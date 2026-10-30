@@ -20,7 +20,7 @@ const links = [
         {links.map((l) => <li><a href={l.href} class="link" aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a></li>)}
       </ul>
     </nav>
-    <button class="menu" aria-expanded="false" aria-controls="mnav" data-menu><span></span><span></span><span class="sr">Menu</span></button>
+    <button class="menu" aria-expanded="false" aria-controls="mnav" aria-label="Menu" data-menu><span></span><span></span></button>
   </div>
   <div class="mnav" id="mnav" hidden>
     <ul class="wrap">{links.map((l, i) => <li><a href={l.href}><span class="label muted">0{i + 1}</span>{l.label}</a></li>)}</ul>
@@ -33,35 +33,44 @@ const links = [
   onScroll(); addEventListener('scroll', onScroll, { passive: true });
   const btn = document.querySelector<HTMLButtonElement>('[data-menu]')!;
   const m = document.getElementById('mnav')!;
-  btn.addEventListener('click', () => {
-    const open = btn.getAttribute('aria-expanded') !== 'true';
+  const set = (open: boolean) => {
     btn.setAttribute('aria-expanded', String(open)); m.hidden = !open; h.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
-  });
+    const l = (window as any).__lenis; open ? l?.stop() : l?.start();
+    if (open) m.querySelector('a')?.focus();
+  };
+  btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !m.hidden) { set(false); btn.focus(); } });
+  // hide the bar while scrolling down, show it when scrolling up
+  let last = scrollY; const noTuck = !!document.querySelector('[data-sticky-bar]');
+  addEventListener('scroll', () => { const y = scrollY; h.classList.toggle('tuck', !noTuck && y > 300 && y > last && !h.classList.contains('open')); last = y; }, { passive: true });
 </script>
 
 <style>
-  .site { position: sticky; top: 0; z-index: 20; background: var(--ow); color: var(--ink); border-bottom: 1px solid var(--rule); transition: background .4s, color .4s, border-color .4s; padding-top: env(safe-area-inset-top, 0px); }
-  .site.over { position: fixed; inset: 0 0 auto; background: transparent; color: var(--ow); border-color: transparent; }
-  .site.over.solid, .site.over.open { background: var(--ox); border-color: transparent; }
+  .site { position: sticky; top: 0; z-index: 20; color: var(--ink); padding-top: env(safe-area-inset-top, 0px); transition: background .5s, color .5s, border-color .5s, transform .6s var(--ease-io);
+    background: var(--glass); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); border-bottom: 1px solid var(--rule); }
+  .site.over { position: fixed; inset: 0 0 auto; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; color: var(--ow); border-color: transparent; }
+  .site.over.solid, .site.open { background: var(--glass-dark); -webkit-backdrop-filter: blur(20px) saturate(1.3); backdrop-filter: blur(20px) saturate(1.3); color: var(--ow); border-color: rgba(255,255,255,.1); }
+  .site.tuck { transform: translateY(-100%); }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .site { background: rgba(243,237,227,.96); } .site.over.solid, .site.open { background: rgba(32,28,27,.95); } }
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 76px; }
+  .logo { display: block; padding-block: 8px; }
   .logo img { height: 40px; width: auto; }
   .lg-light { display: none; }
-  .over .lg-light { display: block; } .over .lg-dark { display: none; }
+  .over .lg-light, .open .lg-light { display: block; } .over .lg-dark, .open .lg-dark { display: none; }
   ul { list-style: none; margin: 0; padding: 0; }
   nav ul { display: flex; gap: clamp(20px, 3vw, 44px); }
-  nav a { font: 400 12px var(--sans); letter-spacing: .22em; text-transform: uppercase; padding-block: 6px; }
-  nav a[aria-current] { background-size: 100% 1px; }
-  .menu { display: none; background: none; border: 0; padding: 10px; color: inherit; cursor: pointer; width: 44px; height: 44px; position: relative; }
-  .menu span:not(.sr) { position: absolute; left: 10px; right: 10px; height: 1.5px; background: currentColor; transition: transform .3s, top .3s; }
-  .menu span:nth-child(1) { top: 17px; } .menu span:nth-child(2) { top: 26px; }
-  .menu[aria-expanded="true"] span:nth-child(1) { top: 21px; transform: rotate(45deg); }
-  .menu[aria-expanded="true"] span:nth-child(2) { top: 21px; transform: rotate(-45deg); }
-  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .mnav { position: fixed; inset: 76px 0 0; background: var(--ox); color: var(--ow); padding-top: 32px; }
-  .mnav li { border-bottom: 1px solid var(--rule-light); }
-  .mnav a { display: flex; align-items: baseline; gap: 18px; padding-block: 18px; font: 500 40px/1 var(--display); }
-  .site:not(.over).open { background: var(--ox); color: var(--ow); }
-  .site:not(.over).open .lg-dark { display: none; } .site:not(.over).open .lg-light { display: block; }
-  @media (max-width: 760px) { nav { display: none; } .menu { display: block; } .logo img { height: 34px; } }
+  nav a { display: inline-block; font: 400 12.5px var(--sans); letter-spacing: .2em; text-transform: uppercase; padding-block: 12px 6px; }
+  .menu { display: none; background: none; border: 0; color: inherit; cursor: pointer; width: 48px; height: 48px; position: relative; margin-right: -10px; }
+  .menu span { position: absolute; left: 12px; right: 12px; height: 1.5px; background: currentColor; transition: transform .45s var(--ease), top .45s var(--ease); }
+  .menu span:nth-child(1) { top: 19px; } .menu span:nth-child(2) { top: 28px; }
+  .menu[aria-expanded="true"] span:nth-child(1) { top: 23px; transform: rotate(45deg); }
+  .menu[aria-expanded="true"] span:nth-child(2) { top: 23px; transform: rotate(-45deg); }
+  .mnav { position: fixed; inset: calc(76px + env(safe-area-inset-top, 0px)) 0 0; background: rgba(32, 28, 27, .9); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); color: var(--ow); padding-top: 24px; overflow-y: auto; }
+  .mnav li { border-bottom: 1px solid var(--rule-light); opacity: 0; transform: translateY(16px); animation: in .7s var(--ease) forwards; }
+  .mnav li:nth-child(2) { animation-delay: .06s; } .mnav li:nth-child(3) { animation-delay: .12s; } .mnav li:nth-child(4) { animation-delay: .18s; }
+  @keyframes in { to { opacity: 1; transform: none; } }
+  .mnav a { display: flex; align-items: baseline; gap: 18px; padding-block: 20px; font: 400 clamp(36px, 10vw, 52px)/1 var(--display); }
+  .mnav .label { color: var(--muted-dark); }
+  @media (max-width: 760px) { nav { display: none; } .menu { display: block; } .logo img { height: 32px; } .bar { height: 68px; } .mnav { inset: calc(68px + env(safe-area-inset-top, 0px)) 0 0; } }
 </style>

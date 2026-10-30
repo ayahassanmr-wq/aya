@@ -18,7 +18,7 @@ const count = (id: string) => id === 'all' ? projects.length : projects.filter((
   <section class="wrap head">
     <p class="label muted">Index of work</p>
     <h1 class="display-xl lines"><span class="ln"><span>Work <sup class="cnt">{projects.length}</sup></span></span></h1>
-    <div class="bar">
+    <div class="bar glass" data-sticky-bar>
       <div class="filters" role="group" aria-label="Filter projects">
         {filters.map((f, i) => <button type="button" data-f={f.id} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}<sup>{count(f.id)}</sup></button>)}
       </div>
@@ -29,8 +29,10 @@ const count = (id: string) => id === 'all' ? projects.length : projects.filter((
     </div>
   </section>
 
-  <section class="wrap">
-    <div class="grid" data-view="grid">
+  <section class="wrap" aria-labelledby="plist">
+    <h2 id="plist" class="sr-only">Projects</h2>
+    <p class="sr-only" aria-live="polite" data-live></p>
+    <div class="grid stagger" data-view="grid">
       {projects.map((p, i) => <div class="it" data-cat={p.category} data-sector={p.sector}><ProjectCard p={p} eager={i < 6} /></div>)}
     </div>
     <ol class="list" data-view="list" hidden>
@@ -52,9 +54,10 @@ const count = (id: string) => id === 'all' ? projects.length : projects.filter((
 <script>
   const fb = document.querySelectorAll<HTMLButtonElement>('[data-f]');
   const vb = document.querySelectorAll<HTMLButtonElement>('[data-v]');
-  const apply = (f: string) => document.querySelectorAll<HTMLElement>('.it').forEach((el) => {
-    el.hidden = !(f === 'all' || el.dataset.cat === f || el.dataset.sector === f);
-  });
+  const live = document.querySelector<HTMLElement>('[data-live]')!;
+  const apply = (f: string) => { let n = 0; document.querySelectorAll<HTMLElement>('.grid .it').forEach((el) => { el.hidden = !(f === 'all' || el.dataset.cat === f || el.dataset.sector === f); if (!el.hidden) n++; });
+    document.querySelectorAll<HTMLElement>('.list .it').forEach((el) => { el.hidden = !(f === 'all' || el.dataset.cat === f || el.dataset.sector === f); });
+    live.textContent = `${n} projects shown`; (window as any).__lenis?.resize?.(); };
   fb.forEach((b) => b.addEventListener('click', () => { fb.forEach((x) => x.setAttribute('aria-pressed', String(x === b))); apply(b.dataset.f!); }));
   vb.forEach((b) => b.addEventListener('click', () => {
     vb.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
@@ -66,9 +69,10 @@ const count = (id: string) => id === 'all' ? projects.length : projects.filter((
 <style>
   .head { padding-top: clamp(48px, 7vw, 100px); }
   .head h1 { margin: 10px 0 clamp(32px, 4vw, 56px); }
-  .bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-block: 16px; border-block: 1px solid var(--rule); position: sticky; top: 76px; background: var(--ow); z-index: 5; }
+  .bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-block: 16px; border: 0; border-block: 1px solid var(--rule); position: sticky; top: 76px; z-index: 5; padding-inline: 14px; margin-inline: -14px; }
+  @media (max-width: 760px) { .bar { top: 68px; } }
   .filters, .views { display: flex; flex-wrap: wrap; gap: 4px 22px; }
-  button { background: none; border: 0; padding: 6px 0; cursor: pointer; font: 400 12px var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--grey); transition: color .25s; }
+  button { background: none; border: 0; padding: 10px 0; min-height: 44px; cursor: pointer; font: 400 12px var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); transition: color .25s; }
   button[aria-pressed="true"], button:hover { color: var(--ox); }
   sup { font-size: 9px; margin-left: 4px; letter-spacing: 0; }
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(40px, 4vw, 64px) clamp(24px, 2.4vw, 40px); padding-block: clamp(40px, 5vw, 72px) clamp(80px, 10vw, 140px); }

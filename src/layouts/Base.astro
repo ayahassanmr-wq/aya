@@ -36,8 +36,9 @@ const ogImage = new URL(image, Astro.site);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" />
   </head>
   <body>
+    <a href="#main" class="skip">Skip to content</a>
     <Header overHero={overHero} />
-    <main><slot /></main>
+    <main id="main" tabindex="-1"><slot /></main>
     <Footer />
     <script>import '../scripts/fx.ts';</script>
   </body>

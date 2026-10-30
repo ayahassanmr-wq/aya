@@ -12,8 +12,8 @@ const img = cover(p.slug);
       {img && <Image src={img} alt={`${p.title}, ${p.location}`} widths={size === 'l' ? [800, 1400, 1800] : [600, 900, 1200]} sizes={size === 'l' ? '(min-width: 900px) 66vw, 100vw' : '(min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw'} loading={eager ? 'eager' : 'lazy'} data-parallax="0.06" data-scale="1.1" />}
     </div>
     <span class="sheen" aria-hidden="true"></span>
-    <span class="label code-chip">{sheetCode(p)}</span>
-    {p.concept && <span class="tag flag">Concept exploration</span>}
+    <span class="label code-chip glass-dark">{sheetCode(p)}</span>
+    {p.concept && <span class="tag flag glass">Concept exploration</span>}
     <span class="corner tl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
   </div>
   <div class="meta">
@@ -34,7 +34,7 @@ const img = cover(p.slug);
   .card:hover .para :global(img) { filter: saturate(1.08) contrast(1.03); }
   .sheen { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .5s; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(243, 237, 227, .22), transparent 45%); }
   .card:hover .sheen { opacity: 1; }
-  .code-chip { position: absolute; right: 12px; bottom: 12px; background: var(--night); color: var(--ow); padding: 7px 10px; font-size: 10px; transform: translateY(8px); opacity: 0; transition: .5s var(--ease); }
+  .code-chip { position: absolute; right: 12px; bottom: 12px; padding: 7px 10px; font-size: 11.5px; transform: translateY(8px); opacity: 0; transition: .5s var(--ease); }
   .card:hover .code-chip { transform: none; opacity: 1; }
   .flag { position: absolute; left: 12px; top: 12px; }
   /* drafting corner marks draw in on hover */
@@ -48,7 +48,7 @@ const img = cover(p.slug);
   .u { background: linear-gradient(var(--ox), var(--ox)) right 100% / 0 1px no-repeat; transition: background-size .5s var(--ease-io), color .3s; }
   .card:hover .u { background-position: left 100%; background-size: 100% 1px; color: var(--ox); }
   :global(.dark) .card:hover .u { color: var(--ow); background-image: linear-gradient(var(--ow), var(--ow)); }
-  .t .label { margin-top: 7px; font-size: 10.5px; }
-  .sector { font-size: 10.5px; }
+  .t .label { margin-top: 7px; font-size: 11.5px; }
+  .sector { font-size: 11.5px; }
   @media (max-width: 520px) { .sector { display: none; } }
 </style>

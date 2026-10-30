@@ -27,7 +27,7 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
         <span class="ln"><span>From concept</span></span>
         <span class="ln"><span>to <em class="foil" style={`--gold:url(${gold.src})`}>conviction.</em></span></span>
       </h1>
-      <div class="block">
+      <div class="block glass-dark">
         <div><span class="label">Currently</span><p>ZFP, Riyadh</p></div>
         <div><span class="label">Selected clients</span><p>NEOM · SABIC · stc</p></div>
         <div><span class="label">Scroll</span><p class="scroll"><span></span></p></div>
@@ -42,7 +42,7 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
   </section>
 
   <section class="dark numbers">
-    <div class="wrap grid4">
+    <div class="wrap grid4 stagger">
       <div class="reveal"><span class="n" data-count={projects.length}>{projects.length}</span><span class="label muted">Projects</span></div>
       <div class="reveal"><span class="n" data-count={countries.length}>{countries.length}</span><span class="label muted">Countries</span></div>
       <div class="reveal"><span class="n" data-count={years}>{years}</span><span class="label muted">Years in practice</span></div>
@@ -51,7 +51,7 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
   </section>
 
   <section class="wrap feat">
-    <div class="sheet-head"><span class="label">01 — Selected work</span><a href="/work/" class="label link">All {projects.length} projects →</a></div>
+    <div class="sheet-head"><h2 class="label">01 — Selected work</h2><a href="/work/" class="label link">All {projects.length} projects →</a></div>
     <div class="row r1"><ProjectCard p={f1} size="l" eager /><ProjectCard p={f2} /></div>
     <div class="row r2"><ProjectCard p={f3} /><ProjectCard p={f4} size="l" /></div>
     <div class="row r3"><ProjectCard p={f5} /><ProjectCard p={f6} /><a href="/work/" class="more reveal" data-cursor="Index"><span class="label">Index of work</span><span class="display-m">See all {projects.length} projects</span><span class="label go">Open the index <span class="arr">→</span></span></a></div>
@@ -63,12 +63,12 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
 
   <section class="dark duo">
     <div class="wrap">
-      <div class="sheet-head"><span class="label">02 — Practice</span><a href="/about/" class="label link">About Aya →</a></div>
+      <div class="sheet-head"><h2 class="label">02 — Practice</h2><a href="/about/" class="label link">About Aya →</a></div>
       <div class="cols">
         <h2 class="display-l lines"><span class="ln"><span>Precision, vision,</span></span><span class="ln"><span><em>scale</em> and craft.</span></span></h2>
-        <div class="pill">
+        <div class="pill stagger">
           {[['Precision', 'Concepts built to be built, from Revit models to IFC drawing sets.'], ['Vision', 'Reading the brief and giving it one clear idea.'], ['Scale', 'National projects and corporate headquarters across the Gulf.'], ['Craft', 'Material, light and the detail that holds them together.']].map(([t, d], i) => (
-            <div class="reveal" style={`transition-delay:${i * 80}ms`}><span class="label muted">0{i + 1}</span><h3>{t}</h3><p>{d}</p></div>
+            <div class="reveal"><span class="label muted">0{i + 1}</span><h3>{t}</h3><p>{d}</p></div>
           ))}
         </div>
       </div>
@@ -76,7 +76,7 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
   </section>
 
   <section class="wrap svc">
-    <div class="sheet-head"><span class="label">03 — Services</span><a href="/services/" class="label link">How I work →</a></div>
+    <div class="sheet-head"><h2 class="label">03 — Services</h2><a href="/services/" class="label link">How I work →</a></div>
     <ol>
       {services.map((s, i) => (
         <li class="reveal"><a href="/services/" data-preview={previews[i]}><span class="label muted">0{i + 1}</span><span class="display-m">{s.t}</span><span class="arr">→</span></a></li>
@@ -96,8 +96,11 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
   .dotl { width: 28px; height: 1px; background: currentColor; }
   .foil { font-style: italic; background: var(--gold) center / cover; -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .06em; }
   @supports not ((-webkit-background-clip: text) or (background-clip: text)) { .foil { color: var(--ow); background: none; } }
-  .block { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 24px 40px; align-items: end; margin-top: clamp(40px, 6vw, 80px); padding-top: 22px; border-top: 1px solid var(--rule-light); }
-  .block .label { opacity: .6; display: block; margin-bottom: 8px; font-size: 10.5px; }
+  .block { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 20px 40px; align-items: center; margin-top: clamp(36px, 5vw, 72px); padding: 20px 22px; opacity: 0; transform: translateY(20px); animation: up 1.1s .55s var(--ease) forwards; }
+  @keyframes up { to { opacity: 1; transform: none; } }
+  .bgwrap { clip-path: inset(0 0 0 0); animation: curtain 1.6s var(--ease-io) both; }
+  @keyframes curtain { from { clip-path: inset(0 0 100% 0); } }
+  .block .label { color: var(--muted-dark); display: block; margin-bottom: 8px; font-size: 11.5px; }
   .block p { font-size: 15px; }
   .scroll { position: relative; width: 1px; height: 34px; background: rgba(243,237,227,.25); overflow: hidden; }
   .scroll span { position: absolute; left: 0; top: -100%; width: 1px; height: 100%; background: var(--ow); animation: drip 2.2s var(--ease-io) infinite; }
@@ -122,7 +125,7 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
   .more { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; aspect-ratio: 4 / 3; padding: 28px; background: var(--night); color: var(--ow); isolation: isolate; }
   .more::before { content: ""; position: absolute; inset: 0; background: var(--ox); z-index: -1; clip-path: circle(0% at 100% 100%); transition: clip-path .8s var(--ease-io); }
   .more:hover::before { clip-path: circle(150% at 100% 100%); }
-  .more .label:first-child { opacity: .6; }
+  .more .label:first-child { color: var(--muted-dark); }
   @media (max-width: 900px) { .r1, .r2, .r3 { grid-template-columns: 1fr; } .r1 > :last-child, .r2 > :first-child { margin-top: 0; } .more { aspect-ratio: auto; min-height: 240px; } }
 
   .marquee { overflow: hidden; padding-block: 30px; border-bottom: 1px solid var(--rule-light); }
@@ -131,7 +134,7 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
   .track span { font: 400 clamp(34px, 4.4vw, 68px)/1 var(--display); white-space: nowrap; padding-right: 36px; transition: color .3s, opacity .3s; }
   .marquee:hover .track span { opacity: .35; }
   .marquee .track span:hover { opacity: 1; color: #D8C7A6; font-style: italic; }
-  .track i { font-style: normal; font-size: .38em; vertical-align: middle; padding-left: 36px; color: var(--grey); }
+  .track i { font-style: normal; font-size: .38em; vertical-align: middle; padding-left: 36px; color: var(--muted-dark); }
   @keyframes slide { to { transform: translateX(-50%); } }
 
   .duo { padding-block: clamp(64px, 9vw, 140px); }

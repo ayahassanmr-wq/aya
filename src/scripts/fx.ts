@@ -1,5 +1,6 @@
 /* Site-wide motion: scroll reveal, parallax, counters, cursor + pattern spotlight, hover image preview.
    Everything degrades to a static, fully visible page without JS, on touch devices and with reduced motion. */
+import Lenis from 'lenis';
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -9,11 +10,28 @@ const io = new IntersectionObserver((es) => es.forEach((e) => {
   if (!e.isIntersecting) return;
   e.target.classList.remove('pre'); e.target.classList.add('shown'); io.unobserve(e.target);
 }), { rootMargin: '0px 0px -8% 0px' });
-document.querySelectorAll<HTMLElement>('.reveal, .lines').forEach((el) => {
+document.querySelectorAll<HTMLElement>('.stagger').forEach((g) => [...g.children].forEach((c, i) => (c as HTMLElement).style.setProperty('--i', String(i % 6))));
+document.querySelectorAll<HTMLElement>('.reveal, .lines, .wipe').forEach((el) => {
   if (reduce) { el.classList.add('shown'); return; }
   if (el.getBoundingClientRect().top > innerHeight * 0.92) { el.classList.add('pre'); io.observe(el); }
   else requestAnimationFrame(() => el.classList.add('shown'));
 });
+
+/* ---------- smooth scroll (desktop, motion allowed) */
+if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const lenis = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4), smoothWheel: true });
+  const raf = (t: number) => { lenis.raf(t); requestAnimationFrame(raf); };
+  requestAnimationFrame(raf);
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href')!; if (id.length < 2) return; const t = document.querySelector<HTMLElement>(id); if (!t) return;
+    e.preventDefault(); lenis.scrollTo(t, { offset: -80 }); t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true });
+  }));
+  (window as any).__lenis = lenis;
+}
+
+/* ---------- reading progress */
+const bar = document.querySelector<HTMLElement>('.progress');
+if (bar) { const up = () => { const h = document.documentElement.scrollHeight - innerHeight; bar.style.setProperty('--p', String(h > 0 ? scrollY / h : 0)); }; addEventListener('scroll', up, { passive: true }); up(); }
 
 /* ---------- counters */
 const co = new IntersectionObserver((es) => es.forEach((e) => {
@@ -76,6 +94,7 @@ if (fine && !reduce) {
   };
   requestAnimationFrame(loop);
 
+  addEventListener('keydown', (e) => { if (e.key === 'Tab') document.documentElement.classList.remove('fx-on'); });
   // cursor states
   document.addEventListener('mouseover', (e) => {
     const t = e.target as HTMLElement;
