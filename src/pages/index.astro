@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import ProjectCard from '../components/ProjectCard.astro';
 import Reel from '../components/Reel.astro';
 import { projects, featured, countries, imagesFor, cover } from '../data/projects';
 import { getImage } from 'astro:assets';
@@ -13,8 +12,19 @@ const slides = await Promise.all(slideSlugs.map(async (slug) => {
   return { p, img, srcset: later.join(', '), thumb: (await getImage({ src: img, width: 240, format: 'webp' })).src };
 }));
 const place = (p: typeof projects[number]) => `${p.location}${p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}`;
-const [f1, f2, f3, f4, f5, f6] = featured;
 const years = new Date().getFullYear() - 2020;
+const thumb = async (slug: string) => (await getImage({ src: cover(slug)!, width: 480, height: 360, fit: 'cover', format: 'webp', quality: 62 })).src;
+const stats = [
+  { n: projects.length, l: 'Projects', d: 'Architecture and interiors, from first concept to drawing set.', img: await thumb('neom-oxagon') },
+  { n: countries.length, l: 'Countries', d: countries.join(' · '), img: await thumb('juba-resort') },
+  { n: years, l: 'Years in practice', d: 'Concept design since 2020.', img: await thumb('fifth-square') },
+  { n: 2, l: 'Studios', d: 'ZFP (Zuhair Fayez Partnership) and Cosmos Studio.', img: await thumb('stc-hq') },
+];
+const feats = await Promise.all(featured.slice(0, 6).map(async (p) => {
+  const img = cover(p.slug)!;
+  const set = await Promise.all([800, 1300, 1900].map(async (w) => `${(await getImage({ src: img, width: w, format: 'webp', quality: 66 })).src} ${w}w`));
+  return { p, srcset: set.join(', '), src: set[1].split(' ')[0], w: img.width, h: img.height };
+}));
 const services = [
   { t: 'Concept design', slug: 'neom-oxagon' },
   { t: 'Visualization & animation', slug: 'fifth-square' },
@@ -99,7 +109,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
     <div class="wrap ig">
       <div class="it">
         <h2 id="intro-h" class="sr-only">Introduction</h2>
-        <p class="statement reveal">I turn early design ideas into concepts clients approve, from public buildings at <em>NEOM</em> to the headquarters of <em>SABIC</em> and <em>stc</em>. Idea, model, image and drawing set, carried by one hand.</p>
+        <p class="statement" data-scrub>I turn early design ideas into concepts clients approve, from public buildings at <em>NEOM</em> to the headquarters of <em>SABIC</em> and <em>stc</em>. Idea, model, image and drawing set, carried by one hand.</p>
         <a href="/about/" class="label link reveal more-l">About Aya <span class="arr">→</span></a>
       </div>
       <div class="collage" aria-hidden="true">
@@ -110,24 +120,38 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
     </div>
   </section>
 
-  <section class="dark numbers" data-sp aria-label="In numbers">
-    <svg class="plan" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
-      <path pathLength="1" d="M0 240 H1200 M80 0 V300 M380 0 V300 M680 0 V300 M980 0 V300 M80 60 H380 L380 240 M680 60 A160 160 0 0 1 980 220" />
-    </svg>
-    <div class="wrap grid4 stagger">
-      <div class="reveal"><span class="n" data-count={projects.length}>{projects.length}</span><span class="label muted">Projects</span></div>
-      <div class="reveal"><span class="n" data-count={countries.length}>{countries.length}</span><span class="label muted">Countries</span></div>
-      <div class="reveal"><span class="n" data-count={years}>{years}</span><span class="label muted">Years in practice</span></div>
-      <div class="reveal"><span class="n">2</span><span class="label muted">Studios · ZFP &amp; Cosmos</span></div>
+  <section class="dark nums" aria-labelledby="nums-h">
+    <div class="wrap">
+      <div class="sheet-head"><h2 id="nums-h" class="label">In numbers</h2><span class="label muted">2020 — {new Date().getFullYear()}</span></div>
+      {stats.map((x) => (
+        <div class="stat" data-sp>
+          <p class="sr-only">{x.n} {x.l}. {x.d}</p>
+          <span class="fig" aria-hidden="true"><span class="o" data-count={x.n}>{x.n}</span><span class="f" data-count={x.n}>{x.n}</span></span>
+          <div class="sm" aria-hidden="true"><span class="t">{x.l}</span><span class="d">{x.d}</span></div>
+          <figure class="th para" aria-hidden="true"><img src={x.img} alt="" width="480" height="360" loading="lazy" decoding="async" /></figure>
+        </div>
+      ))}
     </div>
   </section>
 
   <div class="curtain" data-sp>
-    <section class="wrap feat">
-      <div class="sheet-head"><h2 class="label">Selected work</h2><a href="/work/" class="label link">All {projects.length} projects →</a></div>
-      <div class="row r1"><ProjectCard p={f1} size="l" /><ProjectCard p={f2} /></div>
-      <div class="row r2"><ProjectCard p={f3} /><ProjectCard p={f4} size="l" /></div>
-      <div class="row r3"><ProjectCard p={f5} /><ProjectCard p={f6} /><a href="/work/" class="more reveal" data-cursor="Index"><span class="display-m">See all {projects.length} projects</span><span class="label go">Open the index <span class="arr">→</span></span></a></div>
+    <section class="wrap feat" aria-labelledby="feat-h">
+      <div class="sheet-head"><h2 id="feat-h" class="label">Selected work</h2><a href="/work/" class="label link">All {projects.length} projects →</a></div>
+      <div class="stack" data-stack>
+        {feats.map((x, i) => (
+          <a class="sc" href={`/work/${x.p.slug}/`} style={`--i:${i}`} data-cursor="View">
+            <div class="sci">
+              <img srcset={x.srcset} src={x.src} sizes="(min-width: 1840px) 1700px, 92vw" width={x.w} height={x.h} alt={`${x.p.title}, ${place(x.p)}`} loading="lazy" decoding="async" />
+              {x.p.concept && <span class="tag flag">Concept exploration</span>}
+              <div class="scm glass-dark">
+                <div><h3>{x.p.title}</h3><p class="label">{place(x.p)} · {x.p.sector}</p></div>
+                <span class="label go">View project <span class="arr">→</span></span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+      <a href="/work/" class="more reveal" data-cursor="Index"><span class="display-m">See all {projects.length} projects</span><span class="label go">Open the index <span class="arr">→</span></span></a>
     </section>
   </div>
 
@@ -277,27 +301,41 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   @media (max-width: 900px) { .ig { grid-template-columns: 1fr; } .collage { max-width: 560px; width: 100%; } }
 
   /* numbers on a drafted plan */
-  .numbers { position: relative; padding-block: clamp(56px, 7vw, 100px); overflow: hidden; border-top: 1px solid var(--rule-light); }
-  .plan { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  .plan path { fill: none; stroke: rgba(243, 237, 227, .14); stroke-width: 1px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--sp, 1)); }
-  .numbers { --sp: 1; }
-  .grid4 { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
-  .grid4 > div { display: grid; gap: 8px; padding-top: 18px; border-top: 1px solid var(--rule-light); }
-  .n { font: 400 clamp(56px, 7.6vw, 132px)/.9 var(--display); font-variant-numeric: tabular-nums; }
-  @media (max-width: 760px) { .grid4 { grid-template-columns: 1fr 1fr; } }
+  /* in numbers: one giant figure per row; the outline fills from below as the row crosses the screen */
+  .nums { padding-block: clamp(64px, 8vw, 130px) clamp(40px, 5vw, 80px); border-top: 1px solid var(--rule-light); overflow: hidden; }
+  .stat { --fl: clamp(0, calc((var(--sp, 1) - .25) * 2.4), 1); display: grid; grid-template-columns: auto 1fr auto; align-items: end; gap: clamp(20px, 4vw, 72px); padding-block: clamp(18px, 2.4vw, 36px); border-bottom: 1px solid var(--rule-light); }
+  .fig { position: relative; display: block; font: 400 clamp(160px, 30vw, 560px)/.76 var(--display); letter-spacing: -.04em; font-variant-numeric: lining-nums tabular-nums; transform: translate3d(calc((1 - var(--fl)) * -6vw), 0, 0); }
+  .fig .o { color: transparent; -webkit-text-stroke: 1px rgba(243, 237, 227, .4); }
+  .fig .f { position: absolute; inset: 0; color: var(--ow); clip-path: inset(calc((1 - var(--fl)) * 100%) 0 0 0); }
+  .sm { display: grid; gap: 10px; max-width: 30ch; padding-bottom: clamp(10px, 1.5vw, 26px); opacity: calc(.25 + var(--fl) * .75); transform: translate3d(0, calc((1 - var(--fl)) * 24px), 0); }
+  .sm .t { font: 400 clamp(26px, 2.6vw, 44px)/1.05 var(--display); }
+  .sm .d { font-size: 15px; color: var(--muted-dark); }
+  .th { margin: 0 0 clamp(10px, 1.5vw, 26px); width: clamp(140px, 16vw, 300px); aspect-ratio: 4 / 3; clip-path: inset(calc((1 - var(--fl)) * 100%) 0 0 0 round var(--r-3)); }
+  .th img { width: 100%; height: 100%; object-fit: cover; transform: scale(calc(1.3 - var(--fl) * .3)); }
+  @media (max-width: 760px) { .stat { grid-template-columns: 1fr; gap: 6px; } .fig { font-size: 46vw; } .th { display: none; } .sm { padding-bottom: 0; } }
 
   /* 01 selected work: the light sheet opens out of the dark as it arrives */
   .curtain { background: var(--night); }
   .curtain > .feat { background: var(--ow); border-radius: var(--r-xl); clip-path: inset(0 calc((1 - var(--sp, 1)) * 7%) round var(--r-xl)); }
   .feat { padding-block: clamp(64px, 9vw, 140px); }
-  .row { display: grid; gap: clamp(28px, 3vw, 48px); margin-top: clamp(28px, 4vw, 56px); align-items: start; }
-  .r1 { grid-template-columns: 2fr 1fr; } .r2 { grid-template-columns: 1fr 2fr; } .r3 { grid-template-columns: 1fr 1fr 1fr; }
-  .r1 > :last-child, .r2 > :first-child { margin-top: clamp(0px, 10vw, 160px); }
-  .more { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; aspect-ratio: 4 / 3; padding: 28px; background: var(--night); color: var(--ow); isolation: isolate; }
+  /* selected work: full-width project cards stack on top of each other while you scroll */
+  .stack { margin-top: clamp(28px, 4vw, 56px); }
+  .sc { position: sticky; top: calc(92px + var(--i) * 12px); display: block; height: min(76vh, 780px); margin-bottom: 7vh; }
+  .sci { position: relative; height: 100%; border-radius: var(--r-3); overflow: hidden; isolation: isolate; background: var(--night); transform-origin: 50% 0; transform: scale(calc(1 - var(--st, 0) * .07)); filter: brightness(calc(1 - var(--st, 0) * .55)); will-change: transform; }
+  .sci img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); transition: transform 1.4s var(--ease-out); }
+  .sc:hover .sci img { transform: scale(1.09); }
+  .scm { position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; justify-content: space-between; align-items: end; gap: 20px; padding: 18px 22px; border-radius: var(--r-2); }
+  .scm h3 { font: 400 clamp(26px, 3vw, 52px)/1.02 var(--display); }
+  .scm .label { margin-top: 8px; color: rgba(243, 237, 227, .8); }
+  .scm .go { white-space: nowrap; color: var(--ow); }
+  .sc:hover .go .arr { transform: translateX(6px); }
+  .flag { position: absolute; left: 14px; top: 14px; }
+  @media (max-width: 700px) { .sc { height: 64vh; top: calc(80px + var(--i) * 8px); } .scm { flex-direction: column; align-items: start; } }
+  .more { position: relative; overflow: hidden; display: flex; justify-content: space-between; align-items: end; gap: 24px; min-height: 180px; padding: 28px; margin-top: 4vh; background: var(--night); color: var(--ow); isolation: isolate; }
   .more::before { content: ""; position: absolute; inset: 0; background: var(--ox); z-index: -1; clip-path: circle(0% at 100% 100%); transition: clip-path .8s var(--ease-io); }
   .more:hover::before { clip-path: circle(150% at 100% 100%); }
   .more .label:first-child { color: var(--muted-dark); }
-  @media (max-width: 900px) { .r1, .r2, .r3 { grid-template-columns: 1fr; } .r1 > :last-child, .r2 > :first-child { margin-top: 0; } .more { aspect-ratio: auto; min-height: 240px; } }
+  @media (max-width: 700px) { .more { flex-direction: column; align-items: start; } }
 
   /* image marquee */
   .marquee { overflow: hidden; padding-block: 34px; border-block: 1px solid var(--rule-light); }

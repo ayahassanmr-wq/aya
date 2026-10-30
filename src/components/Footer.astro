@@ -2,7 +2,7 @@
 import { contact, projects } from '../data/projects';
 import Social from './Social.astro';
 ---
-<footer class="dark" data-footer>
+<footer class="dark" data-footer data-sp>
   <div class="wrap">
     <div class="cta">
       <h2 class="big lines"><span class="ln"><span>Have a concept?</span></span><span class="ln"><span>Let’s make it <em>convincing.</em></span></span></h2>
@@ -44,7 +44,7 @@ import Social from './Social.astro';
 
 <style>
   footer { position: relative; overflow: hidden; padding-top: clamp(80px, 11vw, 160px); }
-  .cta { display: grid; gap: 28px; padding-bottom: clamp(56px, 8vw, 110px); border-bottom: 1px solid var(--rule-light); }
+  .cta { transform: translate3d(0, calc((1 - var(--sp, 1)) * 140px), 0); opacity: calc(.3 + var(--sp, 1) * .7); display: grid; gap: 28px; padding-bottom: clamp(56px, 8vw, 110px); border-bottom: 1px solid var(--rule-light); }
   .big { font: 400 clamp(46px, 7.4vw, 132px)/.95 var(--display); letter-spacing: -.02em; }
   .big em { color: var(--sand); }
   .big .ln { display: block; overflow: hidden; padding-bottom: .06em; }
@@ -64,7 +64,7 @@ import Social from './Social.astro';
   .v { font-size: 15px; } .v time { color: var(--ow); font-variant-numeric: tabular-nums; }
   .top { width: 64px; height: 64px; border-radius: var(--r-btn); border: 1px solid var(--rule-light); background: none; color: var(--ow); font-size: 20px; cursor: pointer; transition: background .4s, color .4s, transform .5s var(--ease); }
   .top:hover { background: var(--ow); color: var(--ink); transform: translateY(-4px); }
-  .mark-wrap { padding-inline: max(var(--gut), env(safe-area-inset-left, 0px)); margin-top: clamp(8px, 2vw, 24px); line-height: 0; }
+  .mark-wrap { transform: translate3d(0, calc((1 - var(--sp, 1)) * -12%), 0) scale(calc(.92 + var(--sp, 1) * .08)); transform-origin: 50% 100%; padding-inline: max(var(--gut), env(safe-area-inset-left, 0px)); margin-top: clamp(8px, 2vw, 24px); line-height: 0; }
   .mark { width: 100%; height: auto; max-height: 44vw; display: block; fill: transparent; stroke: rgba(243, 237, 227, .5); stroke-width: 1px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.6s var(--ease-io), fill 1.2s 1.8s var(--ease); }
   .drawn .mark { stroke-dashoffset: 0; fill: rgba(243, 237, 227, .06); }
   .base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--rule-light); color: var(--muted-dark); font-size: 11.5px; }

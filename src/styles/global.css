@@ -265,3 +265,9 @@ footer ul a:hover { transform: translateX(6px); }
 /* dark sheets on light pages open out from the gutters as they arrive (about, services, case studies) */
 main .sheet[data-sp] { border-radius: var(--r-3); clip-path: inset(0 calc((1 - var(--sp, 1)) * 6%) round var(--r-3)); }
 .sheet[data-sp] + .sheet[data-sp] { margin-top: 10px; }
+
+/* scrubbed statement: words start dim and light up with scroll */
+[data-scrub] .sw { color: #8F8983; transition: color .6s var(--ease-out); }
+[data-scrub] .sw.lit { color: var(--ow); }
+.dark [data-scrub] em .sw.lit { color: var(--sand); }
+@media (prefers-reduced-motion: reduce) { [data-scrub] .sw { color: inherit; } }

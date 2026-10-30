@@ -7,7 +7,7 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 /* ---------- word rise: headings and statements below the fold rise word by word as they enter */
 if (!reduce) {
-  document.querySelectorAll<HTMLElement>('main h2.display-l:not(.lines), main h2.display-m, main .svc .display-m, main .statement, main .pill h3, main .tl h2, main .more .display-m').forEach((el) => {
+  document.querySelectorAll<HTMLElement>('main h2.display-l:not(.lines), main h2.display-m, main .svc .display-m, main .statement:not([data-scrub]), main .pill h3, main .tl h2, main .more .display-m').forEach((el) => {
     if (el.closest('.hl, [data-no-split]') || el.getBoundingClientRect().top < innerHeight * 0.92) return;
     let wi = 0;
     const walk = (node: Node) => [...node.childNodes].forEach((c) => {
@@ -77,7 +77,26 @@ document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => co.observ
 const px = [...document.querySelectorAll<HTMLElement>('[data-parallax]')];
 const sp = [...document.querySelectorAll<HTMLElement>('[data-sp]')];
 const marqs = [...document.querySelectorAll<HTMLElement>('.marquee .track')];
-if (!reduce && (px.length || sp.length || marqs.length)) {
+// stacked cards: each card dims and shrinks as the next one slides over it
+const stacks = [...document.querySelectorAll<HTMLElement>('[data-stack]')].map((st) => [...st.children] as HTMLElement[]);
+// scrubbed text: words light up one after another as the paragraph is scrolled through
+const scrubs = [...document.querySelectorAll<HTMLElement>('[data-scrub]')].map((el) => {
+  const words: HTMLElement[] = [];
+  const walk = (node: Node) => [...node.childNodes].forEach((c) => {
+    if (c.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      (c.textContent || '').split(/(\s+)/).forEach((w) => {
+        if (!w) return;
+        if (/^\s+$/.test(w)) { frag.append(w); return; }
+        const sp2 = document.createElement('span'); sp2.className = 'sw'; sp2.textContent = w; words.push(sp2); frag.append(sp2);
+      });
+      c.replaceWith(frag);
+    } else if (c.nodeType === 1) walk(c);
+  });
+  if (!reduce) walk(el);
+  return { el, words, last: -1 };
+});
+if (!reduce && (px.length || sp.length || marqs.length || stacks.length || scrubs.length)) {
   let lastY = NaN, lastH = 0, prevY = scrollY, v = 0, rate = 1;
   let anims: Animation[] = [];
   const dirty = () => { lastY = NaN; };
@@ -96,6 +115,22 @@ if (!reduce && (px.length || sp.length || marqs.length)) {
       lastY = y; lastH = vh;
       const pr = px.map((el) => el.parentElement!.getBoundingClientRect());
       const sr = sp.map((el) => el.getBoundingClientRect());
+      const kr = stacks.map((cards) => cards.map((c) => c.getBoundingClientRect()));
+      const wr = scrubs.map((x) => x.el.getBoundingClientRect());
+      stacks.forEach((cards, s1) => cards.forEach((c, i) => {
+        const next = kr[s1][i + 1]; if (!next) return;
+        const cur = kr[s1][i];
+        const t = 1 - (next.top - cur.top) / Math.max(1, vh - cur.top);
+        c.style.setProperty('--st', Math.max(0, Math.min(1, t)).toFixed(3));
+      }));
+      scrubs.forEach((x, k) => {
+        const r = wr[k];
+        const p = Math.max(0, Math.min(1, (vh * 0.85 - r.top) / (r.height + vh * 0.25)));
+        const lit = Math.round(p * x.words.length);
+        if (lit === x.last) return;
+        x.last = lit;
+        x.words.forEach((w, i) => w.classList.toggle('lit', i < lit));
+      });
       px.forEach((el, i) => {
         const r = pr[i];
         if (r.bottom < -100 || r.top > vh + 100) return;
