@@ -11,6 +11,12 @@
 /* Brand Guidelines v1.0 · off-white base, oxblood accent, warm soft-black sections, one gold-foil moment (home hero).
    Layout idea: an architect's drawing set — sheet codes, title blocks, hairline rules. */
 :root {
+  /* radius system, taken from the soft curves of the AYA swashes */
+  --r-s: 8px;
+  --r-m: clamp(12px, 1vw, 16px);
+  --r-l: clamp(16px, 1.6vw, 26px);
+  --r-xl: clamp(22px, 2.6vw, 44px);
+  --r-pill: 999px;
   --ox: #5E1A24;
   --ox-deep: #43121A;
   --ow: #F3EDE3;
@@ -212,3 +218,15 @@ footer ul a:hover { transform: translateX(6px); }
 .clip img { transition: scale 1.8s var(--ease); }
 .clip.pre { clip-path: inset(100% 0 0 0); opacity: 1; transform: none; }
 .clip.pre img { scale: 1.25; }
+
+/* ---------- radius (soft corners to match the logo) */
+.btn, .tag, .copy, .skip, .hover-prev img, .lbx .x, .lbx .cnt { border-radius: var(--r-pill); }
+.lbx .nav { border-radius: 50%; width: 56px; height: 56px; display: grid; place-items: center; }
+.para, .frame, .lb, .paper, .screen, .more, .sframe, .hover-prev { border-radius: var(--r-l); }
+.para, .frame, .lb, .screen, .sframe, .more { overflow: hidden; isolation: isolate; }
+.chip, .chip img, .code-chip, .flag { border-radius: var(--r-m); }
+.paper :is(img) { border-radius: var(--r-s); }
+.lbx img { border-radius: var(--r-m); }
+.split .hw { border-radius: var(--r-s); }
+.corner.tl { border-top-left-radius: 14px; } .corner.br { border-bottom-right-radius: 14px; }
+.progress { border-radius: 0 2px 2px 0; }
