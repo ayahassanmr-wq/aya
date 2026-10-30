@@ -12,8 +12,8 @@ const links = [
 <header class:list={['site', { over: overHero }]} data-header>
   <div class="wrap bar">
     <a href="/" class="logo" aria-label="Aya Hassan, home">
-      <img class="lg-light" src="/brand/AYA_Horizontal_Inverse_OffWhite.svg" alt="" width="230" height="46" />
-      <img class="lg-dark" src="/brand/AYA_Horizontal_Oxblood.svg" alt="" width="230" height="46" />
+      <img class="lg-light" src="/brand/AYA_Horizontal_Inverse_OffWhite.svg" alt="" width="230" height="46" loading={overHero ? undefined : 'lazy'} />
+      <img class="lg-dark" src="/brand/AYA_Horizontal_Oxblood.svg" alt="" width="230" height="46" loading={overHero ? 'lazy' : undefined} />
     </a>
     <nav aria-label="Main">
       <ul>

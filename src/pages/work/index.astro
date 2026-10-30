@@ -33,7 +33,7 @@ const count = (id: string) => id === 'all' ? projects.length : projects.filter((
     <h2 id="plist" class="sr-only">Projects</h2>
     <p class="sr-only" aria-live="polite" data-live></p>
     <div class="grid stagger" data-view="grid">
-      {projects.map((p, i) => <div class="it" data-cat={p.category} data-sector={p.sector}><ProjectCard p={p} eager={i < 6} /></div>)}
+      {projects.map((p, i) => <div class="it" data-cat={p.category} data-sector={p.sector}><ProjectCard p={p} eager={i < 2} /></div>)}
     </div>
     <ol class="list" data-view="list" hidden>
       {projects.map((p, i) => (

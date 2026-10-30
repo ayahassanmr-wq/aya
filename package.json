@@ -12,7 +12,12 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.1.0",
+    "@fontsource/jost": "^5.1.1",
     "astro": "^7.4.4",
     "lenis": "^1.1.20"
+  },
+  "devDependencies": {
+    "svgo": "^3.3.2"
   }
 }
