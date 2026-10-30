@@ -18,4 +18,5 @@ npm run build    # static output in dist/
 - Logo files: `public/brand/` (from Brand/Logo).
 
 ## Deploy (Vercel)
+Domain: **ayahassan.com** (add it in Vercel → Project → Domains, then set the DNS records Vercel shows).
 Push to GitHub → Vercel → New Project → import repo. Framework preset: Astro. No env vars needed.
