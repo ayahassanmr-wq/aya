@@ -1,7 +1,8 @@
 ---
-/* Logo intro (~4.2 s, once per session): construction lines draw, the AYA mark is traced slowly in champagne line,
-   the fill sweeps across it, then the mark flies up into its place in the header while the screen parts top and bottom.
-   The page renders underneath immediately. Skippable; never with reduced motion, never without JS. */
+/* Logo intro (~4.4 s, once per session).
+   AYA fills the screen: its outline is traced in champagne, two contour echoes ripple out from it,
+   the off-white fill rises up through the letters, then the mark shrinks and flies into the header logo
+   while the screen parts top and bottom onto the hero. Skippable; never with reduced motion or without JS. */
 ---
 <script is:inline>
   try {
@@ -14,9 +15,12 @@
 <div class="intro" aria-hidden="true" data-intro>
   <span class="half up"></span><span class="half dn"></span>
   <div class="stage" data-stage>
-    <span class="g gh g1"></span><span class="g gh g2"></span><span class="g gv g3"></span><span class="g gv g4"></span>
-    <svg class="mk line" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
-    <svg class="mk fill" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
+    <div class="drift">
+      <svg class="mk echo e2" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
+      <svg class="mk echo e1" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
+      <svg class="mk line" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
+      <svg class="mk fill" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
+    </div>
   </div>
   <button type="button" class="label skip-intro" data-skip tabindex="-1">Skip</button>
 </div>
@@ -29,20 +33,16 @@
     const stage = el.querySelector<HTMLElement>('[data-stage]')!;
     const end = () => {
       if (done) return; done = true;
-      // fly the mark to the header logo
       const target = document.querySelector<HTMLElement>('a.logo img');
       const a = stage.getBoundingClientRect();
       if (target) {
         const b = target.getBoundingClientRect();
-        if (b.width > 0) {
-          const s = b.width / a.width;
-          stage.style.setProperty('--fly', `translate(${b.left + b.width / 2 - (a.left + a.width / 2)}px, ${b.top + b.height / 2 - (a.top + a.height / 2)}px) scale(${s})`);
-        }
+        if (b.width > 0) stage.style.setProperty('--fly', `translate(${b.left + b.width / 2 - (a.left + a.width / 2)}px, ${b.top + b.height / 2 - (a.top + a.height / 2)}px) scale(${b.width / a.width})`);
       }
       root.classList.add('intro-out');
-      setTimeout(() => { root.classList.remove('has-intro', 'intro-out'); el.remove(); }, 1000);
+      setTimeout(() => { root.classList.remove('has-intro', 'intro-out'); el.remove(); }, 1150);
     };
-    setTimeout(end, 3300);
+    setTimeout(end, 3500);
     el.querySelector('[data-skip]')!.addEventListener('click', end);
     addEventListener('keydown', end, { once: true });
     addEventListener('pointerdown', end, { once: true });
@@ -51,29 +51,34 @@
 
 <style>
   .intro { display: none; }
-  :global(.has-intro) .intro { display: block; position: fixed; inset: 0; z-index: 500; color: var(--ow); }
+  :global(.has-intro) .intro { display: grid; place-items: center; position: fixed; inset: 0; z-index: 500; color: var(--ow); overflow: hidden; }
   :global(.has-intro a.logo img) { opacity: 0; }
-  .half { position: absolute; left: 0; right: 0; height: 50.5%; background: var(--night); transition: transform 1s var(--ease-io); }
+  .half { position: absolute; left: 0; right: 0; height: 50.5%; background: var(--night); transition: transform 1.05s var(--ease-io); }
   .up { top: 0; } .dn { bottom: 0; }
   :global(.intro-out) .up { transform: translateY(-100%); }
   :global(.intro-out) .dn { transform: translateY(100%); }
-  .stage { position: absolute; left: 50%; top: 50%; width: min(70vw, 560px); aspect-ratio: 941 / 453; margin: calc(min(70vw, 560px) * -453 / 941 / 2) 0 0 calc(min(70vw, 560px) / -2); transform-origin: center; animation: breathe 3.3s var(--ease) both; }
-  @keyframes breathe { from { transform: scale(.94); } to { transform: scale(1); } }
-  :global(.intro-out) .stage { animation: none; transform: var(--fly, translateY(-20px) scale(.2)); transition: transform .95s var(--ease-io); }
-  /* construction lines: draw in, then fade once the fill arrives */
-  .g { position: absolute; background: rgba(216, 199, 166, .3); }
-  .gh { left: -24%; right: -24%; height: 1px; transform: scaleX(0); animation: gx 1s var(--ease-io) forwards, gone .6s 2.7s forwards; }
-  .gv { top: -30%; bottom: -30%; width: 1px; transform: scaleY(0); animation: gy 1s .15s var(--ease-io) forwards, gone .6s 2.75s forwards; }
-  .g1 { top: 2%; } .g2 { bottom: 9.5%; } .g3 { left: 0; } .g4 { right: 0; }
-  @keyframes gx { to { transform: scaleX(1); } } @keyframes gy { to { transform: scaleY(1); } }
-  @keyframes gone { to { opacity: 0; } }
-  /* the mark: a slow trace, then the fill sweeps across from the left */
+
+  /* the mark fills the screen (as wide as the viewport allows without overflowing its height) */
+  .stage { position: relative; z-index: 2; width: min(92vw, calc(78svh * 941 / 453)); aspect-ratio: 941 / 453; transform-origin: center; }
+  :global(.intro-out) .stage { transform: var(--fly, scale(.1)); transition: transform 1.05s cubic-bezier(.7, 0, .2, 1); }
+  .drift { position: absolute; inset: 0; animation: drift 3.5s cubic-bezier(.2, .7, .2, 1) both; }
+  @keyframes drift { from { transform: scale(1.12) translateY(3%); } to { transform: none; } }
+
   .mk { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
-  .line { fill: transparent; stroke: #D8C7A6; stroke-width: 1.2px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2s .3s cubic-bezier(.6, .05, .3, 1) forwards, fadeline .5s 2.8s forwards; }
+  /* 1. the outline is traced */
+  .line { fill: transparent; stroke: #D8C7A6; stroke-width: 1.3px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.9s .15s cubic-bezier(.65, .05, .3, 1) forwards, lineout .6s 2.7s forwards; }
   @keyframes draw { to { stroke-dashoffset: 0; } }
-  @keyframes fadeline { to { opacity: 0; } }
-  .fill { fill: #F3EDE3; clip-path: inset(0 100% 0 0); animation: sweep .9s 2s var(--ease-io) forwards; }
-  @keyframes sweep { to { clip-path: inset(0 0 0 0); } }
-  .skip-intro { position: absolute; right: max(var(--gut), env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: none; border: 0; color: var(--muted-dark); padding: 12px; cursor: pointer; transition: opacity .3s; }
+  @keyframes lineout { to { stroke: rgba(216, 199, 166, 0); } }
+  /* 3. once filled, two contour echoes ripple outward, like offset lines on a plan */
+  .echo { fill: transparent; stroke: rgba(216, 199, 166, .4); stroke-width: 1px; vector-effect: non-scaling-stroke; opacity: 0; transform-origin: 50% 50%; }
+  .e1 { animation: echo 1.3s 2.45s cubic-bezier(.2, .7, .2, 1) forwards; }
+  .e2 { animation: echo 1.4s 2.65s cubic-bezier(.2, .7, .2, 1) forwards; --to: 1.18; }
+  @keyframes echo { 0% { opacity: 0; transform: scale(1); } 15% { opacity: 1; } 100% { opacity: 0; transform: scale(var(--to, 1.08)); } }
+  /* 2. the fill rises up through the letters */
+  .fill { fill: #F3EDE3; clip-path: inset(100% 0 0 0); animation: rise 1s 1.75s cubic-bezier(.7, 0, .2, 1) forwards; }
+  @keyframes rise { to { clip-path: inset(0 0 0 0); } }
+  :global(.intro-out) .echo { animation: none; opacity: 0; }
+
+  .skip-intro { position: absolute; z-index: 3; right: max(var(--gut), env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: none; border: 0; color: var(--muted-dark); padding: 12px; cursor: pointer; transition: opacity .3s; }
   :global(.intro-out) .skip-intro { opacity: 0; }
 </style>

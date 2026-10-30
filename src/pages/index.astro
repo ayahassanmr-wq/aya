@@ -91,7 +91,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
       hero.addEventListener('mouseenter', () => hero.classList.add('paused'));
       hero.addEventListener('mouseleave', () => hero.classList.remove('paused'));
       document.addEventListener('visibilitychange', () => (document.hidden ? clearTimeout(timer) : schedule()));
-      setTimeout(schedule, document.documentElement.classList.contains('has-intro') ? 4600 : 0);
+      setTimeout(schedule, document.documentElement.classList.contains('has-intro') ? 5000 : 0);
     }
   </script>
 
