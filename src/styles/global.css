@@ -90,7 +90,7 @@ em { font-style: italic; }
 .sheet-head h2 { margin: 0; }
 
 /* buttons: fill sweeps in from the left */
-.btn { position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; gap: 14px; font: 400 12px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; padding: 18px 26px; border: 1px solid currentColor; color: inherit; background: none; cursor: pointer; transition: color .45s var(--ease), transform .4s var(--ease); }
+.btn { white-space: nowrap; position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; gap: 14px; font: 400 12px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; padding: 18px 26px; border: 1px solid currentColor; color: inherit; background: none; cursor: pointer; transition: color .45s var(--ease), transform .4s var(--ease); }
 .btn::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--ox); transform: scaleX(0); transform-origin: right; transition: transform .55s var(--ease-io); }
 .btn:hover { color: var(--ow); border-color: var(--ox); }
 .btn:hover::before { transform: scaleX(1); transform-origin: left; }

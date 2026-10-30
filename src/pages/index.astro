@@ -47,8 +47,8 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
       </h1>
       <div class="bottom">
         <div class="ctas">
-          <a href="/work/" class="btn solid">View the work <span class="arr">→</span></a>
-          <a href="/about/" class="btn ghost glass-dark">About Aya</a>
+          <a href="/contact/" class="btn solid magnet">Start a project <span class="arr">→</span></a>
+          <a href="/work/" class="btn ghost glass-dark">View the work</a>
         </div>
         <div class="ctrl" role="group" aria-label="Featured projects">
           <div class="bars">{slides.map((x, i) => <button type="button" class:list={['bb', { on: i === 0 }]} data-go={i} aria-label={`Show ${x.p.title}`}><i></i></button>)}</div>
@@ -232,7 +232,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
     .top .kicker.r { display: none; }
     h1 { font-size: clamp(54px, 16.5vw, 96px); }
     .bottom { grid-template-columns: 1fr; gap: 16px; border-top: 0; padding-top: 0; }
-    .ctas { display: grid; grid-template-columns: 1fr auto; }
+    .ctas { display: grid; grid-template-columns: 1fr; gap: 8px; }
     .ctas .btn { justify-content: center; padding-inline: 18px; }
     .chip { grid-column: 1; grid-row: auto; min-width: 0; grid-template-columns: 56px 1fr auto; }
     .chip img { width: 56px; height: 42px; }
