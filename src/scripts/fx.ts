@@ -43,7 +43,7 @@ document.querySelectorAll<HTMLElement>('.reveal, .lines, .wipe, .clip, .sheet-he
 
 /* ---------- smooth scroll (desktop, motion allowed) */
 if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  const lenis = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4), smoothWheel: true });
+  const lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.95, touchMultiplier: 1 });
   const raf = (t: number) => { lenis.raf(t); requestAnimationFrame(raf); };
   requestAnimationFrame(raf);
   document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
@@ -51,19 +51,6 @@ if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     e.preventDefault(); lenis.scrollTo(t, { offset: -80 }); t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true });
   }));
   (window as any).__lenis = lenis;
-}
-
-/* ---------- marquees speed up with scroll velocity */
-const marqs = [...document.querySelectorAll<HTMLElement>('.marquee .track')];
-if (!reduce && marqs.length) {
-  let last = scrollY, v = 0;
-  const go = () => {
-    const d = Math.abs(scrollY - last); last = scrollY;
-    v = lerp(v, Math.min(d, 80) / 8, 0.12);
-    marqs.forEach((m) => m.getAnimations().forEach((a) => (a.playbackRate = 1 + v)));
-    requestAnimationFrame(go);
-  };
-  requestAnimationFrame(go);
 }
 
 /* ---------- reading progress */
@@ -80,37 +67,50 @@ const co = new IntersectionObserver((es) => es.forEach((e) => {
 }), { threshold: 0.6 });
 document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => co.observe(el));
 
-/* ---------- parallax: [data-parallax="0.12"] moves against scroll while in view */
+/* ---------- one scroll ticker for parallax, scroll progress and marquee speed.
+   All layout reads happen first, then all writes, and nothing is measured when the page hasn't moved:
+   no layout thrashing, so scrolling stays smooth.
+   [data-parallax="0.12"] moves against scroll while in view.
+   [data-sp] gets --sp 0→1 while its top travels from the bottom to the top of the viewport;
+   [data-sp="out"] gets 0→1 while it scrolls out past the top. */
 const px = [...document.querySelectorAll<HTMLElement>('[data-parallax]')];
-if (!reduce && px.length) {
+const sp = [...document.querySelectorAll<HTMLElement>('[data-sp]')];
+const marqs = [...document.querySelectorAll<HTMLElement>('.marquee .track')];
+if (!reduce && (px.length || sp.length || marqs.length)) {
+  let lastY = NaN, lastH = 0, prevY = scrollY, v = 0, rate = 1;
+  let anims: Animation[] = [];
+  const dirty = () => { lastY = NaN; };
+  addEventListener('resize', dirty, { passive: true });
+  addEventListener('load', dirty);
   const tick = () => {
-    const vh = innerHeight;
-    for (const el of px) {
-      const r = el.parentElement!.getBoundingClientRect();
-      if (r.bottom < -100 || r.top > vh + 100) continue;
-      const p = (r.top + r.height / 2 - vh / 2) / vh; // -1..1 around centre
-      el.style.transform = `translate3d(0, ${(-p * +el.dataset.parallax! * 100).toFixed(2)}px, 0) scale(${el.dataset.scale || 1.12})`;
+    const y = scrollY, vh = innerHeight;
+    if (marqs.length) {
+      if (!anims.length) anims = marqs.flatMap((m) => m.getAnimations());
+      v = lerp(v, Math.min(Math.abs(y - prevY), 80) / 8, 0.08);
+      const r = 1 + v;
+      if (Math.abs(r - rate) > 0.01) { rate = r; anims.forEach((a) => (a.playbackRate = r)); }
+    }
+    prevY = y;
+    if (y !== lastY || vh !== lastH) {
+      lastY = y; lastH = vh;
+      const pr = px.map((el) => el.parentElement!.getBoundingClientRect());
+      const sr = sp.map((el) => el.getBoundingClientRect());
+      px.forEach((el, i) => {
+        const r = pr[i];
+        if (r.bottom < -100 || r.top > vh + 100) return;
+        const p = (r.top + r.height / 2 - vh / 2) / vh;
+        el.style.transform = `translate3d(0, ${(-p * +el.dataset.parallax! * 100).toFixed(2)}px, 0) scale(${el.dataset.scale || 1.12})`;
+      });
+      sp.forEach((el, i) => {
+        const r = sr[i];
+        if (r.bottom < -40 || r.top > vh + 40) return;
+        const val = el.dataset.sp === 'out' ? -r.top / Math.max(1, r.height) : (vh - r.top) / vh;
+        el.style.setProperty('--sp', Math.max(0, Math.min(1, val)).toFixed(4));
+      });
     }
     requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);
-}
-
-/* ---------- scroll progress: [data-sp] gets --sp 0→1 while its top travels from the bottom to the top of the viewport;
-   [data-sp="out"] gets 0→1 while it scrolls out past the top. Drives section curtains, hero framing and drifts. */
-const sp = [...document.querySelectorAll<HTMLElement>('[data-sp]')];
-if (!reduce && sp.length) {
-  const run = () => {
-    const vh = innerHeight;
-    for (const el of sp) {
-      const r = el.getBoundingClientRect();
-      if (r.bottom < -40 || r.top > vh + 40) continue;
-      const v = el.dataset.sp === 'out' ? -r.top / Math.max(1, r.height) : (vh - r.top) / vh;
-      el.style.setProperty('--sp', Math.max(0, Math.min(1, v)).toFixed(3));
-    }
-    requestAnimationFrame(run);
-  };
-  requestAnimationFrame(run);
 }
 
 /* ---------- cursor, pattern spotlight, hover preview (desktop only) */
@@ -164,7 +164,7 @@ if (fine && !reduce) {
   document.addEventListener('mouseup', () => ring.classList.remove('down'));
 
   // magnetic buttons
-  document.querySelectorAll<HTMLElement>('.btn, .magnet').forEach((b) => {
+  document.querySelectorAll<HTMLElement>('.btn, .magnet, .social a').forEach((b) => {
     b.addEventListener('mousemove', (e) => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.18}px, ${(e.clientY - r.top - r.height / 2) * 0.3}px)`; });
     b.addEventListener('mouseleave', () => { b.style.transform = ''; });
   });
@@ -197,7 +197,7 @@ if (fine && !reduce) {
     if (++n % 8 === 0) { const el = document.elementFromPoint(tx, ty); dark = !!el?.closest('.dark, .hero, footer, .next, img, video, .para, .mnav, .intro'); }
     ctx.clearRect(0, 0, W, H);
     if (energy > 0.02) {
-      const col = dark ? '216, 199, 166' : '94, 26, 36';
+      const col = dark ? '243, 237, 227' : '94, 26, 36';
       const ox = (scrollY % GAP);
       const x0 = Math.max(0, Math.floor((px - R) / GAP) * GAP), x1 = Math.min(W, px + R);
       const y0 = Math.floor((py - R + ox) / GAP) * GAP - ox, y1 = Math.min(H, py + R);
@@ -219,7 +219,7 @@ if (fine && !reduce) {
 
   /* ---- 2. headline letters: lift + tint near the pointer */
   document.querySelectorAll<HTMLElement>('h1, h2.display-l, h2.display-m, .display-xl, .display-l, .display-m, .card h3 .u, .statement').forEach((el) => {
-    if (el.closest('[data-intro], .hl, [data-no-split]') || el.querySelector('img, svg, a, button, .foil')) return;
+    if (el.closest('[data-intro], .hl, [data-no-split]') || el.querySelector('img, svg, a, button')) return;
     const words = el.matches('.statement');
     if (!words) { const host = el.closest<HTMLElement>('h1, h2, h3') || el; if (!host.hasAttribute('aria-label')) host.setAttribute('aria-label', (host.textContent || '').replace(/\s+/g, ' ').trim()); }
     const walk = (node: Node) => {

@@ -54,9 +54,9 @@ const links = [
 </script>
 
 <style>
-  .site { position: fixed; z-index: 20; left: 0; right: 0; top: 0; padding: calc(12px + env(safe-area-inset-top, 0px)) max(var(--gut), env(safe-area-inset-right, 0px)) 0 max(var(--gut), env(safe-area-inset-left, 0px)); pointer-events: none; transition: transform .7s var(--ease-io); }
+  .site { position: fixed; z-index: 20; left: 0; right: 0; top: 0; padding: calc(12px + env(safe-area-inset-top, 0px)) max(var(--gut), env(safe-area-inset-right, 0px)) 0 max(var(--gut), env(safe-area-inset-left, 0px)); pointer-events: none; transition: transform .9s var(--ease-io); }
   .site.tuck { transform: translateY(calc(-100% - 12px)); }
-  .bar { pointer-events: auto; max-width: calc(var(--max) - var(--gut) * 2); margin: 0 auto; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; height: 60px; padding: 0 8px 0 22px; border-radius: var(--r-pill); transition: background .5s; animation: drop .9s .2s var(--ease) both; }
+  .bar { pointer-events: auto; max-width: calc(var(--max) - var(--gut) * 2); margin: 0 auto; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; height: 60px; padding: 0 8px 0 22px; border-radius: 16px; transition: background .5s; animation: drop .9s .2s var(--ease) both; }
   @keyframes drop { from { opacity: 0; transform: translateY(-20px); } }
   .scrolled .bar { background: rgba(32, 28, 27, .78); }
   .logo { display: block; padding: 6px 0; }
@@ -66,23 +66,23 @@ const links = [
   .main-nav ul { display: flex; justify-content: center; gap: clamp(18px, 3vw, 48px); }
   .main-nav a { display: flex; align-items: center; gap: 6px; color: rgba(243, 237, 227, .82); font: 400 12.5px var(--sans); letter-spacing: .18em; text-transform: uppercase; padding-block: 12px; }
   .main-nav sup { font-size: 9.5px; letter-spacing: 0; color: var(--muted-dark); transition: color .3s; align-self: flex-start; margin-top: 2px; }
-  /* text roll: the label slides up and a champagne copy rolls in from below */
+  /* text roll: the label slides up and a off-white copy rolls in from below */
   .roll { position: relative; display: inline-grid; overflow: hidden; height: 1.3em; line-height: 1.3em; }
   .roll > span { grid-area: 1 / 1; transition: transform .55s var(--ease); }
-  .roll > span:last-child { transform: translateY(100%); color: #D8C7A6; }
+  .roll > span:last-child { transform: translateY(100%); color: var(--sand); }
   .main-nav a:hover .roll > span:first-child, .main-nav a:focus-visible .roll > span:first-child { transform: translateY(-100%); }
   .main-nav a:hover .roll > span:last-child, .main-nav a:focus-visible .roll > span:last-child { transform: none; }
-  .main-nav a:hover sup, .main-nav a[aria-current] sup { color: #D8C7A6; }
-  .main-nav a[aria-current] .roll > span:first-child { color: #D8C7A6; }
+  .main-nav a:hover sup, .main-nav a[aria-current] sup { color: var(--sand); }
+  .main-nav a[aria-current] .roll > span:first-child { color: var(--sand); }
   .right { display: flex; align-items: center; gap: 6px; }
   .clock { display: inline-flex; align-items: center; gap: 8px; color: var(--muted-dark); padding-inline: 12px; font-variant-numeric: tabular-nums; }
   .clock time { color: var(--ow); }
   .live { width: 6px; height: 6px; border-radius: 50%; background: #9BC59A; animation: pulse 2.4s infinite; }
   @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(155, 197, 154, .6); } 70%, 100% { box-shadow: 0 0 0 7px rgba(155, 197, 154, 0); } }
-  .talk { position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 20px; border-radius: var(--r-pill); background: var(--ow); color: var(--ink); transition: color .45s var(--ease); }
+  .talk { position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 20px; border-radius: var(--r-btn); background: var(--ow); color: var(--ink); transition: color .45s var(--ease); }
   .talk::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--ox); transform: translateY(101%); transition: transform .5s var(--ease-io); }
   .talk:hover { color: var(--ow); } .talk:hover::before { transform: none; }
-  .menu { display: none; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: var(--r-pill); background: none; border: 0; color: var(--ow); cursor: pointer; }
+  .menu { display: none; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: var(--r-btn); background: none; border: 0; color: var(--ow); cursor: pointer; }
   .menu .lines { position: relative; width: 22px; height: 10px; }
   .menu .lines i { position: absolute; left: 0; right: 0; height: 1.5px; background: currentColor; transition: transform .45s var(--ease), top .45s var(--ease); }
   .menu .lines i:first-child { top: 0; } .menu .lines i:last-child { top: 8px; }
@@ -95,7 +95,7 @@ const links = [
   @keyframes in { to { opacity: 1; transform: none; } }
   .mnav ul a { display: flex; align-items: baseline; gap: 18px; padding-block: 18px; font: 400 clamp(38px, 11vw, 60px)/1 var(--display); }
   .mnav ul a .arr { margin-left: auto; font: 300 22px var(--sans); color: var(--muted-dark); }
-  .mnav ul a[aria-current] { color: #D8C7A6; font-style: italic; }
+  .mnav ul a[aria-current] { color: var(--sand); font-style: italic; }
   .mnav .label { color: var(--muted-dark); }
   .mnav .foot { display: grid; gap: 6px; opacity: 0; animation: in .7s .3s var(--ease) forwards; }
   .mnav .foot a, .mnav .foot time { color: var(--ow); font-size: 15px; }

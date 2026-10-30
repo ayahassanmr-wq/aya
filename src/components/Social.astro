@@ -12,9 +12,9 @@ const items = [
   { href: `mailto:${contact.email}`, label: 'Email', ext: false, d: '<rect x="3.5" y="5.5" width="17" height="13" rx="3"/><path d="M4.5 7.5l7.5 5.5 7.5-5.5"/>' },
 ];
 ---
-<ul class:list={['social', size, cls]} aria-label="Social and contact links">
+<ul class:list={['social stagger', size, cls]} aria-label="Social and contact links">
   {items.map((i) => (
-    <li><a href={i.href} aria-label={i.ext ? `${i.label} (opens in a new tab)` : `${i.label} Aya`} title={i.label} target={i.ext ? '_blank' : undefined} rel={i.ext ? 'noopener' : undefined} data-cursor={i.label}>
+    <li class="reveal"><a href={i.href} aria-label={i.ext ? `${i.label} (opens in a new tab)` : `${i.label} Aya`} title={i.label} target={i.ext ? '_blank' : undefined} rel={i.ext ? 'noopener' : undefined} data-cursor={i.label}>
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" set:html={i.d} />
     </a></li>
   ))}
@@ -22,7 +22,7 @@ const items = [
 
 <style>
   .social { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
-  a { position: relative; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 1px solid currentColor; border-color: color-mix(in srgb, currentColor 28%, transparent); color: inherit; isolation: isolate; overflow: hidden; transition: color .4s var(--ease), border-color .4s, transform .5s var(--ease); }
+  a { position: relative; display: grid; place-items: center; width: 48px; height: 48px; border-radius: var(--r-btn); border: 1px solid currentColor; border-color: color-mix(in srgb, currentColor 28%, transparent); color: inherit; isolation: isolate; overflow: hidden; transition: color .4s var(--ease), border-color .4s, transform .5s var(--ease); }
   a::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: currentColor; transform: scale(0); transition: transform .5s var(--ease); }
   .l a { width: 58px; height: 58px; }
   svg { width: 20px; height: 20px; transition: transform .5s var(--ease); }

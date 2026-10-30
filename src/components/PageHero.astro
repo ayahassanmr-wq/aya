@@ -75,7 +75,7 @@ const pics = await Promise.all(images.slice(0, 4).map(async (img) => {
   .ttl { align-self: end; display: grid; gap: 26px; }
   .noimg .ttl { max-width: 100%; }
   .ttl :global(h1) { font-size: clamp(58px, 9.6vw, 176px); line-height: .9; text-shadow: 0 1px 30px rgba(32, 28, 27, .25); }
-  .ttl :global(em) { color: #D8C7A6; }
+  .ttl :global(em) { color: var(--sand); }
   .ttl :global(.lede) { max-width: min(30em, 35vw); animation: fadeup 1s .45s var(--ease) both; }
   .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 18px 32px; margin: 0; padding-top: 18px; border-top: 1px solid var(--rule-light); max-width: 37%; animation: fadeup 1s .55s var(--ease) both; }
   .meta div { display: grid; gap: 4px; }

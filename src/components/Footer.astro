@@ -13,11 +13,11 @@ import Social from './Social.astro';
     </div>
 
     <div class="cols">
-      <div><p class="label muted">Index</p><ul>
-        <li><a href="/work/"><span>Work</span><sup>{projects.length}</sup></a></li>
-        <li><a href="/about/"><span>About</span></a></li>
-        <li><a href="/services/"><span>Services</span></a></li>
-        <li><a href="/contact/"><span>Contact</span></a></li>
+      <div><p class="label muted">Index</p><ul class="stagger">
+        <li class="reveal"><a href="/work/"><span>Work</span><sup>{projects.length}</sup></a></li>
+        <li class="reveal"><a href="/about/"><span>About</span></a></li>
+        <li class="reveal"><a href="/services/"><span>Services</span></a></li>
+        <li class="reveal"><a href="/contact/"><span>Contact</span></a></li>
       </ul></div>
       <div><p class="label muted">Follow &amp; message</p><Social /><ul class="cv"><li><a href="/Aya_Hassan_CV.pdf"><span>Curriculum vitae</span> <i aria-hidden="true">↓</i></a></li></ul></div>
       <div><p class="label muted">Based in</p><p class="v">Riyadh, Saudi Arabia</p></div>
@@ -46,7 +46,7 @@ import Social from './Social.astro';
   footer { position: relative; overflow: hidden; padding-top: clamp(80px, 11vw, 160px); }
   .cta { display: grid; gap: 28px; padding-bottom: clamp(56px, 8vw, 110px); border-bottom: 1px solid var(--rule-light); }
   .big { font: 400 clamp(46px, 7.4vw, 132px)/.95 var(--display); letter-spacing: -.02em; }
-  .big em { color: #D8C7A6; }
+  .big em { color: var(--sand); }
   .big .ln { display: block; overflow: hidden; padding-bottom: .06em; }
   .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 32px; margin-top: 12px; }
   .btn.solid { background: var(--ow); color: var(--ink); border-color: var(--ow); }
@@ -57,15 +57,15 @@ import Social from './Social.astro';
   .cols .label { margin-bottom: 14px; }
   ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
   ul a { display: inline-flex; align-items: baseline; gap: 6px; font: 400 22px/1.3 var(--display); transition: transform .45s var(--ease), color .3s; }
-  ul a:hover { transform: translateX(8px); color: #D8C7A6; font-style: italic; }
+  ul a:hover { transform: translateX(8px); color: var(--sand); font-style: italic; }
   ul sup { font: 400 10px var(--sans); color: var(--muted-dark); }
   .cv { margin-top: 18px; }
   ul i { font-style: normal; font-size: 14px; color: var(--muted-dark); }
   .v { font-size: 15px; } .v time { color: var(--ow); font-variant-numeric: tabular-nums; }
-  .top { width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--rule-light); background: none; color: var(--ow); font-size: 20px; cursor: pointer; transition: background .4s, color .4s, transform .5s var(--ease); }
+  .top { width: 64px; height: 64px; border-radius: var(--r-btn); border: 1px solid var(--rule-light); background: none; color: var(--ow); font-size: 20px; cursor: pointer; transition: background .4s, color .4s, transform .5s var(--ease); }
   .top:hover { background: var(--ow); color: var(--ink); transform: translateY(-4px); }
   .mark-wrap { padding-inline: max(var(--gut), env(safe-area-inset-left, 0px)); margin-top: clamp(8px, 2vw, 24px); line-height: 0; }
-  .mark { width: 100%; height: auto; max-height: 44vw; display: block; fill: transparent; stroke: rgba(216, 199, 166, .5); stroke-width: 1px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.6s var(--ease-io), fill 1.2s 1.8s var(--ease); }
+  .mark { width: 100%; height: auto; max-height: 44vw; display: block; fill: transparent; stroke: rgba(243, 237, 227, .5); stroke-width: 1px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.6s var(--ease-io), fill 1.2s 1.8s var(--ease); }
   .drawn .mark { stroke-dashoffset: 0; fill: rgba(243, 237, 227, .06); }
   .base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--rule-light); color: var(--muted-dark); font-size: 11.5px; }
   @media (prefers-reduced-motion: reduce) { .mark { stroke-dashoffset: 0; fill: rgba(243, 237, 227, .06); } }
