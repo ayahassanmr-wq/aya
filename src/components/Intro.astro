@@ -1,0 +1,72 @@
+---
+/* Logo intro: the AYA wordmark is drawn in champagne line, fills in off-white, HASSAN opens out,
+   the descriptor settles, then the curtain lifts onto the hero.
+   Shown once per browser session, never with reduced motion, never without JS (the page is never hidden). */
+import raw from '../assets/logo-primary-inverse.svg?raw';
+const vb = raw.match(/viewBox="([^"]+)"/)![1];
+const paths = [...raw.matchAll(/<path([^>]*)\/>/g)].map((m) => m[1].replace(/fill="[^"]*"/, ''));
+---
+<script is:inline>
+  try {
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !sessionStorage.getItem('aya-intro')) {
+      document.documentElement.classList.add('has-intro');
+      sessionStorage.setItem('aya-intro', '1');
+    }
+  } catch (e) {}
+</script>
+<div class="intro" aria-hidden="true" data-intro>
+  <div class="mark">
+    <svg viewBox={vb} role="presentation">
+      <path class="p-aya" pathLength="1" {...Object.fromEntries([...paths[0].matchAll(/(\w[\w-]*)="([^"]*)"/g)].map((m) => [m[1], m[2]]))} />
+      <path class="p-name" {...Object.fromEntries([...paths[1].matchAll(/(\w[\w-]*)="([^"]*)"/g)].map((m) => [m[1], m[2]]))} />
+      <path class="p-desc" {...Object.fromEntries([...paths[2].matchAll(/(\w[\w-]*)="([^"]*)"/g)].map((m) => [m[1], m[2]]))} />
+    </svg>
+    <span class="rule"></span>
+  </div>
+  <span class="label count"><span data-pct>00</span></span>
+  <button type="button" class="label skip-intro" data-skip>Skip</button>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const el = document.querySelector<HTMLElement>('[data-intro]');
+  if (el && root.classList.contains('has-intro')) {
+    const pct = el.querySelector<HTMLElement>('[data-pct]')!;
+    const t0 = performance.now(); const D = 2300;
+    const tick = (t: number) => { const k = Math.min(1, (t - t0) / D); pct.textContent = String(Math.round(k * 100)).padStart(2, '0'); if (k < 1 && !done) requestAnimationFrame(tick); };
+    let done = false;
+    const end = () => { if (done) return; done = true; root.classList.add('intro-out'); setTimeout(() => { root.classList.remove('has-intro', 'intro-out'); el.remove(); }, 1100); };
+    requestAnimationFrame(tick);
+    setTimeout(end, D + 350);
+    el.querySelector('[data-skip]')!.addEventListener('click', end);
+    addEventListener('keydown', end, { once: true });
+  } else el?.remove();
+</script>
+
+<style>
+  .intro { display: none; }
+  :global(.has-intro) .intro { display: grid; place-items: center; position: fixed; inset: 0; z-index: 500; background: var(--night); color: var(--ow); clip-path: inset(0 0 0 0); transition: clip-path 1s var(--ease-io); }
+  :global(.has-intro) body { overflow: hidden; }
+  :global(.intro-out) .intro { clip-path: inset(0 0 100% 0); }
+  .mark { position: relative; width: min(64vw, 440px); transition: transform 1s var(--ease-io), opacity .8s; }
+  :global(.intro-out) .mark { transform: translateY(-40px); opacity: 0; }
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .p-aya { fill: transparent; stroke: #D8C7A6; stroke-width: 1.4; stroke-dasharray: 1; stroke-dashoffset: 1; vector-effect: non-scaling-stroke;
+    animation: draw 1.5s .15s var(--ease-io) forwards, fill .7s 1.25s var(--ease) forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes fill { to { fill: var(--ow); stroke: transparent; } }
+  .p-name { fill: var(--ow); opacity: 0; transform-box: fill-box; transform-origin: center; transform: scaleX(.82); animation: open 1s 1.35s var(--ease) forwards; }
+  @keyframes open { to { opacity: 1; transform: none; } }
+  .p-desc { fill: var(--muted-dark); opacity: 0; transform-box: fill-box; transform-origin: center; transform: translateY(8px); animation: rise .9s 1.65s var(--ease) forwards; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  .rule { position: absolute; left: 0; right: 0; bottom: -28px; height: 1px; background: rgba(216, 199, 166, .35); transform: scaleX(0); animation: grow 2.2s .1s var(--ease-io) forwards; }
+  @keyframes grow { to { transform: scaleX(1); } }
+  .count { position: absolute; left: max(var(--gut), env(safe-area-inset-left, 0px)); bottom: calc(28px + env(safe-area-inset-bottom, 0px)); color: var(--muted-dark); font-variant-numeric: tabular-nums; }
+  .skip-intro { position: absolute; right: max(var(--gut), env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: none; border: 0; color: var(--muted-dark); padding: 12px; cursor: pointer; }
+  .skip-intro:hover { color: var(--ow); }
+  /* hold the hero animations until the curtain lifts */
+  :global(.has-intro) :global(.hero .bgwrap) { animation-delay: 2.45s !important; }
+  :global(.has-intro) :global(.hero .block) { animation-delay: 3s !important; }
+  :global(.has-intro) :global(.hero .lines .ln > span) { transition-delay: 2.65s !important; }
+  :global(.has-intro) :global(.hero .lines .ln:nth-child(2) > span) { transition-delay: 2.75s !important; }
+</style>

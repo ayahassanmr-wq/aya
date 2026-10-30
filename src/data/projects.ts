@@ -125,7 +125,7 @@ const links: Record<string, Project['links']> = {
 /* ---------- films: drop a compressed mp4 in /public/video/<slug>.mp4, or add a YouTube/Vimeo id */
 const films: Record<string, Project['video']> = {
   // 'jotun-office': { file: '/video/jotun-office.mp4', title: 'Promotional animation' },
-  // 'juba-resort': { youtube: 'VIDEO_ID', title: 'Walkthrough animation' },
+  'juba-resort': { file: '/video/juba-resort.mp4', poster: '/video/juba-resort.jpg', title: 'Walkthrough animation · 1:55' },
 };
 for (const p of projects) { p.links ??= links[p.slug]; p.video ??= films[p.slug]; }
 

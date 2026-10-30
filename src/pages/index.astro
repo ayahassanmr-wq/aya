@@ -17,7 +17,7 @@ const services = [
 ];
 const previews = await Promise.all(services.map(async (s) => (await getImage({ src: cover(s.slug), width: 700, format: 'webp' })).src));
 ---
-<Base overHero>
+<Base overHero intro>
   <section class="hero">
     <div class="para bgwrap"><Image src={hero} alt="Commercial mall atrium under a woven lattice roof at dusk, Saudi Arabia" widths={[900, 1600, 2000]} sizes="100vw" loading="eager" fetchpriority="high" class="bg" data-parallax="0.18" data-scale="1.15" /></div>
     <div class="veil"></div>
