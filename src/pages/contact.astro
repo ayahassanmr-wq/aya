@@ -2,7 +2,8 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Social from '../components/Social.astro';
-import { contact, imagesFor } from '../data/projects';
+import Reel from '../components/Reel.astro';
+import { contact, imagesFor, cover } from '../data/projects';
 ---
 <Base title="Contact" description="Contact Aya Hassan for concept design roles, collaborations with design firms and selected private commissions.">
   <PageHero images={[imagesFor('stc-hq')[2], imagesFor('commercial-mall')[1]]} alt="Interior of the stc headquarters" meta={[['Based in', 'Riyadh, Saudi Arabia'], ['Open to', 'Roles · Collaborations · Commissions'], ['Languages', 'Arabic · English']]}>
@@ -15,6 +16,8 @@ import { contact, imagesFor } from '../data/projects';
     <div class="row"><span class="label muted">Social</span><Social size="l" /><span></span></div>
     <div class="row"><span class="label muted">CV</span><a href="/Aya_Hassan_CV.pdf" class="v link">Download PDF</a><span class="arr">↓</span></div>
   </section>
+
+  <Reel rows={[['commercial-mall', 'sabic-hq', 'neom-oxagon', 'arches-restaurant', 'bmw-showroom', 'tech-park', 'linah-farms'].map((s) => cover(s)!)]} />
 </Base>
 
 <script>

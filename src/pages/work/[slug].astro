@@ -78,7 +78,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
 
     <!-- 05 drawings -->
     {drawings.length > 0 && (
-      <section class="dark draw">
+      <section class="dark draw sheet" data-sp>
         <div class="wrap">
           <div class="sheet-head"><h2 class="label">Drawings &amp; diagrams</h2></div>
           <div class="dgrid">
@@ -95,7 +95,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
 
     <!-- 06 film -->
     {p.video && (
-      <section class="dark film">
+      <section class="dark film sheet" data-sp>
         <div class="wrap">
           <div class="sheet-head"><h2 class="label">Film</h2><span class="label muted">{p.video.title ?? 'Animation'}</span></div>
           <div class="screen reveal">

@@ -11,15 +11,21 @@
 /* Brand Guidelines v1.0 · off-white base, oxblood accent, warm soft-black sections, no gold anywhere on the site.
    Layout idea: an architect's drawing set — sheet codes, title blocks, hairline rules. */
 :root {
-  /* radius system, taken from the soft curves of the AYA swashes */
-  --r-s: 4px;
-  --r-m: clamp(6px, .5vw, 8px);
-  --r-l: clamp(8px, .7vw, 12px);
-  --r-xl: clamp(12px, 1.1vw, 18px);
+  /* RADIUS SYSTEM — three fixed steps on a 4px rhythm, the same at every screen size.
+     r-1  6px  small parts that sit inside something (tags, thumbnails, word highlights)
+     r-2 10px  controls (buttons, icon buttons, chips, inputs)
+     r-3 14px  surfaces (images, cards, panels, heroes, header bar, section sheets)
+     Nested shapes use the next step down, so corners stay concentric. */
+  --r-1: 6px;
+  --r-2: 10px;
+  --r-3: 14px;
+  --r-s: var(--r-1);
+  --r-m: var(--r-2);
+  --r-l: var(--r-3);
+  --r-xl: var(--r-3);
   /* one height for every hero on the site */
   --hero-h: clamp(620px, 100svh, 1120px);
-  --r-pill: 999px;
-  --r-btn: 10px;       /* buttons: soft, not pills */
+  --r-btn: var(--r-2);
   --ox: #5E1A24;
   --ox-deep: #43121A;
   --ow: #F3EDE3;
@@ -54,7 +60,7 @@
 ::view-transition-old(root) { animation: 1s var(--ease-io) both vt-out; }
 ::view-transition-new(root) { animation: 1s var(--ease-io) both vt-in; }
 @keyframes vt-out { to { transform: scale(.94) translateY(-3%); filter: brightness(.45); } }
-@keyframes vt-in { from { clip-path: inset(100% 0 0 0 round 18px 18px 0 0); transform: translateY(8%); } to { clip-path: inset(0 0 0 0 round 0); transform: none; } }
+@keyframes vt-in { from { clip-path: inset(100% 0 0 0 round 14px 14px 0 0); transform: translateY(8%); } to { clip-path: inset(0 0 0 0 round 0); transform: none; } }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -195,7 +201,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ox); outline-of
 /* ---------- letter / word hovers */
 .split .hc { display: inline-block; transform: translateY(calc(var(--p, 0) * -0.09em)) ; color: color-mix(in srgb, currentColor calc(100% - var(--p, 0) * 100%), var(--hl, var(--ox))); transition: transform .35s var(--ease), color .35s; font-style: inherit; }
 .dark .split, .hero .split, footer .split, .next .split, .mnav .split { --hl: var(--sand); }
-.split .hw { transition: color .3s, font-style .3s; border-radius: 2px; }
+.split .hw { transition: color .3s, font-style .3s; }
 .split .hw:hover { color: var(--ox); font-style: italic; }
 .dark .split .hw:hover { color: var(--sand); }
 
@@ -232,15 +238,16 @@ footer ul a:hover { transform: translateX(6px); }
 /* ---------- radius (soft corners to match the logo) */
 .btn, .copy, .skip, .lbx .x, .lbx .cnt { border-radius: var(--r-btn); }
 .tag { border-radius: var(--r-s); }
-.hover-prev img { border-radius: var(--r-l); }
+.hover-prev img { border-radius: var(--r-3); }
 .lbx .nav { border-radius: var(--r-btn); width: 56px; height: 56px; display: grid; place-items: center; }
 .para, .frame, .lb, .paper, .screen, .more, .sframe, .hover-prev { border-radius: var(--r-l); }
 .para, .frame, .lb, .screen, .sframe, .more { overflow: hidden; isolation: isolate; }
-.chip, .chip img, .code-chip, .flag { border-radius: var(--r-m); }
+.chip, .code-chip, .flag { border-radius: var(--r-2); }
+.chip img { border-radius: var(--r-1); }
 .paper :is(img) { border-radius: var(--r-s); }
-.lbx img { border-radius: var(--r-m); }
+.lbx img { border-radius: var(--r-3); }
 .split .hw { border-radius: var(--r-s); }
-.corner.tl { border-top-left-radius: 8px; } .corner.br { border-bottom-right-radius: 8px; }
+.corner.tl { border-top-left-radius: var(--r-3); } .corner.br { border-bottom-right-radius: var(--r-3); }
 .progress { border-radius: 0 2px 2px 0; }
 
 /* word rise */
@@ -254,3 +261,7 @@ footer ul a:hover { transform: translateX(6px); }
 .card .para img { transition: scale 1.8s var(--ease), filter .6s; }
 .card.pre .para img { scale: 1.3; }
 .card.reveal.pre { transform: translateY(40px); opacity: 1; }
+
+/* dark sheets on light pages open out from the gutters as they arrive (about, services, case studies) */
+main .sheet[data-sp] { border-radius: var(--r-3); clip-path: inset(0 calc((1 - var(--sp, 1)) * 6%) round var(--r-3)); }
+.sheet[data-sp] + .sheet[data-sp] { margin-top: 10px; }

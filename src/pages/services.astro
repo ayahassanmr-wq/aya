@@ -2,7 +2,8 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import { imagesFor } from '../data/projects';
+import Reel from '../components/Reel.astro';
+import { imagesFor, cover } from '../data/projects';
 const services = [
   { t: 'Concept design', d: 'Architectural and interior concepts, from the first studies to a direction the client signs off. Massing, spatial strategy, colour and material language, set out in a clear presentation.', img: imagesFor('neom-oxagon')[7] ?? imagesFor('neom-oxagon')[0], items: ['Concept studies & diagrams', 'Spatial planning', 'Mood, colour & material direction', 'Concept presentations'] },
   { t: 'Visualization & animation', d: 'Renders, walkthroughs and promotional films built to win approval, for clients, juries and marketing teams.', img: imagesFor('fifth-square')[0], items: ['Photoreal stills', 'Walkthrough animation', 'Promotional content', 'Post-production'] },
@@ -36,7 +37,9 @@ const steps = [
     ))}
   </section>
 
-  <section class="process dark">
+  <Reel rows={[['fifth-square', 'stc-hq', 'jotun-office', 'neom-oxagon', 'zayed-residence', 'chery-showroom', 'sphinx'].map((s) => cover(s)!)]} />
+
+  <section class="process dark sheet" data-sp>
     <div class="wrap">
       <div class="sheet-head"><span class="label">Process</span></div>
       <ol>{steps.map(([t, d], i) => <li class="reveal"><h3 class="display-m">{t}</h3><p>{d}</p></li>)}</ol>

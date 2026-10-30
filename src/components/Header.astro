@@ -56,7 +56,7 @@ const links = [
 <style>
   .site { position: fixed; z-index: 20; left: 0; right: 0; top: 0; padding: calc(12px + env(safe-area-inset-top, 0px)) max(var(--gut), env(safe-area-inset-right, 0px)) 0 max(var(--gut), env(safe-area-inset-left, 0px)); pointer-events: none; transition: transform .9s var(--ease-io); }
   .site.tuck { transform: translateY(calc(-100% - 12px)); }
-  .bar { pointer-events: auto; max-width: calc(var(--max) - var(--gut) * 2); margin: 0 auto; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; height: 60px; padding: 0 8px 0 22px; border-radius: 16px; transition: background .5s; animation: drop .9s .2s var(--ease) both; }
+  .bar { pointer-events: auto; max-width: calc(var(--max) - var(--gut) * 2); margin: 0 auto; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; height: 60px; padding: 0 8px 0 22px; border-radius: var(--r-3); transition: background .5s; animation: drop .9s .2s var(--ease) both; }
   @keyframes drop { from { opacity: 0; transform: translateY(-20px); } }
   .scrolled .bar { background: rgba(32, 28, 27, .78); }
   .logo { display: block; padding: 6px 0; }

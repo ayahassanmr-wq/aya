@@ -2,7 +2,8 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import { imagesFor } from '../data/projects';
+import Reel from '../components/Reel.astro';
+import { imagesFor, cover } from '../data/projects';
 const side = imagesFor('sabic-hq')[1];
 const timeline = [
   { y: '2024 — now', r: 'Architect & Interior Designer, Concept Design', o: 'ZFP · Zuhair Fayez Partnership', d: 'Headquarters interiors for SABIC and STC in Riyadh: design concepts, 3D modelling and visuals, material selection through site visits and vendor collaboration, and furniture and fixtures sourced from suppliers worldwide.' },
@@ -32,7 +33,9 @@ const tools = [
     </div>
   </section>
 
-  <section class="dark tl"><div class="wrap">
+  <Reel rows={[['sabic-hq', 'neom-oxagon', 'hb-fuller', 'modern-residence-new-cairo', 'mazeej', 'conference-room', 'dry-port'].map((s) => cover(s)!)]} />
+
+  <section class="dark tl sheet" data-sp><div class="wrap">
     <div class="sheet-head"><span class="label">Experience &amp; education</span></div>
     {timeline.map((t) => (
       <div class="row reveal">
