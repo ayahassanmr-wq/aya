@@ -65,8 +65,8 @@ const paths = [...raw.matchAll(/<path([^>]*)\/>/g)].map((m) => m[1].replace(/fil
   .skip-intro { position: absolute; right: max(var(--gut), env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: none; border: 0; color: var(--muted-dark); padding: 12px; cursor: pointer; }
   .skip-intro:hover { color: var(--ow); }
   /* hold the hero animations until the curtain lifts */
-  :global(.has-intro) :global(.hero .bgwrap) { animation-delay: 2.45s !important; }
-  :global(.has-intro) :global(.hero .block) { animation-delay: 3s !important; }
+  :global(.has-intro) :global(.hero .slides) { animation-delay: 2.45s !important; }
+  :global(.has-intro) :global(.hero .bottom) { animation-delay: 3s !important; }
   :global(.has-intro) :global(.hero .lines .ln > span) { transition-delay: 2.65s !important; }
   :global(.has-intro) :global(.hero .lines .ln:nth-child(2) > span) { transition-delay: 2.75s !important; }
 </style>

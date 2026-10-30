@@ -22,10 +22,11 @@ const links = [
     </nav>
     <button class="menu" aria-expanded="false" aria-controls="mnav" aria-label="Menu" data-menu><span></span><span></span></button>
   </div>
-  <div class="mnav" id="mnav" hidden>
-    <ul class="wrap">{links.map((l, i) => <li><a href={l.href}><span class="label muted">0{i + 1}</span>{l.label}</a></li>)}</ul>
-  </div>
 </header>
+<div class="mnav" id="mnav" hidden>
+  <nav aria-label="Mobile" class="wrap"><ul>{links.map((l, i) => <li><a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}><span class="label muted">0{i + 1}</span>{l.label}<span class="arr" aria-hidden="true">→</span></a></li>)}</ul></nav>
+  <div class="wrap foot label"><span>Get in touch</span><a href="mailto:ayahassanm@outlook.com">ayahassanm@outlook.com</a><a href="https://www.linkedin.com/in/ayahassanm" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+</div>
 
 <script>
   const h = document.querySelector<HTMLElement>('[data-header]')!;
@@ -34,13 +35,16 @@ const links = [
   const btn = document.querySelector<HTMLButtonElement>('[data-menu]')!;
   const m = document.getElementById('mnav')!;
   const set = (open: boolean) => {
-    btn.setAttribute('aria-expanded', String(open)); m.hidden = !open; h.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open)); m.hidden = !open; h.classList.toggle('open', open); m.classList.toggle('on', open);
+    h.classList.remove('tuck');
     document.body.style.overflow = open ? 'hidden' : '';
     const l = (window as any).__lenis; open ? l?.stop() : l?.start();
     if (open) m.querySelector('a')?.focus();
   };
   btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && !m.hidden) { set(false); btn.focus(); } });
+  m.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
+  matchMedia('(min-width: 761px)').addEventListener('change', (e) => e.matches && set(false));
   // hide the bar while scrolling down, show it when scrolling up
   let last = scrollY; const noTuck = !!document.querySelector('[data-sticky-bar]');
   addEventListener('scroll', () => { const y = scrollY; h.classList.toggle('tuck', !noTuck && y > 300 && y > last && !h.classList.contains('open')); last = y; }, { passive: true });
@@ -59,18 +63,28 @@ const links = [
   .lg-light { display: none; }
   .over .lg-light, .open .lg-light { display: block; } .over .lg-dark, .open .lg-dark { display: none; }
   ul { list-style: none; margin: 0; padding: 0; }
-  nav ul { display: flex; gap: clamp(20px, 3vw, 44px); }
-  nav a { display: inline-block; font: 400 12.5px var(--sans); letter-spacing: .2em; text-transform: uppercase; padding-block: 12px 6px; }
+  .bar nav ul { display: flex; gap: clamp(20px, 3vw, 44px); }
+  .bar nav a { display: inline-block; font: 400 12.5px var(--sans); letter-spacing: .2em; text-transform: uppercase; padding-block: 12px 6px; }
   .menu { display: none; background: none; border: 0; color: inherit; cursor: pointer; width: 48px; height: 48px; position: relative; margin-right: -10px; }
   .menu span { position: absolute; left: 12px; right: 12px; height: 1.5px; background: currentColor; transition: transform .45s var(--ease), top .45s var(--ease); }
   .menu span:nth-child(1) { top: 19px; } .menu span:nth-child(2) { top: 28px; }
   .menu[aria-expanded="true"] span:nth-child(1) { top: 23px; transform: rotate(45deg); }
   .menu[aria-expanded="true"] span:nth-child(2) { top: 23px; transform: rotate(-45deg); }
-  .mnav { position: fixed; inset: calc(76px + env(safe-area-inset-top, 0px)) 0 0; background: rgba(32, 28, 27, .9); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); color: var(--ow); padding-top: 24px; overflow-y: auto; }
+  .mnav { position: fixed; inset: 0; z-index: 19; background: rgba(32, 28, 27, .94); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); color: var(--ow); padding-top: calc(96px + env(safe-area-inset-top, 0px)); padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)); overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; justify-content: space-between; }
+  .mnav nav { display: block; }
+  .mnav nav ul { display: block; }
+  .mnav .foot { display: grid; gap: 6px; color: var(--muted-dark); opacity: 0; animation: in .7s .3s var(--ease) forwards; }
+  .mnav .foot a { color: var(--ow); font-size: 16px; }
   .mnav li { border-bottom: 1px solid var(--rule-light); opacity: 0; transform: translateY(16px); animation: in .7s var(--ease) forwards; }
   .mnav li:nth-child(2) { animation-delay: .06s; } .mnav li:nth-child(3) { animation-delay: .12s; } .mnav li:nth-child(4) { animation-delay: .18s; }
   @keyframes in { to { opacity: 1; transform: none; } }
-  .mnav a { display: flex; align-items: baseline; gap: 18px; padding-block: 20px; font: 400 clamp(36px, 10vw, 52px)/1 var(--display); }
+  .mnav ul a { display: flex; align-items: baseline; gap: 18px; padding-block: 18px; font: 400 clamp(36px, 10vw, 52px)/1 var(--display); }
   .mnav .label { color: var(--muted-dark); }
-  @media (max-width: 760px) { nav { display: none; } .menu { display: block; } .logo img { height: 32px; } .bar { height: 68px; } .mnav { inset: calc(68px + env(safe-area-inset-top, 0px)) 0 0; } }
+  @media (min-width: 761px) { .mnav { display: none !important; } }
+  @media (max-width: 760px) { .bar nav { display: none; } .menu { display: block; } .logo img { height: 32px; } .bar { height: 68px; } .mnav { padding-top: calc(88px + env(safe-area-inset-top, 0px)); } }
+</style>
+<style>
+  .mnav ul a .arr { margin-left: auto; font: 300 22px var(--sans); color: var(--muted-dark); transition: transform .4s var(--ease), color .3s; }
+  .mnav ul a[aria-current] { color: #D8C7A6; font-style: italic; }
+  .mnav ul a:active .arr { transform: translateX(6px); color: var(--ow); }
 </style>

@@ -5,7 +5,12 @@ import ProjectCard from '../components/ProjectCard.astro';
 import { projects, featured, countries, imagesFor, cover } from '../data/projects';
 import { getImage } from 'astro:assets';
 import gold from '../assets/gold.jpg';
-const hero = imagesFor('commercial-mall')[0];
+const slideSlugs = ['commercial-mall', 'stc-hq', 'neom-oxagon', 'fifth-square'];
+const slides = await Promise.all(slideSlugs.map(async (slug) => {
+  const p = projects.find((x) => x.slug === slug)!;
+  return { p, img: imagesFor(slug)[0], thumb: (await getImage({ src: imagesFor(slug)[0], width: 240, format: 'webp' })).src };
+}));
+const place = (p: typeof projects[number]) => `${p.location}${p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}`;
 const [f1, f2, f3, f4, f5, f6] = featured;
 const names = ['NEOM', 'SABIC', 'stc', 'Jotun', 'H.B. Fuller', 'Chery', 'Noatum', 'Tech Park', 'Fifth Square', 'Linah Farms'];
 const years = new Date().getFullYear() - 2020;
@@ -18,23 +23,72 @@ const services = [
 const previews = await Promise.all(services.map(async (s) => (await getImage({ src: cover(s.slug), width: 700, format: 'webp' })).src));
 ---
 <Base overHero intro>
-  <section class="hero">
-    <div class="para bgwrap"><Image src={hero} alt="Commercial mall atrium under a woven lattice roof at dusk, Saudi Arabia" widths={[900, 1600, 2000]} sizes="100vw" loading="eager" fetchpriority="high" class="bg" data-parallax="0.18" data-scale="1.15" /></div>
+  <section class="hero" data-hero aria-label="Introduction" data-slides={JSON.stringify(slides.map((x) => ({ href: `/work/${x.p.slug}/`, title: x.p.title, place: place(x.p), thumb: x.thumb })))}>
+    <div class="slides">
+      {slides.map((x, i) => (
+        <div class:list={['slide', { on: i === 0 }]} aria-hidden={i === 0 ? undefined : 'true'}>
+          <div class="para"><div class="pl" data-parallax="0.14" data-scale="1"><Image src={x.img} alt={i === 0 ? `${x.p.title}, ${place(x.p)}` : ''} widths={[800, 1400, 2000]} sizes="100vw" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} class="kb" /></div></div>
+        </div>
+      ))}
+    </div>
     <div class="veil"></div>
     <div class="wrap inner">
-      <p class="label kicker"><span class="dotl"></span>Architect &amp; Interior Designer · Concept Design</p>
-      <h1 class="display-xl lines">
+      <div class="top label">
+        <span class="kicker"><span class="dotl"></span>Aya Hassan</span>
+        <span class="kicker r">Architect &amp; Interior Designer<br />Concept Design · Riyadh</span>
+      </div>
+      <h1 class="lines">
         <span class="ln"><span>From concept</span></span>
         <span class="ln"><span>to <em class="foil" style={`--gold:url(${gold.src})`}>conviction.</em></span></span>
       </h1>
-      <div class="block glass-dark">
-        <div><span class="label">Currently</span><p>ZFP, Riyadh</p></div>
-        <div><span class="label">Selected clients</span><p>NEOM · SABIC · stc</p></div>
-        <div><span class="label">Scroll</span><p class="scroll"><span></span></p></div>
-        <a href="/work/" class="btn">View the work <span class="arr">→</span></a>
+      <div class="bottom">
+        <div class="ctas">
+          <a href="/work/" class="btn solid">View the work <span class="arr">→</span></a>
+          <a href="/about/" class="btn ghost glass-dark">About Aya</a>
+        </div>
+        <div class="ctrl" role="group" aria-label="Featured projects">
+          <span class="label idx"><b data-cur>01</b> / {String(slides.length).padStart(2, '0')}</span>
+          <div class="bars">{slides.map((x, i) => <button type="button" class:list={['bb', { on: i === 0 }]} data-go={i} aria-label={`Show ${x.p.title}`}><i></i></button>)}</div>
+        </div>
+        <a class="chip glass-dark" href={`/work/${slides[0].p.slug}/`} data-chip data-cursor="View">
+          <img src={slides[0].thumb} alt="" width="120" height="90" data-chip-img />
+          <span class="ct"><span class="label">Now showing</span><strong data-chip-title>{slides[0].p.title}</strong><span class="label pl2" data-chip-place>{place(slides[0].p)}</span></span>
+          <span class="arr" aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
   </section>
+
+  <script>
+    const hero = document.querySelector<HTMLElement>('[data-hero]');
+    if (hero) {
+      const data = JSON.parse(hero.dataset.slides!);
+      const sl = [...hero.querySelectorAll<HTMLElement>('.slide')];
+      const bb = [...hero.querySelectorAll<HTMLElement>('.bb')];
+      const chip = hero.querySelector<HTMLAnchorElement>('[data-chip]')!;
+      const cur = hero.querySelector<HTMLElement>('[data-cur]')!;
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let i = 0, timer = 0;
+      const go = (k: number) => {
+        i = (k + sl.length) % sl.length;
+        sl.forEach((s, j) => { s.classList.toggle('on', j === i); s.toggleAttribute('aria-hidden', j !== i); });
+        bb.forEach((b, j) => { b.classList.remove('on'); void b.offsetWidth; b.classList.toggle('on', j === i); b.classList.toggle('done', j < i); });
+        chip.classList.add('swap');
+        setTimeout(() => {
+          chip.href = data[i].href; chip.querySelector<HTMLImageElement>('[data-chip-img]')!.src = data[i].thumb;
+          chip.querySelector('[data-chip-title]')!.textContent = data[i].title; chip.querySelector('[data-chip-place]')!.textContent = data[i].place;
+          cur.textContent = String(i + 1).padStart(2, '0'); chip.classList.remove('swap');
+        }, 350);
+        schedule();
+      };
+      const schedule = () => { clearTimeout(timer); if (!reduce) timer = window.setTimeout(() => go(i + 1), 6500); };
+      bb.forEach((b, j) => b.addEventListener('click', () => go(j)));
+      hero.addEventListener('mouseenter', () => hero.classList.add('paused'));
+      hero.addEventListener('mouseleave', () => hero.classList.remove('paused'));
+      document.addEventListener('visibilitychange', () => (document.hidden ? clearTimeout(timer) : schedule()));
+      setTimeout(schedule, document.documentElement.classList.contains('has-intro') ? 2600 : 0);
+    }
+  </script>
 
   <section class="intro wrap">
     <p class="label muted reveal">00 — Introduction</p>
@@ -86,27 +140,63 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
 </Base>
 
 <style>
-  .hero { position: relative; min-height: min(100svh, 1000px); display: flex; align-items: flex-end; color: var(--ow); overflow: hidden; background: var(--night); }
-  .bgwrap { position: absolute; inset: 0; }
-  .bgwrap :global(.bg) { width: 100%; height: 100%; object-fit: cover; transform: scale(1.15); }
-  .veil { position: absolute; inset: 0; background: rgba(32, 28, 27, .55); }
-  .veil::after { content: ""; position: absolute; inset: 0; background: rgba(94, 26, 36, .28); mix-blend-mode: multiply; }
-  .inner { position: relative; z-index: 5; padding-top: 140px; padding-bottom: clamp(28px, 4vw, 48px); }
-  .kicker { opacity: .85; margin-bottom: 26px; display: flex; align-items: center; gap: 12px; }
-  .dotl { width: 28px; height: 1px; background: currentColor; }
-  .foil { font-style: italic; background: var(--gold) center / cover; -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .06em; }
-  @supports not ((-webkit-background-clip: text) or (background-clip: text)) { .foil { color: var(--ow); background: none; } }
-  .block { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 20px 40px; align-items: center; margin-top: clamp(36px, 5vw, 72px); padding: 20px 22px; opacity: 0; transform: translateY(20px); animation: up 1.1s .55s var(--ease) forwards; }
-  @keyframes up { to { opacity: 1; transform: none; } }
-  .bgwrap { clip-path: inset(0 0 0 0); animation: curtain 1.6s var(--ease-io) both; }
+  .hero { position: relative; height: 100svh; min-height: 640px; max-height: 1120px; color: var(--ow); overflow: hidden; background: var(--night); }
+  .slides { position: absolute; inset: 0; clip-path: inset(0 0 0 0); animation: curtain 1.6s var(--ease-io) both; }
   @keyframes curtain { from { clip-path: inset(0 0 100% 0); } }
-  .block .label { color: var(--muted-dark); display: block; margin-bottom: 8px; font-size: 11.5px; }
-  .block p { font-size: 15px; }
-  .scroll { position: relative; width: 1px; height: 34px; background: rgba(243,237,227,.25); overflow: hidden; }
-  .scroll span { position: absolute; left: 0; top: -100%; width: 1px; height: 100%; background: var(--ow); animation: drip 2.2s var(--ease-io) infinite; }
-  @keyframes drip { to { top: 100%; } }
-  @media (max-width: 860px) { .block { grid-template-columns: 1fr 1fr; } .block > div:nth-child(3) { display: none; } .block .btn { grid-column: 1 / -1; justify-content: center; } }
-
+  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s var(--ease); }
+  .slide.on { opacity: 1; z-index: 1; }
+  .slide .para { position: absolute; inset: 0; }
+  .pl { position: absolute; inset: -8% 0; }
+  .pl :global(.kb) { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: transform 9s linear; }
+  .slide.on .pl :global(.kb) { transform: scale(1.02); }
+  .veil { position: absolute; inset: 0; z-index: 2; background: rgba(32, 28, 27, .38); }
+  .veil::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(32, 28, 27, .82) 0%, rgba(32, 28, 27, .25) 45%, rgba(32, 28, 27, 0) 70%, rgba(32, 28, 27, .35) 100%); }
+  .inner { position: relative; z-index: 5; height: 100%; display: grid; grid-template-rows: auto 1fr auto auto; gap: clamp(20px, 3vw, 36px); padding-top: calc(104px + env(safe-area-inset-top, 0px)); padding-bottom: clamp(20px, 3.2vw, 40px); }
+  .top { display: flex; justify-content: space-between; gap: 24px; color: rgba(243, 237, 227, .86); }
+  .kicker { display: flex; align-items: center; gap: 12px; }
+  .kicker.r { text-align: right; display: block; }
+  .dotl { width: 28px; height: 1px; background: currentColor; }
+  h1 { grid-row: 3; font: 400 clamp(56px, 10.5vw, 176px)/.9 var(--display); letter-spacing: -.02em; max-width: 12ch; }
+  .foil { font-style: italic; background: var(--gold) center / cover; -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .08em; }
+  @supports not ((-webkit-background-clip: text) or (background-clip: text)) { .foil { color: var(--ow); background: none; } }
+  .bottom { grid-row: 4; display: grid; grid-template-columns: auto 1fr auto; gap: 20px 32px; align-items: end; padding-top: 20px; border-top: 1px solid var(--rule-light); opacity: 0; transform: translateY(20px); animation: up 1.1s .55s var(--ease) forwards; }
+  @keyframes up { to { opacity: 1; transform: none; } }
+  .ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn.solid { background: var(--ow); color: var(--ink); border-color: var(--ow); }
+  .btn.solid::before { background: var(--ox) !important; }
+  .btn.solid:hover { color: var(--ow) !important; border-color: var(--ox) !important; }
+  .btn.ghost { border-color: rgba(255,255,255,.25); }
+  .ctrl { display: flex; align-items: center; gap: 18px; justify-self: center; }
+  .idx { color: rgba(243, 237, 227, .8); font-variant-numeric: tabular-nums; }
+  .idx b { font-weight: 400; color: var(--ow); }
+  .bars { display: flex; gap: 6px; }
+  .bb { position: relative; width: 44px; height: 24px; background: none; border: 0; padding: 0; cursor: pointer; }
+  .bb::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(243, 237, 227, .3); }
+  .bb i { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--ow); transform: scaleX(0); transform-origin: left; }
+  .bb.done i { transform: scaleX(1); }
+  .bb.on i { animation: fillbar 6.5s linear forwards; }
+  .paused .bb.on i { animation-play-state: paused; }
+  @keyframes fillbar { to { transform: scaleX(1); } }
+  .chip { display: grid; grid-template-columns: 72px 1fr auto; align-items: center; gap: 14px; padding: 8px 18px 8px 8px; min-width: 300px; transition: background .4s, transform .5s var(--ease); }
+  .chip:hover { background: rgba(94, 26, 36, .6); }
+  .chip img { width: 72px; height: 54px; object-fit: cover; transition: opacity .35s; }
+  .ct { display: grid; gap: 2px; min-width: 0; transition: opacity .35s, transform .35s; }
+  .ct .label { font-size: 11px; color: rgba(243, 237, 227, .72); letter-spacing: .18em; }
+  .ct strong { font: 400 20px/1.15 var(--display); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .chip.swap .ct, .chip.swap img { opacity: 0; transform: translateY(6px); }
+  @media (max-width: 1000px) { .bottom { grid-template-columns: 1fr auto; } .ctrl { grid-column: 1 / -1; grid-row: 2; justify-self: start; } .chip { grid-row: 1; grid-column: 2; } }
+  @media (max-width: 700px) {
+    .hero { min-height: 600px; }
+    .top .kicker.r { display: none; }
+    h1 { font-size: clamp(54px, 16.5vw, 96px); }
+    .bottom { grid-template-columns: 1fr; gap: 16px; border-top: 0; padding-top: 0; }
+    .ctas { display: grid; grid-template-columns: 1fr auto; }
+    .ctas .btn { justify-content: center; padding-inline: 18px; }
+    .chip { grid-column: 1; grid-row: auto; min-width: 0; grid-template-columns: 56px 1fr auto; }
+    .chip img { width: 56px; height: 42px; }
+    .ctrl { grid-row: auto; justify-content: space-between; width: 100%; }
+    .bb { width: 32px; height: 32px; }
+  }
   .intro { padding-block: clamp(80px, 12vw, 180px); display: grid; grid-template-columns: 1fr 3fr; gap: 32px; }
   .statement { font: 400 clamp(28px, 3.6vw, 56px)/1.16 var(--display); text-wrap: pretty; }
   .statement em { color: var(--ox); }
