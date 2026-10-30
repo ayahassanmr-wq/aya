@@ -21,6 +21,10 @@ export interface Project {
   deliverables?: string[];
   /** Year still to be confirmed by Aya. */
   year?: string;
+  /** External references (client / programme sites). Filled from `links` below. */
+  links?: { label: string; url: string }[];
+  /** Project film: a file in /public/video, or a YouTube / Vimeo id. Filled from `films` below. */
+  video?: { file?: string; youtube?: string; vimeo?: string; poster?: string; title?: string };
 }
 
 const D = 'Design', M = '3D modelling', R = 'Rendering', P = 'Post-production', B = 'BIM package';
@@ -109,11 +113,28 @@ export const projects: Project[] = [
     summary: 'Hand-drawn-style studies used to explore mood, light and material before modelling.' },
 ];
 
-/* ---------- images: every jpg in src/assets/projects/<slug>/ in file order; 01.jpg is the cover */
+/* ---------- external links (official sites only) */
+const links: Record<string, Project['links']> = {
+  'stc-hq': [{ label: 'stc', url: 'https://www.stc.com.sa' }],
+  'sabic-hq': [{ label: 'SABIC', url: 'https://www.sabic.com' }],
+  'neom-oxagon': [{ label: 'NEOM · Oxagon', url: 'https://www.neom.com/en-us/regions/oxagon' }],
+  'jotun-office': [{ label: 'Jotun', url: 'https://www.jotun.com' }],
+  'hb-fuller': [{ label: 'H.B. Fuller', url: 'https://www.hbfuller.com' }],
+  'noatum-terminal': [{ label: 'Noatum', url: 'https://www.noatum.com' }],
+};
+/* ---------- films: drop a compressed mp4 in /public/video/<slug>.mp4, or add a YouTube/Vimeo id */
+const films: Record<string, Project['video']> = {
+  // 'jotun-office': { file: '/video/jotun-office.mp4', title: 'Promotional animation' },
+  // 'juba-resort': { youtube: 'VIDEO_ID', title: 'Walkthrough animation' },
+};
+for (const p of projects) { p.links ??= links[p.slug]; p.video ??= films[p.slug]; }
+
+/* ---------- images: src/assets/projects/<slug>/NN.jpg are renders (01 = cover); dNN.jpg are drawings & diagrams */
 const files = import.meta.glob<{ default: ImageMetadata }>('../assets/projects/*/*.jpg', { eager: true });
-export function imagesFor(slug: string): ImageMetadata[] {
-  return Object.keys(files).filter((p) => p.includes(`/projects/${slug}/`)).sort().map((p) => files[p].default);
-}
+const pick = (slug: string, drawing: boolean) => Object.keys(files)
+  .filter((p) => p.includes(`/projects/${slug}/`) && /\/d\d+\.jpg$/.test(p) === drawing).sort().map((p) => files[p].default);
+export const imagesFor = (slug: string) => pick(slug, false);
+export const drawingsFor = (slug: string) => pick(slug, true);
 export const cover = (slug: string) => imagesFor(slug)[0];
 
 export const featured = projects.filter((p) => p.featured);

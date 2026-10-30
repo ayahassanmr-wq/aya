@@ -39,12 +39,6 @@ const ogImage = new URL(image, Astro.site);
     <Header overHero={overHero} />
     <main><slot /></main>
     <Footer />
-    <script>
-      // Only elements below the first screen start hidden; everything is visible without JS.
-      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -6% 0px' });
-      document.querySelectorAll('.reveal').forEach((el) => {
-        if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('pre'); io.observe(el); }
-      });
-    </script>
+    <script>import '../scripts/fx.ts';</script>
   </body>
 </html>

@@ -18,12 +18,12 @@ const tools = [
 <Base title="About" description="Aya Hassan, architect and interior designer in concept design at ZFP, Riyadh. Previously Cosmos Studio, with work at NEOM.">
   <section class="wrap head">
     <p class="label muted">About</p>
-    <h1 class="display-xl">Aya Hassan</h1>
+    <h1 class="display-xl lines"><span class="ln"><span>Aya Hassan</span></span></h1>
     <p class="label role">Architect &amp; Interior Designer · Concept Design</p>
   </section>
 
   <section class="wrap bio">
-    <figure class="reveal"><Image src={side} alt="SABIC headquarters atrium interior" widths={[600, 1000]} sizes="(min-width: 900px) 40vw, 100vw" /></figure>
+    <figure class="reveal para"><Image data-parallax="0.1" data-scale="1.15" src={side} alt="SABIC headquarters atrium interior" widths={[600, 1000]} sizes="(min-width: 900px) 40vw, 100vw" /></figure>
     <div class="txt">
       <p class="statement reveal">A concept is only useful once someone believes in it.</p>
       <p class="reveal">Aya is an architect and interior designer working in concept design. She joined ZFP (Zuhair Fayez Partnership) in 2024, where she shapes headquarters interiors for SABIC and STC in Riyadh. Before that she spent four years at Cosmos Studio on architecture, interiors and BIM, including public service buildings at NEOM.</p>
@@ -32,7 +32,7 @@ const tools = [
     </div>
   </section>
 
-  <section class="wrap tl">
+  <section class="dark tl"><div class="wrap">
     <div class="sheet-head"><span class="label">Experience &amp; education</span></div>
     {timeline.map((t) => (
       <div class="row reveal">
@@ -41,7 +41,7 @@ const tools = [
         <p class="d">{t.d}</p>
       </div>
     ))}
-  </section>
+  </div></section>
 
   <section class="wrap tools">
     <div class="sheet-head"><span class="label">Tools</span></div>
@@ -61,7 +61,10 @@ const tools = [
   .statement { font: italic 400 clamp(30px, 3.4vw, 50px)/1.15 var(--display); color: var(--ox); }
   .txt .btn { justify-self: start; margin-top: 12px; }
   @media (max-width: 860px) { .bio { grid-template-columns: 1fr; } .bio figure { aspect-ratio: 16 / 10; } }
-  .tl, .tools { padding-bottom: clamp(64px, 8vw, 120px); }
+  .tl { padding-block: clamp(64px, 8vw, 120px); }
+  .tools { padding-block: clamp(64px, 8vw, 120px); }
+  .row { transition: padding .5s var(--ease); } .row:hover { padding-left: 14px; }
+  .dark .d { color: rgba(243,237,227,.72); } .dark .org { color: #D8C7A6; }
   .row { display: grid; grid-template-columns: 160px 1.2fr 1.3fr; gap: 24px clamp(24px, 4vw, 64px); padding-block: 32px; border-bottom: 1px solid var(--rule); }
   .org { color: var(--ox); margin-top: 10px; }
   .d { color: var(--ink-2); font-size: 16px; }

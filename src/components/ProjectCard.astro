@@ -6,15 +6,19 @@ interface Props { p: Project; size?: 'l' | 'm'; eager?: boolean }
 const { p, size = 'm', eager = false } = Astro.props;
 const img = cover(p.slug);
 ---
-<a href={`/work/${p.slug}/`} class:list={['card', size, 'reveal']} data-cat={p.category} data-sector={p.sector}>
-  <div class="zoom frame">
-    {img && <Image src={img} alt={`${p.title}, ${p.location}`} widths={size === 'l' ? [800, 1400, 1800] : [600, 900, 1200]} sizes={size === 'l' ? '(min-width: 900px) 66vw, 100vw' : '(min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw'} loading={eager ? 'eager' : 'lazy'} />}
+<a href={`/work/${p.slug}/`} class:list={['card', size, 'reveal']} data-cat={p.category} data-sector={p.sector} data-cursor="View">
+  <div class="frame" data-tilt>
+    <div class="para zoom">
+      {img && <Image src={img} alt={`${p.title}, ${p.location}`} widths={size === 'l' ? [800, 1400, 1800] : [600, 900, 1200]} sizes={size === 'l' ? '(min-width: 900px) 66vw, 100vw' : '(min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw'} loading={eager ? 'eager' : 'lazy'} data-parallax="0.06" data-scale="1.1" />}
+    </div>
+    <span class="sheen" aria-hidden="true"></span>
+    <span class="label code-chip">{sheetCode(p)}</span>
     {p.concept && <span class="tag flag">Concept exploration</span>}
+    <span class="corner tl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
   </div>
   <div class="meta">
-    <span class="label code">{sheetCode(p)}</span>
     <div class="t">
-      <h3>{p.title}</h3>
+      <h3><span class="u">{p.title}</span></h3>
       <p class="label muted">{p.location}{p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}</p>
     </div>
     <span class="label muted sector">{p.sector}</span>
@@ -22,17 +26,29 @@ const img = cover(p.slug);
 </a>
 
 <style>
-  .card { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-  .frame { position: relative; aspect-ratio: 4 / 3; }
-  .l .frame { aspect-ratio: 16 / 10; }
-  .frame :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .card { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .frame { position: relative; }
+  .para { aspect-ratio: 4 / 3; }
+  .l .para { aspect-ratio: 16 / 10; }
+  .para :global(img) { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); }
+  .card:hover .para :global(img) { filter: saturate(1.08) contrast(1.03); }
+  .sheen { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .5s; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(243, 237, 227, .22), transparent 45%); }
+  .card:hover .sheen { opacity: 1; }
+  .code-chip { position: absolute; right: 12px; bottom: 12px; background: var(--night); color: var(--ow); padding: 7px 10px; font-size: 10px; transform: translateY(8px); opacity: 0; transition: .5s var(--ease); }
+  .card:hover .code-chip { transform: none; opacity: 1; }
   .flag { position: absolute; left: 12px; top: 12px; }
-  .meta { display: grid; grid-template-columns: 52px 1fr auto; gap: 12px; align-items: baseline; border-top: 1px solid var(--rule); padding-top: 14px; }
-  .code { color: var(--ox); }
-  h3 { font-size: clamp(22px, 2vw, 30px); line-height: 1.1; transition: color .3s; }
-  .l h3 { font-size: clamp(26px, 2.6vw, 38px); }
-  .card:hover h3 { color: var(--ox); }
-  .t .label { margin-top: 6px; font-size: 10.5px; }
+  /* drafting corner marks draw in on hover */
+  .corner { position: absolute; width: 18px; height: 18px; border-color: var(--ox); border-style: solid; border-width: 0; opacity: 0; transition: .5s var(--ease); }
+  .tl { left: -8px; top: -8px; border-left-width: 1px; border-top-width: 1px; transform: translate(6px, 6px); }
+  .br { right: -8px; bottom: -8px; border-right-width: 1px; border-bottom-width: 1px; transform: translate(-6px, -6px); }
+  .card:hover .corner { opacity: 1; transform: none; }
+  .meta { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: baseline; border-top: 1px solid var(--rule); padding-top: 14px; }
+  h3 { font-size: clamp(22px, 2vw, 30px); line-height: 1.1; }
+  .l h3 { font-size: clamp(26px, 2.6vw, 40px); }
+  .u { background: linear-gradient(var(--ox), var(--ox)) right 100% / 0 1px no-repeat; transition: background-size .5s var(--ease-io), color .3s; }
+  .card:hover .u { background-position: left 100%; background-size: 100% 1px; color: var(--ox); }
+  :global(.dark) .card:hover .u { color: var(--ow); background-image: linear-gradient(var(--ow), var(--ow)); }
+  .t .label { margin-top: 7px; font-size: 10.5px; }
   .sector { font-size: 10.5px; }
-  @media (max-width: 520px) { .meta { grid-template-columns: 44px 1fr; } .sector { display: none; } }
+  @media (max-width: 520px) { .sector { display: none; } }
 </style>

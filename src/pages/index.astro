@@ -2,23 +2,35 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { projects, featured, countries, imagesFor } from '../data/projects';
+import { projects, featured, countries, imagesFor, cover } from '../data/projects';
+import { getImage } from 'astro:assets';
 import gold from '../assets/gold.jpg';
 const hero = imagesFor('commercial-mall')[0];
 const [f1, f2, f3, f4, f5, f6] = featured;
-const names = ['NEOM', 'SABIC', 'STC', 'Jotun', 'HB Fuller', 'Chery', 'NOATUM', 'Tech Park', 'Fifth Square', 'Linah Farms'];
+const names = ['NEOM', 'SABIC', 'stc', 'Jotun', 'H.B. Fuller', 'Chery', 'Noatum', 'Tech Park', 'Fifth Square', 'Linah Farms'];
+const years = new Date().getFullYear() - 2020;
+const services = [
+  { t: 'Concept design', slug: 'neom-oxagon' },
+  { t: 'Visualization & animation', slug: 'fifth-square' },
+  { t: 'BIM & design packages', slug: 'noatum-terminal' },
+  { t: 'Materials & FF&E', slug: 'stc-hq' },
+];
+const previews = await Promise.all(services.map(async (s) => (await getImage({ src: cover(s.slug), width: 700, format: 'webp' })).src));
 ---
 <Base overHero>
-  <section class="hero" style={`--gold:url(${gold.src})`}>
-    <Image src={hero} alt="Commercial mall atrium under a woven lattice roof at dusk, Saudi Arabia" widths={[900, 1600, 2000]} sizes="100vw" loading="eager" fetchpriority="high" class="bg" />
+  <section class="hero">
+    <div class="para bgwrap"><Image src={hero} alt="Commercial mall atrium under a woven lattice roof at dusk, Saudi Arabia" widths={[900, 1600, 2000]} sizes="100vw" loading="eager" fetchpriority="high" class="bg" data-parallax="0.18" data-scale="1.15" /></div>
     <div class="veil"></div>
     <div class="wrap inner">
-      <p class="label kicker">Architect &amp; Interior Designer · Concept Design</p>
-      <h1 class="display-xl">From concept<br />to <em class="foil">conviction.</em></h1>
+      <p class="label kicker"><span class="dotl"></span>Architect &amp; Interior Designer · Concept Design</p>
+      <h1 class="display-xl lines">
+        <span class="ln"><span>From concept</span></span>
+        <span class="ln"><span>to <em class="foil" style={`--gold:url(${gold.src})`}>conviction.</em></span></span>
+      </h1>
       <div class="block">
         <div><span class="label">Currently</span><p>ZFP, Riyadh</p></div>
-        <div><span class="label">Selected clients</span><p>NEOM · SABIC · STC</p></div>
-        <div><span class="label">Practice</span><p>{projects.length} projects · {countries.length} countries</p></div>
+        <div><span class="label">Selected clients</span><p>NEOM · SABIC · stc</p></div>
+        <div><span class="label">Scroll</span><p class="scroll"><span></span></p></div>
         <a href="/work/" class="btn">View the work <span class="arr">→</span></a>
       </div>
     </div>
@@ -26,29 +38,39 @@ const names = ['NEOM', 'SABIC', 'STC', 'Jotun', 'HB Fuller', 'Chery', 'NOATUM', 
 
   <section class="intro wrap">
     <p class="label muted reveal">00 — Introduction</p>
-    <p class="statement reveal">I turn early design ideas into concepts clients approve, from public buildings at <em>NEOM</em> to the headquarters of <em>SABIC</em> and <em>STC</em>. Idea, model, image and drawing set, carried by one hand.</p>
+    <p class="statement reveal">I turn early design ideas into concepts clients approve, from public buildings at <em>NEOM</em> to the headquarters of <em>SABIC</em> and <em>stc</em>. Idea, model, image and drawing set, carried by one hand.</p>
+  </section>
+
+  <section class="dark numbers">
+    <div class="wrap grid4">
+      <div class="reveal"><span class="n" data-count={projects.length}>{projects.length}</span><span class="label muted">Projects</span></div>
+      <div class="reveal"><span class="n" data-count={countries.length}>{countries.length}</span><span class="label muted">Countries</span></div>
+      <div class="reveal"><span class="n" data-count={years}>{years}</span><span class="label muted">Years in practice</span></div>
+      <div class="reveal"><span class="n">2</span><span class="label muted">Studios · ZFP &amp; Cosmos</span></div>
+    </div>
   </section>
 
   <section class="wrap feat">
     <div class="sheet-head"><span class="label">01 — Selected work</span><a href="/work/" class="label link">All {projects.length} projects →</a></div>
     <div class="row r1"><ProjectCard p={f1} size="l" eager /><ProjectCard p={f2} /></div>
     <div class="row r2"><ProjectCard p={f3} /><ProjectCard p={f4} size="l" /></div>
-    <div class="row r3"><ProjectCard p={f5} /><ProjectCard p={f6} /><a href="/work/" class="more reveal"><span class="label muted">Index</span><span class="display-m">See all {projects.length} projects</span><span class="btn">Open the index <span class="arr">→</span></span></a></div>
+    <div class="row r3"><ProjectCard p={f5} /><ProjectCard p={f6} /><a href="/work/" class="more reveal" data-cursor="Index"><span class="label">Index of work</span><span class="display-m">See all {projects.length} projects</span><span class="label go">Open the index <span class="arr">→</span></span></a></div>
   </section>
 
-  <section class="marquee" aria-label="Clients and projects">
-    <div class="track">{[...names, ...names].map((n) => <span>{n}<i>·</i></span>)}</div>
+  <section class="dark marquee" aria-label="Clients and projects">
+    <div class="track">{[...names, ...names].map((n) => <span>{n}<i aria-hidden="true">✦</i></span>)}</div>
   </section>
 
-  <section class="wrap duo">
-    <div class="sheet-head"><span class="label">02 — Practice</span><a href="/about/" class="label link">About Aya →</a></div>
-    <div class="cols">
-      <h2 class="display-l reveal">Precision, vision, scale and craft.</h2>
-      <div class="pill reveal">
-        <div><h3>Precision</h3><p>Concepts built to be built, from Revit models to IFC drawing sets.</p></div>
-        <div><h3>Vision</h3><p>Reading the brief and giving it one clear idea.</p></div>
-        <div><h3>Scale</h3><p>National projects and corporate headquarters across the Gulf.</p></div>
-        <div><h3>Craft</h3><p>Material, light and the detail that holds them together.</p></div>
+  <section class="dark duo">
+    <div class="wrap">
+      <div class="sheet-head"><span class="label">02 — Practice</span><a href="/about/" class="label link">About Aya →</a></div>
+      <div class="cols">
+        <h2 class="display-l lines"><span class="ln"><span>Precision, vision,</span></span><span class="ln"><span><em>scale</em> and craft.</span></span></h2>
+        <div class="pill">
+          {[['Precision', 'Concepts built to be built, from Revit models to IFC drawing sets.'], ['Vision', 'Reading the brief and giving it one clear idea.'], ['Scale', 'National projects and corporate headquarters across the Gulf.'], ['Craft', 'Material, light and the detail that holds them together.']].map(([t, d], i) => (
+            <div class="reveal" style={`transition-delay:${i * 80}ms`}><span class="label muted">0{i + 1}</span><h3>{t}</h3><p>{d}</p></div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -56,66 +78,78 @@ const names = ['NEOM', 'SABIC', 'STC', 'Jotun', 'HB Fuller', 'Chery', 'NOATUM', 
   <section class="wrap svc">
     <div class="sheet-head"><span class="label">03 — Services</span><a href="/services/" class="label link">How I work →</a></div>
     <ol>
-      {['Concept design', 'Visualization & animation', 'BIM & design packages', 'Materials & FF&E'].map((s, i) => (
-        <li class="reveal"><a href="/services/"><span class="label muted">0{i + 1}</span><span class="display-m">{s}</span><span class="arr">→</span></a></li>
+      {services.map((s, i) => (
+        <li class="reveal"><a href="/services/" data-preview={previews[i]}><span class="label muted">0{i + 1}</span><span class="display-m">{s.t}</span><span class="arr">→</span></a></li>
       ))}
     </ol>
   </section>
 </Base>
 
 <style>
-  .hero { position: relative; min-height: min(100svh, 980px); display: flex; align-items: flex-end; color: var(--ow); overflow: hidden; background: var(--ox-deep); }
-  .hero :global(.bg) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); animation: settle 2.4s cubic-bezier(.2,.7,.2,1) forwards; }
-  @keyframes settle { to { transform: scale(1); } }
-  .veil { position: absolute; inset: 0; background: rgba(67, 18, 26, .58); }
-  .inner { position: relative; padding-top: 140px; padding-bottom: clamp(28px, 4vw, 48px); }
-  .kicker { opacity: .8; margin-bottom: 26px; }
-  h1 { font-weight: 400; }
+  .hero { position: relative; min-height: min(100svh, 1000px); display: flex; align-items: flex-end; color: var(--ow); overflow: hidden; background: var(--night); }
+  .bgwrap { position: absolute; inset: 0; }
+  .bgwrap :global(.bg) { width: 100%; height: 100%; object-fit: cover; transform: scale(1.15); }
+  .veil { position: absolute; inset: 0; background: rgba(32, 28, 27, .55); }
+  .veil::after { content: ""; position: absolute; inset: 0; background: rgba(94, 26, 36, .28); mix-blend-mode: multiply; }
+  .inner { position: relative; z-index: 5; padding-top: 140px; padding-bottom: clamp(28px, 4vw, 48px); }
+  .kicker { opacity: .85; margin-bottom: 26px; display: flex; align-items: center; gap: 12px; }
+  .dotl { width: 28px; height: 1px; background: currentColor; }
   .foil { font-style: italic; background: var(--gold) center / cover; -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .06em; }
   @supports not ((-webkit-background-clip: text) or (background-clip: text)) { .foil { color: var(--ow); background: none; } }
   .block { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 24px 40px; align-items: end; margin-top: clamp(40px, 6vw, 80px); padding-top: 22px; border-top: 1px solid var(--rule-light); }
-  .block .label { opacity: .6; display: block; margin-bottom: 6px; font-size: 10.5px; }
+  .block .label { opacity: .6; display: block; margin-bottom: 8px; font-size: 10.5px; }
   .block p { font-size: 15px; }
-  .block .btn { color: var(--ow); }
-  .block .btn:hover { background: var(--ow); color: var(--ox); border-color: var(--ow); }
-  @media (max-width: 860px) { .block { grid-template-columns: 1fr 1fr; } .block .btn { grid-column: 1 / -1; justify-content: center; } }
+  .scroll { position: relative; width: 1px; height: 34px; background: rgba(243,237,227,.25); overflow: hidden; }
+  .scroll span { position: absolute; left: 0; top: -100%; width: 1px; height: 100%; background: var(--ow); animation: drip 2.2s var(--ease-io) infinite; }
+  @keyframes drip { to { top: 100%; } }
+  @media (max-width: 860px) { .block { grid-template-columns: 1fr 1fr; } .block > div:nth-child(3) { display: none; } .block .btn { grid-column: 1 / -1; justify-content: center; } }
 
   .intro { padding-block: clamp(80px, 12vw, 180px); display: grid; grid-template-columns: 1fr 3fr; gap: 32px; }
-  .statement { font: 400 clamp(28px, 3.6vw, 54px)/1.18 var(--display); color: var(--ink); text-wrap: pretty; }
+  .statement { font: 400 clamp(28px, 3.6vw, 56px)/1.16 var(--display); text-wrap: pretty; }
   .statement em { color: var(--ox); }
   @media (max-width: 800px) { .intro { grid-template-columns: 1fr; } }
 
-  .feat { padding-bottom: clamp(64px, 9vw, 140px); }
+  .numbers { padding-block: clamp(48px, 6vw, 84px); }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .grid4 > div { display: grid; gap: 8px; padding-top: 18px; border-top: 1px solid var(--rule-light); }
+  .n { font: 400 clamp(56px, 7vw, 110px)/.9 var(--display); font-variant-numeric: tabular-nums; }
+  @media (max-width: 760px) { .grid4 { grid-template-columns: 1fr 1fr; } }
+
+  .feat { padding-block: clamp(64px, 9vw, 140px); }
   .row { display: grid; gap: clamp(28px, 3vw, 48px); margin-top: clamp(28px, 4vw, 56px); align-items: start; }
-  .r1 { grid-template-columns: 2fr 1fr; }
-  .r2 { grid-template-columns: 1fr 2fr; }
-  .r3 { grid-template-columns: 1fr 1fr 1fr; }
+  .r1 { grid-template-columns: 2fr 1fr; } .r2 { grid-template-columns: 1fr 2fr; } .r3 { grid-template-columns: 1fr 1fr 1fr; }
   .r1 > :last-child, .r2 > :first-child { margin-top: clamp(0px, 10vw, 160px); }
-  .more { display: flex; flex-direction: column; justify-content: space-between; gap: 24px; aspect-ratio: 4 / 3; padding: 28px; background: var(--ox); color: var(--ow); }
-  .more .muted { color: rgba(243,237,227,.6); }
-  .more .btn { align-self: flex-start; }
-  .more:hover .btn { background: var(--ow); color: var(--ox); border-color: var(--ow); }
+  .more { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; aspect-ratio: 4 / 3; padding: 28px; background: var(--night); color: var(--ow); isolation: isolate; }
+  .more::before { content: ""; position: absolute; inset: 0; background: var(--ox); z-index: -1; clip-path: circle(0% at 100% 100%); transition: clip-path .8s var(--ease-io); }
+  .more:hover::before { clip-path: circle(150% at 100% 100%); }
+  .more .label:first-child { opacity: .6; }
   @media (max-width: 900px) { .r1, .r2, .r3 { grid-template-columns: 1fr; } .r1 > :last-child, .r2 > :first-child { margin-top: 0; } .more { aspect-ratio: auto; min-height: 240px; } }
 
-  .marquee { border-block: 1px solid var(--rule); overflow: hidden; padding-block: 26px; }
-  .track { display: flex; width: max-content; animation: slide 46s linear infinite; }
-  .track span { font: 400 clamp(32px, 4vw, 60px)/1 var(--display); color: var(--ink); white-space: nowrap; padding-right: 28px; }
-  .track i { color: var(--ox); font-style: normal; padding-left: 28px; }
+  .marquee { overflow: hidden; padding-block: 30px; border-bottom: 1px solid var(--rule-light); }
+  .track { display: flex; width: max-content; animation: slide 50s linear infinite; }
+  .marquee:hover .track { animation-play-state: paused; }
+  .track span { font: 400 clamp(34px, 4.4vw, 68px)/1 var(--display); white-space: nowrap; padding-right: 36px; transition: color .3s, opacity .3s; }
+  .marquee:hover .track span { opacity: .35; }
+  .marquee .track span:hover { opacity: 1; color: #D8C7A6; font-style: italic; }
+  .track i { font-style: normal; font-size: .38em; vertical-align: middle; padding-left: 36px; color: var(--grey); }
   @keyframes slide { to { transform: translateX(-50%); } }
 
   .duo { padding-block: clamp(64px, 9vw, 140px); }
-  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); margin-top: 32px; }
-  .cols h2 { color: var(--ox); }
-  .pill { display: grid; grid-template-columns: 1fr 1fr; gap: 36px 32px; }
-  .pill h3 { font-size: 28px; margin-bottom: 8px; }
-  .pill p { color: var(--ink-2); font-size: 15px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); margin-top: 40px; }
+  .cols em { color: #D8C7A6; }
+  .pill { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--rule-light); }
+  .pill > div { padding: 24px 24px 28px 0; border-bottom: 1px solid var(--rule-light); display: grid; gap: 8px; transition: padding .5s var(--ease); }
+  .pill > div:hover { padding-left: 12px; }
+  .pill h3 { font-size: 30px; }
+  .pill p { color: rgba(243,237,227,.7); font-size: 15px; }
   @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
   @media (max-width: 480px) { .pill { grid-template-columns: 1fr; } }
 
-  .svc { padding-bottom: clamp(64px, 9vw, 140px); }
+  .svc { padding-block: clamp(64px, 9vw, 140px); }
   .svc ol { list-style: none; margin: 0; padding: 0; }
   .svc li { border-bottom: 1px solid var(--rule); }
-  .svc a { display: grid; grid-template-columns: 60px 1fr auto; align-items: center; gap: 16px; padding-block: clamp(18px, 2.4vw, 30px); transition: color .3s, padding .4s; }
-  .svc a:hover { color: var(--ox); padding-left: 12px; }
+  .svc a { display: grid; grid-template-columns: 60px 1fr auto; align-items: center; gap: 16px; padding-block: clamp(20px, 2.6vw, 34px); transition: color .35s, padding .5s var(--ease); }
+  .svc a:hover { color: var(--ox); padding-left: 16px; }
+  .svc a:hover .display-m { font-style: italic; }
   .svc .arr { font-size: 22px; }
 </style>

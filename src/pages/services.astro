@@ -18,7 +18,7 @@ const steps = [
 <Base title="Services" description="Concept design, visualization and animation, BIM and design packages, and materials and FF&E selection.">
   <section class="wrap head">
     <p class="label muted">Services</p>
-    <h1 class="display-xl">From concept<br />to drawing set.</h1>
+    <h1 class="display-xl lines"><span class="ln"><span>From concept</span></span><span class="ln"><span>to <em>drawing set.</em></span></span></h1>
   </section>
 
   <section class="wrap list">
@@ -30,12 +30,12 @@ const steps = [
           <p>{s.d}</p>
           <ul>{s.items.map((x) => <li>{x}</li>)}</ul>
         </div>
-        {s.img && <figure><Image src={s.img} alt="" widths={[600, 1000]} sizes="(min-width: 900px) 34vw, 100vw" /></figure>}
+        {s.img && <figure class="para"><Image data-parallax="0.08" data-scale="1.12" src={s.img} alt="" widths={[600, 1000]} sizes="(min-width: 900px) 34vw, 100vw" /></figure>}
       </article>
     ))}
   </section>
 
-  <section class="process">
+  <section class="process dark">
     <div class="wrap">
       <div class="sheet-head"><span class="label">Process</span></div>
       <ol>{steps.map(([t, d], i) => <li class="reveal"><span class="label">Stage 0{i + 1}</span><h3 class="display-m">{t}</h3><p>{d}</p></li>)}</ol>
@@ -47,6 +47,8 @@ const steps = [
   .head { padding-top: clamp(48px, 7vw, 100px); padding-bottom: clamp(48px, 6vw, 88px); }
   .head h1 { margin-top: 10px; }
   .list { padding-bottom: clamp(64px, 9vw, 130px); }
+  .svc h2 { transition: color .3s; } .svc:hover h2 { color: var(--ox); font-style: italic; }
+  .head em { color: var(--ox); }
   .svc { display: grid; grid-template-columns: 70px 1.1fr 1fr; gap: clamp(24px, 4vw, 64px); padding-block: clamp(32px, 4vw, 56px); border-top: 1px solid var(--rule); align-items: start; }
   .n { color: var(--ox); padding-top: 12px; }
   .c { display: grid; gap: 18px; }
@@ -56,7 +58,7 @@ const steps = [
   figure { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; background: var(--ow-2); }
   figure :global(img) { width: 100%; height: 100%; object-fit: cover; }
   @media (max-width: 900px) { .svc { grid-template-columns: 1fr; } ul { grid-template-columns: 1fr; } }
-  .process { background: var(--ox); color: var(--ow); padding-block: clamp(64px, 9vw, 130px); }
+  .process { padding-block: clamp(64px, 9vw, 130px); }
   .process .sheet-head { border-color: var(--rule-light); }
   .process ol { list-style: none; margin: 32px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
   .process li { display: grid; gap: 12px; padding-top: 20px; border-top: 1px solid var(--rule-light); }

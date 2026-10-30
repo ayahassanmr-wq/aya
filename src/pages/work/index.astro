@@ -1,7 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { projects } from '../../data/projects';
+import { getImage } from 'astro:assets';
+import { projects, cover } from '../../data/projects';
+import { sheetCode } from '../../data/sheet';
 const filters = [
   { id: 'all', label: 'All' },
   { id: 'architecture', label: 'Architecture' },
@@ -9,12 +11,13 @@ const filters = [
   { id: 'Workplace', label: 'Workplace' },
   { id: 'Residential', label: 'Residential' },
 ];
+const prev = await Promise.all(projects.map(async (p) => (await getImage({ src: cover(p.slug), width: 700, format: 'webp' })).src));
 const count = (id: string) => id === 'all' ? projects.length : projects.filter((p) => p.category === id || p.sector === id).length;
 ---
 <Base title="Work" description={`${projects.length} architecture and interior projects by Aya Hassan across the Gulf, Egypt and beyond.`}>
   <section class="wrap head">
     <p class="label muted">Index of work</p>
-    <h1 class="display-xl">Work</h1>
+    <h1 class="display-xl lines"><span class="ln"><span>Work <sup class="cnt">{projects.length}</sup></span></span></h1>
     <div class="bar">
       <div class="filters" role="group" aria-label="Filter projects">
         {filters.map((f, i) => <button type="button" data-f={f.id} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}<sup>{count(f.id)}</sup></button>)}
@@ -31,9 +34,10 @@ const count = (id: string) => id === 'all' ? projects.length : projects.filter((
       {projects.map((p, i) => <div class="it" data-cat={p.category} data-sector={p.sector}><ProjectCard p={p} eager={i < 6} /></div>)}
     </div>
     <ol class="list" data-view="list" hidden>
-      {projects.map((p) => (
+      {projects.map((p, i) => (
         <li class="it" data-cat={p.category} data-sector={p.sector}>
-          <a href={`/work/${p.slug}/`}>
+          <a href={`/work/${p.slug}/`} data-preview={prev[i]}>
+            <span class="label code">{sheetCode(p)}</span>
             <span class="t">{p.title}{p.concept && <span class="tag">Concept</span>}</span>
             <span class="muted">{p.location}{p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}</span>
             <span class="label muted">{p.category}</span>
@@ -72,8 +76,12 @@ const count = (id: string) => id === 'all' ? projects.length : projects.filter((
   @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
   .list { list-style: none; margin: 0; padding: 32px 0 120px; }
   .list li { border-bottom: 1px solid var(--rule); }
-  .list a { display: grid; grid-template-columns: 2fr 1.4fr 1fr 1fr; gap: 16px; align-items: baseline; padding-block: 20px; transition: color .25s, padding .35s; }
-  .list a:hover { color: var(--ox); padding-left: 10px; }
+  .list a { display: grid; grid-template-columns: 60px 2fr 1.4fr 1fr 1fr; gap: 16px; align-items: baseline; padding-block: 20px; transition: color .25s, padding .35s; }
+  .list a:hover { color: var(--ox); padding-left: 16px; }
+  .list a:hover .t { font-style: italic; }
+  .code { color: var(--ox); }
+  .cnt { font: 400 .22em var(--sans); letter-spacing: .1em; vertical-align: top; color: var(--ox); }
+  .list a { transition: color .3s, padding .5s var(--ease); }
   .list .t { font: 400 clamp(22px, 2.2vw, 32px)/1.15 var(--display); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   .list .tag { font-size: 9px; }
   @media (max-width: 760px) { .list a { grid-template-columns: 1fr; gap: 4px; } }
