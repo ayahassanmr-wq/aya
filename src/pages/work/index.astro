@@ -69,10 +69,10 @@ const count = (id: string) => id === 'all' ? projects.length : projects.filter((
 <style>
   .head { padding-top: clamp(48px, 7vw, 100px); }
   .head h1 { margin: 10px 0 clamp(32px, 4vw, 56px); }
-  .bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-block: 16px; border: 0; border-block: 1px solid var(--rule); position: sticky; top: 76px; z-index: 5; padding-inline: 14px; margin-inline: -14px; }
+  .bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-block: 16px; border: 0; border-block: 1px solid var(--rule); position: sticky; top: 76px; z-index: 5; background: rgba(243, 237, 227, .86); padding-inline: 14px; margin-inline: -14px; }
   @media (max-width: 760px) { .bar { top: 68px; } }
   .filters, .views { display: flex; flex-wrap: wrap; gap: 4px 22px; }
-  button { background: none; border: 0; padding: 10px 0; min-height: 44px; cursor: pointer; font: 400 12px var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); transition: color .25s; }
+  button { background: none; border: 0; padding: 10px 0; min-height: 44px; cursor: pointer; font: 400 12px var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); transition: color .25s; }
   button[aria-pressed="true"], button:hover { color: var(--ox); }
   sup { font-size: 9px; margin-left: 4px; letter-spacing: 0; }
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(40px, 4vw, 64px) clamp(24px, 2.4vw, 40px); padding-block: clamp(40px, 5vw, 72px) clamp(80px, 10vw, 140px); }

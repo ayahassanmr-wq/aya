@@ -168,3 +168,35 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ox); outline-of
 
 /* reading progress (case studies) */
 .progress { position: fixed; left: 0; top: 0; height: 2px; width: 100%; z-index: 60; background: var(--ox); transform-origin: left; transform: scaleX(var(--p, 0)); pointer-events: none; }
+
+/* ---------- pointer field (canvas) */
+.field { position: fixed; inset: 0; z-index: 95; pointer-events: none; }
+
+/* ---------- letter / word hovers */
+.split .hc { display: inline-block; transform: translateY(calc(var(--p, 0) * -0.09em)) ; color: color-mix(in srgb, currentColor calc(100% - var(--p, 0) * 100%), var(--hl, var(--ox))); transition: transform .35s var(--ease), color .35s; font-style: inherit; }
+.dark .split, .hero .split, footer .split, .next .split, .mnav .split { --hl: #D8C7A6; }
+.split .hw { transition: color .3s, font-style .3s; border-radius: 2px; }
+.split .hw:hover { color: var(--ox); font-style: italic; }
+.dark .split .hw:hover { color: #D8C7A6; }
+
+/* ---------- text hovers */
+main p:not(.label) { transition: color .4s var(--ease); }
+main section p.lede:hover, main .ov p:hover, main .txt p:hover, main .d:hover, main .c p:hover { color: var(--ink); }
+.dark main p:hover, main .dark p:hover { color: var(--ow); }
+a .label, .sheet-head .label, .label.link { transition: letter-spacing .45s var(--ease), color .3s; }
+a:hover > .label, a.label:hover, .sheet-head a.label:hover { letter-spacing: .28em; }
+dl dd { transition: color .3s, transform .4s var(--ease); }
+dl div:hover dd { color: var(--ox); transform: translateX(4px); }
+.dark dl div:hover dd { color: #D8C7A6; }
+footer ul a { display: inline-block; transition: transform .4s var(--ease), opacity .3s; }
+footer ul a:hover { transform: translateX(6px); }
+
+/* ---------- image hovers (tilt + sheen + zoom) */
+.img-hover { position: relative; transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .7s var(--ease); }
+.img-hover::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .5s; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(243, 237, 227, .2), transparent 45%); }
+.img-hover:hover::after { opacity: 1; }
+.img-hover img { transition: transform 1.2s var(--ease), filter .6s; }
+.img-hover:hover img { filter: saturate(1.08) contrast(1.03); }
+.img-hover .para img { scale: 1; transition: scale 1.2s var(--ease), filter .6s; }
+.img-hover:hover .para img, .img-hover.para:hover img { scale: 1.04; }
+.paper.img-hover:hover img { scale: 1.02; }

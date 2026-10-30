@@ -121,3 +121,88 @@ if (fine && !reduce) {
     c.addEventListener('mouseleave', () => { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); });
   });
 }
+
+/* ======================================================================
+   Pointer field + text/image hovers (desktop, motion allowed)
+   ====================================================================== */
+if (fine && !reduce) {
+  /* ---- 1. drafting-dot field: a dot grid over every page that wakes up around the pointer */
+  const cv = Object.assign(document.createElement('canvas'), { className: 'field', ariaHidden: 'true' });
+  document.body.append(cv);
+  const ctx = cv.getContext('2d')!;
+  const GAP = 26, R = 170;
+  let W = 0, H = 0, dpr = 1, px = -999, py = -999, tx = -999, ty = -999, energy = 0, dark = false;
+  const size = () => { dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px'; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+  size(); addEventListener('resize', size);
+  addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; energy = 1; }, { passive: true });
+  document.addEventListener('mouseleave', () => { energy = 0; });
+  let n = 0;
+  const draw = () => {
+    px += (tx - px) * 0.16; py += (ty - py) * 0.16;
+    energy *= 0.985;
+    if (++n % 8 === 0) { const el = document.elementFromPoint(tx, ty); dark = !!el?.closest('.dark, .hero, footer, .next, img, video, .para, .mnav, .intro'); }
+    ctx.clearRect(0, 0, W, H);
+    if (energy > 0.02) {
+      const col = dark ? '216, 199, 166' : '94, 26, 36';
+      const ox = (scrollY % GAP);
+      const x0 = Math.max(0, Math.floor((px - R) / GAP) * GAP), x1 = Math.min(W, px + R);
+      const y0 = Math.floor((py - R + ox) / GAP) * GAP - ox, y1 = Math.min(H, py + R);
+      for (let y = y0; y <= y1; y += GAP) for (let x = x0; x <= x1; x += GAP) {
+        const dx = x - px, dy = y - py, d = Math.hypot(dx, dy);
+        if (d > R) continue;
+        const k = 1 - d / R, e = k * k * energy;
+        const pull = e * 10; // dots lean toward the pointer
+        const X = x - (dx / (d || 1)) * pull, Y = y - (dy / (d || 1)) * pull;
+        ctx.fillStyle = `rgba(${col}, ${(0.08 + e * 0.6).toFixed(3)})`;
+        if (k > 0.82) { // the cross-hair at the centre, like a drafting mark
+          ctx.fillRect(X - 3 * e, Y - 0.5, 6 * e, 1); ctx.fillRect(X - 0.5, Y - 3 * e, 1, 6 * e);
+        } else { ctx.beginPath(); ctx.arc(X, Y, 0.6 + e * 1.8, 0, Math.PI * 2); ctx.fill(); }
+      }
+    }
+    requestAnimationFrame(draw);
+  };
+  requestAnimationFrame(draw);
+
+  /* ---- 2. headline letters: lift + tint near the pointer */
+  document.querySelectorAll<HTMLElement>('h1, h2.display-l, h2.display-m, .display-xl, .display-l, .display-m, .card h3 .u, .statement').forEach((el) => {
+    if (el.closest('.intro, .hl, [data-no-split]') || el.querySelector('img, svg, a, button, .foil')) return;
+    const words = el.matches('.statement');
+    if (!words) { const host = el.closest<HTMLElement>('h1, h2, h3') || el; if (!host.hasAttribute('aria-label')) host.setAttribute('aria-label', (host.textContent || '').replace(/\s+/g, ' ').trim()); }
+    const walk = (node: Node) => {
+      [...node.childNodes].forEach((c) => {
+        if (c.nodeType === 3) {
+          const t = c.textContent || ''; if (!t.trim()) return;
+          const frag = document.createDocumentFragment();
+          (words ? t.split(/(\s+)/) : [...t]).forEach((ch) => {
+            if (/^\s+$/.test(ch)) { frag.append(ch); return; }
+            const s = document.createElement('span'); s.className = words ? 'hw' : 'hc'; s.textContent = ch; frag.append(s);
+          });
+          c.replaceWith(frag);
+        } else if (c.nodeType === 1 && !(c as HTMLElement).matches('.ln')) walk(c);
+        else if (c.nodeType === 1) walk(c);
+      });
+    };
+    walk(el);
+    el.classList.add('split');
+  });
+  let active: HTMLElement | null = null;
+  document.addEventListener('mousemove', (e) => {
+    const t = (e.target as HTMLElement).closest<HTMLElement>('.split');
+    if (active && active !== t) { active.querySelectorAll<HTMLElement>('.hc').forEach((s) => s.style.removeProperty('--p')); }
+    active = t;
+    if (!t || t.matches('.statement')) return;
+    t.querySelectorAll<HTMLElement>('.hc').forEach((s) => {
+      const r = s.getBoundingClientRect(); const d = Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2));
+      s.style.setProperty('--p', Math.max(0, 1 - d / 90).toFixed(2));
+    });
+  }, { passive: true });
+
+  /* ---- 3. images everywhere: tilt + sheen following the pointer */
+  document.querySelectorAll<HTMLElement>('main figure, .lb, .paper, .chip, .about figure, .svc figure').forEach((f) => {
+    if (f.closest('.hero') || f.hasAttribute('data-tilt')) return;
+    f.setAttribute('data-tilt', ''); f.classList.add('img-hover');
+    f.addEventListener('mousemove', (e) => { const r = f.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      f.style.setProperty('--rx', `${(-y * 2.2).toFixed(2)}deg`); f.style.setProperty('--ry', `${(x * 3).toFixed(2)}deg`); f.style.setProperty('--gx', `${(x + 0.5) * 100}%`); f.style.setProperty('--gy', `${(y + 0.5) * 100}%`); });
+    f.addEventListener('mouseleave', () => { f.style.setProperty('--rx', '0deg'); f.style.setProperty('--ry', '0deg'); });
+  });
+}
