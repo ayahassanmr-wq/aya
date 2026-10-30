@@ -6,7 +6,10 @@
 ---
 <script is:inline>
   try {
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !sessionStorage.getItem('aya-intro')) {
+    // plays on the first visit of a session, and again whenever the page is refreshed
+    var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    var reload = nav ? nav.type === 'reload' : (performance.navigation && performance.navigation.type === 1);
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && (reload || !sessionStorage.getItem('aya-intro'))) {
       document.documentElement.classList.add('has-intro');
       sessionStorage.setItem('aya-intro', '1');
     }

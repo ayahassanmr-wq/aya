@@ -51,6 +51,7 @@ if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     e.preventDefault(); lenis.scrollTo(t, { offset: -80 }); t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true });
   }));
   (window as any).__lenis = lenis;
+  if ((window as any).__top) lenis.scrollTo(0, { immediate: true, force: true });
 }
 
 /* ---------- reading progress */

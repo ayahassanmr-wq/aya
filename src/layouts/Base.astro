@@ -35,6 +35,19 @@ const ogImage = new URL(image, Astro.site);
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>
+      // a refresh always starts at the top of the page (the browser would otherwise jump back to the last section)
+      // (back/forward navigation still returns to where you were)
+      (function () {
+        var n = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+        var reload = n ? n.type === 'reload' : (performance.navigation && performance.navigation.type === 1);
+        try { history.scrollRestoration = reload ? 'manual' : 'auto'; } catch (e) {}
+        if (reload && !location.hash) {
+          window.__top = true; window.scrollTo(0, 0);
+          addEventListener('load', function () { window.scrollTo(0, 0); });
+        }
+      })();
+    </script>
     <link rel="preload" href="/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
     {preloadImage && <link rel="preload" as="image" imagesrcset={preloadImage.srcset} imagesizes={preloadImage.sizes} fetchpriority="high" />}
   </head>
