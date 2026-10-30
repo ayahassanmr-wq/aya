@@ -1,0 +1,50 @@
+---
+import { contact, TBC } from '../data/projects';
+---
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div>
+      <span class="label eyebrow">Contact</span>
+      <h2>Start a conversation</h2>
+      <p class="lede">For concept design roles, collaborations with design firms, and selected private commissions in KSA, the Gulf and Egypt.</p>
+    </div>
+    <div class="rows">
+      <div class="row"><span class="label">Email</span><a class="v" href={`mailto:${contact.email}`} id="em">{contact.email}</a><button type="button" class="copy" data-t="em">Copy</button></div>
+      <div class="row"><span class="label">LinkedIn</span><a class="v" href={contact.linkedin} target="_blank" rel="noopener">{contact.linkedinLabel}</a></div>
+      <div class="row"><span class="label">Based in</span><span class="v">{contact.basedIn === TBC ? <em class="ph">Riyadh / Cairo, confirm</em> : contact.basedIn}</span></div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <img src="/brand/AYA_Primary_Inverse_OffWhite.svg" alt="AYA Hassan, Architect & Interior Design" width="236" height="120" loading="lazy" />
+    <span>© {new Date().getFullYear()} Aya Hassan</span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.copy').forEach((b) => b.addEventListener('click', async () => {
+    const el = document.getElementById(b.dataset.t!);
+    if (!el) return;
+    try { await navigator.clipboard.writeText(el.textContent ?? ''); b.textContent = 'Copied'; setTimeout(() => (b.textContent = 'Copy'), 1600); }
+    catch { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s?.removeAllRanges(); s?.addRange(r); }
+  }));
+</script>
+
+<style>
+  .contact { background: var(--oxblood); color: var(--offwhite); }
+  h2 { color: var(--offwhite); }
+  .wrap { display: grid; gap: 40px; }
+  @media (min-width: 900px) { .contact .wrap { grid-template-columns: 1fr 1fr; align-items: end; } }
+  .eyebrow { opacity: .6; display: block; margin-bottom: 14px; }
+  .lede { margin-top: 20px; max-width: 34em; color: rgba(243, 237, 227, .82); }
+  .row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding-block: 18px; border-top: 1px solid var(--line-light); }
+  .row:last-child { border-bottom: 1px solid var(--line-light); }
+  .row .label { color: rgba(243, 237, 227, .6); flex: 0 0 100px; }
+  .v { flex: 1 1 200px; font-size: 18px; overflow-wrap: anywhere; text-decoration: none; }
+  .copy { font: 500 11px var(--sans); letter-spacing: .18em; text-transform: uppercase; background: none; color: var(--offwhite); border: 1px solid var(--line-light); padding: 8px 12px; cursor: pointer; }
+  .copy:hover { border-color: var(--offwhite); }
+  footer { background: var(--oxblood-deep); color: rgba(243, 237, 227, .6); font-size: 13px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px; padding-block: 32px; }
+  footer img { height: 110px; width: auto; }
+</style>

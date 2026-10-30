@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import heroImg from '../assets/projects/mall2.jpg';
+import gold from '../assets/gold.jpg';
+---
+<section class="hero" style={`--gold:url(${gold.src})`}>
+  <div class="wrap">
+    <div>
+      <p class="label kicker">Architect &amp; Interior Designer · Concept Design</p>
+      <h1>From concept<br />to <span class="foil">conviction.</span></h1>
+      <p class="lede">I shape concepts for Gulf-scale workplaces, public buildings and private residences, and carry them through to visuals clients approve.</p>
+      <div class="meta label"><span>Currently at ZFP · Riyadh</span><span>NEOM · SABIC · STC</span></div>
+    </div>
+    <figure>
+      <Image src={heroImg} alt="Interior of a four-level commercial mall under a woven lattice glass canopy at dusk" widths={[640, 1068]} sizes="(min-width: 900px) 50vw, 100vw" loading="eager" />
+      <figcaption class="label">Commercial Mall · Saudi Arabia</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero { background: var(--oxblood); color: var(--offwhite); padding-block: 0; }
+  .wrap { display: grid; grid-template-columns: 1fr; gap: 40px; padding-block: 56px 64px; }
+  @media (min-width: 900px) { .wrap { grid-template-columns: 1.05fr 1fr; align-items: end; padding-block: 80px 88px; } }
+  .kicker { opacity: .7; margin-bottom: 22px; }
+  h1 { font-size: clamp(46px, 7.4vw, 96px); line-height: .98; }
+  /* The one gold touch on the site: a real foil texture, never flat colour */
+  .foil { background: var(--gold) center / cover; -webkit-background-clip: text; background-clip: text; color: transparent; font-style: italic; }
+  @supports not ((-webkit-background-clip: text) or (background-clip: text)) { .foil { color: var(--offwhite); background: none; } }
+  .lede { max-width: 34em; margin-top: 28px; font-size: 18px; color: rgba(243, 237, 227, .86); }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line-light); color: rgba(243, 237, 227, .7); }
+  figure { margin: 0; }
+  figure :global(img) { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  figcaption { margin-top: 10px; color: rgba(243, 237, 227, .6); }
+</style>
