@@ -5,6 +5,30 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
+/* ---------- word rise: headings and statements below the fold rise word by word as they enter */
+if (!reduce) {
+  document.querySelectorAll<HTMLElement>('main h2.display-l:not(.lines), main h2.display-m, main .svc .display-m, main .statement, main .pill h3, main .tl h2, main .more .display-m').forEach((el) => {
+    if (el.closest('.hl, [data-no-split]') || el.getBoundingClientRect().top < innerHeight * 0.92) return;
+    let wi = 0;
+    const walk = (node: Node) => [...node.childNodes].forEach((c) => {
+      if (c.nodeType === 3) {
+        const t = c.textContent || ''; if (!t.trim()) return;
+        const frag = document.createDocumentFragment();
+        t.split(/(\s+)/).forEach((w) => {
+          if (!w) return;
+          if (/^\s+$/.test(w)) { frag.append(w); return; }
+          const m = document.createElement('span'); m.className = 'rw';
+          const i = document.createElement('span'); i.textContent = w; i.style.setProperty('--wi', String(Math.min(wi++, 24)));
+          m.append(i); frag.append(m);
+        });
+        c.replaceWith(frag);
+      } else if (c.nodeType === 1) walk(c);
+    });
+    walk(el);
+    el.classList.add('words', 'reveal');
+  });
+}
+
 /* ---------- reveal (only things below the first screen start hidden) */
 const io = new IntersectionObserver((es) => es.forEach((e) => {
   if (!e.isIntersecting) return;
@@ -27,6 +51,19 @@ if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     e.preventDefault(); lenis.scrollTo(t, { offset: -80 }); t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true });
   }));
   (window as any).__lenis = lenis;
+}
+
+/* ---------- marquees speed up with scroll velocity */
+const marqs = [...document.querySelectorAll<HTMLElement>('.marquee .track')];
+if (!reduce && marqs.length) {
+  let last = scrollY, v = 0;
+  const go = () => {
+    const d = Math.abs(scrollY - last); last = scrollY;
+    v = lerp(v, Math.min(d, 80) / 8, 0.12);
+    marqs.forEach((m) => m.getAnimations().forEach((a) => (a.playbackRate = 1 + v)));
+    requestAnimationFrame(go);
+  };
+  requestAnimationFrame(go);
 }
 
 /* ---------- reading progress */

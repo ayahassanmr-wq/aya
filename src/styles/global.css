@@ -44,10 +44,12 @@
   color-scheme: light;
 }
 @view-transition { navigation: auto; }
-::view-transition-old(root) { animation: .45s var(--ease-io) both vt-out; }
-::view-transition-new(root) { animation: .6s var(--ease) both vt-in; }
-@keyframes vt-out { to { opacity: 0; transform: translateY(-12px); } }
-@keyframes vt-in { from { opacity: 0; transform: translateY(18px); } }
+/* page change: the old page sinks back and dims, the new one rises over it from the bottom edge */
+::view-transition-group(root) { animation-duration: .9s; }
+::view-transition-old(root) { animation: .9s var(--ease-io) both vt-out; }
+::view-transition-new(root) { animation: .9s var(--ease-io) both vt-in; }
+@keyframes vt-out { to { transform: scale(.94) translateY(-3%); filter: brightness(.45); } }
+@keyframes vt-in { from { clip-path: inset(100% 0 0 0 round 40px 40px 0 0); transform: translateY(8%); } to { clip-path: inset(0 0 0 0 round 0); transform: none; } }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -109,7 +111,10 @@ a:hover .arr, .btn:hover .arr { transform: translateX(5px); }
 .lines .ln > span { display: inline-block; animation: lineup 1.1s var(--ease) both; }
 .lines .ln:nth-child(2) > span { animation-delay: .08s; } .lines .ln:nth-child(3) > span { animation-delay: .16s; }
 .lines.pre .ln > span { animation: none; transform: translateY(105%); }
-@keyframes lineup { from { transform: translateY(105%); } }
+@keyframes lineup { from { transform: translateY(110%) rotate(4deg); } }
+.lines .ln > span, .hl .ln > span { transform-origin: left bottom; }
+/* hold the first-screen entrances until the intro has opened */
+html.has-intro:not(.intro-out) :is(.lines .ln > span, .hl .ln > span, .bottom, .ph .lede, .ph .meta) { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .lines .ln > span { transform: none; } html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 
 /* parallax frame */
@@ -230,3 +235,15 @@ footer ul a:hover { transform: translateX(6px); }
 .split .hw { border-radius: var(--r-s); }
 .corner.tl { border-top-left-radius: 14px; } .corner.br { border-bottom-right-radius: 14px; }
 .progress { border-radius: 0 2px 2px 0; }
+
+/* word rise */
+.words.reveal.pre { opacity: 1; transform: none; }
+.rw { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+.rw > span { display: inline-block; transition: transform 1s var(--ease), opacity 1s var(--ease); transition-delay: calc(var(--wi, 0) * 45ms); }
+.words.pre .rw > span { transform: translateY(105%) rotate(3deg); opacity: 0; transform-origin: left bottom; }
+/* project cards: the picture opens upward as the card arrives */
+.card .para { clip-path: inset(0 0 0 0); transition: clip-path 1.3s var(--ease-io); }
+.card.pre .para { clip-path: inset(100% 0 0 0); }
+.card .para img { transition: scale 1.8s var(--ease), filter .6s; }
+.card.pre .para img { scale: 1.3; }
+.card.reveal.pre { transform: translateY(40px); opacity: 1; }

@@ -1,7 +1,7 @@
 ---
-/* Logo intro: drafting guides draw in, the AYA mark is traced in champagne line and filled while a counter runs to 100,
-   then the screen splits horizontally and opens onto the page. ~1.9 s including the exit, once per session.
-   The page renders underneath immediately. Never with reduced motion, never without JS. */
+/* Logo intro (~4.2 s, once per session): construction lines draw, the AYA mark is traced slowly in champagne line,
+   the fill sweeps across it, then the mark flies up into its place in the header while the screen parts top and bottom.
+   The page renders underneath immediately. Skippable; never with reduced motion, never without JS. */
 ---
 <script is:inline>
   try {
@@ -13,13 +13,11 @@
 </script>
 <div class="intro" aria-hidden="true" data-intro>
   <span class="half up"></span><span class="half dn"></span>
-  <div class="stage">
+  <div class="stage" data-stage>
     <span class="g gh g1"></span><span class="g gh g2"></span><span class="g gv g3"></span><span class="g gv g4"></span>
-    <svg class="mk" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
-    <span class="cap label">Architect &amp; Interior Designer · Concept Design</span>
+    <svg class="mk line" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
+    <svg class="mk fill" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
   </div>
-  <span class="cnt" data-cnt>000</span>
-  <span class="loc label">Riyadh · 24.71° N 46.67° E</span>
   <button type="button" class="label skip-intro" data-skip tabindex="-1">Skip</button>
 </div>
 
@@ -28,12 +26,23 @@
   const el = document.querySelector<HTMLElement>('[data-intro]');
   if (el && root.classList.contains('has-intro')) {
     let done = false;
-    const cnt = el.querySelector<HTMLElement>('[data-cnt]')!;
-    const t0 = performance.now();
-    const tick = (t: number) => { if (done) return; const k = Math.min(1, (t - t0) / 1150); cnt.textContent = String(Math.round(100 * (1 - Math.pow(1 - k, 2.4)))).padStart(3, '0'); if (k < 1) requestAnimationFrame(tick); };
-    requestAnimationFrame(tick);
-    const end = () => { if (done) return; done = true; cnt.textContent = '100'; root.classList.add('intro-out'); setTimeout(() => { root.classList.remove('has-intro', 'intro-out'); el.remove(); }, 800); };
-    setTimeout(end, 1250);
+    const stage = el.querySelector<HTMLElement>('[data-stage]')!;
+    const end = () => {
+      if (done) return; done = true;
+      // fly the mark to the header logo
+      const target = document.querySelector<HTMLElement>('a.logo img');
+      const a = stage.getBoundingClientRect();
+      if (target) {
+        const b = target.getBoundingClientRect();
+        if (b.width > 0) {
+          const s = b.width / a.width;
+          stage.style.setProperty('--fly', `translate(${b.left + b.width / 2 - (a.left + a.width / 2)}px, ${b.top + b.height / 2 - (a.top + a.height / 2)}px) scale(${s})`);
+        }
+      }
+      root.classList.add('intro-out');
+      setTimeout(() => { root.classList.remove('has-intro', 'intro-out'); el.remove(); }, 1000);
+    };
+    setTimeout(end, 3300);
     el.querySelector('[data-skip]')!.addEventListener('click', end);
     addEventListener('keydown', end, { once: true });
     addEventListener('pointerdown', end, { once: true });
@@ -42,28 +51,29 @@
 
 <style>
   .intro { display: none; }
-  :global(.has-intro) .intro { display: block; position: fixed; inset: 0; z-index: 500; color: var(--ow); pointer-events: auto; }
-  .half { position: absolute; left: 0; right: 0; height: 50.5%; background: var(--night); transition: transform .8s var(--ease-io); }
+  :global(.has-intro) .intro { display: block; position: fixed; inset: 0; z-index: 500; color: var(--ow); }
+  :global(.has-intro a.logo img) { opacity: 0; }
+  .half { position: absolute; left: 0; right: 0; height: 50.5%; background: var(--night); transition: transform 1s var(--ease-io); }
   .up { top: 0; } .dn { bottom: 0; }
   :global(.intro-out) .up { transform: translateY(-100%); }
   :global(.intro-out) .dn { transform: translateY(100%); }
-  .stage { position: absolute; left: 50%; top: 50%; width: min(64vw, 460px); aspect-ratio: 941 / 453; transform: translate(-50%, -54%); transition: opacity .35s, transform .8s var(--ease-io); }
-  :global(.intro-out) .stage { opacity: 0; transform: translate(-50%, -54%) scale(.92); }
-  /* drafting guides: baseline, cap line and two verticals */
-  .g { position: absolute; background: rgba(216, 199, 166, .28); }
-  .gh { left: -18%; right: -18%; height: 1px; transform: scaleX(0); animation: gx .7s var(--ease-io) forwards; }
-  .gv { top: -22%; bottom: -22%; width: 1px; transform: scaleY(0); animation: gy .7s .08s var(--ease-io) forwards; }
-  .g1 { top: 2%; } .g2 { bottom: 9.5%; animation-delay: .05s; }
-  .g3 { left: 0; } .g4 { right: 0; animation-delay: .14s; }
+  .stage { position: absolute; left: 50%; top: 50%; width: min(70vw, 560px); aspect-ratio: 941 / 453; margin: calc(min(70vw, 560px) * -453 / 941 / 2) 0 0 calc(min(70vw, 560px) / -2); transform-origin: center; animation: breathe 3.3s var(--ease) both; }
+  @keyframes breathe { from { transform: scale(.94); } to { transform: scale(1); } }
+  :global(.intro-out) .stage { animation: none; transform: var(--fly, translateY(-20px) scale(.2)); transition: transform .95s var(--ease-io); }
+  /* construction lines: draw in, then fade once the fill arrives */
+  .g { position: absolute; background: rgba(216, 199, 166, .3); }
+  .gh { left: -24%; right: -24%; height: 1px; transform: scaleX(0); animation: gx 1s var(--ease-io) forwards, gone .6s 2.7s forwards; }
+  .gv { top: -30%; bottom: -30%; width: 1px; transform: scaleY(0); animation: gy 1s .15s var(--ease-io) forwards, gone .6s 2.75s forwards; }
+  .g1 { top: 2%; } .g2 { bottom: 9.5%; } .g3 { left: 0; } .g4 { right: 0; }
   @keyframes gx { to { transform: scaleX(1); } } @keyframes gy { to { transform: scaleY(1); } }
-  .mk { position: relative; width: 100%; height: 100%; display: block; overflow: visible; fill: transparent; stroke: #D8C7A6; stroke-width: 1.2px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .85s .1s var(--ease-io) forwards, fillin .35s .8s var(--ease) forwards; }
+  @keyframes gone { to { opacity: 0; } }
+  /* the mark: a slow trace, then the fill sweeps across from the left */
+  .mk { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+  .line { fill: transparent; stroke: #D8C7A6; stroke-width: 1.2px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2s .3s cubic-bezier(.6, .05, .3, 1) forwards, fadeline .5s 2.8s forwards; }
   @keyframes draw { to { stroke-dashoffset: 0; } }
-  @keyframes fillin { to { fill: #F3EDE3; stroke: rgba(216, 199, 166, 0); } }
-  .cap { position: absolute; left: 0; right: 0; top: calc(100% + 26px); text-align: center; color: var(--muted-dark); opacity: 0; transform: translateY(8px); animation: rise .5s .7s var(--ease) forwards; white-space: nowrap; }
-  @keyframes rise { to { opacity: 1; transform: none; } }
-  .cnt { position: absolute; left: max(var(--gut), env(safe-area-inset-left, 0px)); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); font: 400 clamp(64px, 11vw, 168px)/1 var(--display); color: rgba(243, 237, 227, .12); font-variant-numeric: tabular-nums; letter-spacing: -.02em; transition: opacity .3s; }
-  .loc { position: absolute; left: max(var(--gut), env(safe-area-inset-left, 0px)); top: calc(26px + env(safe-area-inset-top, 0px)); color: var(--muted-dark); }
-  :global(.intro-out) .cnt, :global(.intro-out) .loc, :global(.intro-out) .skip-intro { opacity: 0; }
+  @keyframes fadeline { to { opacity: 0; } }
+  .fill { fill: #F3EDE3; clip-path: inset(0 100% 0 0); animation: sweep .9s 2s var(--ease-io) forwards; }
+  @keyframes sweep { to { clip-path: inset(0 0 0 0); } }
   .skip-intro { position: absolute; right: max(var(--gut), env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: none; border: 0; color: var(--muted-dark); padding: 12px; cursor: pointer; transition: opacity .3s; }
-  @media (max-width: 600px) { .cap { font-size: 10px; letter-spacing: .14em; } }
+  :global(.intro-out) .skip-intro { opacity: 0; }
 </style>

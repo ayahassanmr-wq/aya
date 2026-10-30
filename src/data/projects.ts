@@ -144,4 +144,7 @@ export const contact = {
   email: 'ayahassanm@outlook.com',
   linkedin: 'https://www.linkedin.com/in/ayahassanm',
   linkedinLabel: 'linkedin.com/in/ayahassanm',
+  instagram: 'https://www.instagram.com/ayahassanmr/',
+  facebook: 'https://www.facebook.com/share/1CLSC4gxvc/',
+  whatsapp: 'https://wa.me/201115318509', // the number is never printed on the site
 };

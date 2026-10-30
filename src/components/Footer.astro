@@ -1,11 +1,11 @@
 ---
 import { contact, projects } from '../data/projects';
+import Social from './Social.astro';
 ---
 <footer class="dark" data-footer>
   <div class="wrap">
     <div class="cta">
-      <p class="label muted">04 — Next step</p>
-      <h2 class="big"><span class="ln"><span>Have a concept?</span></span><span class="ln"><span>Let’s make it <em>convincing.</em></span></span></h2>
+      <h2 class="big lines"><span class="ln"><span>Have a concept?</span></span><span class="ln"><span>Let’s make it <em>convincing.</em></span></span></h2>
       <div class="actions">
         <a href="/contact/" class="btn solid magnet">Start a project <span class="arr">→</span></a>
         <a href={`mailto:${contact.email}`} class="mail link">{contact.email}</a>
@@ -19,11 +19,8 @@ import { contact, projects } from '../data/projects';
         <li><a href="/services/"><span>Services</span></a></li>
         <li><a href="/contact/"><span>Contact</span></a></li>
       </ul></div>
-      <div><p class="label muted">Elsewhere</p><ul>
-        <li><a href={contact.linkedin} target="_blank" rel="noopener"><span>LinkedIn</span> <i aria-hidden="true">↗</i></a></li>
-        <li><a href="/Aya_Hassan_CV.pdf"><span>Curriculum vitae</span> <i aria-hidden="true">↓</i></a></li>
-      </ul></div>
-      <div><p class="label muted">Based in</p><p class="v">Riyadh, Saudi Arabia</p><p class="v muted">Local time <time data-clock>--:--</time></p></div>
+      <div><p class="label muted">Follow &amp; message</p><Social /><ul class="cv"><li><a href="/Aya_Hassan_CV.pdf"><span>Curriculum vitae</span> <i aria-hidden="true">↓</i></a></li></ul></div>
+      <div><p class="label muted">Based in</p><p class="v">Riyadh, Saudi Arabia</p></div>
       <button type="button" class="top" data-top aria-label="Back to top"><span aria-hidden="true">↑</span></button>
     </div>
   </div>
@@ -32,15 +29,13 @@ import { contact, projects } from '../data/projects';
     <svg class="mark" viewBox="0 0 941 453" preserveAspectRatio="xMidYMax meet"><use href="/brand/aya-sprite.svg#aya" /></svg>
   </div>
 
-  <div class="wrap base label"><span>© {new Date().getFullYear()} Aya Hassan</span><span>Architect &amp; Interior Designer · Concept Design</span><span>Designed &amp; built in Riyadh / Cairo</span></div>
+  <div class="wrap base label"><span>© {new Date().getFullYear()} Aya Hassan</span><span>Architect &amp; Interior Designer · Concept Design</span><a href="/sitemap.xml" class="link">Sitemap</a></div>
 </footer>
 
 <script>
   const f = document.querySelector<HTMLElement>('[data-footer]');
   if (f) {
     f.querySelector('[data-top]')!.addEventListener('click', () => { const l = (window as any).__lenis; l ? l.scrollTo(0, { duration: 1.6 }) : scrollTo({ top: 0, behavior: 'smooth' }); (document.querySelector('a.logo') as HTMLElement | null)?.focus({ preventScroll: true }); });
-    const t = () => { const c = f.querySelector<HTMLElement>('[data-clock]'); if (c) c.textContent = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Riyadh' }).format(new Date()); };
-    t(); setInterval(t, 20000);
     // the big AYA draws itself as the footer comes into view
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { f.classList.add('drawn'); io.disconnect(); } }, { threshold: 0.25 });
     io.observe(f.querySelector('.mark-wrap')!);
@@ -64,6 +59,7 @@ import { contact, projects } from '../data/projects';
   ul a { display: inline-flex; align-items: baseline; gap: 6px; font: 400 22px/1.3 var(--display); transition: transform .45s var(--ease), color .3s; }
   ul a:hover { transform: translateX(8px); color: #D8C7A6; font-style: italic; }
   ul sup { font: 400 10px var(--sans); color: var(--muted-dark); }
+  .cv { margin-top: 18px; }
   ul i { font-style: normal; font-size: 14px; color: var(--muted-dark); }
   .v { font-size: 15px; } .v time { color: var(--ow); font-variant-numeric: tabular-nums; }
   .top { width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--rule-light); background: none; color: var(--ow); font-size: 20px; cursor: pointer; transition: background .4s, color .4s, transform .5s var(--ease); }

@@ -1,17 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
+import Social from '../components/Social.astro';
 import { contact, imagesFor } from '../data/projects';
 ---
 <Base title="Contact" description="Contact Aya Hassan for concept design roles, collaborations with design firms and selected private commissions.">
-  <PageHero eyebrow="Contact" code="Sheet G-04 · Enquiries" compact images={[imagesFor('stc-hq')[2], imagesFor('commercial-mall')[1]]} alt="Interior of the stc headquarters" meta={[['Based in', 'Riyadh, Saudi Arabia'], ['Open to', 'Roles · Collaborations · Commissions'], ['Languages', 'Arabic · English']]}>
+  <PageHero compact images={[imagesFor('stc-hq')[2], imagesFor('commercial-mall')[1]]} alt="Interior of the stc headquarters" meta={[['Based in', 'Riyadh, Saudi Arabia'], ['Open to', 'Roles · Collaborations · Commissions'], ['Languages', 'Arabic · English']]}>
     <h1 class="display-xl lines"><span class="ln"><span>Let’s talk</span></span><span class="ln"><span>about your <em>project.</em></span></span></h1>
     <p class="lede">For concept design roles, collaborations with design firms, and selected private commissions in Saudi Arabia, the Gulf and Egypt.</p>
   </PageHero>
 
   <section class="wrap rows">
     <div class="row"><span class="label muted">Email</span><a href={`mailto:${contact.email}`} class="v link" id="em">{contact.email}</a><button type="button" class="btn copy" data-copy="em">Copy</button></div>
-    <div class="row"><span class="label muted">LinkedIn</span><a href={contact.linkedin} target="_blank" rel="noopener" class="v link">{contact.linkedinLabel}</a><span class="arr">↗</span></div>
+    <div class="row"><span class="label muted">Social</span><Social size="l" /><span></span></div>
     <div class="row"><span class="label muted">CV</span><a href="/Aya_Hassan_CV.pdf" class="v link">Download PDF</a><span class="arr">↓</span></div>
   </section>
 </Base>

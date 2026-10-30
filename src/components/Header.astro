@@ -3,6 +3,7 @@
 interface Props { overHero?: boolean }
 const { overHero = false } = Astro.props;
 const path = Astro.url.pathname;
+import Social from './Social.astro';
 const links = [
   { href: '/work/', label: 'Work' },
   { href: '/about/', label: 'About' },
@@ -18,29 +19,25 @@ const links = [
     <nav aria-label="Main" class="main-nav">
       <ul>
         {links.map((l, i) => (
-          <li><a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}><sup>0{i + 1}</sup><span class="roll"><span>{l.label}</span><span aria-hidden="true">{l.label}</span></span></a></li>
+          <li><a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}><span class="roll"><span>{l.label}</span><span aria-hidden="true">{l.label}</span></span></a></li>
         ))}
       </ul>
     </nav>
     <div class="right">
-      <span class="clock label"><i class="live" aria-hidden="true"></i>Riyadh <time data-clock>--:--</time></span>
       <a href="/contact/" class="talk label">Let’s talk <span class="arr" aria-hidden="true">→</span></a>
       <button class="menu label" aria-expanded="false" aria-controls="mnav" data-menu><span class="mt">Menu</span><span class="lines" aria-hidden="true"><i></i><i></i></span></button>
     </div>
   </div>
 </header>
 <div class="mnav" id="mnav" hidden>
-  <nav aria-label="Mobile" class="wrap"><ul>{links.map((l, i) => <li><a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}><span class="label muted">0{i + 1}</span>{l.label}<span class="arr" aria-hidden="true">→</span></a></li>)}</ul></nav>
-  <div class="wrap foot label"><span>Get in touch</span><a href="mailto:ayahassanm@outlook.com">ayahassanm@outlook.com</a><a href="https://www.linkedin.com/in/ayahassanm" target="_blank" rel="noopener">LinkedIn ↗</a><span>Riyadh <time data-clock>--:--</time></span></div>
+  <nav aria-label="Mobile" class="wrap"><ul>{links.map((l, i) => <li><a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}<span class="arr" aria-hidden="true">→</span></a></li>)}</ul></nav>
+  <div class="wrap foot"><Social /></div>
 </div>
 
 <script>
   const h = document.querySelector<HTMLElement>('[data-header]')!;
   const btn = document.querySelector<HTMLButtonElement>('[data-menu]')!;
   const m = document.getElementById('mnav')!;
-  const clocks = document.querySelectorAll<HTMLElement>('[data-clock]');
-  const tick = () => { const t = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Riyadh' }).format(new Date()); clocks.forEach((c) => (c.textContent = t)); };
-  tick(); setInterval(tick, 20000);
   const set = (open: boolean) => {
     btn.setAttribute('aria-expanded', String(open)); m.hidden = !open; h.classList.toggle('open', open); h.classList.remove('tuck');
     btn.querySelector('.mt')!.textContent = open ? 'Close' : 'Menu';

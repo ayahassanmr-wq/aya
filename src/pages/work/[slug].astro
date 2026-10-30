@@ -2,7 +2,6 @@
 import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import { projects, imagesFor, drawingsFor, type Project } from '../../data/projects';
-import { sheetCode } from '../../data/sheet';
 
 export function getStaticPaths() {
   return projects.map((p, i) => ({ params: { slug: p.slug }, props: { p, prev: projects[(i - 1 + projects.length) % projects.length], next: projects[(i + 1) % projects.length], i } }));
@@ -27,7 +26,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
       {hero && <div class="para bgwrap"><Image src={hero} alt={`${p.title}, ${place}`} widths={[900, 1600, 2000]} sizes="100vw" loading="eager" fetchpriority="high" data-parallax="0.2" data-scale="1.18" /></div>}
       <div class="veil"></div>
       <div class="wrap hi">
-        <nav class="crumbs label" aria-label="Breadcrumb"><a href="/work/" class="link">Work</a><span>/</span><span>{sheetCode(p)}</span><span>/</span><span>{String(i + 1).padStart(2, '0')} of {projects.length}</span></nav>
+        <nav class="crumbs label" aria-label="Breadcrumb"><a href="/work/" class="link">← All work</a></nav>
         <h1 class="display-xl lines"><span class="ln"><span>{p.title}</span></span></h1>
         <div class="hmeta label"><span>{place}</span><span>{p.category === 'architecture' ? 'Architecture' : 'Interiors'} · {p.sector}</span>{p.concept && <span class="tag">Concept exploration</span>}</div>
       </div>
@@ -36,7 +35,6 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
     <!-- 02 title block -->
     <section class="wrap tb">
       <dl class="block">
-        <div><dt class="label">Sheet</dt><dd>{sheetCode(p)}</dd></div>
         <div><dt class="label">Location</dt><dd>{place}</dd></div>
         <div><dt class="label">Discipline</dt><dd>{p.category === 'architecture' ? 'Architecture' : 'Interiors'} · {p.sector}</dd></div>
         <div><dt class="label">Practice</dt><dd>{p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent / portfolio'}</dd></div>
@@ -47,7 +45,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
 
     <!-- 03 brief -->
     <section class="wrap brief">
-      <h2 class="label muted reveal">01 — Brief</h2>
+      <h2 class="label muted reveal">Brief</h2>
       <div class="bt">
         {p.summary && <p class="statement reveal">{p.summary}</p>}
         {p.overview && <div class="ov reveal">{p.overview.map((t) => <p>{t}</p>)}</div>}
@@ -65,14 +63,13 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
     <!-- 04 visuals -->
     {rest.length > 0 && (
       <section class="wrap gal">
-        <div class="sheet-head"><h2 class="label">02 — Visuals</h2><span class="label muted">{rest.length + 1} images</span></div>
+        <div class="sheet-head"><h2 class="label">Visuals</h2></div>
         <div class="grid">
           {rest.map((img, k) => (
             <figure class:list={[layout(k, rest.length)]}>
               <button type="button" class="para zoom lb wipe" data-lb={k + 1} data-cursor="Open" aria-label={`Open image ${k + 2}`}>
                 <Image src={img} alt={`${p.title}, view ${k + 2}`} widths={[700, 1200, 1800]} sizes={layout(k, rest.length) === 'full' ? '100vw' : '(min-width: 760px) 50vw, 100vw'} data-parallax="0.07" data-scale="1.1" />
               </button>
-              <figcaption class="label muted">{sheetCode(p)}.{String(k + 2).padStart(2, '0')}</figcaption>
             </figure>
           ))}
         </div>
@@ -83,12 +80,12 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
     {drawings.length > 0 && (
       <section class="dark draw">
         <div class="wrap">
-          <div class="sheet-head"><h2 class="label">03 — Drawings &amp; diagrams</h2><span class="label muted">{drawings.length} sheets</span></div>
+          <div class="sheet-head"><h2 class="label">Drawings &amp; diagrams</h2></div>
           <div class="dgrid">
             {drawings.map((d, k) => (
               <figure class="reveal">
                 <button type="button" class="paper lb" data-lb={rest.length + 1 + k} data-cursor="Open" aria-label={`Open drawing ${k + 1}`}><Image src={d} alt={`${p.title}, drawing ${k + 1}`} widths={[600, 1100]} sizes="(min-width: 760px) 50vw, 100vw" /></button>
-                <figcaption class="label muted">D-{String(k + 1).padStart(2, '0')}</figcaption>
+                
               </figure>
             ))}
           </div>
@@ -100,7 +97,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
     {p.video && (
       <section class="dark film">
         <div class="wrap">
-          <div class="sheet-head"><h2 class="label">04 — Film</h2><span class="label muted">{p.video.title ?? 'Animation'}</span></div>
+          <div class="sheet-head"><h2 class="label">Film</h2><span class="label muted">{p.video.title ?? 'Animation'}</span></div>
           <div class="screen reveal">
             {p.video.file && <video src={p.video.file} poster={p.video.poster ?? hero?.src} controls playsinline preload="none"></video>}
             {p.video.youtube && <iframe src={`https://www.youtube-nocookie.com/embed/${p.video.youtube}?rel=0`} title={p.video.title ?? p.title} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>}
@@ -118,7 +115,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
     <a href={`/work/${next.slug}/`} class="next" data-cursor="Next">
       {nextCover && <div class="para nb"><Image src={nextCover} alt="" widths={[900, 1600]} sizes="100vw" data-parallax="0.12" data-scale="1.15" /></div>}
       <div class="veil"></div>
-      <div class="wrap ni"><span class="label">Next project · {sheetCode(next)}</span><span class="display-l">{next.title}</span><span class="label go">Open project <span class="arr">→</span></span></div>
+      <div class="wrap ni"><span class="label">Next project</span><span class="display-l">{next.title}</span><span class="label go">Open project <span class="arr">→</span></span></div>
     </a>
   </article>
 
@@ -166,11 +163,11 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
   .hmeta { font-size: 12px; display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: center; padding-top: 18px; border-top: 1px solid var(--rule-light); opacity: .9; }
 
   .tb { padding-block: 0; }
-  .block { margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 1px solid var(--rule); }
+  .block { margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--rule); }
   .block div { padding: 20px 18px 20px 0; border-right: 1px solid var(--rule); display: grid; gap: 6px; align-content: start; }
   .block div + div { padding-left: 18px; }
   .block .wide { grid-column: 1 / -1; border-top: 1px solid var(--rule); border-right: 0; padding-left: 0; }
-  .block div:nth-child(5) { border-right: 0; }
+  .block div:nth-child(4) { border-right: 0; }
   dt { color: var(--muted); font-size: 11.5px; }
   dd { margin: 0; font-size: 15px; }
   @media (max-width: 860px) { .block { grid-template-columns: 1fr 1fr; } .block div { border-right: 0 !important; padding-left: 0 !important; border-top: 1px solid var(--rule); } }

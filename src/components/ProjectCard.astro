@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import { cover, type Project } from '../data/projects';
-import { sheetCode } from '../data/sheet';
 interface Props { p: Project; size?: 'l' | 'm'; eager?: boolean }
 const { p, size = 'm', eager = false } = Astro.props;
 const img = cover(p.slug);
@@ -12,7 +11,6 @@ const img = cover(p.slug);
       {img && <Image src={img} alt={`${p.title}, ${p.location}`} widths={size === 'l' ? [800, 1400, 1800] : [600, 900, 1200]} sizes={size === 'l' ? '(min-width: 900px) 66vw, 100vw' : '(min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw'} loading={eager ? 'eager' : 'lazy'} data-parallax="0.06" data-scale="1.1" />}
     </div>
     <span class="sheen" aria-hidden="true"></span>
-    <span class="label code-chip glass-dark">{sheetCode(p)}</span>
     {p.concept && <span class="tag flag glass">Concept exploration</span>}
     <span class="corner tl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
   </div>
