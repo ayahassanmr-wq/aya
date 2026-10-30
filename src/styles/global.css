@@ -12,10 +12,12 @@
    Layout idea: an architect's drawing set — sheet codes, title blocks, hairline rules. */
 :root {
   /* radius system, taken from the soft curves of the AYA swashes */
-  --r-s: 8px;
-  --r-m: clamp(12px, 1vw, 16px);
-  --r-l: clamp(16px, 1.6vw, 26px);
-  --r-xl: clamp(22px, 2.6vw, 44px);
+  --r-s: 4px;
+  --r-m: clamp(6px, .5vw, 8px);
+  --r-l: clamp(8px, .7vw, 12px);
+  --r-xl: clamp(12px, 1.1vw, 18px);
+  /* one height for every hero on the site */
+  --hero-h: clamp(620px, 100svh, 1120px);
   --r-pill: 999px;
   --ox: #5E1A24;
   --ox-deep: #43121A;
@@ -49,7 +51,7 @@
 ::view-transition-old(root) { animation: .9s var(--ease-io) both vt-out; }
 ::view-transition-new(root) { animation: .9s var(--ease-io) both vt-in; }
 @keyframes vt-out { to { transform: scale(.94) translateY(-3%); filter: brightness(.45); } }
-@keyframes vt-in { from { clip-path: inset(100% 0 0 0 round 40px 40px 0 0); transform: translateY(8%); } to { clip-path: inset(0 0 0 0 round 0); transform: none; } }
+@keyframes vt-in { from { clip-path: inset(100% 0 0 0 round 18px 18px 0 0); transform: translateY(8%); } to { clip-path: inset(0 0 0 0 round 0); transform: none; } }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -233,7 +235,7 @@ footer ul a:hover { transform: translateX(6px); }
 .paper :is(img) { border-radius: var(--r-s); }
 .lbx img { border-radius: var(--r-m); }
 .split .hw { border-radius: var(--r-s); }
-.corner.tl { border-top-left-radius: 14px; } .corner.br { border-bottom-right-radius: 14px; }
+.corner.tl { border-top-left-radius: 8px; } .corner.br { border-bottom-right-radius: 8px; }
 .progress { border-radius: 0 2px 2px 0; }
 
 /* word rise */
