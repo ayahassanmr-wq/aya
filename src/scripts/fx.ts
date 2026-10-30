@@ -11,7 +11,7 @@ const io = new IntersectionObserver((es) => es.forEach((e) => {
   e.target.classList.remove('pre'); e.target.classList.add('shown'); io.unobserve(e.target);
 }), { rootMargin: '0px 0px -8% 0px' });
 document.querySelectorAll<HTMLElement>('.stagger').forEach((g) => [...g.children].forEach((c, i) => (c as HTMLElement).style.setProperty('--i', String(i % 6))));
-document.querySelectorAll<HTMLElement>('.reveal, .lines, .wipe').forEach((el) => {
+document.querySelectorAll<HTMLElement>('.reveal, .lines, .wipe, .clip, .sheet-head').forEach((el) => {
   if (reduce) { el.classList.add('shown'); return; }
   if (el.getBoundingClientRect().top > innerHeight * 0.92) { el.classList.add('pre'); io.observe(el); }
   else requestAnimationFrame(() => el.classList.add('shown'));
@@ -57,6 +57,23 @@ if (!reduce && px.length) {
     requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);
+}
+
+/* ---------- scroll progress: [data-sp] gets --sp 0→1 while its top travels from the bottom to the top of the viewport;
+   [data-sp="out"] gets 0→1 while it scrolls out past the top. Drives section curtains, hero framing and drifts. */
+const sp = [...document.querySelectorAll<HTMLElement>('[data-sp]')];
+if (!reduce && sp.length) {
+  const run = () => {
+    const vh = innerHeight;
+    for (const el of sp) {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -40 || r.top > vh + 40) continue;
+      const v = el.dataset.sp === 'out' ? -r.top / Math.max(1, r.height) : (vh - r.top) / vh;
+      el.style.setProperty('--sp', Math.max(0, Math.min(1, v)).toFixed(3));
+    }
+    requestAnimationFrame(run);
+  };
+  requestAnimationFrame(run);
 }
 
 /* ---------- cursor, pattern spotlight, hover preview (desktop only) */
@@ -165,7 +182,7 @@ if (fine && !reduce) {
 
   /* ---- 2. headline letters: lift + tint near the pointer */
   document.querySelectorAll<HTMLElement>('h1, h2.display-l, h2.display-m, .display-xl, .display-l, .display-m, .card h3 .u, .statement').forEach((el) => {
-    if (el.closest('.intro, .hl, [data-no-split]') || el.querySelector('img, svg, a, button, .foil')) return;
+    if (el.closest('[data-intro], .hl, [data-no-split]') || el.querySelector('img, svg, a, button, .foil')) return;
     const words = el.matches('.statement');
     if (!words) { const host = el.closest<HTMLElement>('h1, h2, h3') || el; if (!host.hasAttribute('aria-label')) host.setAttribute('aria-label', (host.textContent || '').replace(/\s+/g, ' ').trim()); }
     const walk = (node: Node) => {
@@ -173,9 +190,14 @@ if (fine && !reduce) {
         if (c.nodeType === 3) {
           const t = c.textContent || ''; if (!t.trim()) return;
           const frag = document.createDocumentFragment();
-          (words ? t.split(/(\s+)/) : [...t]).forEach((ch) => {
-            if (/^\s+$/.test(ch)) { frag.append(ch); return; }
-            const s = document.createElement('span'); s.className = words ? 'hw' : 'hc'; s.textContent = ch; frag.append(s);
+          t.split(/(\s+)/).forEach((w) => {
+            if (!w) return;
+            if (/^\s+$/.test(w)) { frag.append(w); return; }
+            if (words) { const s = document.createElement('span'); s.className = 'hw'; s.textContent = w; frag.append(s); return; }
+            // letters are grouped per word so a line never breaks inside a word
+            const wd = document.createElement('span'); wd.style.whiteSpace = 'nowrap';
+            [...w].forEach((ch) => { const s = document.createElement('span'); s.className = 'hc'; s.textContent = ch; wd.append(s); });
+            frag.append(wd);
           });
           c.replaceWith(frag);
         } else if (c.nodeType === 1 && !(c as HTMLElement).matches('.ln')) walk(c);

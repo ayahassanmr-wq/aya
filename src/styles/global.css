@@ -31,8 +31,8 @@
   --rule-light: rgba(243, 237, 227, .16);
   --display: "Cormorant Garamond", "Cormorant Fallback", Georgia, serif;
   --sans: "Jost", "Jost Fallback", "Futura", "Helvetica Neue", Arial, sans-serif;
-  --gut: clamp(16px, 4vw, 56px);
-  --max: 1440px;
+  --gut: clamp(16px, 4vw, 72px);
+  --max: 1840px;  /* wide container for large screens */
   --ease: cubic-bezier(.2, .7, .2, 1);
   --ease-io: cubic-bezier(.76, 0, .24, 1);
   color-scheme: light;
@@ -72,7 +72,11 @@ em { font-style: italic; }
 .dark .lede { color: rgba(243, 237, 227, .78); }
 
 /* section heading: label + rule, like a sheet header */
-.sheet-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding-block: 18px; border-top: 1px solid var(--rule); }
+.sheet-head { position: relative; display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding-block: 18px; }
+.sheet-head::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--rule); transform-origin: left; transition: transform 1.4s var(--ease-io); }
+.sheet-head.pre::before { transform: scaleX(0); }
+.sheet-head.pre > * { opacity: 0; transform: translateY(10px); }
+
 @media (min-width: 560px) { .sheet-head > * { white-space: nowrap; } }
 .sheet-head { flex-wrap: wrap; }
 .sheet-head h2 { margin: 0; }
@@ -200,3 +204,11 @@ footer ul a:hover { transform: translateX(6px); }
 .img-hover .para img { scale: 1; transition: scale 1.2s var(--ease), filter .6s; }
 .img-hover:hover .para img, .img-hover.para:hover img { scale: 1.04; }
 .paper.img-hover:hover img { scale: 1.02; }
+
+/* section heads: the rule draws, then the labels rise (after the generic label transition so it wins) */
+.sheet-head > *, .sheet-head > .label { transition: opacity .9s .25s var(--ease), transform .9s .25s var(--ease), letter-spacing .45s var(--ease), color .3s; }
+/* clip reveal for images: the frame opens upward, the picture settles from a slight zoom */
+.clip { clip-path: inset(0 0 0 0); transition: clip-path 1.5s var(--ease-io); }
+.clip img { transition: scale 1.8s var(--ease); }
+.clip.pre { clip-path: inset(100% 0 0 0); opacity: 1; transform: none; }
+.clip.pre img { scale: 1.25; }

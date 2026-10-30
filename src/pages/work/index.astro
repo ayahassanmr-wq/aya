@@ -1,8 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { getImage } from 'astro:assets';
-import { projects, cover } from '../../data/projects';
+import { projects, cover, countries } from '../../data/projects';
 import { sheetCode } from '../../data/sheet';
 const filters = [
   { id: 'all', label: 'All' },
@@ -15,9 +16,10 @@ const prev = await Promise.all(projects.map(async (p) => (await getImage({ src: 
 const count = (id: string) => id === 'all' ? projects.length : projects.filter((p) => p.category === id || p.sector === id).length;
 ---
 <Base title="Work" description={`${projects.length} architecture and interior projects by Aya Hassan across the Gulf, Egypt and beyond.`}>
+  <PageHero eyebrow="Index of work" code="Sheets A-01 — I-99" compact images={['commercial-mall', 'sabic-hq', 'neom-oxagon', 'zayed-residence'].map((x) => cover(x)!)} alt="Selected projects by Aya Hassan" meta={[['Projects', String(projects.length)], ['Architecture', String(count('architecture'))], ['Interiors', String(count('interiors'))], ['Countries', String(countries.length)]]}>
+    <h1 class="display-xl lines"><span class="ln"><span>The work,</span></span><span class="ln"><span><em>{projects.length} projects.</em></span></span></h1>
+  </PageHero>
   <section class="wrap head">
-    <p class="label muted">Index of work</p>
-    <h1 class="display-xl lines"><span class="ln"><span>Work <sup class="cnt">{projects.length}</sup></span></span></h1>
     <div class="bar glass" data-sticky-bar>
       <div class="filters" role="group" aria-label="Filter projects">
         {filters.map((f, i) => <button type="button" data-f={f.id} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}<sup>{count(f.id)}</sup></button>)}
@@ -33,7 +35,7 @@ const count = (id: string) => id === 'all' ? projects.length : projects.filter((
     <h2 id="plist" class="sr-only">Projects</h2>
     <p class="sr-only" aria-live="polite" data-live></p>
     <div class="grid stagger" data-view="grid">
-      {projects.map((p, i) => <div class="it" data-cat={p.category} data-sector={p.sector}><ProjectCard p={p} eager={i < 2} /></div>)}
+      {projects.map((p, i) => <div class="it" data-cat={p.category} data-sector={p.sector}><ProjectCard p={p} /></div>)}
     </div>
     <ol class="list" data-view="list" hidden>
       {projects.map((p, i) => (
@@ -67,8 +69,7 @@ const count = (id: string) => id === 'all' ? projects.length : projects.filter((
 </script>
 
 <style>
-  .head { padding-top: clamp(48px, 7vw, 100px); }
-  .head h1 { margin: 10px 0 clamp(32px, 4vw, 56px); }
+  .head { padding-top: clamp(28px, 3vw, 44px); }
   .bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-block: 16px; border: 0; border-block: 1px solid var(--rule); position: sticky; top: 76px; z-index: 5; background: rgba(243, 237, 227, .86); padding-inline: 14px; margin-inline: -14px; }
   @media (max-width: 760px) { .bar { top: 68px; } }
   .filters, .views { display: flex; flex-wrap: wrap; gap: 4px 22px; }
@@ -84,7 +85,6 @@ const count = (id: string) => id === 'all' ? projects.length : projects.filter((
   .list a:hover { color: var(--ox); padding-left: 16px; }
   .list a:hover .t { font-style: italic; }
   .code { color: var(--ox); }
-  .cnt { font: 400 .22em var(--sans); letter-spacing: .1em; vertical-align: top; color: var(--ox); }
   .list a { transition: color .3s, padding .5s var(--ease); }
   .list .t { font: 400 clamp(22px, 2.2vw, 32px)/1.15 var(--display); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   .list .tag { font-size: 9px; }

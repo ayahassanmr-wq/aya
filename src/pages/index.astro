@@ -14,7 +14,6 @@ const slides = await Promise.all(slideSlugs.map(async (slug) => {
 }));
 const place = (p: typeof projects[number]) => `${p.location}${p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}`;
 const [f1, f2, f3, f4, f5, f6] = featured;
-const names = ['NEOM', 'SABIC', 'stc', 'Jotun', 'H.B. Fuller', 'Chery', 'Noatum', 'Tech Park', 'Fifth Square', 'Linah Farms'];
 const years = new Date().getFullYear() - 2020;
 const services = [
   { t: 'Concept design', slug: 'neom-oxagon' },
@@ -22,10 +21,12 @@ const services = [
   { t: 'BIM & design packages', slug: 'noatum-terminal' },
   { t: 'Materials & FF&E', slug: 'stc-hq' },
 ];
-const previews = await Promise.all(services.map(async (s) => (await getImage({ src: cover(s.slug), width: 700, format: 'webp' })).src));
+const previews = await Promise.all(services.map(async (s) => (await getImage({ src: cover(s.slug), width: 900, format: 'webp', quality: 70 })).src));
+const stripSlugs: [string, string][] = [['NEOM', 'neom-oxagon'], ['SABIC', 'sabic-hq'], ['stc', 'stc-hq'], ['Jotun', 'jotun-office'], ['H.B. Fuller', 'hb-fuller'], ['Chery', 'chery-showroom'], ['Noatum', 'noatum-terminal'], ['Tech Park', 'tech-park'], ['Fifth Square', 'fifth-square'], ['Linah Farms', 'linah-farms']];
+const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (await getImage({ src: cover(slug), width: 320, height: 220, fit: 'cover', format: 'webp', quality: 60 })).src })));
 ---
 <Base overHero intro preloadImage={{ srcset: slides[0].srcset, sizes: '100vw' }}>
-  <section class="hero" data-hero aria-label="Introduction" data-slides={JSON.stringify(slides.map((x) => ({ href: `/work/${x.p.slug}/`, title: x.p.title, place: place(x.p), thumb: x.thumb })))}>
+  <section class="hero" data-hero data-sp="out" aria-label="Introduction" data-slides={JSON.stringify(slides.map((x) => ({ href: `/work/${x.p.slug}/`, title: x.p.title, place: place(x.p), thumb: x.thumb })))}>
     <div class="slides">
       {slides.map((x, i) => (
         <div class:list={['slide', { on: i === 0 }]} aria-hidden={i === 0 ? undefined : 'true'}>
@@ -38,6 +39,8 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
       ))}
     </div>
     <div class="veil"></div>
+    <div class="draft" aria-hidden="true"><span class="cx"></span><span class="cy"></span><span class="coord label">24.7136° N<br />46.6753° E</span></div>
+    <span class="cue label" aria-hidden="true"><i></i>Scroll</span>
     <div class="wrap inner">
       <div class="top label">
         <span class="kicker"><span class="dotl"></span>Aya Hassan</span>
@@ -99,12 +102,26 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
     }
   </script>
 
-  <section class="intro wrap">
-    <p class="label muted reveal">00 — Introduction</p>
-    <p class="statement reveal">I turn early design ideas into concepts clients approve, from public buildings at <em>NEOM</em> to the headquarters of <em>SABIC</em> and <em>stc</em>. Idea, model, image and drawing set, carried by one hand.</p>
+  <section class="dark intro" aria-labelledby="intro-h">
+    <div class="wrap ig">
+      <div class="it">
+        <div class="sheet-head"><h2 id="intro-h" class="label">00 — Introduction</h2><span class="label muted">Riyadh · 24.71° N</span></div>
+        <p class="statement reveal">I turn early design ideas into concepts clients approve, from public buildings at <em>NEOM</em> to the headquarters of <em>SABIC</em> and <em>stc</em>. Idea, model, image and drawing set, carried by one hand.</p>
+        <a href="/about/" class="label link reveal more-l">About Aya <span class="arr">→</span></a>
+      </div>
+      <div class="collage" aria-hidden="true">
+        <figure class="c1 clip para"><Image src={imagesFor('stc-hq')[1]} alt="" widths={[500, 900]} sizes="(min-width: 900px) 26vw, 60vw" data-parallax="0.12" data-scale="1.12" /></figure>
+        <figure class="c2 clip para"><Image src={imagesFor('sabic-hq')[2]} alt="" widths={[400, 700]} sizes="(min-width: 900px) 18vw, 40vw" data-parallax="0.24" data-scale="1.12" /></figure>
+        <figure class="c3 clip para"><Image src={imagesFor('neom-oxagon')[2]} alt="" widths={[400, 700]} sizes="(min-width: 900px) 20vw, 50vw" data-parallax="0.06" data-scale="1.12" /></figure>
+        <span class="dim label" aria-hidden="true"><i></i>Concept → Conviction<i></i></span>
+      </div>
+    </div>
   </section>
 
-  <section class="dark numbers">
+  <section class="dark numbers" data-sp aria-label="In numbers">
+    <svg class="plan" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
+      <path pathLength="1" d="M0 240 H1200 M80 0 V300 M380 0 V300 M680 0 V300 M980 0 V300 M80 60 H380 L380 240 M680 60 A160 160 0 0 1 980 220" />
+    </svg>
     <div class="wrap grid4 stagger">
       <div class="reveal"><span class="n" data-count={projects.length}>{projects.length}</span><span class="label muted">Projects</span></div>
       <div class="reveal"><span class="n" data-count={countries.length}>{countries.length}</span><span class="label muted">Countries</span></div>
@@ -113,22 +130,25 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
     </div>
   </section>
 
-  <section class="wrap feat">
-    <div class="sheet-head"><h2 class="label">01 — Selected work</h2><a href="/work/" class="label link">All {projects.length} projects →</a></div>
-    <div class="row r1"><ProjectCard p={f1} size="l" eager /><ProjectCard p={f2} /></div>
-    <div class="row r2"><ProjectCard p={f3} /><ProjectCard p={f4} size="l" /></div>
-    <div class="row r3"><ProjectCard p={f5} /><ProjectCard p={f6} /><a href="/work/" class="more reveal" data-cursor="Index"><span class="label">Index of work</span><span class="display-m">See all {projects.length} projects</span><span class="label go">Open the index <span class="arr">→</span></span></a></div>
-  </section>
+  <div class="curtain" data-sp>
+    <section class="wrap feat">
+      <div class="sheet-head"><h2 class="label">01 — Selected work</h2><a href="/work/" class="label link">All {projects.length} projects →</a></div>
+      <div class="row r1"><ProjectCard p={f1} size="l" /><ProjectCard p={f2} /></div>
+      <div class="row r2"><ProjectCard p={f3} /><ProjectCard p={f4} size="l" /></div>
+      <div class="row r3"><ProjectCard p={f5} /><ProjectCard p={f6} /><a href="/work/" class="more reveal" data-cursor="Index"><span class="label">Index of work</span><span class="display-m">See all {projects.length} projects</span><span class="label go">Open the index <span class="arr">→</span></span></a></div>
+    </section>
+  </div>
 
   <section class="dark marquee" aria-label="Clients and projects">
-    <div class="track">{[...names, ...names].map((n) => <span>{n}<i aria-hidden="true">✦</i></span>)}</div>
+    <div class="track">{[...strip, ...strip].map((x, k) => <span class="mi" aria-hidden={k >= strip.length ? 'true' : undefined}><img src={x.src} alt="" width="160" height="110" loading="lazy" decoding="async" />{x.n}<i aria-hidden="true">✦</i></span>)}</div>
   </section>
 
   <section class="dark duo">
     <div class="wrap">
       <div class="sheet-head"><h2 class="label">02 — Practice</h2><a href="/about/" class="label link">About Aya →</a></div>
+      <h2 class="display-l lines big"><span class="ln"><span>Precision, vision,</span></span><span class="ln"><span><em>scale</em> and craft.</span></span></h2>
       <div class="cols">
-        <h2 class="display-l lines"><span class="ln"><span>Precision, vision,</span></span><span class="ln"><span><em>scale</em> and craft.</span></span></h2>
+        <figure class="pfig clip para" aria-hidden="true"><Image src={imagesFor('sabic-hq')[3]} alt="" widths={[600, 1000, 1400]} sizes="(min-width: 860px) 45vw, 100vw" data-parallax="0.1" data-scale="1.14" /><figcaption class="label">SABIC HQ · Riyadh</figcaption></figure>
         <div class="pill stagger">
           {[['Precision', 'Concepts built to be built, from Revit models to IFC drawing sets.'], ['Vision', 'Reading the brief and giving it one clear idea.'], ['Scale', 'National projects and corporate headquarters across the Gulf.'], ['Craft', 'Material, light and the detail that holds them together.']].map(([t, d], i) => (
             <div class="reveal"><span class="label muted">0{i + 1}</span><h3>{t}</h3><p>{d}</p></div>
@@ -138,14 +158,34 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
     </div>
   </section>
 
-  <section class="wrap svc">
-    <div class="sheet-head"><h2 class="label">03 — Services</h2><a href="/services/" class="label link">How I work →</a></div>
-    <ol>
-      {services.map((s, i) => (
-        <li class="reveal"><a href="/services/" data-preview={previews[i]}><span class="label muted">0{i + 1}</span><span class="display-m">{s.t}</span><span class="arr">→</span></a></li>
-      ))}
-    </ol>
+  <section class="dark svc" data-svc>
+    <div class="wrap">
+      <div class="sheet-head"><h2 class="label">03 — Services</h2><a href="/services/" class="label link">How I work →</a></div>
+      <div class="sg">
+        <div class="sticky" aria-hidden="true">
+          <div class="sframe">
+            {previews.map((src, i) => <img src={src} alt="" width="700" height="525" loading="lazy" decoding="async" class:list={{ on: i === 0 }} data-si={i} />)}
+            <span class="label sidx"><b data-sidx>01</b> / 0{services.length}</span>
+          </div>
+        </div>
+        <ol>
+          {services.map((s, i) => (
+            <li class="reveal"><a href="/services/" data-sv={i}><span class="label muted">0{i + 1}</span><span class="display-m">{s.t}</span><span class="arr">→</span></a></li>
+          ))}
+        </ol>
+      </div>
+    </div>
   </section>
+
+  <script>
+    const sv = document.querySelector<HTMLElement>('[data-svc]');
+    if (sv) {
+      const ims = [...sv.querySelectorAll<HTMLElement>('[data-si]')];
+      const n = sv.querySelector<HTMLElement>('[data-sidx]')!;
+      const show = (i: number) => { ims.forEach((im, j) => im.classList.toggle('on', j === i)); n.textContent = String(i + 1).padStart(2, '0'); };
+      sv.querySelectorAll<HTMLElement>('[data-sv]').forEach((a) => { const i = +a.dataset.sv!; a.addEventListener('mouseenter', () => show(i)); a.addEventListener('focus', () => show(i)); });
+    }
+  </script>
 </Base>
 
 <style>
@@ -209,17 +249,53 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
     .ctrl { grid-row: auto; justify-content: space-between; width: 100%; }
     .bb { width: 32px; height: 32px; }
   }
-  .intro { padding-block: clamp(80px, 12vw, 180px); display: grid; grid-template-columns: 1fr 3fr; gap: 32px; }
-  .statement { font: 400 clamp(28px, 3.6vw, 56px)/1.16 var(--display); text-wrap: pretty; }
-  .statement em { color: var(--ox); }
-  @media (max-width: 800px) { .intro { grid-template-columns: 1fr; } }
+  /* hero: drafting crosshair, and the picture tightens into a frame as you scroll away */
+  .slides { clip-path: inset(calc(var(--sp, 0) * 9%) calc(var(--sp, 0) * 6%)); }
+  .inner { opacity: calc(1 - var(--sp, 0) * 1.4); transform: translate3d(0, calc(var(--sp, 0) * -80px), 0); }
+  .draft { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+  .cx, .cy { position: absolute; background: rgba(243, 237, 227, .16); }
+  .cx { left: 0; right: 0; top: 38%; height: 1px; transform-origin: left; animation: dx 1.8s .4s var(--ease-io) both; }
+  .cy { top: 0; bottom: 0; left: 64%; width: 1px; transform-origin: top; animation: dy 1.8s .5s var(--ease-io) both; }
+  @keyframes dx { from { transform: scaleX(0); } } @keyframes dy { from { transform: scaleY(0); } }
+  .coord { position: absolute; left: calc(64% + 14px); top: calc(38% + 12px); color: rgba(243, 237, 227, .7); font-size: 11px; line-height: 1.6; animation: up .9s 1.2s var(--ease) both; font-variant-numeric: tabular-nums; }
+  .cue { position: absolute; z-index: 6; right: max(var(--gut), env(safe-area-inset-right, 0px)); top: 50%; display: flex; flex-direction: column; align-items: center; gap: 12px; color: rgba(243, 237, 227, .72); writing-mode: vertical-rl; transform: translateY(-50%); }
+  .cue i { width: 1px; height: 54px; background: rgba(243, 237, 227, .25); position: relative; overflow: hidden; }
+  .cue i::after { content: ""; position: absolute; left: 0; right: 0; height: 40%; background: var(--ow); animation: cue 2.2s var(--ease-io) infinite; }
+  @keyframes cue { from { transform: translateY(-100%); } to { transform: translateY(260%); } }
+  @media (max-width: 900px) { .draft, .cue { display: none; } }
 
-  .numbers { padding-block: clamp(48px, 6vw, 84px); }
-  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  /* 00 intro: statement + parallax collage */
+  .intro { padding-block: clamp(80px, 11vw, 170px); overflow: hidden; }
+  .ig { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(40px, 6vw, 120px); align-items: center; }
+  .it { display: grid; gap: 32px; }
+  .statement { font: 400 clamp(28px, 3.1vw, 54px)/1.18 var(--display); text-wrap: pretty; }
+  .statement em { color: #D8C7A6; }
+  .more-l { justify-self: start; color: rgba(243, 237, 227, .86); }
+  .collage { position: relative; aspect-ratio: 1 / 1.05; }
+  .collage figure { position: absolute; margin: 0; overflow: hidden; }
+  .collage :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .c1 { left: 0; top: 4%; width: 62%; aspect-ratio: 4 / 5; }
+  .c2 { right: 0; top: 0; width: 34%; aspect-ratio: 3 / 4; transition-delay: .15s; }
+  .c3 { right: 6%; bottom: 0; width: 46%; aspect-ratio: 4 / 3; transition-delay: .3s; }
+  .dim { position: absolute; left: 0; bottom: 2%; width: 44%; display: flex; align-items: center; gap: 10px; color: var(--muted-dark); font-size: 11px; white-space: nowrap; }
+  .dim i { flex: 1; height: 1px; background: rgba(243, 237, 227, .25); position: relative; }
+  .dim i::before { content: ""; position: absolute; top: -4px; width: 1px; height: 9px; background: inherit; }
+  .dim i:first-child::before { left: 0; } .dim i:last-child::before { right: 0; }
+  @media (max-width: 900px) { .ig { grid-template-columns: 1fr; } .collage { max-width: 560px; width: 100%; } }
+
+  /* numbers on a drafted plan */
+  .numbers { position: relative; padding-block: clamp(56px, 7vw, 100px); overflow: hidden; border-top: 1px solid var(--rule-light); }
+  .plan { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .plan path { fill: none; stroke: rgba(216, 199, 166, .14); stroke-width: 1px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--sp, 1)); }
+  .numbers { --sp: 1; }
+  .grid4 { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
   .grid4 > div { display: grid; gap: 8px; padding-top: 18px; border-top: 1px solid var(--rule-light); }
-  .n { font: 400 clamp(56px, 7vw, 110px)/.9 var(--display); font-variant-numeric: tabular-nums; }
+  .n { font: 400 clamp(56px, 7.6vw, 132px)/.9 var(--display); font-variant-numeric: tabular-nums; }
   @media (max-width: 760px) { .grid4 { grid-template-columns: 1fr 1fr; } }
 
+  /* 01 selected work: the light sheet opens out of the dark as it arrives */
+  .curtain { background: var(--night); }
+  .curtain > .feat { background: var(--ow); clip-path: inset(0 calc((1 - var(--sp, 1)) * 7%)); }
   .feat { padding-block: clamp(64px, 9vw, 140px); }
   .row { display: grid; gap: clamp(28px, 3vw, 48px); margin-top: clamp(28px, 4vw, 56px); align-items: start; }
   .r1 { grid-template-columns: 2fr 1fr; } .r2 { grid-template-columns: 1fr 2fr; } .r3 { grid-template-columns: 1fr 1fr 1fr; }
@@ -230,31 +306,48 @@ const previews = await Promise.all(services.map(async (s) => (await getImage({ s
   .more .label:first-child { color: var(--muted-dark); }
   @media (max-width: 900px) { .r1, .r2, .r3 { grid-template-columns: 1fr; } .r1 > :last-child, .r2 > :first-child { margin-top: 0; } .more { aspect-ratio: auto; min-height: 240px; } }
 
-  .marquee { overflow: hidden; padding-block: 30px; border-bottom: 1px solid var(--rule-light); }
-  .track { display: flex; width: max-content; animation: slide 50s linear infinite; }
+  /* image marquee */
+  .marquee { overflow: hidden; padding-block: 34px; border-block: 1px solid var(--rule-light); }
+  .track { display: flex; width: max-content; animation: slide 60s linear infinite; }
   .marquee:hover .track { animation-play-state: paused; }
-  .track span { font: 400 clamp(34px, 4.4vw, 68px)/1 var(--display); white-space: nowrap; padding-right: 36px; transition: color .3s, opacity .3s; }
-  .marquee:hover .track span { opacity: .35; }
-  .marquee .track span:hover { opacity: 1; color: #D8C7A6; font-style: italic; }
-  .track i { font-style: normal; font-size: .38em; vertical-align: middle; padding-left: 36px; color: var(--muted-dark); }
+  .mi { display: inline-flex; align-items: center; gap: 22px; font: 400 clamp(34px, 4.4vw, 72px)/1 var(--display); white-space: nowrap; padding-right: 34px; transition: color .3s, opacity .3s; }
+  .mi img { width: clamp(84px, 8vw, 150px); height: auto; aspect-ratio: 16 / 11; object-fit: cover; filter: grayscale(1) contrast(1.05); transition: filter .5s, transform .6s var(--ease); }
+  .marquee:hover .mi { opacity: .35; }
+  .marquee .mi:hover { opacity: 1; color: #D8C7A6; font-style: italic; }
+  .marquee .mi:hover img { filter: none; transform: rotate(-3deg) scale(1.08); }
+  .mi i { font-style: normal; font-size: .34em; color: var(--muted-dark); padding-left: 12px; }
   @keyframes slide { to { transform: translateX(-50%); } }
 
-  .duo { padding-block: clamp(64px, 9vw, 140px); }
-  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); margin-top: 40px; }
-  .cols em { color: #D8C7A6; }
-  .pill { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--rule-light); }
-  .pill > div { padding: 24px 24px 28px 0; border-bottom: 1px solid var(--rule-light); display: grid; gap: 8px; transition: padding .5s var(--ease); }
-  .pill > div:hover { padding-left: 12px; }
-  .pill h3 { font-size: 30px; }
-  .pill p { color: rgba(243,237,227,.7); font-size: 15px; }
-  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
-  @media (max-width: 480px) { .pill { grid-template-columns: 1fr; } }
+  /* 02 practice */
+  .duo { padding-block: clamp(64px, 9vw, 140px) clamp(40px, 5vw, 80px); }
+  .big { margin: clamp(24px, 3vw, 44px) 0 clamp(36px, 5vw, 72px); font-size: clamp(44px, 6.4vw, 112px); line-height: .95; }
+  .big em, .cols em { color: #D8C7A6; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 110px); align-items: start; }
+  .pfig { position: relative; margin: 0; aspect-ratio: 4 / 5; overflow: hidden; }
+  .pfig :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .pfig figcaption { position: absolute; left: 14px; bottom: 12px; color: rgba(243, 237, 227, .9); font-size: 11px; }
+  .pill { display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--rule-light); }
+  .pill > div { padding: 26px 24px 30px 0; border-bottom: 1px solid var(--rule-light); display: grid; grid-template-columns: 52px 1fr; gap: 6px 18px; transition: padding .5s var(--ease), background .5s; }
+  .pill > div > .label { grid-row: span 2; padding-top: 10px; }
+  .pill > div:hover { padding-left: 14px; }
+  .pill h3 { font-size: clamp(30px, 2.8vw, 44px); line-height: 1.05; }
+  .pill p { color: rgba(243,237,227,.7); font-size: 15.5px; }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } .pfig { aspect-ratio: 16 / 11; } }
 
-  .svc { padding-block: clamp(64px, 9vw, 140px); }
-  .svc ol { list-style: none; margin: 0; padding: 0; }
-  .svc li { border-bottom: 1px solid var(--rule); }
-  .svc a { display: grid; grid-template-columns: 60px 1fr auto; align-items: center; gap: 16px; padding-block: clamp(20px, 2.6vw, 34px); transition: color .35s, padding .5s var(--ease); }
-  .svc a:hover { color: var(--ox); padding-left: 16px; }
+  /* 03 services: sticky picture that follows the hovered line */
+  .svc { padding-block: clamp(40px, 6vw, 100px) clamp(64px, 9vw, 140px); }
+  .sg { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(32px, 6vw, 110px); margin-top: clamp(28px, 4vw, 56px); align-items: start; }
+  .sticky { position: sticky; top: 110px; }
+  .sframe { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--night-2); }
+  .sframe img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.08); clip-path: inset(0 0 100% 0); transition: opacity .6s var(--ease), transform 1.2s var(--ease), clip-path .9s var(--ease-io); }
+  .sframe img.on { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+  .sidx { position: absolute; right: 14px; bottom: 12px; z-index: 2; color: rgba(243, 237, 227, .85); font-variant-numeric: tabular-nums; }
+  .sidx b { font-weight: 400; color: var(--ow); }
+  .svc ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule-light); }
+  .svc li { border-bottom: 1px solid var(--rule-light); }
+  .svc a { display: grid; grid-template-columns: 60px 1fr auto; align-items: center; gap: 16px; padding-block: clamp(22px, 2.8vw, 38px); transition: color .35s, padding .5s var(--ease); }
+  .svc a:hover, .svc a:focus-visible { color: #D8C7A6; padding-left: 16px; }
   .svc a:hover .display-m { font-style: italic; }
   .svc .arr { font-size: 22px; }
+  @media (max-width: 860px) { .sg { grid-template-columns: 1fr; } .sticky { position: static; } }
 </style>

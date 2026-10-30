@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
 import { imagesFor } from '../data/projects';
 const services = [
   { t: 'Concept design', d: 'Architectural and interior concepts, from the first studies to a direction the client signs off. Massing, spatial strategy, colour and material language, set out in a clear presentation.', img: imagesFor('neom-oxagon')[7] ?? imagesFor('neom-oxagon')[0], items: ['Concept studies & diagrams', 'Spatial planning', 'Mood, colour & material direction', 'Concept presentations'] },
@@ -16,10 +17,9 @@ const steps = [
 ];
 ---
 <Base title="Services" description="Concept design, visualization and animation, BIM and design packages, and materials and FF&E selection.">
-  <section class="wrap head">
-    <p class="label muted">Services</p>
+  <PageHero eyebrow="Services" code="Sheet G-02 · Scope" images={[imagesFor('neom-oxagon')[0], imagesFor('fifth-square')[1], imagesFor('noatum-terminal')[0], imagesFor('stc-hq')[3]]} alt="Rendered public buildings at NEOM Oxagon" meta={services.map((s, i) => [`0${i + 1}`, s.t] as [string, string])}>
     <h1 class="display-xl lines"><span class="ln"><span>From concept</span></span><span class="ln"><span>to <em>drawing set.</em></span></span></h1>
-  </section>
+  </PageHero>
 
   <section class="wrap list">
     {services.map((s, i) => (
@@ -44,11 +44,8 @@ const steps = [
 </Base>
 
 <style>
-  .head { padding-top: clamp(48px, 7vw, 100px); padding-bottom: clamp(48px, 6vw, 88px); }
-  .head h1 { margin-top: 10px; }
-  .list { padding-bottom: clamp(64px, 9vw, 130px); }
+  .list { padding-top: clamp(64px, 9vw, 130px); padding-bottom: clamp(64px, 9vw, 130px); }
   .svc h2 { transition: color .3s; } .svc:hover h2 { color: var(--ox); font-style: italic; }
-  .head em { color: var(--ox); }
   .svc { display: grid; grid-template-columns: 70px 1.1fr 1fr; gap: clamp(24px, 4vw, 64px); padding-block: clamp(32px, 4vw, 56px); border-top: 1px solid var(--rule); align-items: start; }
   .n { color: var(--ox); padding-top: 12px; }
   .c { display: grid; gap: 18px; }

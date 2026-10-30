@@ -1,38 +1,77 @@
 ---
-import { contact } from '../data/projects';
+import { contact, projects } from '../data/projects';
 ---
-<footer>
+<footer class="dark" data-footer>
   <div class="wrap">
     <div class="cta">
-      <p class="label">Start a conversation</p>
-      <a href={`mailto:${contact.email}`} class="mail display-l">{contact.email}</a>
+      <p class="label muted">04 — Next step</p>
+      <h2 class="big"><span class="ln"><span>Have a concept?</span></span><span class="ln"><span>Let’s make it <em>convincing.</em></span></span></h2>
+      <div class="actions">
+        <a href="/contact/" class="btn solid magnet">Start a project <span class="arr">→</span></a>
+        <a href={`mailto:${contact.email}`} class="mail link">{contact.email}</a>
+      </div>
     </div>
-    <div class="grid">
-      <img src="/brand/AYA_Primary_Inverse_OffWhite.svg" alt="AYA Hassan, Architect & Interior Design" width="236" height="120" loading="lazy" class="mark" />
-      <ul>
-        <li><a class="link" href="/work/">Work</a></li>
-        <li><a class="link" href="/about/">About</a></li>
-        <li><a class="link" href="/services/">Services</a></li>
-        <li><a class="link" href="/contact/">Contact</a></li>
-      </ul>
-      <ul>
-        <li><a class="link" href={contact.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a class="link" href="/Aya_Hassan_CV.pdf">Download CV</a></li>
-      </ul>
+
+    <div class="cols">
+      <div><p class="label muted">Index</p><ul>
+        <li><a href="/work/"><span>Work</span><sup>{projects.length}</sup></a></li>
+        <li><a href="/about/"><span>About</span></a></li>
+        <li><a href="/services/"><span>Services</span></a></li>
+        <li><a href="/contact/"><span>Contact</span></a></li>
+      </ul></div>
+      <div><p class="label muted">Elsewhere</p><ul>
+        <li><a href={contact.linkedin} target="_blank" rel="noopener"><span>LinkedIn</span> <i aria-hidden="true">↗</i></a></li>
+        <li><a href="/Aya_Hassan_CV.pdf"><span>Curriculum vitae</span> <i aria-hidden="true">↓</i></a></li>
+      </ul></div>
+      <div><p class="label muted">Based in</p><p class="v">Riyadh, Saudi Arabia</p><p class="v muted">Local time <time data-clock>--:--</time></p></div>
+      <button type="button" class="top" data-top aria-label="Back to top"><span aria-hidden="true">↑</span></button>
     </div>
-    <div class="base label"><span>© {new Date().getFullYear()} Aya Hassan</span><span>Architect &amp; Interior Designer · Concept Design</span></div>
   </div>
+
+  <div class="mark-wrap" aria-hidden="true">
+    <svg class="mark" viewBox="0 0 941 453" preserveAspectRatio="xMidYMax meet"><use href="/brand/aya-sprite.svg#aya" /></svg>
+  </div>
+
+  <div class="wrap base label"><span>© {new Date().getFullYear()} Aya Hassan</span><span>Architect &amp; Interior Designer · Concept Design</span><span>Designed &amp; built in Riyadh / Cairo</span></div>
 </footer>
 
+<script>
+  const f = document.querySelector<HTMLElement>('[data-footer]');
+  if (f) {
+    f.querySelector('[data-top]')!.addEventListener('click', () => { const l = (window as any).__lenis; l ? l.scrollTo(0, { duration: 1.6 }) : scrollTo({ top: 0, behavior: 'smooth' }); (document.querySelector('a.logo') as HTMLElement | null)?.focus({ preventScroll: true }); });
+    const t = () => { const c = f.querySelector<HTMLElement>('[data-clock]'); if (c) c.textContent = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Riyadh' }).format(new Date()); };
+    t(); setInterval(t, 20000);
+    // the big AYA draws itself as the footer comes into view
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { f.classList.add('drawn'); io.disconnect(); } }, { threshold: 0.25 });
+    io.observe(f.querySelector('.mark-wrap')!);
+  }
+</script>
+
 <style>
-  footer { background: var(--ox); color: var(--ow); padding-top: clamp(64px, 9vw, 120px); }
-  .cta { padding-bottom: clamp(48px, 7vw, 96px); border-bottom: 1px solid var(--rule-light); }
-  .cta .label { color: var(--muted-ox); margin-bottom: 18px; }
-  .mail { display: inline-block; font-family: var(--display); font-weight: 400; overflow-wrap: anywhere; transition: opacity .3s; }
-  .mail:hover { opacity: .75; }
-  .grid { display: grid; grid-template-columns: 1fr auto auto; gap: 40px clamp(40px, 8vw, 120px); padding-block: 48px; align-items: start; }
-  .mark { height: 96px; width: auto; }
-  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15px; }
-  .base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--rule-light); color: var(--muted-ox); font-size: 11.5px; }
-  @media (max-width: 700px) { .grid { grid-template-columns: 1fr 1fr; } .mark { grid-column: 1 / -1; } }
+  footer { position: relative; overflow: hidden; padding-top: clamp(80px, 11vw, 160px); }
+  .cta { display: grid; gap: 28px; padding-bottom: clamp(56px, 8vw, 110px); border-bottom: 1px solid var(--rule-light); }
+  .big { font: 400 clamp(46px, 7.4vw, 132px)/.95 var(--display); letter-spacing: -.02em; }
+  .big em { color: #D8C7A6; }
+  .big .ln { display: block; overflow: hidden; padding-bottom: .06em; }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 32px; margin-top: 12px; }
+  .btn.solid { background: var(--ow); color: var(--ink); border-color: var(--ow); }
+  .btn.solid::before { background: var(--ox) !important; }
+  .btn.solid:hover { color: var(--ow) !important; border-color: var(--ox) !important; }
+  .mail { font: 400 clamp(20px, 2vw, 28px) var(--display); color: rgba(243, 237, 227, .85); }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 40px; padding-block: 56px; align-items: start; }
+  .cols .label { margin-bottom: 14px; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  ul a { display: inline-flex; align-items: baseline; gap: 6px; font: 400 22px/1.3 var(--display); transition: transform .45s var(--ease), color .3s; }
+  ul a:hover { transform: translateX(8px); color: #D8C7A6; font-style: italic; }
+  ul sup { font: 400 10px var(--sans); color: var(--muted-dark); }
+  ul i { font-style: normal; font-size: 14px; color: var(--muted-dark); }
+  .v { font-size: 15px; } .v time { color: var(--ow); font-variant-numeric: tabular-nums; }
+  .top { width: 64px; height: 64px; border: 1px solid var(--rule-light); background: none; color: var(--ow); font-size: 20px; cursor: pointer; transition: background .4s, color .4s, transform .5s var(--ease); }
+  .top:hover { background: var(--ow); color: var(--ink); transform: translateY(-4px); }
+  .mark-wrap { padding-inline: max(var(--gut), env(safe-area-inset-left, 0px)); margin-top: clamp(8px, 2vw, 24px); line-height: 0; }
+  .mark { width: 100%; height: auto; max-height: 44vw; display: block; fill: transparent; stroke: rgba(216, 199, 166, .5); stroke-width: 1px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.6s var(--ease-io), fill 1.2s 1.8s var(--ease); }
+  .drawn .mark { stroke-dashoffset: 0; fill: rgba(243, 237, 227, .06); }
+  .base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--rule-light); color: var(--muted-dark); font-size: 11.5px; }
+  @media (prefers-reduced-motion: reduce) { .mark { stroke-dashoffset: 0; fill: rgba(243, 237, 227, .06); } }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr 1fr; } .top { grid-column: 2; justify-self: end; } }
 </style>

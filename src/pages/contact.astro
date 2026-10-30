@@ -1,13 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
-import { contact } from '../data/projects';
+import PageHero from '../components/PageHero.astro';
+import { contact, imagesFor } from '../data/projects';
 ---
 <Base title="Contact" description="Contact Aya Hassan for concept design roles, collaborations with design firms and selected private commissions.">
-  <section class="wrap head">
-    <p class="label muted">Contact</p>
+  <PageHero eyebrow="Contact" code="Sheet G-04 · Enquiries" compact images={[imagesFor('stc-hq')[2], imagesFor('commercial-mall')[1]]} alt="Interior of the stc headquarters" meta={[['Based in', 'Riyadh, Saudi Arabia'], ['Open to', 'Roles · Collaborations · Commissions'], ['Languages', 'Arabic · English']]}>
     <h1 class="display-xl lines"><span class="ln"><span>Let’s talk</span></span><span class="ln"><span>about your <em>project.</em></span></span></h1>
     <p class="lede">For concept design roles, collaborations with design firms, and selected private commissions in Saudi Arabia, the Gulf and Egypt.</p>
-  </section>
+  </PageHero>
 
   <section class="wrap rows">
     <div class="row"><span class="label muted">Email</span><a href={`mailto:${contact.email}`} class="v link" id="em">{contact.email}</a><button type="button" class="btn copy" data-copy="em">Copy</button></div>
@@ -25,9 +25,7 @@ import { contact } from '../data/projects';
 </script>
 
 <style>
-  .head { padding-top: clamp(48px, 7vw, 100px); padding-bottom: clamp(48px, 6vw, 88px); display: grid; gap: 28px; }
-  .head em { color: var(--ox); }
-  .rows { padding-bottom: clamp(80px, 10vw, 150px); }
+  .rows { padding-top: clamp(64px, 8vw, 120px); padding-bottom: clamp(80px, 10vw, 150px); }
   .row { display: grid; grid-template-columns: 160px 1fr auto; gap: 16px; align-items: center; padding-block: clamp(20px, 2.6vw, 34px); border-top: 1px solid var(--rule); }
   .row:last-child { border-bottom: 1px solid var(--rule); }
   .v { font: 400 clamp(24px, 3.2vw, 46px)/1.1 var(--display); overflow-wrap: anywhere; }
