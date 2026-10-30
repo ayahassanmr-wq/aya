@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { imagesFor } from '../data/projects';
+const side = imagesFor('sabic-hq')[1];
+const timeline = [
+  { y: '2024 — now', r: 'Architect & Interior Designer, Concept Design', o: 'ZFP · Zuhair Fayez Partnership', d: 'Headquarters interiors for SABIC and STC in Riyadh: design concepts, 3D modelling and visuals, material selection through site visits and vendor collaboration, and furniture and fixtures sourced from suppliers worldwide.' },
+  { y: '2020 — 2024', r: 'Architect & Interior Designer, Concept Design', o: 'Cosmos Studio', d: 'Led BIM development for NEOM public service buildings; 3D modelling, animation and promotional content for NEOM Oxagon and Um Qasr Logistic City; interior concepts and schematic packages for Sphinx, HB Fuller, Jotun and Tech Park; architecture for Fifth Square, Chery, NOATUM, Linah Farms and more.' },
+  { y: '2014 — 2019', r: 'B.Sc. Architectural Engineering', o: 'Future University in Egypt', d: 'Graduation project grade A−.' },
+];
+const tools = [
+  ['Design & BIM', 'AutoCAD, Revit, Navisworks, BIM 360, Rhino, Grasshopper, SketchUp'],
+  ['Visualization', '3ds Max, V-Ray, Corona, Lumion, AI-assisted concept tools'],
+  ['Presentation', 'Photoshop, InDesign, Premiere, After Effects'],
+  ['Languages', 'Arabic (native), English (fluent)'],
+];
+---
+<Base title="About" description="Aya Hassan, architect and interior designer in concept design at ZFP, Riyadh. Previously Cosmos Studio, with work at NEOM.">
+  <section class="wrap head">
+    <p class="label muted">About</p>
+    <h1 class="display-xl">Aya Hassan</h1>
+    <p class="label role">Architect &amp; Interior Designer · Concept Design</p>
+  </section>
+
+  <section class="wrap bio">
+    <figure class="reveal"><Image src={side} alt="SABIC headquarters atrium interior" widths={[600, 1000]} sizes="(min-width: 900px) 40vw, 100vw" /></figure>
+    <div class="txt">
+      <p class="statement reveal">A concept is only useful once someone believes in it.</p>
+      <p class="reveal">Aya is an architect and interior designer working in concept design. She joined ZFP (Zuhair Fayez Partnership) in 2024, where she shapes headquarters interiors for SABIC and STC in Riyadh. Before that she spent four years at Cosmos Studio on architecture, interiors and BIM, including public service buildings at NEOM.</p>
+      <p class="reveal">Her work covers the full concept stage: the idea, the 3D model, the visuals and animation that win approval, and the drawing packages and material selections that make it buildable.</p>
+      <a href="/Aya_Hassan_CV.pdf" class="btn reveal">Download CV <span class="arr">↓</span></a>
+    </div>
+  </section>
+
+  <section class="wrap tl">
+    <div class="sheet-head"><span class="label">Experience &amp; education</span></div>
+    {timeline.map((t) => (
+      <div class="row reveal">
+        <span class="label muted yr">{t.y}</span>
+        <div><h2 class="display-m">{t.r}</h2><p class="label org">{t.o}</p></div>
+        <p class="d">{t.d}</p>
+      </div>
+    ))}
+  </section>
+
+  <section class="wrap tools">
+    <div class="sheet-head"><span class="label">Tools</span></div>
+    <dl>{tools.map(([k, v]) => <div class="reveal"><dt class="label muted">{k}</dt><dd>{v}</dd></div>)}</dl>
+  </section>
+</Base>
+
+<style>
+  .head { padding-top: clamp(48px, 7vw, 100px); padding-bottom: clamp(40px, 5vw, 72px); }
+  .head h1 { margin: 10px 0 18px; }
+  .role { color: var(--ox); }
+  .bio { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 6vw, 110px); padding-bottom: clamp(80px, 10vw, 150px); align-items: start; }
+  .bio figure { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; }
+  .bio figure :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .txt { display: grid; gap: 24px; max-width: 60ch; }
+  .txt p:not(.statement) { color: var(--ink-2); }
+  .statement { font: italic 400 clamp(30px, 3.4vw, 50px)/1.15 var(--display); color: var(--ox); }
+  .txt .btn { justify-self: start; margin-top: 12px; }
+  @media (max-width: 860px) { .bio { grid-template-columns: 1fr; } .bio figure { aspect-ratio: 16 / 10; } }
+  .tl, .tools { padding-bottom: clamp(64px, 8vw, 120px); }
+  .row { display: grid; grid-template-columns: 160px 1.2fr 1.3fr; gap: 24px clamp(24px, 4vw, 64px); padding-block: 32px; border-bottom: 1px solid var(--rule); }
+  .org { color: var(--ox); margin-top: 10px; }
+  .d { color: var(--ink-2); font-size: 16px; }
+  @media (max-width: 900px) { .row { grid-template-columns: 1fr; gap: 10px; } }
+  dl { margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 48px; }
+  dl div { display: grid; grid-template-columns: 150px 1fr; gap: 16px; padding-block: 20px; border-bottom: 1px solid var(--rule); }
+  dd { margin: 0; }
+  @media (max-width: 800px) { dl { grid-template-columns: 1fr; } dl div { grid-template-columns: 1fr; gap: 4px; } }
+</style>

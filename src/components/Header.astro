@@ -1,30 +1,67 @@
 ---
+interface Props { overHero?: boolean }
+const { overHero = false } = Astro.props;
+const path = Astro.url.pathname;
 const links = [
-  { href: '#work', label: 'Work' },
-  { href: '#about', label: 'About' },
-  { href: '#services', label: 'Services' },
-  { href: '#contact', label: 'Contact' },
+  { href: '/work/', label: 'Work' },
+  { href: '/about/', label: 'About' },
+  { href: '/services/', label: 'Services' },
+  { href: '/contact/', label: 'Contact' },
 ];
 ---
-<header>
-  <div class="wrap nav">
-    <a class="logo" href="#top">
-      <img src="/brand/AYA_Horizontal_Inverse_OffWhite.svg" alt="AYA Hassan, Architect & Interior Design" width="230" height="46" />
+<header class:list={['site', { over: overHero }]} data-header>
+  <div class="wrap bar">
+    <a href="/" class="logo" aria-label="Aya Hassan, home">
+      <img class="lg-light" src="/brand/AYA_Horizontal_Inverse_OffWhite.svg" alt="" width="230" height="46" />
+      <img class="lg-dark" src="/brand/AYA_Horizontal_Oxblood.svg" alt="" width="230" height="46" />
     </a>
     <nav aria-label="Main">
-      <ul>{links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      <ul>
+        {links.map((l) => <li><a href={l.href} class="link" aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a></li>)}
+      </ul>
     </nav>
+    <button class="menu" aria-expanded="false" aria-controls="mnav" data-menu><span></span><span></span><span class="sr">Menu</span></button>
+  </div>
+  <div class="mnav" id="mnav" hidden>
+    <ul class="wrap">{links.map((l, i) => <li><a href={l.href}><span class="label muted">0{i + 1}</span>{l.label}</a></li>)}</ul>
   </div>
 </header>
 
+<script>
+  const h = document.querySelector<HTMLElement>('[data-header]')!;
+  const onScroll = () => h.classList.toggle('solid', window.scrollY > 40);
+  onScroll(); addEventListener('scroll', onScroll, { passive: true });
+  const btn = document.querySelector<HTMLButtonElement>('[data-menu]')!;
+  const m = document.getElementById('mnav')!;
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', String(open)); m.hidden = !open; h.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+</script>
+
 <style>
-  header { position: sticky; top: 0; z-index: 5; background: var(--oxblood); color: var(--offwhite); }
-  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
-  .logo { display: block; line-height: 0; }
-  .logo img { height: 46px; width: auto; max-width: 55vw; }
-  ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
-  ul a { text-decoration: none; font: 400 13px var(--sans); letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
-  ul a:hover { opacity: 1; }
-  @media (max-width: 640px) { ul { gap: 16px; } li:nth-child(3) { display: none; } }
-  @media (max-width: 440px) { li:nth-child(2) { display: none; } }
+  .site { position: sticky; top: 0; z-index: 20; background: var(--ow); color: var(--ink); border-bottom: 1px solid var(--rule); transition: background .4s, color .4s, border-color .4s; padding-top: env(safe-area-inset-top, 0px); }
+  .site.over { position: fixed; inset: 0 0 auto; background: transparent; color: var(--ow); border-color: transparent; }
+  .site.over.solid, .site.over.open { background: var(--ox); border-color: transparent; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 76px; }
+  .logo img { height: 40px; width: auto; }
+  .lg-light { display: none; }
+  .over .lg-light { display: block; } .over .lg-dark { display: none; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  nav ul { display: flex; gap: clamp(20px, 3vw, 44px); }
+  nav a { font: 400 12px var(--sans); letter-spacing: .22em; text-transform: uppercase; padding-block: 6px; }
+  nav a[aria-current] { background-size: 100% 1px; }
+  .menu { display: none; background: none; border: 0; padding: 10px; color: inherit; cursor: pointer; width: 44px; height: 44px; position: relative; }
+  .menu span:not(.sr) { position: absolute; left: 10px; right: 10px; height: 1.5px; background: currentColor; transition: transform .3s, top .3s; }
+  .menu span:nth-child(1) { top: 17px; } .menu span:nth-child(2) { top: 26px; }
+  .menu[aria-expanded="true"] span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+  .menu[aria-expanded="true"] span:nth-child(2) { top: 21px; transform: rotate(-45deg); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .mnav { position: fixed; inset: 76px 0 0; background: var(--ox); color: var(--ow); padding-top: 32px; }
+  .mnav li { border-bottom: 1px solid var(--rule-light); }
+  .mnav a { display: flex; align-items: baseline; gap: 18px; padding-block: 18px; font: 500 40px/1 var(--display); }
+  .site:not(.over).open { background: var(--ox); color: var(--ow); }
+  .site:not(.over).open .lg-dark { display: none; } .site:not(.over).open .lg-light { display: block; }
+  @media (max-width: 760px) { nav { display: none; } .menu { display: block; } .logo img { height: 34px; } }
 </style>

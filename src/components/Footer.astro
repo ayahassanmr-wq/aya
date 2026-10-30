@@ -1,0 +1,38 @@
+---
+import { contact } from '../data/projects';
+---
+<footer>
+  <div class="wrap">
+    <div class="cta">
+      <p class="label">Start a conversation</p>
+      <a href={`mailto:${contact.email}`} class="mail display-l">{contact.email}</a>
+    </div>
+    <div class="grid">
+      <img src="/brand/AYA_Primary_Inverse_OffWhite.svg" alt="AYA Hassan, Architect & Interior Design" width="236" height="120" loading="lazy" class="mark" />
+      <ul>
+        <li><a class="link" href="/work/">Work</a></li>
+        <li><a class="link" href="/about/">About</a></li>
+        <li><a class="link" href="/services/">Services</a></li>
+        <li><a class="link" href="/contact/">Contact</a></li>
+      </ul>
+      <ul>
+        <li><a class="link" href={contact.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a class="link" href="/Aya_Hassan_CV.pdf">Download CV</a></li>
+      </ul>
+    </div>
+    <div class="base label"><span>© {new Date().getFullYear()} Aya Hassan</span><span>Architect &amp; Interior Designer · Concept Design</span></div>
+  </div>
+</footer>
+
+<style>
+  footer { background: var(--ox); color: var(--ow); padding-top: clamp(64px, 9vw, 120px); }
+  .cta { padding-bottom: clamp(48px, 7vw, 96px); border-bottom: 1px solid var(--rule-light); }
+  .cta .label { opacity: .6; margin-bottom: 18px; }
+  .mail { display: inline-block; font-family: var(--display); font-weight: 400; overflow-wrap: anywhere; transition: opacity .3s; }
+  .mail:hover { opacity: .75; }
+  .grid { display: grid; grid-template-columns: 1fr auto auto; gap: 40px clamp(40px, 8vw, 120px); padding-block: 48px; align-items: start; }
+  .mark { height: 96px; width: auto; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15px; }
+  .base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--rule-light); opacity: .55; font-size: 10.5px; }
+  @media (max-width: 700px) { .grid { grid-template-columns: 1fr 1fr; } .mark { grid-column: 1 / -1; } }
+</style>

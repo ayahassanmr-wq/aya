@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+import { cover, type Project } from '../data/projects';
+import { sheetCode } from '../data/sheet';
+interface Props { p: Project; size?: 'l' | 'm'; eager?: boolean }
+const { p, size = 'm', eager = false } = Astro.props;
+const img = cover(p.slug);
+---
+<a href={`/work/${p.slug}/`} class:list={['card', size, 'reveal']} data-cat={p.category} data-sector={p.sector}>
+  <div class="zoom frame">
+    {img && <Image src={img} alt={`${p.title}, ${p.location}`} widths={size === 'l' ? [800, 1400, 1800] : [600, 900, 1200]} sizes={size === 'l' ? '(min-width: 900px) 66vw, 100vw' : '(min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw'} loading={eager ? 'eager' : 'lazy'} />}
+    {p.concept && <span class="tag flag">Concept exploration</span>}
+  </div>
+  <div class="meta">
+    <span class="label code">{sheetCode(p)}</span>
+    <div class="t">
+      <h3>{p.title}</h3>
+      <p class="label muted">{p.location}{p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}</p>
+    </div>
+    <span class="label muted sector">{p.sector}</span>
+  </div>
+</a>
+
+<style>
+  .card { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .frame { position: relative; aspect-ratio: 4 / 3; }
+  .l .frame { aspect-ratio: 16 / 10; }
+  .frame :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .flag { position: absolute; left: 12px; top: 12px; }
+  .meta { display: grid; grid-template-columns: 52px 1fr auto; gap: 12px; align-items: baseline; border-top: 1px solid var(--rule); padding-top: 14px; }
+  .code { color: var(--ox); }
+  h3 { font-size: clamp(22px, 2vw, 30px); line-height: 1.1; transition: color .3s; }
+  .l h3 { font-size: clamp(26px, 2.6vw, 38px); }
+  .card:hover h3 { color: var(--ox); }
+  .t .label { margin-top: 6px; font-size: 10.5px; }
+  .sector { font-size: 10.5px; }
+  @media (max-width: 520px) { .meta { grid-template-columns: 44px 1fr; } .sector { display: none; } }
+</style>

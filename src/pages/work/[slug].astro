@@ -1,0 +1,103 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { projects, imagesFor, type Project } from '../../data/projects';
+import { sheetCode } from '../../data/sheet';
+
+export function getStaticPaths() {
+  return projects.map((p, i) => ({ params: { slug: p.slug }, props: { p, next: projects[(i + 1) % projects.length] } }));
+}
+interface Props { p: Project; next: Project }
+const { p, next } = Astro.props;
+const [hero, ...rest] = imagesFor(p.slug);
+const nextCover = imagesFor(next.slug)[0];
+const place = `${p.location}${p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}`;
+---
+<Base title={p.title} description={p.summary ?? `${p.title}, ${place}. ${p.sector} project by Aya Hassan.`} image={hero?.src}>
+  <article>
+    <header class="wrap top">
+      <a href="/work/" class="label muted back link">← Index of work</a>
+      <div class="ttl">
+        <span class="label code">{sheetCode(p)}</span>
+        <h1 class="display-l">{p.title}</h1>
+      </div>
+    </header>
+
+    {hero && (
+      <div class="wrap">
+        <figure class="hero">
+          <Image src={hero} alt={`${p.title}, ${place}`} widths={[900, 1600, 2000]} sizes="100vw" loading="eager" fetchpriority="high" />
+          {p.concept && <figcaption class="tag">Concept exploration</figcaption>}
+        </figure>
+      </div>
+    )}
+
+    <section class="wrap body">
+      <dl class="block">
+        <div><dt class="label">Location</dt><dd>{place}</dd></div>
+        <div><dt class="label">Discipline</dt><dd>{p.category === 'architecture' ? 'Architecture' : 'Interiors'} · {p.sector}</dd></div>
+        <div><dt class="label">Scope</dt><dd>{p.scope.join(' · ')}</dd></div>
+        {p.practice && <div><dt class="label">Practice</dt><dd>{p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice}</dd></div>}
+        {p.year && <div><dt class="label">Year</dt><dd>{p.year}</dd></div>}
+      </dl>
+      <div class="text">
+        {p.summary && <p class="lede">{p.summary}</p>}
+        {p.overview?.map((t) => <p>{t}</p>)}
+        {p.deliverables && (<><h2 class="label muted">Deliverables</h2><ul>{p.deliverables.map((d) => <li>{d}</li>)}</ul></>)}
+        {p.nda && <p class="note label">Shown with images from the published portfolio only.</p>}
+        {p.concept && <p class="note">These images are AI-assisted concept explorations, used to study mood, light and material. They are not presented as final renders.</p>}
+      </div>
+    </section>
+
+    {rest.length > 0 && (
+      <section class="wrap gallery">
+        {rest.map((img, i) => (
+          <figure class:list={['reveal', { wide: i % 3 === 0 || (i === rest.length - 1 && i % 3 === 1) }]}>
+            <Image src={img} alt={`${p.title}, view ${i + 2}`} widths={[700, 1200, 1800]} sizes={i % 3 === 0 ? '100vw' : '(min-width: 760px) 50vw, 100vw'} />
+          </figure>
+        ))}
+      </section>
+    )}
+
+    <a href={`/work/${next.slug}/`} class="next">
+      {nextCover && <Image src={nextCover} alt="" widths={[900, 1600]} sizes="100vw" class="nbg" />}
+      <div class="veil"></div>
+      <div class="wrap ni"><span class="label">Next project · {sheetCode(next)}</span><span class="display-l">{next.title}</span><span class="btn">Open <span class="arr">→</span></span></div>
+    </a>
+  </article>
+</Base>
+
+<style>
+  .top { padding-top: clamp(32px, 5vw, 64px); }
+  .back { display: inline-block; margin-bottom: clamp(28px, 4vw, 48px); }
+  .ttl { display: grid; grid-template-columns: 90px 1fr; gap: 16px; align-items: baseline; padding-bottom: clamp(28px, 4vw, 48px); }
+  .code { color: var(--ox); }
+  @media (max-width: 600px) { .ttl { grid-template-columns: 1fr; gap: 8px; } }
+  .hero { position: relative; margin: 0; background: var(--ow-2); }
+  .hero :global(img) { width: 100%; max-height: 86svh; object-fit: cover; }
+  .hero .tag { position: absolute; left: 16px; top: 16px; }
+  .body { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(32px, 6vw, 112px); padding-block: clamp(48px, 7vw, 104px); }
+  .block { margin: 0; display: grid; gap: 0; align-content: start; border-top: 1px solid var(--rule); }
+  .block div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--rule); }
+  dt { color: var(--grey); font-size: 10.5px; padding-top: 4px; }
+  dd { margin: 0; font-size: 15px; }
+  .text { display: grid; gap: 22px; max-width: 64ch; align-content: start; }
+  .text > p:not(.lede):not(.note) { color: var(--ink-2); }
+  .text h2 { margin-top: 12px; }
+  ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+  ul li::before { content: "— "; color: var(--ox); }
+  .note { font-size: 13px; color: var(--grey); border-left: 2px solid var(--ox); padding-left: 14px; }
+  @media (max-width: 860px) { .body { grid-template-columns: 1fr; } }
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 28px); padding-bottom: clamp(80px, 10vw, 140px); }
+  .gallery figure { margin: 0; background: var(--ow-2); }
+  .gallery .wide { grid-column: 1 / -1; }
+  .gallery :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 760px) { .gallery { grid-template-columns: 1fr; } }
+  .next { position: relative; display: block; overflow: hidden; color: var(--ow); background: var(--ox-deep); }
+  .next :global(.nbg) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+  .next:hover :global(.nbg) { transform: scale(1.04); }
+  .veil { position: absolute; inset: 0; background: rgba(67, 18, 26, .66); }
+  .ni { position: relative; display: grid; gap: 18px; justify-items: start; padding-block: clamp(80px, 12vw, 180px); }
+  .ni .label { opacity: .75; }
+  .next:hover .btn { background: var(--ow); color: var(--ox); border-color: var(--ow); }
+</style>
