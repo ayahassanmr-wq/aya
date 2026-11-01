@@ -7,15 +7,21 @@ const { p, variant = 'compact', dark = false } = Astro.props;
 const on = disciplinesFor(p);
 const said = DISCIPLINES.filter((d) => on.has(d)).join(', ');
 ---
-<div class:list={['scope', variant, { dark }]} role="img" aria-label={`Scope: ${said}`}>
-  {DISCIPLINES.map((d, i) => (
-    <span class:list={['c', { on: on.has(d) }]} aria-hidden="true">
-      {variant === 'full' && <span class="n">{String(i + 1).padStart(2, '0')}</span>}
-      <span class="mark"></span>
-      <span class="t">{variant === 'full' ? d : d[0]}</span>
-    </span>
-  ))}
-</div>
+{variant === 'compact' ? (
+  <ul class="scope compact" aria-label="Scope">
+    {DISCIPLINES.filter((d) => on.has(d)).map((d) => <li class="c on"><span class="mark" aria-hidden="true"></span>{d}</li>)}
+  </ul>
+) : (
+  <div class:list={['scope', variant, { dark }]} role="img" aria-label={`Scope: ${said}`}>
+    {DISCIPLINES.map((d, i) => (
+      <span class:list={['c', { on: on.has(d) }]} aria-hidden="true">
+        <span class="n">{String(i + 1).padStart(2, '0')}</span>
+        <span class="mark"></span>
+        <span class="t">{d}</span>
+      </span>
+    ))}
+  </div>
+)}
 
 <style>
   .scope { display: flex; align-items: center; font-family: var(--sans); text-transform: uppercase; letter-spacing: .12em; }
@@ -25,8 +31,8 @@ const said = DISCIPLINES.filter((d) => on.has(d)).join(', ');
   .c.on .mark { background: currentColor; }
 
   /* compact: five initials, each a tiny filled or hollow square */
-  .compact { gap: 10px; font-size: 10.5px; }
-  .compact .t { line-height: 1; }
+  .compact { list-style: none; margin: 0; padding: 0; flex-wrap: wrap; gap: 6px 14px; font-size: 10.5px; }
+  .compact .c { gap: 6px; line-height: 1.2; }
 
   /* full: a single ruled strip, one cell per discipline */
   .full { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--rule); border-radius: var(--r-1); overflow: hidden; }

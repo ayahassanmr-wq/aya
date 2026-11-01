@@ -55,7 +55,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
         {(p.deliverables || p.links) && (
           <div class="aside reveal">
             {p.deliverables && <div><h2 class="label muted">Deliverables</h2><ul>{p.deliverables.map((d) => <li>{d}</li>)}</ul></div>}
-            {p.links && <div><h2 class="label muted">Links</h2><ul class="lk">{p.links.map((l) => <li><a href={l.url} target="_blank" rel="noopener" class="link">{l.label} <span class="arr">↗</span></a></li>)}</ul></div>}
+            {p.links && <div><h2 class="label muted">Client</h2><ul class="lk">{p.links.map((l) => <li><a href={l.url} target="_blank" rel="noopener" class="link">{l.label} <span class="arr">↗</span></a></li>)}</ul></div>}
           </div>
         )}
         {p.concept && <p class="note reveal">AI-assisted concept explorations, used to study mood, light and material. Not presented as final renders.</p>}

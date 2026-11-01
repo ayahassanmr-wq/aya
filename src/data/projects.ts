@@ -131,14 +131,15 @@ const links: Record<string, Project['links']> = {
   'jotun-office': [{ label: 'Jotun', url: 'https://www.jotun.com' }],
   'hb-fuller': [{ label: 'H.B. Fuller', url: 'https://www.hbfuller.com' }],
   'noatum-terminal': [{ label: 'Noatum', url: 'https://www.noatum.com' }],
-  'linah-farms': [{ label: 'Linah Farms', url: 'https://linahfarms.com/pages/about-us' }],
-  'chery-showroom': [{ label: 'Chery Egypt', url: 'https://chery-eg.com/en/news' }],
-  'fifth-square': [{ label: 'Fifth Square, Al Marasem', url: 'https://realestate.eg/en/blog/east-cairo-compounds/fifht-square-mall-new-cairo-by-almarasem-developments' }],
-  'misr-italia-hilltop': [{ label: 'Hilltop launch, Daily News Egypt', url: 'https://www.dailynewsegypt.com/?p=832696' }],
-  'sodic-ogami': [{ label: 'Ogami launch, Daily News Egypt', url: 'https://www.dailynewsegypt.com/?p=819635' }],
-  'orascom-o-west': [{ label: 'Midyard launch, Arab Finance', url: 'https://arabfinance.com/en/news/newdetails/15832' }],
-  'travco-west-island': [{ label: 'Almaza Bay, CairoScene', url: 'https://cairoscene.com/Home/How-Almaza-Bay-is-Shaping-a-More-Intentional-North-Coast' }],
-  'sodic-east-vale': [{ label: 'EastVale by SODIC', url: 'https://metropolitan.realestate/egypt/eastvale/' }],
+  'linah-farms': [{ label: 'Linah Farms', url: 'https://linahfarms.com' }],
+  'chery-showroom': [{ label: 'Chery Egypt', url: 'https://chery-eg.com' }],
+  'fifth-square': [{ label: 'Al Marasem', url: 'https://www.almarasem.com' }],
+  'misr-italia-hilltop': [{ label: 'Misr Italia Properties', url: 'https://www.misritaliaproperties.com' }],
+  'sodic-ogami': [{ label: 'SODIC', url: 'https://www.sodic.com' }],
+  'sodic-east-vale': [{ label: 'SODIC', url: 'https://www.sodic.com' }],
+  'orascom-o-west': [{ label: 'Orascom Development', url: 'https://www.orascomdevelopment.com' }],
+  'travco-west-island': [{ label: 'Almaza Bay · Travco', url: 'https://www.almazabay.com' }],
+  'bmw-showroom': [{ label: 'BMW Egypt', url: 'https://www.bmw-egypt.com' }],
 };
 /* ---------- films: drop a compressed mp4 in /public/video/<slug>.mp4, or add a YouTube/Vimeo id */
 const films: Record<string, Project['video']> = {
