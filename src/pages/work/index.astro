@@ -14,9 +14,9 @@ const filters = [
 const prev = await Promise.all(projects.map(async (p) => (await getImage({ src: cover(p.slug), width: 700, format: 'webp' })).src));
 const count = (id: string) => id === 'all' ? projects.length : projects.filter((p) => p.category === id || p.sector === id).length;
 ---
-<Base title="Work" description={`${projects.length} architecture and interior projects by Aya Hassan across the Gulf, Egypt and beyond.`}>
-  <PageHero images={['misr-italia-hilltop', 'sabic-hq', 'neom-oxagon', 'zayed-residence'].map((x) => cover(x)!)} alt="Selected projects by Aya Hassan" meta={[['Projects', String(projects.length)], ['Architecture', String(count('architecture'))], ['Interiors', String(count('interiors'))], ['Countries', String(countries.length)]]}>
-    <h1 class="display-xl lines"><span class="ln"><span>The work,</span></span><span class="ln"><span><em>{projects.length} projects.</em></span></span></h1>
+<Base title="Selected work" description={`Selected work by Aya Hassan: ${projects.length} architecture and interior projects across the Gulf, Egypt and beyond.`}>
+  <PageHero images={['misr-italia-hilltop', 'sabic-hq', 'neom-oxagon', 'zayed-residence'].map((x) => cover(x)!)} alt="Selected projects by Aya Hassan" meta={[['Selected', String(projects.length)], ['Architecture', String(count('architecture'))], ['Interiors', String(count('interiors'))], ['Countries', String(countries.length)]]}>
+    <h1 class="display-xl lines"><span class="ln"><span>Selected</span></span><span class="ln"><span><em>work.</em></span></span></h1>
   </PageHero>
   <section class="wrap head">
     <div class="bar glass" data-sticky-bar>

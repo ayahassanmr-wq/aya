@@ -25,6 +25,10 @@ export interface Project {
   links?: { label: string; url: string }[];
   /** Project film: a file in /public/video, or a YouTube / Vimeo id. Filled from `films` below. */
   video?: { file?: string; youtube?: string; vimeo?: string; poster?: string; title?: string };
+  /** Captions for the drawings (d01, d02 …), in order. */
+  captions?: string[];
+  /** Concept → model → render strip: [label, image file name without .jpg]. */
+  process?: [string, string][];
 }
 
 const D = 'Design', M = '3D modelling', R = 'Rendering', P = 'Post-production', B = 'BIM package', AI = 'AI enhancement';
@@ -72,7 +76,13 @@ export const projects: Project[] = [
   { slug: 'noatum-terminal', title: 'NOATUM Automotive Terminal', location: 'Ain Sokhna', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, R, P, B], practice: 'Cosmos Studio',
     summary: 'Terminal and admin buildings for a port operator, in crisp white and deep blue.' },
   { slug: 'linah-farms', title: 'Linah Farms Industrial & Admin Building', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, R, P, B], practice: 'Cosmos Studio',
-    summary: 'An industrial facade whose green framework is inspired by palm leaves.' },
+    summary: 'An industrial facade whose green framework is inspired by palm leaves.',
+    overview: [
+      'A long, solid industrial shed for a date producer, given a face. The mass is carved with vertical slots, and a green framework drawn from palm leaves runs across it, so the building carries the client’s product on its skin.',
+      'The design was taken from concept to a full Revit package: a coordinated 3D model, elevations and the phase 1 site and ground-floor plan.',
+    ],
+    captions: ['Concept: solid mass, carved slots, palm-leaf framework', 'Revit model', 'Revit elevation, main facade', 'Site and ground-floor plan, phase 1'],
+    process: [['Concept', 'd01'], ['Revit model', 'd02'], ['Render', '01']] },
   { slug: 'mazeej', title: 'Mazeej Hotel & Housing Complex', location: 'Giza', country: 'Egypt', category: 'architecture', sector: 'Hospitality', scope: ['Design review', 'Redesign to code'], practice: 'Cosmos Studio',
     summary: 'Design review and redesign of a hotel and housing complex to code and architectural standards.' },
   { slug: 'dry-port', title: 'Dry Port Buildings', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, B], practice: 'Cosmos Studio',
@@ -121,6 +131,14 @@ const links: Record<string, Project['links']> = {
   'jotun-office': [{ label: 'Jotun', url: 'https://www.jotun.com' }],
   'hb-fuller': [{ label: 'H.B. Fuller', url: 'https://www.hbfuller.com' }],
   'noatum-terminal': [{ label: 'Noatum', url: 'https://www.noatum.com' }],
+  'linah-farms': [{ label: 'Linah Farms', url: 'https://linahfarms.com/pages/about-us' }],
+  'chery-showroom': [{ label: 'Chery Egypt', url: 'https://chery-eg.com/en/news' }],
+  'fifth-square': [{ label: 'Fifth Square, Al Marasem', url: 'https://realestate.eg/en/blog/east-cairo-compounds/fifht-square-mall-new-cairo-by-almarasem-developments' }],
+  'misr-italia-hilltop': [{ label: 'Hilltop launch, Daily News Egypt', url: 'https://www.dailynewsegypt.com/?p=832696' }],
+  'sodic-ogami': [{ label: 'Ogami launch, Daily News Egypt', url: 'https://www.dailynewsegypt.com/?p=819635' }],
+  'orascom-o-west': [{ label: 'Midyard launch, Arab Finance', url: 'https://arabfinance.com/en/news/newdetails/15832' }],
+  'travco-west-island': [{ label: 'Almaza Bay, CairoScene', url: 'https://cairoscene.com/Home/How-Almaza-Bay-is-Shaping-a-More-Intentional-North-Coast' }],
+  'sodic-east-vale': [{ label: 'EastVale by SODIC', url: 'https://metropolitan.realestate/egypt/eastvale/' }],
 };
 /* ---------- films: drop a compressed mp4 in /public/video/<slug>.mp4, or add a YouTube/Vimeo id */
 const films: Record<string, Project['video']> = {
@@ -138,6 +156,22 @@ export const drawingsFor = (slug: string) => pick(slug, true);
 export const cover = (slug: string) => imagesFor(slug)[0];
 
 export const featured = projects.filter((p) => p.featured);
+
+/* ---------- scope widget: the five disciplines, read from each project's scope */
+export const DISCIPLINES = ['Design', 'Modelling', 'Rendering', 'Animation', 'BIM'] as const;
+export type Discipline = (typeof DISCIPLINES)[number];
+const DESIGN = /design|concept|review|redesign|FF&E|material/i;
+export const disciplinesFor = (p: Project) => {
+  const on = new Set<Discipline>();
+  if (p.scope.some((x) => DESIGN.test(x) && !/BIM/.test(x))) on.add('Design');
+  if (p.scope.includes(M)) on.add('Modelling');
+  if (p.scope.includes(R) || p.scope.includes(P)) on.add('Rendering');
+  if (p.scope.some((x) => /animation/i.test(x)) || p.video) on.add('Animation');
+  if (p.scope.some((x) => /BIM|IFC|Revit/i.test(x))) on.add('BIM');
+  return on;
+};
+/* a project image by file name (e.g. 'd02', '01') */
+export const fileFor = (slug: string, name: string) => { const k = Object.keys(files).find((f) => f.endsWith(`/projects/${slug}/${name}.jpg`)); return k ? files[k].default : undefined; };
 export const countries = [...new Set(projects.map((p) => p.country).filter((c) => c !== '—'))];
 
 export const contact = {

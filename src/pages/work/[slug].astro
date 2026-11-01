@@ -1,7 +1,8 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
-import { projects, imagesFor, drawingsFor, type Project } from '../../data/projects';
+import { projects, imagesFor, drawingsFor, fileFor, disciplinesFor, type Project } from '../../data/projects';
+import Scope from '../../components/Scope.astro';
 
 export function getStaticPaths() {
   return projects.map((p, i) => ({ params: { slug: p.slug }, props: { p, prev: projects[(i - 1 + projects.length) % projects.length], next: projects[(i + 1) % projects.length], i } }));
@@ -10,6 +11,8 @@ interface Props { p: Project; prev: Project; next: Project; i: number }
 const { p, prev, next, i } = Astro.props;
 const [hero, ...rest] = imagesFor(p.slug);
 const drawings = drawingsFor(p.slug);
+const bim = disciplinesFor(p).has('BIM');
+const process = (p.process ?? []).map(([label, name]) => ({ label, img: fileFor(p.slug, name) })).filter((x) => x.img);
 const nextCover = imagesFor(next.slug)[0];
 const place = `${p.location}${p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}`;
 // full-size sources for the lightbox
@@ -39,7 +42,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
         <div><dt class="label">Discipline</dt><dd>{p.category === 'architecture' ? 'Architecture' : 'Interiors'} · {p.sector}</dd></div>
         <div><dt class="label">Practice</dt><dd>{p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent / portfolio'}</dd></div>
         <div><dt class="label">Year</dt><dd>{p.year ?? '—'}</dd></div>
-        <div class="wide"><dt class="label">Scope</dt><dd>{p.scope.join(' · ')}</dd></div>
+        <div class="wide"><dt class="label">Scope</dt><dd class="sc"><Scope p={p} variant="full" /><span class="det">{p.scope.join(' · ')}</span></dd></div>
       </dl>
     </section>
 
@@ -55,7 +58,6 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
             {p.links && <div><h2 class="label muted">Links</h2><ul class="lk">{p.links.map((l) => <li><a href={l.url} target="_blank" rel="noopener" class="link">{l.label} <span class="arr">↗</span></a></li>)}</ul></div>}
           </div>
         )}
-        {p.nda && <p class="note reveal">Shown with images from the published portfolio only.</p>}
         {p.concept && <p class="note reveal">AI-assisted concept explorations, used to study mood, light and material. Not presented as final renders.</p>}
       </div>
     </section>
@@ -80,12 +82,22 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
     {drawings.length > 0 && (
       <section class="dark draw sheet" data-sp>
         <div class="wrap">
-          <div class="sheet-head"><h2 class="label">Drawings &amp; diagrams</h2></div>
+          <div class="sheet-head"><h2 class="label">{bim ? 'BIM package' : 'Drawings & diagrams'}</h2>{bim && <span class="label muted">Revit · coordinated model &amp; drawing set</span>}</div>
+          {process.length > 1 && (
+            <ol class="proc reveal" aria-label="From concept to model">
+              {process.map((s, k) => (
+                <li>
+                  <div class="pimg"><Image src={s.img!} alt={`${p.title}: ${s.label}`} widths={[500, 900]} sizes="(min-width: 760px) 30vw, 100vw" /></div>
+                  <span class="label"><span class="pn2">{String(k + 1).padStart(2, '0')}</span>{s.label}</span>
+                </li>
+              ))}
+            </ol>
+          )}
           <div class="dgrid">
             {drawings.map((d, k) => (
               <figure class="reveal">
-                <button type="button" class="paper lb" data-lb={rest.length + 1 + k} data-cursor="Open" aria-label={`Open drawing ${k + 1}`}><Image src={d} alt={`${p.title}, drawing ${k + 1}`} widths={[600, 1100]} sizes="(min-width: 760px) 50vw, 100vw" /></button>
-                
+                <button type="button" class="paper lb" data-lb={rest.length + 1 + k} data-cursor="Open" aria-label={`Open drawing ${k + 1}`}><Image src={d} alt={`${p.title}, ${p.captions?.[k] ?? `drawing ${k + 1}`}`} widths={[600, 1100]} sizes="(min-width: 760px) 50vw, 100vw" /></button>
+                {p.captions?.[k] && <figcaption class="label muted">{String(k + 1).padStart(2, '0')} · {p.captions[k]}</figcaption>}
               </figure>
             ))}
           </div>
@@ -169,6 +181,17 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
   .block .wide { grid-column: 1 / -1; border-top: 1px solid var(--rule); border-right: 0; padding-left: 0; }
   .block div:nth-child(4) { border-right: 0; }
   dt { color: var(--muted); font-size: 11.5px; }
+  .sc { display: grid; gap: 12px; }
+  .det { font-size: 13px; color: var(--muted); }
+  .proc { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 2vw, 28px); counter-reset: s; }
+  .proc li { display: grid; gap: 12px; position: relative; }
+  .proc li + li::before { content: "→"; position: absolute; left: calc(-1 * clamp(12px, 2vw, 28px) / 2); top: 42%; transform: translate(-50%, -50%); color: var(--sand); font-size: 18px; }
+  .pimg { aspect-ratio: 4 / 3; background: var(--ow); overflow: hidden; border-radius: var(--r-1); }
+  .pimg :global(img) { width: 100%; height: 100%; object-fit: contain; }
+  .proc li:last-child .pimg :global(img) { object-fit: cover; }
+  .pn2 { color: var(--sand); margin-right: 10px; }
+  .draw figcaption { color: var(--muted-dark); }
+  @media (max-width: 760px) { .proc { grid-template-columns: 1fr; } .proc li + li::before { content: "↓"; left: 50%; top: -14px; } }
   dd { margin: 0; font-size: 15px; }
   @media (max-width: 860px) { .block { grid-template-columns: 1fr 1fr; } .block div { border-right: 0 !important; padding-left: 0 !important; border-top: 1px solid var(--rule); } }
 

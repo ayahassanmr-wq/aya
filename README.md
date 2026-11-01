@@ -12,7 +12,9 @@ npm run build    # static output in dist/
 ## Edit content
 - Projects, roles, years, contact: `src/data/projects.ts`
   - `TBC` = still to confirm with Aya (shows highlighted on the site).
-  - `nda: true` = NEOM / STC / SABIC — use published-portfolio images only.
+  - `nda: true` = NEOM / STC / SABIC (Aya approved showing all project images, Nov 2026).
+  - `captions` / `process` = drawing captions and the concept → model → render strip (see Linah Farms).
+  - Scope widget reads `scope` (Design · Modelling · Rendering · Animation · BIM).
   - AI-assisted concept images: set `tag: 'Concept exploration'`. Never label them as renders.
 - Project images: `src/assets/projects/` (auto-optimised to WebP at build).
 - Logo files: `public/brand/` (from Brand/Logo).

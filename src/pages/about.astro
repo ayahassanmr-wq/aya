@@ -6,8 +6,10 @@ import Reel from '../components/Reel.astro';
 import { imagesFor, cover } from '../data/projects';
 const side = imagesFor('sabic-hq')[1];
 const timeline = [
-  { y: '2024 — now', r: 'Architect & Interior Designer, Concept Design', o: 'ZFP · Zuhair Fayez Partnership', d: 'Headquarters interiors for SABIC and STC in Riyadh: design concepts, 3D modelling and visuals, material selection through site visits and vendor collaboration, and furniture and fixtures sourced from suppliers worldwide.' },
-  { y: '2020 — 2024', r: 'Architect & Interior Designer, Concept Design', o: 'Cosmos Studio', d: 'Led BIM development for NEOM public service buildings; 3D modelling, animation and promotional content for NEOM Oxagon and Um Qasr Logistic City; interior concepts and schematic packages for Sphinx, HB Fuller, Jotun and Tech Park; architecture for Fifth Square, Chery, NOATUM, Linah Farms and more.' },
+  { y: '2026 — now', r: 'Mid-senior Design Architect', o: 'Innovation Design Studio', d: 'Architectural concepts, 3D modelling and visuals for residential developments by SODIC, Orascom, Misr Italia and Travco on the North Coast and in Greater Cairo, with AI-assisted post-production.' },
+  { y: '2025', r: 'Mid-senior Architect & Interior Designer', o: 'Cosmos Studio', d: 'Commercial and industrial architecture: Fifth Square, the Chery showroom and admin building, the NOATUM automotive terminal, Linah Farms and the Mazeej hotel and housing redesign, through to Revit (BIM) packages.' },
+  { y: '2024', r: 'Mid-senior Interior Architect', o: 'ZFP · Zuhair Fayez Partnership', d: 'Headquarters interiors for SABIC and STC in Riyadh: design concepts, 3D modelling and visuals, material selection through site visits and vendor collaboration, and furniture and fixtures sourced from suppliers worldwide.' },
+  { y: '2020 — 2023', r: 'Architect & Interior Designer', o: 'Cosmos Studio', d: 'BIM development for NEOM public service buildings; 3D modelling, animation and promotional content for NEOM Oxagon and Um Qasr Logistic City; interior concepts and schematic packages for Sphinx, HB Fuller, Jotun and Tech Park.' },
   { y: '2014 — 2019', r: 'B.Sc. Architectural Engineering', o: 'Future University in Egypt', d: 'Graduation project grade A−.' },
 ];
 const tools = [
@@ -17,8 +19,8 @@ const tools = [
   ['Languages', 'Arabic (native), English (fluent)'],
 ];
 ---
-<Base title="About" description="Aya Hassan, architect and interior designer in concept design at ZFP, Riyadh. Previously Cosmos Studio, with work at NEOM.">
-  <PageHero images={[imagesFor('stc-hq')[3], imagesFor('sabic-hq')[4], imagesFor('neom-oxagon')[1]]} alt="Interior of the stc headquarters" meta={[['Role', 'Concept Design'], ['Studio', 'ZFP, Riyadh'], ['Since', '2020'], ['Education', 'B.Sc. Architecture']]}>
+<Base title="About" description="Aya Hassan, mid-senior design architect at Innovation Design Studio. Previously ZFP and Cosmos Studio, with work at NEOM, SABIC HQ and STC HQ.">
+  <PageHero images={[imagesFor('stc-hq')[3], imagesFor('sabic-hq')[4], imagesFor('neom-oxagon')[1]]} alt="Interior of the stc headquarters" meta={[['Role', 'Design Architect'], ['Studio', 'Innovation Design Studio'], ['Since', '2020'], ['Education', 'B.Sc. Architecture']]}>
     <h1 class="display-xl lines"><span class="ln"><span>Aya</span></span><span class="ln"><span><em>Hassan.</em></span></span></h1>
     <p class="lede">Architect and interior designer in concept design. Gulf-scale work, from NEOM to the headquarters of SABIC and stc.</p>
   </PageHero>
@@ -27,7 +29,8 @@ const tools = [
     <figure class="reveal para"><Image data-parallax="0.1" data-scale="1.15" src={side} alt="SABIC headquarters atrium interior" widths={[600, 1000]} sizes="(min-width: 900px) 40vw, 100vw" /></figure>
     <div class="txt">
       <p class="statement reveal">A concept is only useful once someone believes in it.</p>
-      <p class="reveal">Aya is an architect and interior designer working in concept design. She joined ZFP (Zuhair Fayez Partnership) in 2024, where she shapes headquarters interiors for SABIC and STC in Riyadh. Before that she spent four years at Cosmos Studio on architecture, interiors and BIM, including public service buildings at NEOM.</p>
+      <p class="reveal">Aya is an architect and interior designer working in concept design. She is a mid-senior design architect at Innovation Design Studio, on residential developments for SODIC, Orascom, Misr Italia and Travco. Before that she was a mid-senior interior architect at ZFP (Zuhair Fayez Partnership), shaping the headquarters interiors of SABIC and STC in Riyadh, and spent four years at Cosmos Studio on architecture, interiors and BIM, including public service buildings at NEOM, returning in 2025 for commercial and industrial work.</p>
+      <p class="reveal">The projects on this site are a selection of that work, not the full record.</p>
       <p class="reveal">Her work covers the full concept stage: the idea, the 3D model, the visuals and animation that win approval, and the drawing packages and material selections that make it buildable.</p>
       <a href="/Aya_Hassan_CV.pdf" class="btn reveal">Download CV <span class="arr">↓</span></a>
     </div>

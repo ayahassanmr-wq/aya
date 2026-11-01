@@ -15,7 +15,7 @@ const place = (p: typeof projects[number]) => `${p.location}${p.country !== p.lo
 const years = new Date().getFullYear() - 2020;
 const thumb = async (slug: string) => (await getImage({ src: cover(slug)!, width: 480, height: 360, fit: 'cover', format: 'webp', quality: 62 })).src;
 const stats = [
-  { n: projects.length, l: 'Projects', d: 'Architecture and interiors, from first concept to drawing set.', img: await thumb('neom-oxagon') },
+  { n: projects.length, l: 'Selected projects', d: 'A selection of architecture and interiors, from first concept to drawing set.', img: await thumb('neom-oxagon') },
   { n: countries.length, l: 'Countries', d: countries.join(' · '), img: await thumb('juba-resort') },
   { n: years, l: 'Years in practice', d: 'Concept design since 2020.', img: await thumb('fifth-square') },
   { n: 3, l: 'Studios', d: 'ZFP (Zuhair Fayez Partnership), Cosmos Studio and Innovation Design Studio.', img: await thumb('stc-hq') },
@@ -136,7 +136,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
 
   <div class="curtain" data-sp>
     <section class="wrap feat" aria-labelledby="feat-h">
-      <div class="sheet-head"><h2 id="feat-h" class="label">Selected work</h2><a href="/work/" class="label link">All {projects.length} projects →</a></div>
+      <div class="sheet-head"><h2 id="feat-h" class="label">Selected work</h2><a href="/work/" class="label link">All {projects.length} selected projects →</a></div>
       <div class="stack" data-stack>
         {feats.map((x, i) => (
           <a class="sc" href={`/work/${x.p.slug}/`} style={`--i:${i}`} data-cursor="View">
@@ -151,7 +151,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
           </a>
         ))}
       </div>
-      <a href="/work/" class="more reveal" data-cursor="Index"><span class="display-m">See all {projects.length} projects</span><span class="label go">Open the index <span class="arr">→</span></span></a>
+      <a href="/work/" class="more reveal" data-cursor="Index"><span class="display-m">See all selected work</span><span class="label go">Open the index <span class="arr">→</span></span></a>
     </section>
   </div>
 
