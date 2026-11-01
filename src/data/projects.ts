@@ -10,7 +10,7 @@ export interface Project {
   category: Category;
   sector: string;
   scope: string[];
-  practice?: 'ZFP' | 'Cosmos Studio';
+  practice?: 'ZFP' | 'Cosmos Studio' | 'Innovation Design Studio';
   /** NDA-sensitive: only images already in her published portfolio. */
   nda?: boolean;
   /** AI-assisted concept imagery, or provenance not yet confirmed by Aya. Never presented as a render. */
@@ -27,7 +27,7 @@ export interface Project {
   video?: { file?: string; youtube?: string; vimeo?: string; poster?: string; title?: string };
 }
 
-const D = 'Design', M = '3D modelling', R = 'Rendering', P = 'Post-production', B = 'BIM package';
+const D = 'Design', M = '3D modelling', R = 'Rendering', P = 'Post-production', B = 'BIM package', AI = 'AI enhancement';
 
 export const projects: Project[] = [
   // ---------- Interiors · Workplace
@@ -59,14 +59,12 @@ export const projects: Project[] = [
     summary: 'Executive offices, meeting rooms and lounges for a flexible-workspace operator.' },
   { slug: 'sphinx', title: 'Sphinx Business Building', location: 'Giza', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, 'Schematic & IFC drawing packages'], practice: 'Cosmos Studio', year: '2022',
     summary: 'Formal reception salons and executive suites, delivered through to issued-for-construction drawings.' },
-  { slug: 'conference-room', title: 'Formal Conference Room', location: 'New Capital', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P],
+  { slug: 'conference-room', title: 'Formal Conference Room', location: 'New Capital', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio',
     summary: 'A formal boardroom in warm timber and soft light for the New Administrative Capital.' },
 
   // ---------- Architecture
   { slug: 'neom-oxagon', title: 'NEOM Oxagon Public Service Buildings', location: 'Oxagon, NEOM', country: 'Saudi Arabia', category: 'architecture', sector: 'Public', scope: [D, M, R, P, 'Animation'], practice: 'Cosmos Studio', nda: true, featured: true,
     summary: 'Public service buildings for Oxagon, NEOM’s port city: brick volumes, shaded courtyards and planted roofs.' },
-  { slug: 'commercial-mall', title: 'Commercial Mall', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Retail', scope: [D, M, R, P], featured: true,
-    summary: 'A four-level retail mall under a woven lattice roof that filters the desert light into the atrium.' },
   { slug: 'fifth-square', title: 'Fifth Square Commercial Complex', location: 'New Cairo', country: 'Egypt', category: 'architecture', sector: 'Commercial', scope: [M, R, P, 'Concept studies'], practice: 'Cosmos Studio', featured: true,
     summary: 'A terraced commercial complex whose canopy “trees” become the landmark at night.' },
   { slug: 'chery-showroom', title: 'Chery Showroom & Admin', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Commercial', scope: [D, M, R, P, B], practice: 'Cosmos Studio',
@@ -81,15 +79,22 @@ export const projects: Project[] = [
     summary: 'A Revit (BIM) sample: plans and 3D for a dry port’s buildings.' },
   { slug: 'juba-resort', title: 'Juba Resort Complex', location: 'Juba', country: 'South Sudan', category: 'architecture', sector: 'Hospitality', scope: [D, M, R], practice: 'Cosmos Studio',
     summary: 'A resort complex arranged around a landscaped pool garden.' },
-  { slug: 'studio-k', title: 'Studio K. Office Building', location: 'Cairo', country: 'Egypt', category: 'architecture', sector: 'Workplace', scope: [D, M, R],
-    summary: 'A compact office building with a gridded glass facade and yellow accents.' },
-  { slug: 'hk-inc', title: 'HK Inc. Office Building', location: 'Belgium', country: 'Belgium', category: 'architecture', sector: 'Workplace', scope: [D, M, R],
-    summary: 'An office building of stacked, shifted volumes.' },
+
+  // ---------- Residential developments (Innovation Design Studio)
+  { slug: 'misr-italia-hilltop', title: 'Misr Italia Hilltop', location: 'Ras El Hekma', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: [M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
+    summary: 'Three apartment-building prototypes for a North Coast community, set around lagoons and beach-front pools.' },
+  { slug: 'sodic-ogami', title: 'SODIC Ogami', location: 'Ras El Hekma', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
+    summary: 'A twin villa and a town home for a coastal community, in warm terracotta render with deep, shaded terraces.' },
+  { slug: 'travco-west-island', title: 'Travco West Island', location: 'Almaza Bay', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
+    summary: 'A coastal chalet and a coastal town home on the lagoon at Almaza Bay.' },
+  { slug: 'sodic-east-vale', title: 'SODIC East Vale', location: 'New Cairo', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
+    summary: 'A premium family home with planted roof terraces and a garden pool.' },
+  { slug: 'orascom-o-west', title: 'Orascom O West Midyard', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
+    summary: 'Mid-rise apartment blocks for the Midyard district of O West.' },
 
   // ---------- Residential architecture (concept exploration)
   { slug: 'classic-house', title: 'Classic House', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
-  { slug: 'modern-villa-a', title: 'Modern Villa I', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
-  { slug: 'modern-villa-b', title: 'Modern Villa II', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
+  { slug: 'modern-villa-b', title: 'Modern Villa', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
   { slug: 'mediterranean-house', title: 'Mediterranean House', location: 'Lebanon', country: 'Lebanon', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
   { slug: 'blue-villa', title: 'Blue Villa', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
   { slug: 'apartment-building', title: 'Apartment Building', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
@@ -101,14 +106,9 @@ export const projects: Project[] = [
     summary: 'A bold residence of dark timber, marble and sculptural lighting.' },
   { slug: 'arches-restaurant', title: 'Arches Restaurant', location: 'Sheikh Zayed, Giza', country: 'Egypt', category: 'interiors', sector: 'Hospitality', scope: [D, M, R, P],
     summary: 'A restaurant of timber arches, hanging greenery and halo lights.' },
-  { slug: 'bmw-showroom', title: 'BMW Showroom', location: 'Cairo–Alex Road', country: 'Egypt', category: 'interiors', sector: 'Retail', scope: [D, M, R, P],
+  { slug: 'bmw-showroom', title: 'BMW Showroom', location: 'Cairo–Alex Road', country: 'Egypt', category: 'interiors', sector: 'Retail', scope: [D, M, R, P], practice: 'Cosmos Studio',
     summary: 'A brand showroom with a textured feature wall and bright display bays.' },
   { slug: 'jeddah-residence', title: 'Jeddah Residence', location: 'Jeddah', country: 'Saudi Arabia', category: 'interiors', sector: 'Residential', scope: [D], concept: true },
-  { slug: 'majlis', title: 'Majlis', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'interiors', sector: 'Residential', scope: [D], concept: true },
-  { slug: 'jubail-residence', title: 'Jubail Residence', location: 'Jubail', country: 'Saudi Arabia', category: 'interiors', sector: 'Residential', scope: [D], concept: true },
-  { slug: 'sea-residence', title: 'Sea Residence', location: 'Al-Alamein', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D], concept: true },
-  { slug: 'neoclassical-residence', title: 'Neo-Classical Residence', location: 'New Cairo', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D], concept: true },
-  { slug: 'modern-residence-bedroom', title: 'Modern Residence II', location: 'New Cairo', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D], concept: true },
   { slug: 'concept-sketches', title: 'Concept Sketches', location: 'Various', country: '—', category: 'interiors', sector: 'Sketches', scope: ['Concept exploration'], concept: true,
     summary: 'Hand-drawn-style studies used to explore mood, light and material before modelling.' },
 ];

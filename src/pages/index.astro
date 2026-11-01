@@ -4,7 +4,7 @@ import Base from '../layouts/Base.astro';
 import Reel from '../components/Reel.astro';
 import { projects, featured, countries, imagesFor, cover } from '../data/projects';
 import { getImage } from 'astro:assets';
-const slideSlugs = ['commercial-mall', 'stc-hq', 'neom-oxagon', 'fifth-square'];
+const slideSlugs = ['misr-italia-hilltop', 'stc-hq', 'neom-oxagon', 'fifth-square'];
 const slides = await Promise.all(slideSlugs.map(async (slug) => {
   const p = projects.find((x) => x.slug === slug)!;
   const img = imagesFor(slug)[0];
@@ -18,7 +18,7 @@ const stats = [
   { n: projects.length, l: 'Projects', d: 'Architecture and interiors, from first concept to drawing set.', img: await thumb('neom-oxagon') },
   { n: countries.length, l: 'Countries', d: countries.join(' · '), img: await thumb('juba-resort') },
   { n: years, l: 'Years in practice', d: 'Concept design since 2020.', img: await thumb('fifth-square') },
-  { n: 2, l: 'Studios', d: 'ZFP (Zuhair Fayez Partnership) and Cosmos Studio.', img: await thumb('stc-hq') },
+  { n: 3, l: 'Studios', d: 'ZFP (Zuhair Fayez Partnership), Cosmos Studio and Innovation Design Studio.', img: await thumb('stc-hq') },
 ];
 const feats = await Promise.all(featured.slice(0, 6).map(async (p) => {
   const img = cover(p.slug)!;
@@ -176,7 +176,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
 
   <Reel dark rows={[
     ['neom-oxagon', 'jotun-office', 'fifth-square', 'zayed-residence', 'chery-showroom', 'arches-restaurant', 'noatum-terminal'].map((s) => cover(s)!),
-    ['stc-hq', 'commercial-mall', 'bmw-showroom', 'linah-farms', 'tech-park', 'juba-resort', 'sphinx'].map((s) => cover(s)!),
+    ['stc-hq', 'sodic-ogami', 'bmw-showroom', 'linah-farms', 'tech-park', 'juba-resort', 'sphinx'].map((s) => cover(s)!),
   ]} />
 
   <section class="dark svc" data-svc>
