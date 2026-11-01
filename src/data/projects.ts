@@ -124,22 +124,28 @@ export const projects: Project[] = [
 ];
 
 /* ---------- external links (official sites only) */
+// Verified 2026-11-01: each website loads, and every Instagram/Facebook URL is the one
+// linked from that client's own site (no guessed handles).
+const ig = (url: string) => ({ label: 'Instagram', url });
+const fb = (url: string) => ({ label: 'Facebook', url });
 const links: Record<string, Project['links']> = {
-  'stc-hq': [{ label: 'stc', url: 'https://www.stc.com.sa' }],
-  'sabic-hq': [{ label: 'SABIC', url: 'https://www.sabic.com' }],
-  'neom-oxagon': [{ label: 'NEOM · Oxagon', url: 'https://www.neom.com/en-us/regions/oxagon' }],
-  'jotun-office': [{ label: 'Jotun', url: 'https://www.jotun.com' }],
-  'hb-fuller': [{ label: 'H.B. Fuller', url: 'https://www.hbfuller.com' }],
-  'noatum-terminal': [{ label: 'Noatum', url: 'https://www.noatum.com' }],
-  'linah-farms': [{ label: 'Linah Farms', url: 'https://linahfarms.com' }],
-  'chery-showroom': [{ label: 'Chery Egypt', url: 'https://chery-eg.com' }],
-  'fifth-square': [{ label: 'Al Marasem', url: 'https://www.almarasem.com' }],
-  'misr-italia-hilltop': [{ label: 'Misr Italia Properties', url: 'https://www.misritaliaproperties.com' }],
-  'sodic-ogami': [{ label: 'SODIC', url: 'https://www.sodic.com' }],
-  'sodic-east-vale': [{ label: 'SODIC', url: 'https://www.sodic.com' }],
-  'orascom-o-west': [{ label: 'Orascom Development', url: 'https://www.orascomdevelopment.com' }],
-  'travco-west-island': [{ label: 'Almaza Bay · Travco', url: 'https://www.almazabay.com' }],
-  'bmw-showroom': [{ label: 'BMW Egypt', url: 'https://www.bmw-egypt.com' }],
+  'stc-hq': [{ label: 'stc', url: 'https://www.stc.com.sa' }, ig('https://www.instagram.com/stc_ksa'), fb('https://www.facebook.com/stc.ksa')],
+  'sabic-hq': [{ label: 'SABIC', url: 'https://www.sabic.com' }, ig('https://www.instagram.com/sabic/'), fb('https://www.facebook.com/sabiccorp')],
+  'neom-oxagon': [{ label: 'NEOM · Oxagon', url: 'https://www.neom.com/en-us/regions/oxagon' }, ig('https://www.instagram.com/neom/'), fb('https://www.facebook.com/NEOM')],
+  'jotun-office': [{ label: 'Jotun Egypt', url: 'https://www.jotun.com/eg-en' }, fb('https://www.facebook.com/JotunGroup/')],
+  'hb-fuller': [{ label: 'H.B. Fuller', url: 'https://www.hbfuller.com' }, ig('https://www.instagram.com/hb_fuller/'), fb('https://www.facebook.com/hbfullercompany')],
+  // noatum.com now serves a blank server page; the ports business lives at noatumports.com (no IG/FB linked there)
+  'noatum-terminal': [{ label: 'Noatum Ports', url: 'https://www.noatumports.com' }],
+  'linah-farms': [{ label: 'Linah Farms', url: 'https://linahfarms.com' }, ig('https://www.instagram.com/linahfarms/'), fb('https://www.facebook.com/LinahFarms')],
+  'chery-showroom': [{ label: 'Chery Egypt', url: 'https://chery-eg.com' }, ig('https://www.instagram.com/cheryegypt/'), fb('https://www.facebook.com/CheryEgypt')],
+  'fifth-square': [{ label: 'Al Marasem', url: 'https://almarasem.com' }, fb('https://www.facebook.com/almarasemdevelopment')],
+  'misr-italia-hilltop': [{ label: 'Misr Italia Properties', url: 'https://www.misritaliaproperties.com' }, ig('https://www.instagram.com/misritaliaproperties/'), fb('https://www.facebook.com/misritaliaproperties/')],
+  'sodic-ogami': [{ label: 'SODIC · Ogami', url: 'https://www.sodic.com/our-developments/ogami' }, ig('https://www.instagram.com/sodicrealestate/'), fb('https://www.facebook.com/SODICRealEstate')],
+  'sodic-east-vale': [{ label: 'SODIC · EastVale', url: 'https://www.sodic.com/our-developments/eastvale' }, ig('https://www.instagram.com/sodicrealestate/'), fb('https://www.facebook.com/SODICRealEstate')],
+  // orascomdevelopment.com redirects to orascomdh.com; link straight to the O West page
+  'orascom-o-west': [{ label: 'Orascom · O West', url: 'https://www.orascomdh.com/destinations/owest' }, ig('https://www.instagram.com/orascomdevelopment/'), fb('https://www.facebook.com/OrascomDevelopment')],
+  'travco-west-island': [{ label: 'Almaza Bay · Travco', url: 'https://www.almazabay.com' }, ig('https://www.instagram.com/almazabay/'), fb('https://www.facebook.com/AlmazaBayEG/')],
+  'bmw-showroom': [{ label: 'BMW Egypt', url: 'https://www.bmw-egypt.com' }, ig('https://www.instagram.com/bmwegypt/'), fb('https://www.facebook.com/BMWEgypt')],
 };
 /* ---------- films: drop a compressed mp4 in /public/video/<slug>.mp4, or add a YouTube/Vimeo id */
 const films: Record<string, Project['video']> = {
