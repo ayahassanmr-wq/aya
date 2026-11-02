@@ -11,6 +11,8 @@ const slides = await Promise.all(slideSlugs.map(async (slug) => {
   const later = await Promise.all([480, 720, 960, 1400, 2000].map(async (w) => { const r = await getImage({ src: img, width: w, format: 'webp', quality: 66 }); return `${r.src} ${w}w`; }));
   return { p, img, srcset: later.join(', '), thumb: (await getImage({ src: img, width: 240, format: 'webp' })).src };
 }));
+const handSrc = imagesFor('commercial-mall')[0];
+const hand = await getImage({ src: handSrc, width: 1800, format: 'webp', quality: 70 });
 const place = (p: typeof projects[number]) => `${p.location}${p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}`;
 const years = new Date().getFullYear() - 2020;
 const thumb = async (slug: string) => (await getImage({ src: cover(slug)!, width: 480, height: 360, fit: 'cover', format: 'webp', quality: 62 })).src;
@@ -32,7 +34,7 @@ const services = [
   { t: 'Materials & FF&E', slug: 'stc-hq' },
 ];
 const previews = await Promise.all(services.map(async (s) => (await getImage({ src: cover(s.slug), width: 900, format: 'webp', quality: 70 })).src));
-const stripSlugs: [string, string][] = [['NEOM', 'neom-oxagon'], ['SABIC', 'sabic-hq'], ['stc', 'stc-hq'], ['Jotun', 'jotun-office'], ['H.B. Fuller', 'hb-fuller'], ['Chery', 'chery-showroom'], ['Noatum', 'noatum-terminal'], ['Tech Park', 'tech-park'], ['Fifth Square', 'fifth-square'], ['Linah Farms', 'linah-farms']];
+const stripSlugs: [string, string][] = [['Public', 'neom-oxagon'], ['Workplace', 'sabic-hq'], ['Headquarters', 'stc-hq'], ['Offices', 'jotun-office'], ['Interiors', 'hb-fuller'], ['Showroom', 'chery-showroom'], ['Logistics', 'noatum-terminal'], ['Tech campus', 'tech-park'], ['Commercial', 'fifth-square'], ['Landscape', 'linah-farms']];
 const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (await getImage({ src: cover(slug), width: 320, height: 220, fit: 'cover', format: 'webp', quality: 60 })).src })));
 ---
 <Base overHero intro preloadImage={{ srcset: slides[0].srcset, sizes: '100vw' }}>
@@ -51,10 +53,22 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
     <div class="veil"></div>
     <div class="wrap inner">
       <div class="top"></div>
-      <h1 class="hl">
-        <span class="ln"><span>From concept</span></span>
-        <span class="ln"><span>to <em>conviction.</em></span></span>
-      </h1>
+      <div class="hl-row">
+        <h1 class="hl wordmark" aria-label="Aya Hassan">
+          <span class="ln"><span class="w1">AYA</span></span>
+          <span class="ln"><span class="w2">Hassan<b>.</b></span></span>
+        </h1>
+        <div class="tagline">
+          <p class="tl">From concept to <em>conviction.</em></p>
+          <svg class="stamp" role="img" aria-label="Stamp: concept approved, Cairo 2026" viewBox="0 0 160 160">
+            <defs><path id="stamp-ring" d="M80 80 m -58 0 a 58 58 0 1 1 116 0 a 58 58 0 1 1 -116 0"></path></defs>
+            <circle cx="80" cy="80" r="76" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+            <circle cx="80" cy="80" r="44" fill="none" stroke="currentColor" stroke-width="1"></circle>
+            <text font-weight="600" font-size="11.5" letter-spacing="3.2" fill="currentColor"><textPath href="#stamp-ring">CONCEPT APPROVED · CAIRO · MMXXVI ·</textPath></text>
+            <path d="M62 82 L 75 95 L 100 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+      </div>
       <div class="bottom">
         <div class="ctas">
           <a href="/contact/" class="btn solid magnet">Start a project <span class="arr">→</span></a>
@@ -105,11 +119,37 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
     }
   </script>
 
+  <section class="hand" aria-labelledby="hand-h" data-hand>
+    <div class="wrap">
+      <div class="sheet-head"><h2 id="hand-h" class="label">One hand</h2><span class="label muted">Stage — <span class="st" data-hand-stage>Model → Image</span></span></div>
+      <p class="hand-t">Drag to watch <em>one brain</em> work.</p>
+      <div class="hand-frame">
+        <svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="pencil" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"></feColorMatrix><feGaussianBlur stdDeviation="0.9"></feGaussianBlur><feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true"></feConvolveMatrix><feComponentTransfer><feFuncR type="linear" slope="-4.5" intercept="1"></feFuncR><feFuncG type="linear" slope="-4.5" intercept="1"></feFuncG><feFuncB type="linear" slope="-4.7" intercept="1"></feFuncB></feComponentTransfer></filter></svg>
+        <img class="sketch-src lay sk" src={hand.src} alt="" width={handSrc.width} height={handSrc.height} loading="lazy" decoding="async" />
+        <div class="rv" data-hand-rv><img class="lay" src={hand.src} alt="A commercial mall rendered at dusk, revealed from its line drawing" width={handSrc.width} height={handSrc.height} loading="lazy" decoding="async" /></div>
+        <span class="tagl label">Render</span><span class="tagr label">Sketch</span>
+      </div>
+      <label class="label muted hand-l" for="hand-range">Sketch ← drag → Render</label>
+      <input id="hand-range" class="hand-range" type="range" min="0" max="100" value="55" data-hand-range />
+    </div>
+  </section>
+
+  <script>
+    const hd = document.querySelector<HTMLElement>('[data-hand]');
+    if (hd) {
+      const r = hd.querySelector<HTMLInputElement>('[data-hand-range]')!;
+      const rv = hd.querySelector<HTMLElement>('[data-hand-rv]')!;
+      const st = hd.querySelector<HTMLElement>('[data-hand-stage]')!;
+      const set = () => { const v = +r.value; rv.style.clipPath = `inset(0 ${100 - v}% 0 0)`; st.textContent = v < 20 ? 'Sketch' : v < 75 ? 'Model → Image' : 'Render · Approved'; };
+      r.addEventListener('input', set); set();
+    }
+  </script>
+
   <section class="dark intro" aria-labelledby="intro-h">
     <div class="wrap ig">
       <div class="it">
         <h2 id="intro-h" class="sr-only">Introduction</h2>
-        <p class="statement" data-scrub>I turn early design ideas into concepts clients approve, from public buildings at <em>NEOM</em> to the headquarters of <em>SABIC</em> and <em>stc</em>. Idea, model, image and drawing set, carried by one hand.</p>
+        <p class="statement" data-scrub>I turn early design ideas into concepts clients approve, from <em>public buildings</em> to <em>corporate headquarters</em> and private homes. Idea, model, image and drawing set, carried by one hand.</p>
         <a href="/about/" class="label link reveal more-l">About Aya <span class="arr">→</span></a>
       </div>
       <div class="collage" aria-hidden="true">
@@ -155,7 +195,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
     </section>
   </div>
 
-  <section class="dark marquee" aria-label="Clients and projects">
+  <section class="dark marquee" aria-label="Typologies">
     <div class="track">{[...strip, ...strip].map((x, k) => <span class="mi" aria-hidden={k >= strip.length ? 'true' : undefined}><img src={x.src} alt="" width="160" height="110" loading="lazy" decoding="async" />{x.n}<i aria-hidden="true">✦</i></span>)}</div>
   </section>
 
@@ -208,6 +248,24 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
 </Base>
 
 <style>
+  .hand { padding: clamp(72px, 9vw, 140px) 0; background: var(--ow); }
+  .hand-t { font: 800 clamp(30px, 4vw, 60px)/1 var(--display); font-stretch: 112%; letter-spacing: -.03em; margin: 28px 0 32px; }
+  .hand-t em { font-weight: 250; font-stretch: 100%; color: var(--ox); }
+  .hand .st { color: var(--ox); }
+  .hand-frame { position: relative; aspect-ratio: 21 / 9; min-height: 280px; overflow: hidden; border-radius: var(--r-3); background: #fff; }
+  .lay { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .sk { filter: url(#pencil) !important; opacity: .9; }
+  .rv { position: absolute; inset: 0; clip-path: inset(0 45% 0 0); }
+  .rv::after { content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 2px; background: var(--ox); }
+  .tagl, .tagr { position: absolute; top: 16px; padding: 7px 11px; border-radius: var(--r-1); font-size: 11px; }
+  .tagl { left: 16px; background: var(--night); color: var(--ow); }
+  .tagr { right: 16px; background: var(--ow); color: var(--ink); }
+  .hand-l { display: block; margin-top: 18px; }
+  .hand-range { -webkit-appearance: none; appearance: none; width: 100%; height: 44px; background: transparent; cursor: ew-resize; }
+  .hand-range::-webkit-slider-runnable-track { height: 1px; background: var(--ink); }
+  .hand-range::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; margin-top: -14px; border-radius: 50%; background: var(--ox); border: 3px solid var(--ow); box-shadow: 0 0 0 1px var(--ink); }
+  .hand-range::-moz-range-track { height: 1px; background: var(--ink); }
+  .hand-range::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: var(--ox); border: 3px solid var(--ow); }
   .hero { position: relative; height: var(--hero-h); color: var(--ow); overflow: hidden; background: var(--night); }
   .slides { position: absolute; inset: 0; }
   .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s var(--ease); }
@@ -223,7 +281,17 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   .kicker { display: flex; align-items: center; gap: 12px; }
   .kicker.r { text-align: right; display: block; }
   .dotl { width: 28px; height: 1px; background: currentColor; }
-  h1 { grid-row: 3; font: 400 clamp(56px, 10.5vw, 176px)/.9 var(--display); letter-spacing: -.02em; max-width: 12ch; }
+  .hl-row { grid-row: 3; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px 48px; }
+  h1 { font: 900 clamp(64px, 13vw, 220px)/.84 var(--display); font-stretch: 125%; letter-spacing: -.035em; }
+  .wordmark .w2 { font-weight: 200; font-style: italic; font-stretch: 100%; padding-left: .42em; }
+  .wordmark .w2 b { font-weight: 900; font-style: normal; color: #B8394A; }
+  .tagline { display: flex; align-items: center; gap: 28px; padding-bottom: .6em; }
+  .tl { font: 600 clamp(22px, 2.4vw, 36px)/1.05 var(--display); letter-spacing: -.025em; max-width: 9em; }
+  .tl em { font-weight: 250; font-style: italic; color: var(--sand); }
+  .stamp { width: clamp(96px, 9vw, 132px); height: auto; flex-shrink: 0; color: var(--sand); transform: rotate(-9deg); animation: stampin .9s .9s var(--ease) both; }
+  .stamp text { font-family: var(--sans); }
+  @keyframes stampin { from { opacity: 0; transform: rotate(-30deg) scale(1.4); } }
+  @media (max-width: 700px) { .tagline { padding-bottom: 0; } .stamp { width: 84px; } }
   .hl .ln { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
   .hl .ln > span { display: inline-block; animation: lineup 1.3s var(--ease) both; }
   .hl .ln:nth-child(2) > span { animation-delay: .14s; }

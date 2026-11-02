@@ -1,4 +1,6 @@
 ---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/archivo/wdth-italic.css';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -6,7 +8,7 @@ import Intro from '../components/Intro.astro';
 interface Props { title?: string; description?: string; image?: string; overHero?: boolean; intro?: boolean; preloadImage?: { srcset: string; sizes: string } }
 const {
   title,
-  description = 'Aya Hassan is an architect and interior designer in concept design, with Gulf-scale experience on NEOM, SABIC HQ and STC HQ.',
+  description = 'Aya Hassan is a Cairo-based architect and interior designer in concept design: workplaces, public buildings and interiors across six countries.',
   image = '/og.jpg',
   overHero = false,
   intro = false,
@@ -48,7 +50,6 @@ const ogImage = new URL(image, Astro.site);
         }
       })();
     </script>
-    <link rel="preload" href="/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
     {preloadImage && <link rel="preload" as="image" imagesrcset={preloadImage.srcset} imagesizes={preloadImage.sizes} fetchpriority="high" />}
   </head>
   <body>
