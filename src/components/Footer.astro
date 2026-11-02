@@ -28,7 +28,7 @@ const L = i18n(Astro.url);
   </div>
 
   <div class="mark-wrap" aria-hidden="true">
-    <svg class="mark" viewBox="0 0 941 453" preserveAspectRatio="xMidYMax meet"><use href="/brand/aya-sprite.svg#aya" /></svg>
+    <p class="mark" dir="ltr">AYA<i></i>HASSAN</p>
   </div>
 
   <div class="wrap base label"><span>© {new Date().getFullYear()} {L.t('Aya Hassan', 'آية حسن')}</span><span>{L.t('Architect & Interior Designer · Concept Design', 'معمارية ومصممة داخلية · التصميم المبدئي')}</span><a href="/sitemap.xml" class="link">{L.t('Sitemap', 'خريطة الموقع')}</a></div>
@@ -67,9 +67,10 @@ const L = i18n(Astro.url);
   .top { width: 64px; height: 64px; border-radius: var(--r-btn); border: 1px solid var(--rule-light); background: none; color: var(--ow); font-size: 20px; cursor: pointer; transition: background .4s, color .4s, transform .5s var(--ease); }
   .top:hover { background: var(--ow); color: var(--ink); transform: translateY(-4px); }
   .mark-wrap { transform: translate3d(0, calc((1 - var(--sp, 1)) * -12%), 0) scale(calc(.92 + var(--sp, 1) * .08)); transform-origin: 50% 100%; padding-inline: max(var(--gut), env(safe-area-inset-left, 0px)); margin-top: clamp(8px, 2vw, 24px); line-height: 0; }
-  .mark { width: 100%; height: auto; max-height: 44vw; display: block; fill: transparent; stroke: rgba(243, 237, 227, .5); stroke-width: 1px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.6s var(--ease-io), fill 1.2s 1.8s var(--ease); }
-  .drawn .mark { stroke-dashoffset: 0; fill: rgba(243, 237, 227, .06); }
+  .mark { display: flex; justify-content: space-between; align-items: center; margin: 0; font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: 10.4vw; line-height: .8; letter-spacing: -.02em; white-space: nowrap; color: rgba(243, 237, 227, .1); transition: color 1.6s .3s var(--ease); padding-block: .08em .04em; }
+  .mark i { width: 1px; align-self: stretch; background: rgba(243, 237, 227, .3); }
+  .drawn .mark { color: rgba(243, 237, 227, .88); }
   .base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--rule-light); color: var(--muted-dark); font-size: 11.5px; }
-  @media (prefers-reduced-motion: reduce) { .mark { stroke-dashoffset: 0; fill: rgba(243, 237, 227, .06); } }
+  @media (prefers-reduced-motion: reduce) { .mark { color: rgba(243, 237, 227, .88); } }
   @media (max-width: 860px) { .cols { grid-template-columns: 1fr 1fr; } .top { grid-column: 2; justify-self: end; } }
 </style>

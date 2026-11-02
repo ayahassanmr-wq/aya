@@ -81,6 +81,7 @@ No gold anywhere.
 - **Hero name:** "AYA HASSAN" on one line: small label "Architect · Interior designer" above, the name, then an unruled info row: motto · Based: Cairo, EG · Practice: 2020 — · Sheet: A-000. No stamp, no table lines, no dimension line (✅ 3 Nov).
 - **Approval stamp:** ❌ removed from hero and intro (3 Nov).
 - **Intro screen:** dimension line draws out → name rises → title block wipes in → stamp lands → screen parts onto the hero (~3 s, skippable, off with reduced motion).
+- **Footer:** big `AYA | HASSAN` wordmark (Archivo 800/125%) fades in — old AYA sprite logo retired (✅ 3 Nov).
 - **Recurring devices:** sheet numbers (A-000, A-001…), project codes (01.01, 01.02), hairline rules, dimension strings.
 - ❌ Rejected: sketch-to-render drag slider (looked bad), scribbled underline through the name, two-line AYA/*Hassan* stacked wordmark.
 
@@ -91,7 +92,8 @@ No gold anywhere.
 **Goal:** every project looks like it came from the same brain.
 
 - **Renders:** one grade on the site — `sepia(.14) saturate(.86) contrast(1.05) brightness(1.01)`: warm sand highlights, slightly matte blacks, quieter greens/blues.
-- **Drawings, plans, elevations, BIM captures, diagrams (✅ 3 Nov):** "presentation sheet" — full colour kept (light unify: saturate .9, sepia .06), natural proportions (no cropping, max 78vh), on a clean bone sheet `#FBF8F3` with soft shadow against the night section, oxblood hairline + sheet number strip (A-001…) underneath. Grayscale/multiply treatment retired.
+- **Drawings, plans, elevations, BIM captures, diagrams (✅ 3 Nov):** recoloured *in the files* to the brand palette — gradient map: near-black ink `#1A1615` linework → warm graphite → sand fills → bone `#F3EDE3` background (no white). Shown at natural proportions on a bone sheet with soft shadow against the night section, oxblood hairline + sheet number (A-001…). New drawings must get the same gradient map before upload (script in the 3 Nov commit / ask Claude).
+- **Project page extras (✅ 3 Nov):** cover render repeated uncropped at the top of Visuals; a **Details** section of artistic close-up crops (D-01…D-05, zoom ×1.7–3.2) in an off-grid layout.
 - **For future renders (guidance):** one signature light hour (warm late-afternoon "Cairo 5 pm"), camera height ~1.2 m, 35 mm interiors, verticals always corrected, consistent entourage (neutral, slightly blurred people; one plant family), fine grain at fixed strength, crops 4:5 and 21:9 only.
 - **Exclusions:** STC and SABIC folders contain photos of the real towers — never on the site.
 - **Juba renders look dated (⏸):** fix without re-rendering — AI upscale at low creativity (Magnific / Krea Enhance / Topaz), Photoshop sky + foliage + people replacement, then house grade. 21 more 2021 Juba renders exist in `G:\Portfolio\pot\Juba Render`.
@@ -126,7 +128,7 @@ No gold anywhere.
 | About/timeline | `src/pages/about.astro` |
 
 ### 4.3 Site structure (✅ DECIDED)
-- **Home:** intro → hero (title block over project slideshow) → intro statement → numbers → selected work → services → contact. Homepage strip uses **typologies**, not client names.
+- **Home:** intro → hero → intro statement → numbers → selected work → typology marquee → **client wall** → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): two counter-scrolling rows of 16 client marks, each linking to its project; typographic marks in Archivo until real logos are dropped in `public/clients/<id>.svg` (auto-tinted ink). Confidential and private clients excluded.
 - **Work:** opens on **three disciplines** — *Architectural design*, *Interior design*, *BIM & technical*. Choosing one shows its projects grouped by type (Residential, Workplace, Commercial…), numbered 01.01, 01.02…
 - **Project page:** title block with Location · Discipline · Practice · **Client** · **Year** · Scope (+ optional scope note) → renders → drawing sheets → client links.
 - **About:** timeline (section 1), bio, tools.
@@ -231,9 +233,11 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - Modern Villa 02 (KSA) stays off the site even though its folder remains on G:.
 - Minimal Villa: 2026, full scope.
 - Max 5 renders per project (best picks; first = cover). Drawings/plans not counted.
-- Hero: no stamp, no table lines. Drawings: colour presentation sheets.
+- Hero: no stamp, no table lines.
+- Drawings recoloured to brand palette (ink lines, bone background); cover shown uncropped; Details close-up section; client wall on homepage; footer = AYA | HASSAN wordmark.
 
 ### ❓ NEEDS DECISION (Aya)
+0. **Client logos:** send SVG logos (or approve typographic marks as final). Also confirm STC, SABIC, NEOM (NDA projects) may appear by name on the homepage wall — they're shown now.
 1. **Merge `rebrand-on-update` to `main` (go live)?** — after reviewing preview.
 2. **Which Vercel project to keep** (`aya`, `aya-hassan`, `ayahassan`) and delete the other two.
 3. **Video edits wanted:** web cuts (30–60 s) / Instagram reels / one showreel / logo & titles / compression only?
@@ -276,6 +280,10 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | Drawings recoloured to palette in the image files; bone background, ink lines | Aya: drawings must blend with brand |
+| 2026-11-03 | Client wall on homepage | Aya request (reopens typologies-only rule) |
+| 2026-11-03 | Cover repeated uncropped; Details close-up section | Aya request — avant-garde detail shots |
+| 2026-11-03 | Footer logo → AYA \| HASSAN wordmark | Old sprite logo off-brand |
 | 2026-11-03 | Remove stamp + title-block lines from hero (and intro) | Aya: weird / unneeded |
 | 2026-11-03 | Max renders per project 4 → 5 | Aya request |
 | 2026-11-03 | Drawings: full-colour bone presentation sheets, replacing grayscale multiply | Old look was washed-out and out of place |
@@ -369,6 +377,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | Modern Residence wrong 5th image replaced; 40 drawings recoloured; cover uncropped + Details section; client wall; new footer wordmark. |
 | 2026-11-03 | Claude | Hero: stamp + table lines removed; 15 projects back to 5 renders (5th from previous set); new colour drawing-sheet style. |
 | 2026-11-03 | Claude (chat) | Curated every project to its best 4 renders (15 projects trimmed); drawings unchanged. |
 | 2026-11-02 | Claude (chat) | Synced site to folder: + Minimal Villa, − Classic House, Juba → 14 renders (2021 set), East Vale + 3 plans, Ogami + ground plan. Video web versions done in `_Videos\Web` (Jotun 71 MB, Juba 74 MB, Render 01 132 MB, Sphinx 4K ~470–480 MB each). |

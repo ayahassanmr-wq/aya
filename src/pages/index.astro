@@ -38,6 +38,28 @@ const services = [
 ];
 const previews = await Promise.all(services.map(async (s) => (await getImage({ src: cover(s.slug), width: 900, format: 'webp', quality: 70 })).src));
 const stripSlugs: [string, string][] = L.ar ? [['مبانٍ عامة', 'neom-oxagon'], ['مقرات', 'sabic-hq'], ['أبراج إدارية', 'stc-hq'], ['مكاتب', 'jotun-office'], ['تصميم داخلي', 'hb-fuller'], ['معارض', 'chery-showroom'], ['لوجستيات', 'noatum-terminal'], ['مجمعات تقنية', 'tech-park'], ['تجاري', 'fifth-square'], ['لاندسكيب', 'linah-farms']] : [['Public', 'neom-oxagon'], ['Headquarters', 'sabic-hq'], ['Office towers', 'stc-hq'], ['Offices', 'jotun-office'], ['Interiors', 'hb-fuller'], ['Showrooms', 'chery-showroom'], ['Logistics', 'noatum-terminal'], ['Tech campus', 'tech-park'], ['Commercial', 'fifth-square'], ['Landscape', 'linah-farms']];
+// client wall — real logo files dropped in public/clients/<id>.svg replace the typographic mark automatically
+import fs from 'node:fs';
+const clientList: { id: string; n: string; slug: string; w?: number; wt?: number; tr?: string; lc?: boolean; it?: boolean }[] = [
+  { id: 'sodic', n: 'SODIC', slug: 'sodic-ogami', w: 125, wt: 900, tr: '.18em' },
+  { id: 'orascom', n: 'Orascom', slug: 'orascom-o-west', w: 100, wt: 700 },
+  { id: 'misr-italia', n: 'Misr Italia', slug: 'misr-italia-hilltop', w: 112, wt: 300, it: true },
+  { id: 'neom', n: 'NEOM', slug: 'neom-oxagon', w: 125, wt: 200, tr: '.42em' },
+  { id: 'stc', n: 'stc', slug: 'stc-hq', w: 100, wt: 800, lc: true },
+  { id: 'sabic', n: 'SABIC', slug: 'sabic-hq', w: 118, wt: 800, tr: '.06em' },
+  { id: 'travco', n: 'Travco', slug: 'travco-west-island', w: 108, wt: 600, it: true },
+  { id: 'jotun', n: 'JOTUN', slug: 'jotun-office', w: 125, wt: 900 },
+  { id: 'bmw', n: 'BMW', slug: 'bmw-showroom', w: 100, wt: 700, tr: '.1em' },
+  { id: 'chery', n: 'CHERY', slug: 'chery-showroom', w: 125, wt: 500, tr: '.3em' },
+  { id: 'noatum', n: 'NOATUM', slug: 'noatum-terminal', w: 112, wt: 800 },
+  { id: 'hb-fuller', n: 'H.B. Fuller', slug: 'hb-fuller', w: 100, wt: 600 },
+  { id: 'al-marasem', n: 'Al Marasem', slug: 'fifth-square', w: 112, wt: 250 },
+  { id: 'guira', n: 'Guira', slug: 'mazeej', w: 125, wt: 700, it: true },
+  { id: 'linah', n: 'Linah Farms', slug: 'linah-farms', w: 100, wt: 400 },
+  { id: 'suits', n: 'Suits', slug: 'suits-workspaces', w: 125, wt: 800, lc: true },
+];
+const clients = clientList.map((c) => ({ ...c, logo: fs.existsSync(`public/clients/${c.id}.svg`) ? `/clients/${c.id}.svg` : null }));
+const rowA = clients.filter((_, k) => k % 2 === 0), rowB = clients.filter((_, k) => k % 2 === 1);
 const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (await getImage({ src: cover(slug), width: 320, height: 220, fit: 'cover', format: 'webp', quality: 60 })).src })));
 ---
 <Base overHero intro preloadImage={{ srcset: slides[0].srcset, sizes: '100vw' }}>
@@ -170,6 +192,26 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
 
   <section class="dark marquee" aria-label={t('Clients and projects', 'العملاء والمشاريع')}>
     <div class="track">{[...strip, ...strip].map((x, k) => <span class="mi" aria-hidden={k >= strip.length ? 'true' : undefined}><img src={x.src} alt="" width="160" height="110" loading="lazy" decoding="async" />{x.n}<i aria-hidden="true">✦</i></span>)}</div>
+  </section>
+
+
+  <section class="clients" aria-labelledby="cl-h">
+    <div class="wrap cl-head"><h2 id="cl-h" class="label">{t('Clients · 2020 —', 'العملاء · 2020 —')}</h2><span class="label muted">{t('Developers, brands and institutions the work was drawn for', 'مطورون وعلامات ومؤسسات صُمّم لها العمل')}</span></div>
+    {[rowA, rowB].map((row, r) => (
+      <div class:list={['cl-row', { rev: r === 1 }]}>
+        <ul class="cl-track">
+          {[...row, ...row].map((c, k) => (
+            <li aria-hidden={k >= row.length ? 'true' : undefined}>
+              <a href={u(`/work/${c.slug}/`)} class="cl" tabindex={k >= row.length ? -1 : undefined} data-cursor={t('Project', 'المشروع')}>
+                {c.logo
+                  ? <span class="logo-img" style={`-webkit-mask-image:url(${c.logo});mask-image:url(${c.logo})`} role="img" aria-label={c.n}></span>
+                  : <span class="wmk" dir="ltr" style={`font-stretch:${c.w ?? 100}%;font-weight:${c.wt ?? 700};letter-spacing:${c.tr ?? '-.01em'};${c.lc ? 'text-transform:lowercase;' : ''}${c.it ? 'font-style:italic;' : ''}`}>{c.n}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </section>
 
   <section class="dark duo">
@@ -376,6 +418,28 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   .marquee .mi:hover img { filter: none; transform: rotate(-3deg) scale(1.08); }
   .mi i { font-style: normal; font-size: .34em; color: var(--muted-dark); padding-left: 12px; }
   @keyframes slide { to { transform: translateX(-50%); } }
+
+
+  /* client wall */
+  .clients { background: var(--ow); color: var(--ink); padding-block: clamp(56px, 8vw, 120px); overflow: hidden; }
+  .cl-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-bottom: clamp(24px, 3vw, 44px); }
+  .cl-head h2 { color: var(--ox); }
+  .cl-row { border-top: 1px solid var(--rule); overflow: hidden; }
+  .cl-row:last-child { border-bottom: 1px solid var(--rule); }
+  .cl-track { list-style: none; margin: 0; padding: 0; display: flex; width: max-content; animation: slide 48s linear infinite; }
+  .cl-row.rev .cl-track { animation-direction: reverse; animation-duration: 56s; }
+  .clients:hover .cl-track { animation-play-state: paused; }
+  .cl-track li { border-inline-end: 1px solid var(--rule); }
+  .cl { display: grid; place-items: center; width: clamp(200px, 22vw, 340px); height: clamp(96px, 10vw, 150px); color: var(--ink); text-decoration: none; position: relative; transition: background .4s var(--ease), color .4s var(--ease); }
+  .cl::after { content: ""; position: absolute; left: 18px; right: 18px; bottom: 14px; height: 1px; background: var(--ox); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease); }
+  .cl:hover { background: var(--night); color: var(--ow); }
+  .cl:hover::after { transform: scaleX(1); background: var(--sand); }
+  .clients:hover .cl:not(:hover) { opacity: .45; }
+  .cl { transition: background .4s var(--ease), color .4s var(--ease), opacity .4s; }
+  .wmk { font-family: "Archivo Variable", sans-serif; font-size: clamp(22px, 2.3vw, 36px); line-height: 1; white-space: nowrap; transition: transform .5s var(--ease); }
+  .cl:hover .wmk { transform: scale(1.08); }
+  .logo-img { display: block; width: 62%; height: 46%; background: currentColor; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; -webkit-mask-size: contain; mask-size: contain; }
+  @media (prefers-reduced-motion: reduce) { .cl-track { animation: none; flex-wrap: wrap; width: auto; } .cl-track li[aria-hidden] { display: none; } }
 
   /* 02 practice */
   .duo { padding-block: clamp(64px, 9vw, 140px) clamp(40px, 5vw, 80px); }
