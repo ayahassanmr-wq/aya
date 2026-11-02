@@ -167,7 +167,7 @@ No gold anywhere.
 | bmw-showroom | BMW Showroom | Interior | Cosmos | BMW Egypt | 2022 | |
 | suits-workspaces | Suits Workspaces | Interior | Freelance | Suits Workspaces | 2025 | |
 | arches-restaurant | Arches Restaurant | Interior | Freelance | Private client | 2022 | Location: Saudi Arabia |
-| minimal-villa | Minimal Villa | Arch | Freelance | Private client | 2026 ❓ | NEW · 2 renders; year & scope to confirm |
+| minimal-villa | Minimal Villa | Arch | Freelance | Private client | 2026 | NEW · 2 renders; full scope (design, modelling, rendering) |
 | mediterranean-house | Mediterranean House | Arch | Freelance | Private client | 2025 | Concept |
 | blue-villa | Blue Villa | Arch | Freelance | Private client | 2025 | Concept |
 | modern-residence-new-cairo | Modern Residence | Interior | Freelance | Private client | 2025 | |
@@ -227,6 +227,8 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - Based in Cairo, Egypt. Career timeline per section 1.
 - Removed projects per section 5. Arches Restaurant location = KSA.
 - STC/SABIC real-tower photos never on site.
+- Modern Villa 02 (KSA) stays off the site even though its folder remains on G:.
+- Minimal Villa: 2026, full scope.
 
 ### ❓ NEEDS DECISION (Aya)
 1. **Merge `rebrand-on-update` to `main` (go live)?** — after reviewing preview.
@@ -238,12 +240,10 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 7. **Arches client label:** "Private client" (current) or "Freelance"?
 8. **Juba:** upscale existing 3 renders, swap in some of the 21 older renders, or both?
 9. **Project page client links:** add official Instagram/Facebook for all clients (partly done in v2).
-10. **Minimal Villa:** confirm year (set 2026) and scope (set design + modelling + rendering).
-11. **Orascom Workers Housing Proposal (El Gouna):** folder exists but is empty — add images to publish it.
-12. **Modern Villa 02 (KSA):** folder still on G: but removed from site per earlier request — keep removed?
-13. **Missing views:** export more renders for Orascom O West (2), Misr Italia (4), SODIC East Vale (3)?
+10. **Missing views:** export more renders for Orascom O West (2), Misr Italia (4), SODIC East Vale (3)?
 
 ### ⏸ ON HOLD
+- **Orascom Workers Housing Proposal (El Gouna)** — Aya will upload images to its folder; Claude to publish and confirm when they appear.
 - **Video editing** — blocked until videos are reachable (PC on & awake, or uploaded to Google Drive + connector, or Claude Code run locally on the PC).
 - **Copying videos into `_Videos`** — Aya to run the PowerShell above.
 - **Juba render upgrade** — needs AI upscaler (outside Claude) or Aya's Photoshop pass.
