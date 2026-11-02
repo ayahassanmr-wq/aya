@@ -1,6 +1,6 @@
 # Aya Hassan — Master Handover (v3)
 
-**Last updated:** 2 Nov 2026 · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
+**Last updated:** 2 Nov 2026 (late) · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
 **Lives at:** `G:\Portfolio\Portfolio Projects\Aya_Hassan_Handover_v3.md`
 
 > **Rule for everyone (people, Claude chat, Claude Code):** read this file first. When you finish a session, update the sections you touched — Status board, Decisions log, Changelog — and bump the date. Never keep project knowledge only in a chat. One file, one truth.
@@ -145,8 +145,8 @@ No gold anywhere.
 | Slug | Title | Discipline | Practice | Client | Year | Notes |
 |---|---|---|---|---|---|---|
 | misr-italia-hilltop | Misr Italia Hilltop | Arch | Innovation | Misr Italia Properties | 2026 | Featured, hero slide 1 |
-| sodic-ogami | SODIC Ogami | Arch | Innovation | SODIC | 2026 | |
-| sodic-east-vale | SODIC East Vale | Arch | Innovation | SODIC | 2026 | 3 images |
+| sodic-ogami | SODIC Ogami | Arch | Innovation | SODIC | 2026 | + ground floor plan |
+| sodic-east-vale | SODIC East Vale | Arch | Innovation | SODIC | 2026 | 3 renders + 3 plans (GF, FF, roof) |
 | travco-west-island | Travco West Island | Arch | Innovation | Travco · Almaza Bay | 2026 | |
 | orascom-o-west | Orascom O West Midyard | Arch | Innovation | Orascom Development | 2026 | 2 images only |
 | stc-hq | STC HQ Office Tower | Interior | ZFP | stc | 2024 | NDA; no real-tower photos |
@@ -158,7 +158,7 @@ No gold anywhere.
 | linah-farms | Linah Farms | Arch/BIM | Cosmos | Linah Farms | 2025 | Keep even though not in folder; renders need upscale |
 | mazeej | Mazeej Hotel & Housing | Arch | Cosmos | Guira Developments | 2025 | |
 | dry-port | Dry Port Buildings | Arch/BIM | Cosmos | Egyptian Government | 2021 | |
-| juba-resort | Juba Resort Complex | Arch | Cosmos | Confidential | 2023 | Walkthrough video live; renders dated |
+| juba-resort | Juba Resort Complex | Arch | Cosmos | Confidential | 2023 | Now 14 renders from the 2021 set; walkthrough video live |
 | tech-park | Tech Park Office Building | Interior | Cosmos | Confidential | 2023 | |
 | jotun-office | Jotun Office Building | Interior | Cosmos | Jotun | 2023 | Animation available, not yet on site |
 | hb-fuller | HB Fuller Office | Interior | Cosmos | H.B. Fuller | 2022 | |
@@ -167,13 +167,13 @@ No gold anywhere.
 | bmw-showroom | BMW Showroom | Interior | Cosmos | BMW Egypt | 2022 | |
 | suits-workspaces | Suits Workspaces | Interior | Freelance | Suits Workspaces | 2025 | |
 | arches-restaurant | Arches Restaurant | Interior | Freelance | Private client | 2022 | Location: Saudi Arabia |
-| classic-house | Classic House | Arch | Freelance | Private client | 2024 | Concept |
+| minimal-villa | Minimal Villa | Arch | Freelance | Private client | 2026 ❓ | NEW · 2 renders; year & scope to confirm |
 | mediterranean-house | Mediterranean House | Arch | Freelance | Private client | 2025 | Concept |
 | blue-villa | Blue Villa | Arch | Freelance | Private client | 2025 | Concept |
 | modern-residence-new-cairo | Modern Residence | Interior | Freelance | Private client | 2025 | |
 | zayed-residence | Zayed Residence | Interior | Freelance | Private client | 2024 | |
 
-**Removed (✅):** Modern Villa, Apartment Building, Concept Sketches, Jeddah Residence (+ earlier: Studio K, HK Inc, Commercial Mall, Modern Villa I, Majlis, Jubail, Sea Residence, Neo-Classical Residence, Modern Residence II).
+**Removed (✅):** Classic House (folder deleted 2 Nov), Modern Villa, Apartment Building, Concept Sketches, Jeddah Residence (+ earlier: Studio K, HK Inc, Commercial Mall, Modern Villa I, Majlis, Jubail, Sea Residence, Neo-Classical Residence, Modern Residence II).
 
 ---
 
@@ -238,7 +238,10 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 7. **Arches client label:** "Private client" (current) or "Freelance"?
 8. **Juba:** upscale existing 3 renders, swap in some of the 21 older renders, or both?
 9. **Project page client links:** add official Instagram/Facebook for all clients (partly done in v2).
-10. **Missing views:** export more renders for Orascom O West (2), Misr Italia (4), SODIC East Vale (3)?
+10. **Minimal Villa:** confirm year (set 2026) and scope (set design + modelling + rendering).
+11. **Orascom Workers Housing Proposal (El Gouna):** folder exists but is empty — add images to publish it.
+12. **Modern Villa 02 (KSA):** folder still on G: but removed from site per earlier request — keep removed?
+13. **Missing views:** export more renders for Orascom O West (2), Misr Italia (4), SODIC East Vale (3)?
 
 ### ⏸ ON HOLD
 - **Video editing** — blocked until videos are reachable (PC on & awake, or uploaded to Google Drive + connector, or Claude Code run locally on the PC).
@@ -360,4 +363,5 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-02 | Claude (chat) | Synced site to folder: + Minimal Villa, − Classic House, Juba → 14 renders (2021 set), East Vale + 3 plans, Ogami + ground plan. Video web versions done in `_Videos\Web` (Jotun 71 MB, Juba 74 MB, Render 01 132 MB, Sphinx 4K ~470–480 MB each). |
 | 2026-11-02 | Claude (chat) | Brand concepts → One Hand chosen; site rebranded on `rebrand-on-update` (Archivo, title-block hero, intro, nav logo, house grade, drawing sheets, 3-discipline work page, client/year everywhere, removed 4 projects, Arches→KSA, Fifth Square note, timeline fix, East Vale +1 image). Video inventory done; `_Videos` folder created (empty). Handover v3 written. |
