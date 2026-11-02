@@ -135,6 +135,7 @@ No gold anywhere.
 ### 4.4 Content rules
 - Every project must have **client** and **year** (no "—").
 - Fifth Square scope note: *"Design: the canopy. Modelling and rendering: the whole building."*
+- Max **4 renders** per project, best first (cover). Drawings/plans/BIM sheets are extra.
 - Images on site are capped at 2400 px (displayed ≤2000 px); larger originals are not needed.
 - Videos must be compressed (≈10–25 MB, 1080p) or embedded from YouTube/Vimeo.
 
@@ -158,7 +159,7 @@ No gold anywhere.
 | linah-farms | Linah Farms | Arch/BIM | Cosmos | Linah Farms | 2025 | Keep even though not in folder; renders need upscale |
 | mazeej | Mazeej Hotel & Housing | Arch | Cosmos | Guira Developments | 2025 | |
 | dry-port | Dry Port Buildings | Arch/BIM | Cosmos | Egyptian Government | 2021 | |
-| juba-resort | Juba Resort Complex | Arch | Cosmos | Confidential | 2023 | Now 14 renders from the 2021 set; walkthrough video live |
+| juba-resort | Juba Resort Complex | Arch | Cosmos | Confidential | 2023 | 4 best renders from the 2021 set; walkthrough video live |
 | tech-park | Tech Park Office Building | Interior | Cosmos | Confidential | 2023 | |
 | jotun-office | Jotun Office Building | Interior | Cosmos | Jotun | 2023 | Animation available, not yet on site |
 | hb-fuller | HB Fuller Office | Interior | Cosmos | H.B. Fuller | 2022 | |
@@ -229,6 +230,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - STC/SABIC real-tower photos never on site.
 - Modern Villa 02 (KSA) stays off the site even though its folder remains on G:.
 - Minimal Villa: 2026, full scope.
+- Max 4 renders per project (best picks; first = cover). Drawings/plans not counted.
 
 ### ❓ NEEDS DECISION (Aya)
 1. **Merge `rebrand-on-update` to `main` (go live)?** — after reviewing preview.
@@ -363,5 +365,6 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude (chat) | Curated every project to its best 4 renders (15 projects trimmed); drawings unchanged. |
 | 2026-11-02 | Claude (chat) | Synced site to folder: + Minimal Villa, − Classic House, Juba → 14 renders (2021 set), East Vale + 3 plans, Ogami + ground plan. Video web versions done in `_Videos\Web` (Jotun 71 MB, Juba 74 MB, Render 01 132 MB, Sphinx 4K ~470–480 MB each). |
 | 2026-11-02 | Claude (chat) | Brand concepts → One Hand chosen; site rebranded on `rebrand-on-update` (Archivo, title-block hero, intro, nav logo, house grade, drawing sheets, 3-discipline work page, client/year everywhere, removed 4 projects, Arches→KSA, Fifth Square note, timeline fix, East Vale +1 image). Video inventory done; `_Videos` folder created (empty). Handover v3 written. |
