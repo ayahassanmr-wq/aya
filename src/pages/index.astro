@@ -9,8 +9,6 @@ import { placeAr } from '../data/projects-ar';
 const L = i18n(Astro.url);
 const { t, u } = L;
 const loc = (p: typeof projects[number]) => localize(p, L.ar);
-const handSrc = imagesFor('misr-italia-hilltop')[0];
-const hand = await getImage({ src: handSrc, width: 1800, format: 'webp', quality: 70 });
 const slideSlugs = ['misr-italia-hilltop', 'stc-hq', 'neom-oxagon', 'fifth-square'];
 const slides = await Promise.all(slideSlugs.map(async (slug) => {
   const p = projects.find((x) => x.slug === slug)!;
@@ -58,21 +56,24 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
     <div class="veil"></div>
     <div class="wrap inner">
       <div class="top"></div>
-      <div class="hl-row">
-        <h1 class="hl wordmark" aria-label={t('Aya Hassan', 'آية حسن')} dir="ltr">
-          <span class="ln"><span class="w1">AYA</span></span>
-          <span class="ln"><span class="w2">Hassan<b>.</b></span></span>
-        </h1>
-        <div class="tagline">
-          <p class="tl">{L.ar ? <>من الفكرة إلى <em>الإقناع.</em></> : <>From concept to <em>conviction.</em></>}</p>
-          <svg class="stamp" role="img" aria-label={t('Stamp: concept approved, Cairo 2026', 'ختم: الفكرة معتمدة، القاهرة 2026')} viewBox="0 0 160 160" dir="ltr">
-            <defs><path id="stamp-ring" d="M80 80 m -58 0 a 58 58 0 1 1 116 0 a 58 58 0 1 1 -116 0"></path></defs>
-            <circle cx="80" cy="80" r="76" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
-            <circle cx="80" cy="80" r="44" fill="none" stroke="currentColor" stroke-width="1"></circle>
-            <text font-weight="600" font-size="11.5" letter-spacing="3.2" fill="currentColor" direction="ltr" style="direction:ltr;unicode-bidi:bidi-override"><textPath href="#stamp-ring">CONCEPT APPROVED · CAIRO · MMXXVI ·</textPath></text>
-            <path d="M62 82 L 75 95 L 100 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </div>
+      <div class="tb" dir="ltr">
+        <div class="dimn" aria-hidden="true"><i></i><span>{t('Architect · Interior designer', 'معمارية · مصممة داخلية')}</span><i></i></div>
+        <h1 class="hl nm-h"><span class="ln"><span>AYA&nbsp;HASSAN</span></span></h1>
+        <dl class="cells" dir={L.dir}>
+          <div class="c mot"><dt class="sr-only">{t('Motto', 'الشعار')}</dt><dd>{L.ar ? <>من الفكرة إلى <em>الإقناع.</em></> : <>From concept to <em>conviction.</em></>}</dd></div>
+          <div class="c"><dt class="label">{t('Based', 'المقر')}</dt><dd>{t('Cairo, EG', 'القاهرة، مصر')}</dd></div>
+          <div class="c"><dt class="label">{t('Practice', 'منذ')}</dt><dd>2020 —</dd></div>
+          <div class="c"><dt class="label">{t('Sheet', 'لوحة')}</dt><dd>A-000</dd></div>
+          <div class="c st">
+            <svg class="stamp" role="img" aria-label={t('Stamp: concept approved, Cairo 2026', 'ختم: الفكرة معتمدة، القاهرة 2026')} viewBox="0 0 160 160" dir="ltr">
+              <defs><path id="stamp-ring" d="M80 80 m -58 0 a 58 58 0 1 1 116 0 a 58 58 0 1 1 -116 0"></path></defs>
+              <circle cx="80" cy="80" r="76" fill="none" stroke="currentColor" stroke-width="2"></circle>
+              <circle cx="80" cy="80" r="44" fill="none" stroke="currentColor" stroke-width="1.2"></circle>
+              <text font-weight="600" font-size="11.5" letter-spacing="3.2" fill="currentColor" style="direction:ltr;unicode-bidi:bidi-override"><textPath href="#stamp-ring">CONCEPT APPROVED · CAIRO · MMXXVI ·</textPath></text>
+              <path d="M62 82 L 75 95 L 100 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+        </dl>
       </div>
       <div class="bottom">
         <div class="ctas">
@@ -121,33 +122,6 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
       hero.addEventListener('mouseleave', () => hero.classList.remove('paused'));
       document.addEventListener('visibilitychange', () => (document.hidden ? clearTimeout(timer) : schedule()));
       setTimeout(schedule, document.documentElement.classList.contains('has-intro') ? 4400 : 0);
-    }
-  </script>
-
-  <section class="hand" aria-labelledby="hand-h" data-hand>
-    <div class="wrap">
-      <div class="sheet-head"><h2 id="hand-h" class="label">{t('One hand', 'يد واحدة')}</h2><span class="label muted">{t('Stage', 'المرحلة')} — <span class="st" data-hand-stage data-l={JSON.stringify(L.ar ? ['رسم', 'نموذج ← صورة', 'صورة · معتمدة'] : ['Sketch', 'Model → Image', 'Render · Approved'])}></span></span></div>
-      <p class="hand-t">{L.ar ? <>اسحب لترى <em>عقلًا واحدًا</em> يعمل.</> : <>Drag to watch <em>one brain</em> work.</>}</p>
-      <div class="hand-frame" dir="ltr">
-        <svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="pencil" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"></feColorMatrix><feGaussianBlur stdDeviation="0.9"></feGaussianBlur><feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true"></feConvolveMatrix><feComponentTransfer><feFuncR type="linear" slope="-4.5" intercept="1"></feFuncR><feFuncG type="linear" slope="-4.5" intercept="1"></feFuncG><feFuncB type="linear" slope="-4.7" intercept="1"></feFuncB></feComponentTransfer></filter></svg>
-        <img class="lay sk" src={hand.src} alt="" width={handSrc.width} height={handSrc.height} loading="lazy" decoding="async" />
-        <div class="rv" data-hand-rv><img class="lay" src={hand.src} alt={t('A render revealed from its own line drawing', 'صورة معمارية تظهر من رسمها الخطي')} width={handSrc.width} height={handSrc.height} loading="lazy" decoding="async" /></div>
-        <span class="tagl label">{t('Render', 'صورة')}</span><span class="tagr label">{t('Sketch', 'رسم')}</span>
-      </div>
-      <label class="label muted hand-l" for="hand-range">{t('Sketch ← drag → Render', 'رسم ← اسحب → صورة')}</label>
-      <input id="hand-range" class="hand-range" type="range" min="0" max="100" value="55" dir="ltr" data-hand-range />
-    </div>
-  </section>
-
-  <script>
-    const hd = document.querySelector<HTMLElement>('[data-hand]');
-    if (hd) {
-      const r = hd.querySelector<HTMLInputElement>('[data-hand-range]')!;
-      const rv = hd.querySelector<HTMLElement>('[data-hand-rv]')!;
-      const st = hd.querySelector<HTMLElement>('[data-hand-stage]')!;
-      const lb: string[] = JSON.parse(st.dataset.l!);
-      const set = () => { const v = +r.value; rv.style.clipPath = `inset(0 ${100 - v}% 0 0)`; st.textContent = v < 20 ? lb[0] : v < 75 ? lb[1] : lb[2]; };
-      r.addEventListener('input', set); set();
     }
   </script>
 
@@ -256,23 +230,6 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
 </Base>
 
 <style>
-  .hand { padding: clamp(72px, 9vw, 140px) 0; background: var(--ow); }
-  .hand-t { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 4vw, 60px); line-height: 1.05; font-stretch: 112%; letter-spacing: -.03em; margin: 28px 0 32px; }
-  .hand-t em { font-weight: 250; font-stretch: 100%; color: var(--ox); }
-  .hand .st { color: var(--ox); }
-  .hand-frame { position: relative; aspect-ratio: 21 / 9; min-height: 280px; overflow: hidden; border-radius: var(--r-3); background: #fff; }
-  .lay { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .hand-frame .sk { filter: url(#pencil); opacity: .9; }
-  .rv { position: absolute; inset: 0; clip-path: inset(0 45% 0 0); }
-  .tagl, .tagr { position: absolute; top: 16px; padding: 7px 11px; border-radius: var(--r-1); font-size: 11px; }
-  .tagl { left: 16px; background: var(--night); color: var(--ow); }
-  .tagr { right: 16px; background: var(--ow); color: var(--ink); }
-  .hand-l { display: block; margin-top: 18px; }
-  .hand-range { -webkit-appearance: none; appearance: none; width: 100%; height: 44px; background: transparent; cursor: ew-resize; }
-  .hand-range::-webkit-slider-runnable-track { height: 1px; background: var(--ink); }
-  .hand-range::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; margin-top: -14px; border-radius: 50%; background: var(--ox); border: 3px solid var(--ow); box-shadow: 0 0 0 1px var(--ink); }
-  .hand-range::-moz-range-track { height: 1px; background: var(--ink); }
-  .hand-range::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: var(--ox); border: 3px solid var(--ow); }
   .hero { position: relative; height: var(--hero-h); color: var(--ow); overflow: hidden; background: var(--night); }
   .slides { position: absolute; inset: 0; }
   .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s var(--ease); }
@@ -288,17 +245,27 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   .kicker { display: flex; align-items: center; gap: 12px; }
   .kicker.r { text-align: right; display: block; }
   .dotl { width: 28px; height: 1px; background: currentColor; }
-  .hl-row { grid-row: 3; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px 48px; }
-  h1 { font-family: "Archivo Variable", sans-serif; font-weight: 900; font-size: clamp(64px, 13vw, 220px); line-height: .84; font-stretch: 125%; letter-spacing: -.035em; }
-  .wordmark .w2 { font-weight: 200; font-style: italic; font-stretch: 100%; padding-left: .42em; }
-  .wordmark .w2 b { font-weight: 900; font-style: normal; color: #B8394A; }
-  .tagline { display: flex; align-items: center; gap: 28px; padding-bottom: .6em; }
-  .tl { font: 600 clamp(22px, 2.4vw, 36px)/1.1 var(--display); letter-spacing: -.025em; max-width: 9em; }
-  .tl em { font-weight: 250; font-style: italic; color: var(--sand); }
-  .stamp { width: clamp(96px, 9vw, 132px); height: auto; flex-shrink: 0; color: var(--sand); transform: rotate(-9deg); animation: stampin .9s .9s var(--ease) both; }
+  /* hero name as a drawing title block: dimension string, name, then the block's cells */
+  .tb { grid-row: 3; display: grid; gap: 0; }
+  .dimn { display: flex; align-items: center; gap: 14px; color: var(--sand); margin-bottom: clamp(10px, 1.2vw, 18px); }
+  .dimn i { flex: 1; height: 1px; background: currentColor; position: relative; }
+  .dimn i::before { content: ""; position: absolute; top: -6px; width: 1px; height: 13px; background: currentColor; }
+  .dimn i:first-child::before { left: 0; } .dimn i:last-child::before { right: 0; }
+  .dimn span { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; white-space: nowrap; }
+  .nm-h { font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(44px, 9.6vw, 176px); line-height: .86; letter-spacing: -.02em; white-space: nowrap; max-width: none; }
+  .cells { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr auto; margin: clamp(16px, 2vw, 28px) 0 0; border: 1px solid rgba(243, 237, 227, .35); }
+  .c { margin: 0; padding: 14px 18px; border-inline-start: 1px solid rgba(243, 237, 227, .35); display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+  .c:first-child { border-inline-start: 0; }
+  .c dt { color: rgba(243, 237, 227, .7); font-size: 10.5px; }
+  .c dd { margin: 0; font-weight: 500; font-size: 15px; }
+  .c.mot dd { font-weight: 600; font-size: clamp(18px, 1.7vw, 26px); line-height: 1.1; letter-spacing: -.02em; }
+  .c.mot em { font-weight: 250; font-style: italic; color: var(--sand); }
+  .c.st { padding: 8px 14px; }
+  .stamp { width: 74px; height: auto; color: #D7A0A6; transform: rotate(-9deg); animation: stampin .7s 1.1s cubic-bezier(.3, 1.6, .5, 1) both; }
   .stamp text { font-family: "Archivo Variable", sans-serif; }
-  @keyframes stampin { from { opacity: 0; transform: rotate(-30deg) scale(1.4); } }
-  @media (max-width: 700px) { .tagline { padding-bottom: 0; } .stamp { width: 84px; } }
+  @keyframes stampin { from { opacity: 0; transform: rotate(-26deg) scale(1.6); } }
+  @media (max-width: 900px) { .cells { grid-template-columns: 1fr 1fr 1fr auto; } .c.mot { grid-column: 1 / -1; border-inline-start: 0; border-bottom: 1px solid rgba(243, 237, 227, .35); } .c:nth-child(2) { border-inline-start: 0; } }
+  @media (max-width: 560px) { .cells { grid-template-columns: 1fr 1fr auto; } .c:nth-child(4) { display: none; } .dimn span { font-size: 9.5px; letter-spacing: .16em; } }
   .hl .ln { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
   .hl .ln > span { display: inline-block; animation: lineup 1.3s var(--ease) both; }
   .hl .ln:nth-child(2) > span { animation-delay: .14s; }
@@ -332,7 +299,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   @media (max-width: 1000px) { .bottom { grid-template-columns: 1fr auto; } .ctrl { grid-column: 1 / -1; grid-row: 2; justify-self: start; } .chip { grid-row: 1; grid-column: 2; } }
   @media (max-width: 700px) {
     .top .kicker.r { display: none; }
-    h1 { font-size: clamp(60px, 19vw, 110px); }
+    .nm-h { font-size: clamp(30px, 11vw, 60px); }
     .bottom { grid-template-columns: 1fr; gap: 16px; border-top: 0; padding-top: 0; }
     .ctas { display: grid; grid-template-columns: 1fr; gap: 8px; }
     .ctas .btn { justify-content: center; padding-inline: 18px; }

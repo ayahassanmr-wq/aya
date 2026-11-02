@@ -1,12 +1,12 @@
 ---
-/* Logo intro (~4 s, once per session).
-   AYA fills the screen: its outline is traced in off-white, two contour echoes ripple out from it,
-   the off-white fill rises up through the letters, then the mark shrinks and flies into the header logo
-   while the screen parts top and bottom onto the hero. Skippable; never with reduced motion or without JS. */
+/* Intro (~3 s, first visit of a session and on refresh), in the One Hand brand.
+   A drawing sheet: a dimension line is drawn edge to edge, AYA HASSAN rises onto it in wide Archivo,
+   the title block's cells rule in underneath, the oxblood "concept approved" stamp lands, then the sheet
+   parts top and bottom onto the hero. Skippable; never with reduced motion or without JS. */
+const ar = Astro.url.pathname.startsWith('/ar');
 ---
 <script is:inline>
   try {
-    // plays on the first visit of a session, and again whenever the page is refreshed
     var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
     var reload = nav ? nav.type === 'reload' : (performance.navigation && performance.navigation.type === 1);
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches && (reload || !sessionStorage.getItem('aya-intro'))) {
@@ -17,15 +17,23 @@
 </script>
 <div class="intro" aria-hidden="true" data-intro>
   <span class="half up"></span><span class="half dn"></span>
-  <div class="stage" data-stage>
-    <div class="drift">
-      <svg class="mk echo e2" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
-      <svg class="mk echo e1" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
-      <svg class="mk line" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
-      <svg class="mk fill" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
+  <div class="sheet" dir="ltr">
+    <div class="dim"><i></i><span>{ar ? 'معمارية · مصممة داخلية' : 'Architect · Interior designer'}</span><i></i></div>
+    <p class="nm"><span>AYA&nbsp;HASSAN</span></p>
+    <div class="cells">
+      <span class="c">{ar ? 'من الفكرة إلى الإقناع' : 'From concept to conviction'}</span>
+      <span class="c">Cairo, EG</span>
+      <span class="c">A-000</span>
+      <svg class="stamp" viewBox="0 0 160 160">
+        <defs><path id="intro-ring" d="M80 80 m -58 0 a 58 58 0 1 1 116 0 a 58 58 0 1 1 -116 0"></path></defs>
+        <circle cx="80" cy="80" r="76" fill="none" stroke="currentColor" stroke-width="2"></circle>
+        <circle cx="80" cy="80" r="44" fill="none" stroke="currentColor" stroke-width="1.2"></circle>
+        <text font-weight="600" font-size="11.5" letter-spacing="3.2" fill="currentColor" style="direction:ltr;unicode-bidi:bidi-override"><textPath href="#intro-ring">CONCEPT APPROVED · CAIRO · MMXXVI ·</textPath></text>
+        <path d="M62 82 L 75 95 L 100 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
     </div>
   </div>
-  <button type="button" class="label skip-intro" data-skip tabindex="-1">{Astro.url.pathname.startsWith('/ar') ? 'تخطَّ' : 'Skip'}</button>
+  <button type="button" class="label skip-intro" data-skip tabindex="-1">{ar ? 'تخطَّ' : 'Skip'}</button>
 </div>
 
 <script>
@@ -33,19 +41,12 @@
   const el = document.querySelector<HTMLElement>('[data-intro]');
   if (el && root.classList.contains('has-intro')) {
     let done = false;
-    const stage = el.querySelector<HTMLElement>('[data-stage]')!;
     const end = () => {
       if (done) return; done = true;
-      const target = document.querySelector<HTMLElement>('a.logo img');
-      const a = stage.getBoundingClientRect();
-      if (target) {
-        const b = target.getBoundingClientRect();
-        if (b.width > 0) stage.style.setProperty('--fly', `translate(${b.left + b.width / 2 - (a.left + a.width / 2)}px, ${b.top + b.height / 2 - (a.top + a.height / 2)}px) scale(${b.width / a.width})`);
-      }
       root.classList.add('intro-out');
-      setTimeout(() => { root.classList.remove('has-intro', 'intro-out'); el.remove(); }, 1150);
+      setTimeout(() => { root.classList.remove('has-intro', 'intro-out'); el.remove(); }, 1100);
     };
-    setTimeout(end, 2950);
+    setTimeout(end, 2900);
     el.querySelector('[data-skip]')!.addEventListener('click', end);
     addEventListener('keydown', end, { once: true });
     addEventListener('pointerdown', end, { once: true });
@@ -55,32 +56,38 @@
 <style>
   .intro { display: none; }
   :global(.has-intro) .intro { display: grid; place-items: center; position: fixed; inset: 0; z-index: 500; color: var(--ow); overflow: hidden; }
-  :global(.has-intro a.logo img) { opacity: 0; }
   .half { position: absolute; left: 0; right: 0; height: 50.5%; background: var(--night); transition: transform 1.05s var(--ease-io); }
   .up { top: 0; } .dn { bottom: 0; }
   :global(.intro-out) .up { transform: translateY(-100%); }
   :global(.intro-out) .dn { transform: translateY(100%); }
 
-  /* the mark fills the screen (as wide as the viewport allows without overflowing its height) */
-  .stage { position: relative; z-index: 2; width: min(92vw, calc(78svh * 941 / 453)); aspect-ratio: 941 / 453; transform-origin: center; }
-  :global(.intro-out) .stage { transform: var(--fly, scale(.1)); transition: transform 1.05s cubic-bezier(.7, 0, .2, 1); }
-  .drift { position: absolute; inset: 0; animation: drift 2.95s cubic-bezier(.2, .7, .2, 1) both; }
-  @keyframes drift { from { transform: scale(1.12) translateY(3%); } to { transform: none; } }
+  .sheet { position: relative; z-index: 2; width: min(88vw, 1400px); transition: opacity .45s, transform 1s var(--ease-io); }
+  :global(.intro-out) .sheet { opacity: 0; transform: scale(.96); }
 
-  .mk { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
-  /* 1. the outline is traced */
-  .line { fill: transparent; stroke: var(--sand); stroke-width: 1.3px; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.6s .1s cubic-bezier(.65, .05, .3, 1) forwards, lineout .5s 2.3s forwards; }
-  @keyframes draw { to { stroke-dashoffset: 0; } }
-  @keyframes lineout { to { stroke: rgba(243, 237, 227, 0); } }
-  /* 3. once filled, two contour echoes ripple outward, like offset lines on a plan */
-  .echo { fill: transparent; stroke: rgba(243, 237, 227, .4); stroke-width: 1px; vector-effect: non-scaling-stroke; opacity: 0; transform-origin: 50% 50%; }
-  .e1 { animation: echo 1.2s 2.05s cubic-bezier(.2, .7, .2, 1) forwards; }
-  .e2 { animation: echo 1.3s 2.2s cubic-bezier(.2, .7, .2, 1) forwards; --to: 1.18; }
-  @keyframes echo { 0% { opacity: 0; transform: scale(1); } 15% { opacity: 1; } 100% { opacity: 0; transform: scale(var(--to, 1.08)); } }
-  /* 2. the fill rises up through the letters */
-  .fill { fill: #F3EDE3; clip-path: inset(100% 0 0 0); animation: rise .85s 1.45s cubic-bezier(.7, 0, .2, 1) forwards; }
-  @keyframes rise { to { clip-path: inset(0 0 0 0); } }
-  :global(.intro-out) .echo { animation: none; opacity: 0; }
+  /* 1. the dimension line draws out from the centre to both ends */
+  .dim { display: flex; align-items: center; gap: 14px; color: var(--sand); margin-bottom: clamp(10px, 1.4vw, 20px); }
+  .dim i { flex: 1; height: 1px; background: currentColor; position: relative; transform: scaleX(0); animation: draw .9s .1s var(--ease-io) forwards; }
+  .dim i:first-child { transform-origin: right; } .dim i:last-child { transform-origin: left; }
+  .dim i::before { content: ""; position: absolute; top: -7px; width: 1px; height: 15px; background: currentColor; }
+  .dim i:first-child::before { left: 0; } .dim i:last-child::before { right: 0; }
+  .dim span { font: 400 11px/1 var(--sans); letter-spacing: .26em; text-transform: uppercase; white-space: nowrap; opacity: 0; animation: fade .6s .5s forwards; }
+  @keyframes draw { to { transform: scaleX(1); } }
+  @keyframes fade { to { opacity: 1; } }
+
+  /* 2. the name rises onto the line */
+  .nm { margin: 0; overflow: hidden; font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(40px, 10.4vw, 190px); line-height: .9; letter-spacing: -.02em; white-space: nowrap; text-align: center; }
+  .nm span { display: inline-block; transform: translateY(105%); animation: rise 1s .55s var(--ease-out) forwards; }
+  @keyframes rise { to { transform: none; } }
+
+  /* 3. the title block rules in, then the stamp lands */
+  .cells { display: grid; grid-template-columns: 2fr 1fr 1fr auto; align-items: center; margin-top: clamp(14px, 1.8vw, 26px); border-top: 1px solid rgba(243, 237, 227, .35); border-bottom: 1px solid rgba(243, 237, 227, .35); clip-path: inset(0 100% 0 0); animation: wipe .8s 1.25s var(--ease-io) forwards; }
+  .c { padding: 14px 18px; border-inline-start: 1px solid rgba(243, 237, 227, .35); font: 400 12px/1.2 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: rgba(243, 237, 227, .8); }
+  .c:first-child { border-inline-start: 0; padding-inline-start: 0; }
+  @keyframes wipe { to { clip-path: inset(0 0 0 0); } }
+  .stamp { width: clamp(56px, 6vw, 84px); height: auto; margin: 6px 0 6px 18px; color: #D7A0A6; opacity: 0; transform: rotate(-26deg) scale(1.8); animation: stamp .5s 1.95s cubic-bezier(.3, 1.6, .5, 1) forwards; }
+  .stamp text { font-family: "Archivo Variable", sans-serif; }
+  @keyframes stamp { to { opacity: 1; transform: rotate(-9deg) scale(1); } }
+  @media (max-width: 640px) { .cells { grid-template-columns: 1fr auto; } .c:nth-child(2), .c:nth-child(3) { display: none; } .c { font-size: 10px; letter-spacing: .12em; } }
 
   .skip-intro { position: absolute; z-index: 3; right: max(var(--gut), env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: none; border: 0; color: var(--muted-dark); padding: 12px; cursor: pointer; transition: opacity .3s; }
   :global(.intro-out) .skip-intro { opacity: 0; }
