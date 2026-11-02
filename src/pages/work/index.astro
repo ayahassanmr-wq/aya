@@ -3,101 +3,131 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { getImage } from 'astro:assets';
-import { projects, cover, countries } from '../../data/projects';
-const filters = [
-  { id: 'all', label: 'All' },
-  { id: 'architecture', label: 'Architecture' },
-  { id: 'interiors', label: 'Interiors' },
-  { id: 'bim', label: 'BIM' },
-  { id: 'Workplace', label: 'Workplace' },
-  { id: 'Residential', label: 'Residential' },
-];
-const prev = await Promise.all(projects.map(async (p) => (await getImage({ src: cover(p.slug), width: 700, format: 'webp' })).src));
-const isBim = (p: (typeof projects)[number]) => p.scope.some((x) => /BIM|IFC/i.test(x));
-const count = (id: string) => id === 'all' ? projects.length : id === 'bim' ? projects.filter(isBim).length : projects.filter((p) => p.category === id || p.sector === id).length;
+import { projects, cover, countries, type Project } from '../../data/projects';
+const isBim = (p: Project) => p.scope.some((x) => /BIM|IFC/i.test(x));
+const prev = Object.fromEntries(await Promise.all(projects.map(async (p) => [p.slug, (await getImage({ src: cover(p.slug)!, width: 700, format: 'webp' })).src])));
 const disciplines = await Promise.all([
-  { id: 'architecture', n: '01', name: 'Architecture', line: 'Buildings, from the first massing to the last render.', img: 'neom-oxagon' },
-  { id: 'interiors', n: '02', name: 'Interior design', line: 'Workplaces, homes and showrooms, down to the finish.', img: 'sabic-hq' },
-  { id: 'bim', n: '03', name: 'BIM', line: 'Full Revit packages: modelled, coordinated, issued.', img: 'linah-farms' },
-].map(async (d) => ({ ...d, src: (await getImage({ src: cover(d.img)!, width: 1400, format: 'webp' })).src })));
+  { id: 'architecture', n: '01', name: 'Architecture', line: 'Buildings, from the first massing to the last render.', img: 'neom-oxagon', list: projects.filter((p) => p.category === 'architecture') },
+  { id: 'interiors', n: '02', name: 'Interior design', line: 'Workplaces, homes and showrooms, down to the finish.', img: 'sabic-hq', list: projects.filter((p) => p.category === 'interiors') },
+  { id: 'bim', n: '03', name: 'BIM', line: 'Full Revit packages: modelled, coordinated, issued.', img: 'linah-farms', list: projects.filter(isBim) },
+].map(async (d) => ({ ...d, src: (await getImage({ src: cover(d.img)!, width: 1600, format: 'webp' })).src })));
 ---
-<Base title="Selected work" description={`Selected work by Aya Hassan: ${projects.length} architecture and interior projects across the Gulf, Egypt and beyond.`}>
-  <PageHero images={['misr-italia-hilltop', 'sabic-hq', 'neom-oxagon', 'zayed-residence'].map((x) => cover(x)!)} alt="Selected projects by Aya Hassan" meta={[['Selected', String(projects.length)], ['Architecture', String(count('architecture'))], ['Interiors', String(count('interiors'))], ['Countries', String(countries.length)]]}>
+<Base title="Selected work" description={`Selected work by Aya Hassan: ${projects.length} projects across architecture, interior design and BIM, in the Gulf, Egypt and beyond.`}>
+  <PageHero images={['misr-italia-hilltop', 'sabic-hq', 'neom-oxagon', 'zayed-residence'].map((x) => cover(x)!)} alt="Selected projects by Aya Hassan" meta={[['Selected', String(projects.length)], ...disciplines.map((d) => [d.name, String(d.list.length)] as [string, string]), ['Countries', String(countries.length)]]}>
     <h1 class="display-xl lines"><span class="ln"><span>Selected</span></span><span class="ln"><span><em>work.</em></span></span></h1>
   </PageHero>
-  <section class="wrap disc" aria-labelledby="disc-h">
-    <h2 id="disc-h" class="label muted dh">Disciplines</h2>
-    <div class="dl">
-      {disciplines.map((d) => (
-        <button type="button" class="d" data-pick={d.id} aria-label={`Show ${d.name} projects (${count(d.id)})`}>
-          <span class="img" style={`background-image:url(${d.src})`} aria-hidden="true"></span>
-          <span class="n label">{d.n}</span>
-          <span class="nm">{d.name}</span>
-          <span class="ln2">{d.line}</span>
-          <span class="ct label">{count(d.id)} projects <span class="arr">↓</span></span>
-        </button>
-      ))}
+
+  <!-- 1 · disciplines, a section of its own -->
+  <section class="disc" aria-labelledby="disc-h">
+    <div class="wrap">
+      <div class="dtop">
+        <p class="label muted">The work, in three parts</p>
+        <h2 id="disc-h" class="dtitle reveal">Three disciplines.<br /><em>One hand.</em></h2>
+      </div>
+      <div class="dl">
+        {disciplines.map((d) => (
+          <a class="d" href={`#${d.id}`} data-jump={d.id}>
+            <span class="img" style={`background-image:url(${d.src})`} aria-hidden="true"></span>
+            <span class="n label">{d.n}</span>
+            <span class="nm">{d.name}</span>
+            <span class="ln2">{d.line}</span>
+            <span class="ct label">{d.list.length} projects <span class="arr">↓</span></span>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
-  <section class="wrap head" id="projects">
-    <div class="bar glass" data-sticky-bar>
-      <div class="filters" role="group" aria-label="Filter projects">
-        {filters.map((f, i) => <button type="button" data-f={f.id} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}<sup>{count(f.id)}</sup></button>)}
-      </div>
+  <div class="works">
+  <!-- 2 · sticky chapter bar -->
+  <div class="wrap head">
+    <nav class="bar glass" aria-label="Disciplines">
+      <ol class="chap">
+        {disciplines.map((d) => <li><a href={`#${d.id}`} data-chap={d.id}><span class="cn">{d.n}</span>{d.name}<sup>{d.list.length}</sup></a></li>)}
+      </ol>
       <div class="views" role="group" aria-label="View">
         <button type="button" data-v="grid" aria-pressed="true">Grid</button>
         <button type="button" data-v="list" aria-pressed="false">List</button>
       </div>
-    </div>
-  </section>
+    </nav>
+  </div>
 
-  <section class="wrap" aria-labelledby="plist">
-    <h2 id="plist" class="sr-only">Projects</h2>
-    <p class="sr-only" aria-live="polite" data-live></p>
-    <div class="grid stagger" data-view="grid">
-      {projects.map((p, i) => <div class="it" data-cat={p.category} data-sector={p.sector} data-bim={isBim(p) ? '1' : undefined}><ProjectCard p={p} /></div>)}
-    </div>
-    <ol class="list" data-view="list" hidden>
-      {projects.map((p, i) => (
-        <li class="it" data-cat={p.category} data-sector={p.sector} data-bim={isBim(p) ? '1' : undefined}>
-          <a href={`/work/${p.slug}/`} data-preview={prev[i]}>
-            <span class="t">{p.title}{p.concept && <span class="tag">Concept</span>}</span>
-            <span class="muted">{p.location}{p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}</span>
-            <span class="label muted">{p.category}</span>
-            <span class="label muted">{p.sector}</span>
-          </a>
-        </li>
-      ))}
-    </ol>
-  </section>
+  <!-- 3 · the work, one chapter per discipline -->
+  {disciplines.map((d) => (
+    <section class="chapter" id={d.id} aria-labelledby={`${d.id}-h`} data-chapter={d.id}>
+      <header class="wrap ch">
+        <span class="big" aria-hidden="true">{d.n}</span>
+        <div class="cht">
+          <p class="label muted">Discipline {d.n} / 03</p>
+          <h2 id={`${d.id}-h`} class="chn">{d.name}</h2>
+          <p class="chl">{d.line}</p>
+        </div>
+        <p class="label muted chc">{d.list.length} projects</p>
+      </header>
+      <div class="wrap band reveal" aria-hidden="true"><span style={`background-image:url(${d.src})`}></span></div>
+      <div class="wrap">
+        <div class="grid stagger" data-view="grid">
+          {d.list.map((p) => <div class="it"><ProjectCard p={p} /></div>)}
+        </div>
+        <ol class="list" data-view="list" hidden>
+          {d.list.map((p) => (
+            <li class="it">
+              <a href={`/work/${p.slug}/`} data-preview={prev[p.slug]}>
+                <span class="t">{p.title}{p.concept && <span class="tag">Concept</span>}</span>
+                <span class="muted">{p.location}{p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}</span>
+                <span class="label muted">{p.sector}</span>
+                <span class="label muted">{p.practice ?? 'Independent'}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+      {d.id !== 'bim' && <p class="wrap next label"><a href={`#${disciplines[disciplines.indexOf(d) + 1].id}`} class="link">Next: {disciplines[disciplines.indexOf(d) + 1].name} ↓</a></p>}
+    </section>
+  ))}
+  </div>
 </Base>
 
 <script>
-  const fb = document.querySelectorAll<HTMLButtonElement>('[data-f]');
+  const go = (id: string) => { const t = document.getElementById(id)!; const l = (window as any).__lenis;
+    l?.scrollTo ? l.scrollTo(t, { offset: -150 }) : t.scrollIntoView({ behavior: 'smooth' }); history.replaceState(null, '', `#${id}`); };
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); go(a.hash.slice(1)); }));
+  // highlight the chapter in view
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-chap]');
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) links.forEach((l) => l.toggleAttribute('aria-current', l.dataset.chap === (e.target as HTMLElement).dataset.chapter)); }), { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('[data-chapter]').forEach((c) => io.observe(c));
   const vb = document.querySelectorAll<HTMLButtonElement>('[data-v]');
-  const live = document.querySelector<HTMLElement>('[data-live]')!;
-  const match = (el: HTMLElement, f: string) => f === 'all' || el.dataset.cat === f || el.dataset.sector === f || (f === 'bim' && el.dataset.bim === '1');
-  const apply = (f: string) => { let n = 0; document.querySelectorAll<HTMLElement>('.grid .it').forEach((el) => { el.hidden = !match(el, f); if (!el.hidden) n++; });
-    document.querySelectorAll<HTMLElement>('.list .it').forEach((el) => { el.hidden = !match(el, f); });
-    live.textContent = `${n} projects shown`; (window as any).__lenis?.resize?.(); };
-  fb.forEach((b) => b.addEventListener('click', () => { fb.forEach((x) => x.setAttribute('aria-pressed', String(x === b))); apply(b.dataset.f!); }));
-  document.querySelectorAll<HTMLButtonElement>('[data-pick]').forEach((d) => d.addEventListener('click', () => {
-    document.querySelector<HTMLButtonElement>(`[data-f="${d.dataset.pick}"]`)?.click();
-    const t = document.getElementById('projects')!; const l = (window as any).__lenis;
-    l?.scrollTo ? l.scrollTo(t, { offset: -90 }) : t.scrollIntoView({ behavior: 'smooth' });
-  }));
   vb.forEach((b) => b.addEventListener('click', () => {
     vb.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     document.querySelectorAll<HTMLElement>('[data-view]').forEach((v) => (v.hidden = v.dataset.view !== b.dataset.v));
-    document.querySelectorAll('.reveal').forEach((el) => el.classList.remove('pre'));
+    document.querySelectorAll('.reveal').forEach((el) => el.classList.remove('pre')); (window as any).__lenis?.resize?.();
   }));
 </script>
 
 <style>
   /* disciplines: three panels; the hovered one widens and its render fades in */
-  .disc { padding-top: clamp(48px, 6vw, 96px); }
-  .dh { margin: 0 0 18px; }
+  .disc { padding-block: clamp(96px, 12vw, 180px) clamp(72px, 9vw, 140px); }
+  .dtop { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(32px, 4vw, 56px); }
+  .dtitle { margin: 0; font: 400 clamp(44px, 6vw, 104px)/.95 var(--display); letter-spacing: -.02em; text-align: right; }
+  .d { cursor: pointer; text-decoration: none; }
+  /* chapter bar */
+  .chap { display: flex; flex-wrap: wrap; gap: 4px 28px; list-style: none; margin: 0; padding: 0; }
+  .chap a { display: inline-flex; align-items: baseline; gap: 8px; min-height: 44px; align-items: center; font: 400 12px var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); transition: color .25s; }
+  .chap .cn { color: var(--grey); font-size: 10px; }
+  .chap a:hover, .chap a[aria-current] { color: var(--ox); }
+  .chap a[aria-current] .cn { color: var(--ox); }
+  /* chapters */
+  .chapter { padding-top: clamp(80px, 10vw, 160px); scroll-margin-top: 150px; }
+  .ch { display: grid; grid-template-columns: auto 1fr auto; gap: clamp(20px, 3vw, 56px); align-items: end; border-bottom: 1px solid var(--rule); padding-bottom: clamp(24px, 3vw, 40px); }
+  .big { font: 400 clamp(110px, 17vw, 300px)/.78 var(--display); color: transparent; -webkit-text-stroke: 1px var(--ox); letter-spacing: -.04em; }
+  .cht .label { margin: 0 0 10px; }
+  .chn { margin: 0; font: 400 clamp(48px, 7vw, 124px)/.92 var(--display); letter-spacing: -.02em; }
+  .chl { margin: 14px 0 0; max-width: 40ch; color: var(--ink-2); }
+  .chc { margin: 0; white-space: nowrap; }
+  .band { margin-top: clamp(28px, 3vw, 44px); }
+  .band span { display: block; height: clamp(180px, 26vw, 400px); background: center/cover no-repeat; border-radius: var(--r-l); }
+  .next { padding-bottom: 20px; text-align: right; }
+  @media (max-width: 760px) { .ch { grid-template-columns: 1fr; } .big { font-size: 96px; } .dtitle { text-align: left; } .chc { order: 3; } }
   .dl { display: flex; gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); min-height: clamp(360px, 38vw, 560px); }
   .d { position: relative; flex: 1 1 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 14px; text-align: left; padding: clamp(20px, 2.4vw, 36px); border: 0; border-left: 1px solid var(--rule); overflow: hidden; color: var(--ink); text-transform: none; letter-spacing: 0; transition: flex-grow .9s var(--ease-io), color .5s var(--ease); isolation: isolate; }
   .d:first-child { border-left: 0; }
@@ -127,16 +157,17 @@ const disciplines = await Promise.all([
     .d .nm { white-space: normal; }
   }
   .head { padding-top: clamp(28px, 3vw, 44px); }
-  .bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-block: 10px; border: 1px solid var(--rule); border-radius: var(--r-l); position: sticky; top: 80px; z-index: 5; background: rgba(243, 237, 227, .86); padding-inline: 22px; }
-  @media (max-width: 760px) { .bar { top: 68px; } }
+  .bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-block: 10px; border: 1px solid var(--rule); border-radius: var(--r-l); background: rgba(243, 237, 227, .86); padding-inline: 22px; }
+  .head { position: sticky; top: 80px; z-index: 5; }
+  @media (max-width: 760px) { .head { top: 68px; } .bar { padding-block: 0; padding-inline: 16px; } .bar .views { display: none; } .chap { flex-wrap: nowrap; overflow-x: auto; gap: 0 18px; scrollbar-width: none; } .chap a { white-space: nowrap; font-size: 10px; letter-spacing: .12em; } }
   .filters, .views { display: flex; flex-wrap: wrap; gap: 4px 22px; }
   button { background: none; border: 0; padding: 10px 0; min-height: 44px; cursor: pointer; font: 400 12px var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); transition: color .25s; }
   button[aria-pressed="true"], button:hover { color: var(--ox); }
   sup { font-size: 9px; margin-left: 4px; letter-spacing: 0; }
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(40px, 4vw, 64px) clamp(24px, 2.4vw, 40px); padding-block: clamp(40px, 5vw, 72px) clamp(80px, 10vw, 140px); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(40px, 4vw, 64px) clamp(24px, 2.4vw, 40px); padding-block: clamp(40px, 5vw, 72px) clamp(40px, 5vw, 72px); }
   @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
-  .list { list-style: none; margin: 0; padding: 32px 0 120px; }
+  .list { list-style: none; margin: 0; padding: 32px 0 72px; }
   .list li { border-bottom: 1px solid var(--rule); }
   .list a { display: grid; grid-template-columns: 2fr 1.4fr 1fr 1fr; gap: 16px; align-items: baseline; padding-block: 20px; transition: color .25s, padding .35s; }
   .list a:hover { color: var(--ox); padding-left: 16px; }
