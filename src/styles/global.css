@@ -50,9 +50,9 @@
   --night-2: #2B2826;    /* brand charcoal, cards on dark */
   --rule: rgba(43, 40, 38, .16);
   --rule-light: rgba(243, 237, 227, .16);
-  --display: "Syne", "Alexandria Display", "Jost Fallback", Arial, sans-serif;
-  --arabic: "Alexandria", "Jost", sans-serif;
-  --sans: "Jost", "Jost Fallback", "Futura", "Helvetica Neue", Arial, sans-serif;
+  --display: "Archivo Variable", "Alexandria Display", "Jost Fallback", Arial, sans-serif;
+  --arabic: "Alexandria", "Archivo Variable", sans-serif;
+  --sans: "Archivo Variable", "Alexandria", "Jost Fallback", "Helvetica Neue", Arial, sans-serif;
   --gut: clamp(16px, 4vw, 72px);
   --max: 1840px;  /* wide container for large screens */
   --ease: cubic-bezier(.2, .7, .2, 1);
@@ -76,7 +76,10 @@ body { margin: 0; background: var(--ow); color: var(--ink); font: 300 17px/1.65 
 img, video { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 p { margin: 0; }
-h1, h2, h3 { font-family: var(--display); font-weight: 800; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+h1, h2, h3 { font-family: var(--display); font-weight: 800; font-stretch: 112%; margin: 0; text-wrap: balance; letter-spacing: -.03em; }
+/* One typeface: accents are the same family, thin and italic, never a second font */
+h1 em, h2 em, h3 em, .display-xl em, .display-l em, .display-m em, .statement em, .lede em { font-weight: 250; font-stretch: 100%; font-style: italic; }
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 { letter-spacing: 0; }
 :focus-visible { outline: 2px solid var(--ox); outline-offset: 3px; }
 ::selection { background: var(--ox); color: var(--ow); }
 [hidden] { display: none !important; }
@@ -84,7 +87,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 800; margin: 0; text-wrap
 .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding-inline: max(var(--gut), env(safe-area-inset-left, 0px)) max(var(--gut), env(safe-area-inset-right, 0px)); }
 .label { font: 400 12px/1.45 var(--sans); letter-spacing: .2em; text-transform: uppercase; }
 .muted { color: var(--muted); }
-.display-xl, .display-l, .display-m { font-family: var(--display); font-weight: 800; letter-spacing: -.035em; }
+.display-xl, .display-l, .display-m { font-family: var(--display); font-weight: 800; font-stretch: 112%; letter-spacing: -.03em; }
 .display-xl { font-size: clamp(54px, 9.5vw, 156px); line-height: .92; }
 .display-l { font-size: clamp(40px, 6vw, 88px); line-height: .98; }
 .display-m { font-size: clamp(30px, 3.6vw, 52px); line-height: 1.05; }
@@ -307,3 +310,7 @@ main .sheet[data-sp] { border-radius: var(--r-3); clip-path: inset(0 calc((1 - v
 [dir="rtl"] :is(footer ul a:hover, dl div:hover dd) { transform: translateX(-6px); }
 [dir="rtl"] .progress, [dir="rtl"] .sheet-head::before { transform-origin: right; }
 [dir="rtl"] :is(.lines, .hl) .ln { padding-top: .28em; margin-top: -.28em; padding-bottom: .2em; margin-bottom: -.2em; }
+
+/* THE HOUSE LOOK — one grade over every project image so every project reads as one hand:
+   warm sand highlights, slightly matte blacks, quieter greens and blues. Logos and SVG marks are left alone. */
+main img:not([src$=".svg"]) { filter: sepia(.14) saturate(.86) contrast(1.05) brightness(1.01); }

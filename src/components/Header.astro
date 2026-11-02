@@ -1,5 +1,5 @@
 ---
-/* Floating glass bar: AYA mark · indexed nav · Riyadh time · "Let's talk". Full-screen menu on mobile. */
+/* Floating glass bar: AYA mark · indexed nav · Cairo time · "Let's talk". Full-screen menu on mobile. */
 interface Props { overHero?: boolean }
 const { overHero = false } = Astro.props;
 const path = Astro.url.pathname;
@@ -16,7 +16,7 @@ const links = [
 <header class:list={['site', { over: overHero }]} data-header>
   <div class="bar glass-dark">
     <a href={L.u('/')} class="logo" aria-label={L.t('Aya Hassan, home', 'آية حسن، الرئيسية')} data-cursor={L.t('Home', 'الرئيسية')}>
-      <img src="/brand/aya.svg" alt="" width="88" height="42" />
+      <span class="wm" aria-hidden="true">AYA<b>.</b></span>
     </a>
     <nav aria-label={L.t('Main', 'القائمة الرئيسية')} class="main-nav">
       <ul>
@@ -57,6 +57,8 @@ const links = [
 </script>
 
 <style>
+  .wm { font-family: "Archivo Variable", sans-serif; font-weight: 900; font-size: 22px; line-height: 1; font-stretch: 125%; letter-spacing: .02em; color: var(--ow); }
+  .wm b { color: #B8394A; }
   .site { position: fixed; z-index: 20; left: 0; right: 0; top: 0; padding: calc(12px + env(safe-area-inset-top, 0px)) max(var(--gut), env(safe-area-inset-right, 0px)) 0 max(var(--gut), env(safe-area-inset-left, 0px)); pointer-events: none; transition: transform .9s var(--ease-io); }
   .site.tuck { transform: translateY(calc(-100% - 12px)); }
   .bar { pointer-events: auto; max-width: calc(var(--max) - var(--gut) * 2); margin: 0 auto; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; height: 60px; padding: 0 8px 0 22px; border-radius: var(--r-3); transition: background .5s; animation: drop .9s .2s var(--ease) both; }
