@@ -45,18 +45,18 @@ import Social from './Social.astro';
 <style>
   footer { position: relative; overflow: hidden; padding-top: clamp(80px, 11vw, 160px); }
   .cta { transform: translate3d(0, calc((1 - var(--sp, 1)) * 140px), 0); opacity: calc(.3 + var(--sp, 1) * .7); display: grid; gap: 28px; padding-bottom: clamp(56px, 8vw, 110px); border-bottom: 1px solid var(--rule-light); }
-  .big { font: 400 clamp(46px, 7.4vw, 132px)/.95 var(--display); letter-spacing: -.02em; }
+  .big { font: 800 clamp(46px, 7.4vw, 132px)/.95 var(--display); letter-spacing: -.02em; }
   .big em { color: var(--sand); }
   .big .ln { display: block; overflow: hidden; padding-bottom: .06em; }
   .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 32px; margin-top: 12px; }
   .btn.solid { background: var(--ow); color: var(--ink); border-color: var(--ow); }
   .btn.solid::before { background: var(--ox) !important; }
   .btn.solid:hover { color: var(--ow) !important; border-color: var(--ox) !important; }
-  .mail { font: 400 clamp(20px, 2vw, 28px) var(--display); color: rgba(243, 237, 227, .85); }
+  .mail { font: 800 clamp(20px, 2vw, 28px) var(--display); color: rgba(243, 237, 227, .85); }
   .cols { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 40px; padding-block: 56px; align-items: start; }
   .cols .label { margin-bottom: 14px; }
   ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-  ul a { display: inline-flex; align-items: baseline; gap: 6px; font: 400 22px/1.3 var(--display); transition: transform .45s var(--ease), color .3s; }
+  ul a { display: inline-flex; align-items: baseline; gap: 6px; font: 400 19px/1.4 var(--sans); transition: transform .45s var(--ease), color .3s; }
   ul a:hover { transform: translateX(8px); color: var(--sand); font-style: italic; }
   ul sup { font: 400 10px var(--sans); color: var(--muted-dark); }
   .cv { margin-top: 18px; }

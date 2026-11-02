@@ -78,7 +78,7 @@ const pics = await Promise.all(images.slice(0, 4).map(async (img) => {
   .ttl :global(.lede) { max-width: min(30em, 35vw); animation: fadeup 1s .45s var(--ease) both; }
   .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 18px 32px; margin: 0; padding-top: 18px; border-top: 1px solid var(--rule-light); max-width: 37%; animation: fadeup 1s .55s var(--ease) both; }
   .meta div { display: grid; gap: 4px; }
-  .meta dd { margin: 0; font: 400 20px/1.25 var(--display); }
+  .meta dd { margin: 0; font: 400 17px/1.35 var(--sans); }
   @keyframes fadeup { from { opacity: 0; transform: translateY(14px); } }
   .cue { position: absolute; right: max(var(--gut), env(safe-area-inset-right, 0px)); bottom: clamp(28px, 4vw, 52px); display: none; }
   .noimg .cue { display: inline-flex; align-items: center; gap: 12px; color: var(--muted-dark); }

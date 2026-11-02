@@ -197,7 +197,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
 
   .brief { display: grid; grid-template-columns: 1fr 3fr; gap: 32px; padding-block: clamp(64px, 9vw, 140px); }
   .bt { display: grid; gap: 32px; }
-  .statement { font: 400 clamp(26px, 3vw, 46px)/1.2 var(--display); text-wrap: pretty; }
+  .statement { font: 800 clamp(26px, 3vw, 46px)/1.2 var(--display); text-wrap: pretty; }
   .ov { columns: 2 320px; column-gap: 48px; color: var(--ink-2); }
   .ov p + p { margin-top: 1em; }
   .aside { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding-top: 24px; border-top: 1px solid var(--rule); }
@@ -205,7 +205,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
   ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
   .aside li::before { content: "— "; color: var(--ox); }
   .aside .lk li::before { content: none; }
-  .lk a { font: 400 22px var(--display); }
+  .lk a { font: 400 18px var(--sans); }
   .note { font-size: 13px; color: var(--muted); border-left: 2px solid var(--ox); padding-left: 14px; }
   @media (max-width: 860px) { .brief { grid-template-columns: 1fr; } .aside { grid-template-columns: 1fr; } }
 
