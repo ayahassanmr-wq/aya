@@ -52,16 +52,12 @@ export const projectsAr: Record<string, ArText> = {
   'sodic-east-vale': { title: 'إيست فيل، سوديك', summary: 'منزل عائلي فاخر بتراسات سطح مزروعة ومسبح في الحديقة.' },
   'orascom-o-west': { title: 'ميديارد، أو ويست، أوراسكوم', summary: 'عمارات سكنية متوسطة الارتفاع لحي ميديارد في أو ويست.' },
   'classic-house': { title: 'منزل كلاسيكي' },
-  'modern-villa-b': { title: 'فيلا معاصرة' },
   'mediterranean-house': { title: 'منزل متوسطي' },
   'blue-villa': { title: 'الفيلا الزرقاء' },
-  'apartment-building': { title: 'عمارة سكنية' },
   'modern-residence-new-cairo': { title: 'مسكن معاصر', summary: 'مسكن كامل من الخشب الدافئ والحجر والألوان المحايدة الهادئة: معيشة وطعام وغرف نوم وحمامات.' },
   'zayed-residence': { title: 'مسكن زايد', summary: 'مسكن جريء من الخشب الداكن والرخام والإضاءة النحتية.' },
   'arches-restaurant': { title: 'مطعم آرتشز', summary: 'مطعم من الأقواس الخشبية والنباتات المتدلية وحلقات الإضاءة.' },
   'bmw-showroom': { title: 'معرض BMW', summary: 'معرض لعلامة سيارات بجدار مميز ذي ملمس وأجنحة عرض مضيئة.' },
-  'jeddah-residence': { title: 'مسكن جدة' },
-  'concept-sketches': { title: 'اسكتشات الفكرة', summary: 'دراسات بأسلوب الرسم اليدوي لاستكشاف الأجواء والضوء والمواد قبل النمذجة.' },
 };
 
 export const placeAr: Record<string, string> = {

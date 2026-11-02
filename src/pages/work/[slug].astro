@@ -45,8 +45,9 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
         <div><dt class="label">{t('Location', 'الموقع')}</dt><dd>{place}</dd></div>
         <div><dt class="label">{t('Discipline', 'التخصص')}</dt><dd>{disc} · {p.sector}</dd></div>
         <div><dt class="label">{t('Practice', 'المكتب')}</dt><dd>{L.ar ? ({ 'ZFP': 'زهير فايز ومشاركوه · ZFP', 'Cosmos Studio': 'كوزموس ستوديو', 'Innovation Design Studio': 'إنوفيشن ديزاين ستوديو' } as Record<string, string>)[p.practice ?? ''] ?? 'عمل مستقل' : p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent / portfolio'}</dd></div>
+        <div><dt class="label">{t('Client', 'العميل')}</dt><dd>{p.client ?? '—'}</dd></div>
         <div><dt class="label">{t('Year', 'السنة')}</dt><dd>{p.year ?? '—'}</dd></div>
-        <div class="wide"><dt class="label">{t('Scope', 'النطاق')}</dt><dd class="sc"><Scope p={p} variant="full" />{!L.ar && <span class="det">{p.scope.join(' · ')}</span>}</dd></div>
+        <div class="wide"><dt class="label">{t('Scope', 'النطاق')}</dt><dd class="sc"><Scope p={p} variant="full" />{!L.ar && <span class="det">{p.scope.join(' · ')}</span>}{p.scopeNote && <span class="det note">{L.ar ? (p.scopeNoteAr ?? p.scopeNote) : p.scopeNote}</span>}</dd></div>
       </dl>
     </section>
 
@@ -100,7 +101,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
           <div class="dgrid">
             {drawings.map((d, k) => (
               <figure class="reveal">
-                <button type="button" class="paper lb" data-lb={rest.length + 1 + k} data-cursor={t('Open', 'افتح')} aria-label={`${t('Open drawing', 'افتح الرسم')} ${k + 1}`}><Image src={d} alt={`${p.title}, ${p.captions?.[k] ?? `${t('drawing', 'رسم')} ${k + 1}`}`} widths={[600, 1100]} sizes="(min-width: 760px) 50vw, 100vw" /></button>
+                <button type="button" class="paper lb" data-sheet={`A-${String(k + 1).padStart(3, "0")}`} data-lb={rest.length + 1 + k} data-cursor={t('Open', 'افتح')} aria-label={`${t('Open drawing', 'افتح الرسم')} ${k + 1}`}><Image src={d} alt={`${p.title}, ${p.captions?.[k] ?? `${t('drawing', 'رسم')} ${k + 1}`}`} widths={[600, 1100]} sizes="(min-width: 760px) 50vw, 100vw" /></button>
                 {p.captions?.[k] && <figcaption class="label muted">{String(k + 1).padStart(2, '0')} · {p.captions[k]}</figcaption>}
               </figure>
             ))}
@@ -179,11 +180,11 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
   .hmeta { font-size: 12px; display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: center; padding-top: 18px; border-top: 1px solid var(--rule-light); opacity: .9; }
 
   .tb { padding-block: 0; }
-  .block { margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--rule); }
+  .block { margin: 0; display: grid; grid-template-columns: 1.3fr 1.3fr 1.1fr 1.3fr .7fr; border-bottom: 1px solid var(--rule); }
   .block div { padding: 20px 18px 20px 0; border-right: 1px solid var(--rule); display: grid; gap: 6px; align-content: start; }
   .block div + div { padding-left: 18px; }
-  .block .wide { grid-column: 1 / -1; border-top: 1px solid var(--rule); border-right: 0; padding-left: 0; }
-  .block div:nth-child(4) { border-right: 0; }
+  .block .wide { grid-column: 1 / -1; border-top: 1px solid var(--rule); border-right: 0; padding-left: 0 !important; }
+  .block div:nth-child(5) { border-right: 0; }
   dt { color: var(--muted); font-size: 11.5px; }
   .sc { display: grid; gap: 12px; }
   .det { font-size: 13px; color: var(--muted); }
@@ -231,7 +232,11 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
   .dgrid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 28px); margin-top: 28px; }
   .paper { display: block; width: 100%; border: 0; cursor: zoom-in; background: var(--ow); padding: clamp(10px, 1.6vw, 22px); transition: transform .6s var(--ease); }
   .paper:hover { transform: translateY(-6px); }
-  .paper :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; }
+  /* THE DRAWING SHEET — every plan, elevation, BIM capture and diagram gets the same treatment:
+     inked to warm graphite on bone paper, inside a hairline sheet border with a title strip. */
+  .paper { position: relative; background: #F6F1E8; border: 1px solid var(--rule); outline: 1px solid var(--rule); outline-offset: -8px; }
+  .paper :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; filter: grayscale(1) sepia(.22) contrast(1.18) brightness(1.04) !important; mix-blend-mode: multiply; }
+  .paper::after { content: attr(data-sheet); position: absolute; right: 14px; bottom: 12px; font: 500 10px/1 var(--sans); letter-spacing: .2em; color: var(--ox); }
   @media (max-width: 760px) { .dgrid { grid-template-columns: 1fr; } }
 
   .film { padding-block: clamp(64px, 9vw, 130px); }
