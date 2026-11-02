@@ -1,0 +1,363 @@
+# Aya Hassan — Master Handover (v3)
+
+**Last updated:** 2 Nov 2026 · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
+**Lives at:** `G:\Portfolio\Portfolio Projects\Aya_Hassan_Handover_v3.md`
+
+> **Rule for everyone (people, Claude chat, Claude Code):** read this file first. When you finish a session, update the sections you touched — Status board, Decisions log, Changelog — and bump the date. Never keep project knowledge only in a chat. One file, one truth.
+
+---
+
+## 0. How to use this file
+
+| Section | What it holds | Who updates |
+|---|---|---|
+| 1 Profile | Who Aya is, career, contact | Rarely |
+| 2 Brand | The decided identity and its rules | Only after a logged decision |
+| 3 Image system | How every image must look | Only after a logged decision |
+| 4 Website | Tech, structure, content rules | Claude Code / dev |
+| 5 Projects | Project list with all metadata | Whoever edits projects |
+| 6 Assets & files | Where things are on the G: drive | Whoever moves files |
+| 7 Status board | DECIDED / NEEDS DECISION / ON HOLD / TO DO | Everyone, every session |
+| 8 Decisions log | Dated record of choices and why | Everyone |
+| 9 Strategy & business | Positioning, services, pricing, marketing | Strategy chat |
+| 10 Roles & workflow | Who does what (chat vs Claude Code) | Aya |
+| 11 Claude Code brief | Paste-ready instructions for the website | Aya / Claude Code |
+| 12 Project instructions | Paste-ready instructions for the Claude Project | Aya |
+| 13 Changelog | One line per session | Everyone |
+
+Status tags used throughout: **✅ DECIDED · ❓ NEEDS DECISION · ⏸ ON HOLD · 🔧 TO DO**
+
+---
+
+## 1. Profile
+
+- **Name:** Aya Hassan — architect & interior designer, concept design. **Based in Cairo, Egypt.**
+- **Disciplines:** concept design, 3D modelling, rendering, animation, BIM (Revit), interiors, FF&E.
+- **Career (✅ final wording):**
+
+| Years | Role | Studio |
+|---|---|---|
+| 2020 – 2023 | Design Architect / Interior Designer | Cosmos Studio |
+| 2024 | Design Architect / Interior Designer | ZFP (Zuhair Fayez Partnership) |
+| 2025 | Mid-senior Design Architect / Interior Designer | Cosmos Studio |
+| 2026 – now | Mid-senior Design Architect | Innovation Design Studio |
+
+- Education: B.Sc. Architectural Engineering, Future University in Egypt (2014–2019).
+- Contact: ayahassanm@outlook.com · Instagram @ayahassanmr · LinkedIn /in/ayahassanm · WhatsApp +20 111 531 8509.
+- Computer: Windows; work files on the **G:** drive. Prefers static images over interactive canvases unless asked. Keep it efficient.
+
+---
+
+## 2. Brand — "One Hand" (✅ DECIDED, 2 Nov 2026)
+
+> The blue "Architecture, cut open" concept in Handover v1/v2 is **retired**. Do not use Hassan Blue, the section-cut wordmark or the AH monogram unless Aya reopens it.
+
+**Core idea:** one person carries a project from idea to model to image to drawing set. Tagline: **"From concept to *conviction*."** Supporting line: *"Idea, model, image and drawing set — carried by one hand."*
+
+**Tone:** confident, precise, quiet luxury; architectural vocabulary (sheets, title blocks, dimensions); never salesy.
+
+### 2.1 Typography
+- **One typeface only: Archivo** (variable, with width axis) for Latin. Contrast comes from weight and width, never a second font.
+  - Headlines: Archivo 800–900, width 112–125%, tight tracking (−0.02 to −0.035em).
+  - Accent words: Archivo 200–300 *italic*, width 100%.
+  - Labels: Archivo 400–500, 10–12px, uppercase, tracking 0.18–0.24em.
+- **Arabic: Alexandria.**
+- Retired: Cormorant Garamond, Jost, Syne, Instrument Serif, JetBrains Mono.
+
+### 2.2 Colour
+| Token | Hex | Use |
+|---|---|---|
+| Off-white (bone) | `#F3EDE3` | Base background |
+| Ink | `#2B2826` | Text |
+| Night | `#201C1B` | Dark sections |
+| Oxblood | `#5E1A24` | Primary accent |
+| Oxblood light | `#B8394A` | Small marks (logo dot) |
+| Sand | `#D6CBBE` | Accent on dark |
+| Stamp pink | `#D7A0A6` | The approval stamp on dark |
+No gold anywhere.
+
+### 2.3 Identity elements
+- **Wordmark (nav/header):** `AYA | HASSAN` — Archivo 800, width 125%, one line, thin vertical divider.
+- **Hero name:** "AYA HASSAN" on one line as a **drawing title block**: a dimension line above labelled "Architect · Interior designer", the name, then a ruled title-block row with cells: motto · Based: Cairo, EG · Practice: 2020 — · Sheet: A-000 · stamp.
+- **Approval stamp:** round seal, text on ring "CONCEPT APPROVED · CAIRO · MMXXVI ·", hand-drawn check in centre, rotated −9°.
+- **Intro screen:** dimension line draws out → name rises → title block wipes in → stamp lands → screen parts onto the hero (~3 s, skippable, off with reduced motion).
+- **Recurring devices:** sheet numbers (A-000, A-001…), project codes (01.01, 01.02), hairline rules, dimension strings.
+- ❌ Rejected: sketch-to-render drag slider (looked bad), scribbled underline through the name, two-line AYA/*Hassan* stacked wordmark.
+
+---
+
+## 3. Image system — the "house look" (✅ DECIDED)
+
+**Goal:** every project looks like it came from the same brain.
+
+- **Renders:** one grade on the site — `sepia(.14) saturate(.86) contrast(1.05) brightness(1.01)`: warm sand highlights, slightly matte blacks, quieter greens/blues.
+- **Drawings, plans, elevations, BIM captures, diagrams:** "drawing sheet" treatment — grayscale + slight sepia, multiplied onto bone paper `#F6F1E8`, hairline sheet border, sheet number (A-001…) in oxblood bottom-right.
+- **For future renders (guidance):** one signature light hour (warm late-afternoon "Cairo 5 pm"), camera height ~1.2 m, 35 mm interiors, verticals always corrected, consistent entourage (neutral, slightly blurred people; one plant family), fine grain at fixed strength, crops 4:5 and 21:9 only.
+- **Exclusions:** STC and SABIC folders contain photos of the real towers — never on the site.
+- **Juba renders look dated (⏸):** fix without re-rendering — AI upscale at low creativity (Magnific / Krea Enhance / Topaz), Photoshop sky + foliage + people replacement, then house grade. 21 more 2021 Juba renders exist in `G:\Portfolio\pot\Juba Render`.
+
+---
+
+## 4. Website
+
+### 4.1 Tech
+- **Repo:** GitHub `ayahassanmr-wq/aya` · **Astro 7** · fonts via `@fontsource-variable/archivo`.
+- **Hosting:** Vercel team "AYA". Three Vercel projects (`aya`, `aya-hassan`, `ayahassan`) build the same repo → 🔧 keep one, delete two.
+- **Domain:** ayahassan.com · bilingual EN + AR (`/ar/`, RTL).
+- **Branches:**
+  - `main` — live site (old brand).
+  - `update-projects-from-folder` — project/content update (superseded by below).
+  - **`rebrand-on-update` — CURRENT WORK. Contains everything: project update + One Hand rebrand + all fixes below.** Not live yet.
+  - `rebrand-one-hand` — early experiment, ignore/delete.
+- **Latest preview:** https://aya-hassan-hqfj52wzr-aya-d9cd.vercel.app (Vercel login). Newer builds appear per push.
+
+### 4.2 Where things are edited
+| What | File |
+|---|---|
+| Projects data (title, client, year, scope, category, sector) | `src/data/projects.ts` |
+| Arabic project text | `src/data/projects-ar.ts` |
+| Project images | `src/assets/projects/<slug>/` — `01.jpg` cover, `NN.jpg` renders, `dNN.jpg` drawings |
+| Global styles, tokens, house grade | `src/styles/global.css` |
+| Homepage (hero title block, sections) | `src/pages/index.astro` |
+| Work page (3 disciplines → type groups) | `src/pages/work/index.astro` |
+| Project page (title block, client row, drawing sheets) | `src/pages/work/[slug].astro` |
+| Intro animation | `src/components/Intro.astro` |
+| Nav logo | `src/components/Header.astro` |
+| About/timeline | `src/pages/about.astro` |
+
+### 4.3 Site structure (✅ DECIDED)
+- **Home:** intro → hero (title block over project slideshow) → intro statement → numbers → selected work → services → contact. Homepage strip uses **typologies**, not client names.
+- **Work:** opens on **three disciplines** — *Architectural design*, *Interior design*, *BIM & technical*. Choosing one shows its projects grouped by type (Residential, Workplace, Commercial…), numbered 01.01, 01.02…
+- **Project page:** title block with Location · Discipline · Practice · **Client** · **Year** · Scope (+ optional scope note) → renders → drawing sheets → client links.
+- **About:** timeline (section 1), bio, tools.
+- Client names: allowed on project pages (Client row + links); homepage uses typologies.
+
+### 4.4 Content rules
+- Every project must have **client** and **year** (no "—").
+- Fifth Square scope note: *"Design: the canopy. Modelling and rendering: the whole building."*
+- Images on site are capped at 2400 px (displayed ≤2000 px); larger originals are not needed.
+- Videos must be compressed (≈10–25 MB, 1080p) or embedded from YouTube/Vimeo.
+
+---
+
+## 5. Projects (current list on `rebrand-on-update`)
+
+| Slug | Title | Discipline | Practice | Client | Year | Notes |
+|---|---|---|---|---|---|---|
+| misr-italia-hilltop | Misr Italia Hilltop | Arch | Innovation | Misr Italia Properties | 2026 | Featured, hero slide 1 |
+| sodic-ogami | SODIC Ogami | Arch | Innovation | SODIC | 2026 | |
+| sodic-east-vale | SODIC East Vale | Arch | Innovation | SODIC | 2026 | 3 images |
+| travco-west-island | Travco West Island | Arch | Innovation | Travco · Almaza Bay | 2026 | |
+| orascom-o-west | Orascom O West Midyard | Arch | Innovation | Orascom Development | 2026 | 2 images only |
+| stc-hq | STC HQ Office Tower | Interior | ZFP | stc | 2024 | NDA; no real-tower photos |
+| sabic-hq | SABIC HQ Renovation | Interior | ZFP | SABIC | 2024 | NDA; no real-tower photos |
+| neom-oxagon | NEOM Oxagon Public Service | Arch | Cosmos | NEOM | 2023 | |
+| fifth-square | Fifth Square Commercial Complex | Arch | Cosmos | Al Marasem | 2025 | Canopy-design note |
+| chery-showroom | Chery Showroom & Admin | Arch/BIM | Cosmos | Chery Egypt | 2025 | |
+| noatum-terminal | NOATUM Automotive Terminal | Arch/BIM | Cosmos | NOATUM | 2025 | |
+| linah-farms | Linah Farms | Arch/BIM | Cosmos | Linah Farms | 2025 | Keep even though not in folder; renders need upscale |
+| mazeej | Mazeej Hotel & Housing | Arch | Cosmos | Guira Developments | 2025 | |
+| dry-port | Dry Port Buildings | Arch/BIM | Cosmos | Egyptian Government | 2021 | |
+| juba-resort | Juba Resort Complex | Arch | Cosmos | Confidential | 2023 | Walkthrough video live; renders dated |
+| tech-park | Tech Park Office Building | Interior | Cosmos | Confidential | 2023 | |
+| jotun-office | Jotun Office Building | Interior | Cosmos | Jotun | 2023 | Animation available, not yet on site |
+| hb-fuller | HB Fuller Office | Interior | Cosmos | H.B. Fuller | 2022 | |
+| sphinx | Sphinx Business Building | Interior | Cosmos | Confidential | 2022 | |
+| conference-room | Formal Conference Room | Interior | Cosmos | Confidential | 2022 | |
+| bmw-showroom | BMW Showroom | Interior | Cosmos | BMW Egypt | 2022 | |
+| suits-workspaces | Suits Workspaces | Interior | Freelance | Suits Workspaces | 2025 | |
+| arches-restaurant | Arches Restaurant | Interior | Freelance | Private client | 2022 | Location: Saudi Arabia |
+| classic-house | Classic House | Arch | Freelance | Private client | 2024 | Concept |
+| mediterranean-house | Mediterranean House | Arch | Freelance | Private client | 2025 | Concept |
+| blue-villa | Blue Villa | Arch | Freelance | Private client | 2025 | Concept |
+| modern-residence-new-cairo | Modern Residence | Interior | Freelance | Private client | 2025 | |
+| zayed-residence | Zayed Residence | Interior | Freelance | Private client | 2024 | |
+
+**Removed (✅):** Modern Villa, Apartment Building, Concept Sketches, Jeddah Residence (+ earlier: Studio K, HK Inc, Commercial Mall, Modern Villa I, Majlis, Jubail, Sea Residence, Neo-Classical Residence, Modern Residence II).
+
+---
+
+## 6. Assets & files (G: drive)
+
+- **Master archive:** `G:\Portfolio\Portfolio Projects\<Employer>\<Project (Location)>\` — project PDF + `Images\` (`Project (Location) - 01.ext`). Jotun folder is spelled "Juton".
+- **Master portfolio PDF:** `G:\Portfolio\Portfolio Projects\Arch Portfolio.pdf` (InDesign source in `G:\Portfolio\Final Portfolio\`).
+- **Brand concepts (old blue direction, archived):** `G:\Portfolio\Portfolio Projects\_Brand Concepts\`.
+- **Videos folder:** `G:\Portfolio\Portfolio Projects\_Videos\` — created, **empty** (copy pending, see 7).
+- **Video sources:**
+
+| File | Project | Size |
+|---|---|---|
+| `G:\Portfolio\ANIM\Juba Animation.mp4` | Juba | 158 MB |
+| `G:\Portfolio\ANIM\FULL ANIMATION\JOTUN ANIMATION.mp4` | Jotun | 402 MB |
+| `G:\Portfolio\ANIM\FULL ANIMATION\20221114-JOTUN ANIMATION_Update.mp4` | Jotun (newer) | 401 MB |
+| `G:\Portfolio\Cosmos\Interior\Sphinx Airport\Animation\01-New Classic 4K.mp4` | Sphinx Airport | 810 MB |
+| `G:\Portfolio\Cosmos\Interior\Sphinx Airport\Animation\02-New Pharonic 4K.mp4` | Sphinx Airport | 753 MB |
+| `G:\Portfolio\Cosmos\Exterior\01_shebeen\city club_1.mp4` | City Club (Shebeen) | 357 MB |
+| `G:\Portfolio\ANIM\Render 01.mp4` | Unknown | 217 MB |
+| Dry Port | only After Effects projects (`G:\Portfolio\ANIM\DRY\*.aep`), no export | — |
+
+- **PowerShell to copy videos into `_Videos`** (Aya runs it; copies, does not move):
+```powershell
+$dst = "G:\Portfolio\Portfolio Projects\_Videos"
+New-Item -ItemType Directory -Force $dst | Out-Null
+$files = @{
+ "G:\Portfolio\ANIM\Juba Animation.mp4" = "Juba Resort - Animation.mp4"
+ "G:\Portfolio\ANIM\FULL ANIMATION\JOTUN ANIMATION.mp4" = "Jotun Office - Animation.mp4"
+ "G:\Portfolio\ANIM\FULL ANIMATION\20221114-JOTUN ANIMATION_Update.mp4" = "Jotun Office - Animation (2022 update).mp4"
+ "G:\Portfolio\Cosmos\Interior\Sphinx Airport\Animation\01-New Classic 4K.mp4" = "Sphinx Airport - New Classic 4K.mp4"
+ "G:\Portfolio\Cosmos\Interior\Sphinx Airport\Animation\02-New Pharonic 4K.mp4" = "Sphinx Airport - New Pharaonic 4K.mp4"
+ "G:\Portfolio\Cosmos\Exterior\01_shebeen\city club_1.mp4" = "City Club (Shebeen) - Animation.mp4"
+ "G:\Portfolio\ANIM\Render 01.mp4" = "Unnamed - Render 01.mp4"
+}
+foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path $dst $files[$f]) }
+```
+- **Technical limits learned:** Claude's link to the PC can pull files ≤400 MB and write files ≤30 MB; large videos time out — run local commands (PowerShell / Claude Code on the PC) for big files. File Explorer control is click-only.
+
+---
+
+## 7. Status board
+
+### ✅ DECIDED
+- One Hand brand (section 2) replaces blue concept.
+- One typeface: Archivo (+ Alexandria for Arabic).
+- Hero = one-line name as drawing title block; new title-block intro; `AYA | HASSAN` nav logo.
+- House grade for renders; drawing-sheet treatment for drawings/BIM.
+- Work page = 3 disciplines → grouped by type.
+- Every project shows Client + Year.
+- Based in Cairo, Egypt. Career timeline per section 1.
+- Removed projects per section 5. Arches Restaurant location = KSA.
+- STC/SABIC real-tower photos never on site.
+
+### ❓ NEEDS DECISION (Aya)
+1. **Merge `rebrand-on-update` to `main` (go live)?** — after reviewing preview.
+2. **Which Vercel project to keep** (`aya`, `aya-hassan`, `ayahassan`) and delete the other two.
+3. **Video edits wanted:** web cuts (30–60 s) / Instagram reels / one showreel / logo & titles / compression only?
+4. **Sphinx Airport & City Club animations:** add as new projects, attach to existing Sphinx page, or keep off site?
+5. **"Render 01.mp4":** what project is it?
+6. **Jotun animation:** use original or 2022 update?
+7. **Arches client label:** "Private client" (current) or "Freelance"?
+8. **Juba:** upscale existing 3 renders, swap in some of the 21 older renders, or both?
+9. **Project page client links:** add official Instagram/Facebook for all clients (partly done in v2).
+10. **Missing views:** export more renders for Orascom O West (2), Misr Italia (4), SODIC East Vale (3)?
+
+### ⏸ ON HOLD
+- **Video editing** — blocked until videos are reachable (PC on & awake, or uploaded to Google Drive + connector, or Claude Code run locally on the PC).
+- **Copying videos into `_Videos`** — Aya to run the PowerShell above.
+- **Juba render upgrade** — needs AI upscaler (outside Claude) or Aya's Photoshop pass.
+- **Linah Farms re-render / upscale.**
+
+### 🔧 TO DO (next actions, in order)
+1. Aya: review preview → decide #1.
+2. Aya: run PowerShell to fill `_Videos`; keep PC awake or upload to Drive.
+3. Claude Code: compress Jotun animation → `public/video/jotun-office.mp4` + poster; enable in `films` in `projects.ts`.
+4. Claude Code: delete two duplicate Vercel projects (after #2).
+5. Strategy chat: write brand guideline PDF/Doc, service menu & pricing, launch plan (section 9).
+6. Update portfolio PDF and CV to One Hand brand + corrected timeline.
+7. Social profiles (Instagram/LinkedIn) re-skin to One Hand.
+
+---
+
+## 8. Decisions log
+
+| Date | Decision | Why / note |
+|---|---|---|
+| 2026-11-02 | Brand = "One Hand" (oxblood/bone, Archivo) replaces blue "cut open" | Aya chose the chat concept |
+| 2026-11-02 | Based in Cairo (not Riyadh) | Fact correction |
+| 2026-11-02 | Single typeface | "Too many fonts" |
+| 2026-11-02 | Name hero = title block, one line | Two-line stack looked random |
+| 2026-11-02 | Drop sketch-to-render slider | Looked bad |
+| 2026-11-02 | Work page opens on 3 disciplines | Aya request |
+| 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
+| 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
+| 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-02 | Homepage uses typologies; client names on project pages | Aya: don't headline clients under her name |
+
+---
+
+## 9. Strategy & business (owned by the Claude Project chat)
+
+Fill and maintain these; mark each ✅/❓.
+- **Positioning:** Cairo-based design architect delivering Gulf-scale concept work end-to-end (idea → model → image → drawing set). ❓ confirm target clients: developers (SODIC/Orascom tier), corporate fit-out, private villas, studios needing freelance viz/BIM.
+- **Offer / services:** Concept design · Visualization & animation · BIM & design packages · Materials & FF&E. ❓ packages and price ranges (EGP / SAR / USD).
+- **Freelance vs employment:** ❓ is the site for commissions, job offers, or both? (Contact page currently says Roles · Collaborations · Commissions.)
+- **Proposal & fee templates:** ❓ (bilingual fee proposal skill available).
+- **Marketing:** Instagram grid in house look, LinkedIn case studies, reels from animations. ❓ cadence.
+- **Legal/NDA:** STC, SABIC flagged NDA — only already-published imagery; confirm permissions for others.
+- **Metrics:** Vercel Analytics — ❓ enable.
+
+---
+
+## 10. Roles & workflow
+
+| Who | Responsible for |
+|---|---|
+| **Claude Project chat** | Strategy, brand guardianship, business, copywriting, image/video editing direction & processing, portfolio/CV, keeping this handover current |
+| **Claude Code** (on the PC, in the repo) | All website code, builds, Vercel, compressing/adding videos & images, git |
+| **Aya** | Decisions (section 7 ❓), approving previews, running local file operations, final say |
+
+**Session protocol (everyone):**
+1. Read this file.
+2. Work.
+3. Update: Status board (move items), Decisions log (add rows), Projects table if changed, Changelog (one line).
+4. Save back to `G:\Portfolio\Portfolio Projects\Aya_Hassan_Handover_v3.md` (and commit a copy to the repo at `docs/HANDOVER.md` when Claude Code works).
+
+---
+
+## 11. Claude Code brief (paste into `CLAUDE.md` at the repo root)
+
+```markdown
+# Aya Hassan website — Claude Code instructions
+
+Read `docs/HANDOVER.md` (copy of G:\Portfolio\Portfolio Projects\Aya_Hassan_Handover_v3.md) before any work. It is the single source of truth for brand, projects and status.
+
+## Stack
+- Astro 7, Archivo variable (@fontsource-variable/archivo) + Alexandria (Arabic). EN + AR (/ar/, RTL).
+- Deployed on Vercel from GitHub ayahassanmr-wq/aya. Work branch: `rebrand-on-update`. `main` = live.
+
+## Rules
+- Brand: One Hand (see handover §2). One typeface only. No new fonts, no gold, no blue.
+- Images: renders get the house grade (global.css); drawings get the drawing-sheet style ([slug].astro). Never add STC/SABIC real-tower photos.
+- Project data lives in src/data/projects.ts (+ projects-ar.ts). Every project needs client + year.
+- Images ≤2400 px wide JPG in src/assets/projects/<slug>/ (01 = cover, dNN = drawings).
+- Videos: compress with ffmpeg to ~1080p H.264, CRF 26–28, -preset veryfast, ≤25 MB, plus a poster JPG; put in public/video/<slug>.mp4 and register in the `films` map.
+- Use font longhands (font-family/font-weight/…) not the `font:` shorthand when setting font-stretch (Astro minifier drops it).
+- Build (`npx astro build`) must pass before committing. Work on a branch; never push to main without Aya's OK.
+- Commit messages: plain English, what changed for the visitor.
+
+## After every session
+Update docs/HANDOVER.md (Status board, Decisions log, Changelog) and tell Aya to copy it back to G:\Portfolio\Portfolio Projects\ (or write it there directly if running on her PC).
+
+## Open tasks
+See handover §7 TO DO.
+```
+
+---
+
+## 12. Claude Project instructions (paste into the Project's "Instructions")
+
+```
+You are Aya Hassan's creative director, strategist and studio manager for her architecture & interior design practice (Cairo, Egypt). You own brand, strategy, business, copywriting, portfolio/CV, and image & video editing direction. Website code is handled by Claude Code; you write its briefs.
+
+Source of truth: the file "Aya_Hassan_Handover_v3.md" (project knowledge, and G:\Portfolio\Portfolio Projects\). Read it at the start of every conversation. Never contradict a ✅ DECIDED item without Aya reopening it.
+
+Brand: "One Hand" — From concept to conviction. Archivo only (Arabic: Alexandria). Bone #F3EDE3, ink #2B2826, night #201C1B, oxblood #5E1A24, sand #D6CBBE. Title-block hero, AYA | HASSAN wordmark, approval stamp. House grade on renders; drawing-sheet style on drawings. The blue "cut open" concept is retired.
+
+How to work:
+- Be concise and decisive; give a recommendation, not a menu, unless the choice is genuinely Aya's.
+- Separate clearly: what's decided, what needs her decision (ask with options), what's on hold.
+- Prefer finished, usable outputs (images, docs, decks, briefs) over descriptions.
+- Her files are on the G: drive on Windows; large files (videos) must be handled locally — give her ready-to-run PowerShell, or a Claude Code brief.
+- Never put real-tower STC/SABIC photos in outputs. Respect NDA projects.
+
+End of every session: produce the updated sections of the handover (Status board, Decisions log, Projects if changed, Changelog line) so Aya can paste/replace them in the file. Anyone working on the project must update the same document.
+```
+
+**Also upload to Project knowledge:** this handover file, the latest portfolio PDF, the CV.
+
+---
+
+## 13. Changelog
+
+| Date | Who | Change |
+|---|---|---|
+| 2026-11-02 | Claude (chat) | Brand concepts → One Hand chosen; site rebranded on `rebrand-on-update` (Archivo, title-block hero, intro, nav logo, house grade, drawing sheets, 3-discipline work page, client/year everywhere, removed 4 projects, Arches→KSA, Fifth Square note, timeline fix, East Vale +1 image). Video inventory done; `_Videos` folder created (empty). Handover v3 written. |
