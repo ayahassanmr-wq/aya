@@ -44,35 +44,35 @@ export const projects: Project[] = [
     summary: 'Headquarters workplace interiors for Saudi Telecom: executive floors, open offices and focus rooms in a calm palette of stone, oak and the brand violet.' },
   { slug: 'sabic-hq', client: 'SABIC', year: '2024', title: 'SABIC HQ Office Tower Renovation', location: 'Riyadh', country: 'Saudi Arabia', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P, 'Material & FF&E sourcing'], practice: 'ZFP', nda: true, featured: true,
     summary: 'Renovation of SABIC’s headquarters tower: a planted atrium lobby, collaborative floors and training rooms built around the corporate yellow and blue.' },
-  { slug: 'tech-park', client: 'Confidential', title: 'Tech Park Office Building', location: 'Confidential client', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio', featured: true,
+  { slug: 'tech-park', year: '2023', client: 'Confidential', title: 'Tech Park Office Building', location: 'Confidential client', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio', featured: true,
     summary: 'A high-tech workplace for a young, visionary client, built on a colour code assigned to each space.',
     overview: [
       'We were tasked with designing a high-tech building embodying innovation and futuristic aesthetics, tailored to the dynamic needs of a young and visionary client. With a pre-established colour code system for each space, we created a truly avant-garde environment.',
       'The client’s colour code runs through every space, tailored to each function. Glass elements bring openness, mounted screens offer interactive displays, LED strips trace the architecture, and metal meshes act as both texture and partition.',
     ],
     deliverables: ['Conceptual design presentation', 'Detailed design plans', 'Material samples', 'Implementation guidelines'] },
-  { slug: 'jotun-office', client: 'Jotun', title: 'Jotun Office Building', location: '6th of October', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P, 'Animation'], practice: 'Cosmos Studio',
+  { slug: 'jotun-office', year: '2023', client: 'Jotun', title: 'Jotun Office Building', location: '6th of October', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P, 'Animation'], practice: 'Cosmos Studio',
     summary: 'Admin offices that carry Jotun’s bold colours into calm, productive workspaces.',
     overview: [
       'We were tasked with revitalising the interior of Jotun’s new admin building, blending the company’s bold colours with neutral tones to create dynamic offices that reflect its identity while supporting productivity and creativity.',
       'Wooden strips add warmth and texture, ergonomic furniture reflects the brand’s commitment to comfort, and a carefully planned layout supports collaboration and future adaptability. Branding is integrated subtly from the entrance onward.',
     ],
     deliverables: ['Conceptual design presentation', 'Detailed design plans', 'Material samples', 'Implementation guidelines', 'Promotional animation'] },
-  { slug: 'hb-fuller', client: 'H.B. Fuller', title: 'HB Fuller Office Building', location: '6th of October', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio',
+  { slug: 'hb-fuller', year: '2022', client: 'H.B. Fuller', title: 'HB Fuller Office Building', location: '6th of October', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio',
     summary: 'An energetic, budget-conscious HQ built from simple materials and the client’s brand colours.',
     overview: [
       'The interior design for the HB Fuller HQ admin building aimed to bring energy and vibrancy to the space on a budget. Simple materials, the client’s brand colours and creative paint techniques create a lively, engaging atmosphere.',
     ],
     deliverables: ['Conceptual design presentation', 'Detailed design plans', 'Material samples', 'Implementation guidelines'] },
-  { slug: 'suits-workspaces', client: 'Suits Workspaces', title: 'Suits Workspaces Office Building', location: 'India', country: 'India', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P],
+  { slug: 'suits-workspaces', year: '2025', client: 'Suits Workspaces', title: 'Suits Workspaces Office Building', location: 'India', country: 'India', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P],
     summary: 'Executive offices, meeting rooms and lounges for a flexible-workspace operator.' },
-  { slug: 'sphinx', title: 'Sphinx Business Building', location: 'Giza', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, 'Schematic & IFC drawing packages'], practice: 'Cosmos Studio', year: '2022',
+  { slug: 'sphinx', client: 'Confidential', title: 'Sphinx Business Building', location: 'Giza', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, 'Schematic & IFC drawing packages'], practice: 'Cosmos Studio', year: '2022',
     summary: 'Formal reception salons and executive suites, delivered through to issued-for-construction drawings.' },
-  { slug: 'conference-room', title: 'Formal Conference Room', location: 'New Capital', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio',
+  { slug: 'conference-room', client: 'Confidential', year: '2022', title: 'Formal Conference Room', location: 'New Capital', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio',
     summary: 'A formal boardroom in warm timber and soft light for the New Administrative Capital.' },
 
   // ---------- Architecture
-  { slug: 'neom-oxagon', client: 'NEOM', title: 'NEOM Oxagon Public Service Buildings', location: 'Oxagon, NEOM', country: 'Saudi Arabia', category: 'architecture', sector: 'Public', scope: [D, M, R, P, 'Animation'], practice: 'Cosmos Studio', nda: true, featured: true,
+  { slug: 'neom-oxagon', year: '2023', client: 'NEOM', title: 'NEOM Oxagon Public Service Buildings', location: 'Oxagon, NEOM', country: 'Saudi Arabia', category: 'architecture', sector: 'Public', scope: [D, M, R, P, 'Animation'], practice: 'Cosmos Studio', nda: true, featured: true,
     summary: 'Public service buildings for Oxagon, NEOM’s port city: brick volumes, shaded courtyards and planted roofs.' },
   { slug: 'fifth-square', client: 'Al Marasem', year: '2025', title: 'Fifth Square Commercial Complex', location: 'New Cairo', country: 'Egypt', category: 'architecture', sector: 'Commercial', scope: ['Canopy design', M, R, P], scopeNote: 'Design: the canopy. Modelling and rendering: the whole building.', scopeNoteAr: 'التصميم: المظلة. النمذجة والإظهار: المبنى بالكامل.', practice: 'Cosmos Studio', featured: true,
     summary: 'A terraced commercial complex whose canopy “trees” become the landmark at night.' },
@@ -90,9 +90,9 @@ export const projects: Project[] = [
     process: [['Concept', 'd01'], ['Revit model', 'd02'], ['Render', '01']] },
   { slug: 'mazeej', year: '2025', title: 'Mazeej Hotel & Housing Complex', location: 'Giza', country: 'Egypt', category: 'architecture', sector: 'Hospitality', scope: ['Design review', 'Redesign to code'], practice: 'Cosmos Studio',
     summary: 'Design review and redesign of a hotel and housing complex to code and architectural standards.' },
-  { slug: 'dry-port', title: 'Dry Port Buildings', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, B], practice: 'Cosmos Studio',
+  { slug: 'dry-port', client: 'Egyptian Government', year: '2021', title: 'Dry Port Buildings', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, B], practice: 'Cosmos Studio',
     summary: 'A Revit (BIM) sample: plans and 3D for a dry port’s buildings.' },
-  { slug: 'juba-resort', title: 'Juba Resort Complex', location: 'Juba', country: 'South Sudan', category: 'architecture', sector: 'Hospitality', scope: [D, M, R], practice: 'Cosmos Studio',
+  { slug: 'juba-resort', client: 'Confidential', title: 'Juba Resort Complex', location: 'Juba', country: 'South Sudan', category: 'architecture', sector: 'Hospitality', scope: [D, M, R], practice: 'Cosmos Studio',
     summary: 'A resort complex arranged around a landscaped pool garden.' },
 
   // ---------- Residential developments (Innovation Design Studio)
@@ -108,18 +108,18 @@ export const projects: Project[] = [
     summary: 'Mid-rise apartment blocks for the Midyard district of O West.' },
 
   // ---------- Residential architecture (concept exploration)
-  { slug: 'classic-house', client: 'Private client', title: 'Classic House', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
-  { slug: 'mediterranean-house', client: 'Private client', title: 'Mediterranean House', location: 'Lebanon', country: 'Lebanon', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
-  { slug: 'blue-villa', client: 'Private client', title: 'Blue Villa', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
+  { slug: 'classic-house', year: '2024', client: 'Private client', title: 'Classic House', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
+  { slug: 'mediterranean-house', year: '2025', client: 'Private client', title: 'Mediterranean House', location: 'Lebanon', country: 'Lebanon', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
+  { slug: 'blue-villa', year: '2025', client: 'Private client', title: 'Blue Villa', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
 
   // ---------- Interiors · Residential & hospitality
   { slug: 'modern-residence-new-cairo', client: 'Private client', title: 'Modern Residence', location: 'New Cairo', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A full residence in warm timber, stone and soft neutrals: living, dining, bedrooms and baths.' },
-  { slug: 'zayed-residence', client: 'Private client', title: 'Zayed Residence', location: 'Sheikh Zayed, Giza', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
+  { slug: 'zayed-residence', year: '2024', client: 'Private client', title: 'Zayed Residence', location: 'Sheikh Zayed, Giza', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A bold residence of dark timber, marble and sculptural lighting.' },
-  { slug: 'arches-restaurant', title: 'Arches Restaurant', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'interiors', sector: 'Hospitality', scope: [D, M, R, P],
+  { slug: 'arches-restaurant', year: '2022', title: 'Arches Restaurant', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'interiors', sector: 'Hospitality', scope: [D, M, R, P],
     summary: 'A restaurant of timber arches, hanging greenery and halo lights.' },
-  { slug: 'bmw-showroom', client: 'BMW Egypt', title: 'BMW Showroom', location: 'Cairo–Alex Road', country: 'Egypt', category: 'interiors', sector: 'Retail', scope: [D, M, R, P], practice: 'Cosmos Studio',
+  { slug: 'bmw-showroom', year: '2022', client: 'BMW Egypt', title: 'BMW Showroom', location: 'Cairo–Alex Road', country: 'Egypt', category: 'interiors', sector: 'Retail', scope: [D, M, R, P], practice: 'Cosmos Studio',
     summary: 'A brand showroom with a textured feature wall and bright display bays.' },
 ];
 
