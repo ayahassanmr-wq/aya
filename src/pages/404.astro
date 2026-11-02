@@ -1,12 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
+import { i18n } from '../i18n';
+const L = i18n(Astro.url);
+const { t, u } = L;
 ---
-<Base title="Page not found" description="This page doesn’t exist. Browse Aya Hassan’s work instead.">
+<Base title={t('Page not found', 'الصفحة غير موجودة')} description={t('This page doesn’t exist. Browse Aya Hassan’s work instead.', 'هذه الصفحة غير موجودة. تصفّح أعمال آية حسن بدلًا منها.')}>
   <PageHero >
-    <h1 class="display-xl lines"><span class="ln"><span>This sheet isn’t</span></span><span class="ln"><span>in the <em>set.</em></span></span></h1>
-    <p class="lede">The page you’re looking for has moved or never existed.</p>
-    <div class="go"><a href="/work/" class="btn">See all work <span class="arr">→</span></a><a href="/" class="label link">Back to home</a></div>
+    <h1 class="display-xl lines"><span class="ln"><span>{t('This sheet isn’t', 'هذه اللوحة ليست')}</span></span><span class="ln"><span>{L.ar ? <>ضمن <em>المجموعة.</em></> : <>in the <em>set.</em></>}</span></span></h1>
+    <p class="lede">{t('The page you’re looking for has moved or never existed.', 'الصفحة التي تبحث عنها نُقلت أو لم تكن موجودة.')}</p>
+    <div class="go"><a href={u('/work/')} class="btn">{t('See all work', 'شاهد كل الأعمال')} <span class="arr">{L.next}</span></a><a href={u('/')} class="label link">{t('Back to home', 'العودة إلى الرئيسية')}</a></div>
   </PageHero>
 </Base>
 <style>

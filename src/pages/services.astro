@@ -4,23 +4,39 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Reel from '../components/Reel.astro';
 import { imagesFor, cover } from '../data/projects';
-const services = [
+import { i18n } from '../i18n';
+const L = i18n(Astro.url);
+const { t } = L;
+const servicesEn = [
   { t: 'Concept design', d: 'Architectural and interior concepts, from the first studies to a direction the client signs off. Massing, spatial strategy, colour and material language, set out in a clear presentation.', img: imagesFor('neom-oxagon')[7] ?? imagesFor('neom-oxagon')[0], items: ['Concept studies & diagrams', 'Spatial planning', 'Mood, colour & material direction', 'Concept presentations'] },
   { t: 'Visualization & animation', d: 'Renders, walkthroughs and promotional films built to win approval, for clients, juries and marketing teams.', img: imagesFor('fifth-square')[0], items: ['Photoreal stills', 'Walkthrough animation', 'Promotional content', 'Post-production'] },
   { t: 'BIM & design packages', d: 'Revit models and coordinated drawing sets, from schematic design to issued-for-construction packages.', img: imagesFor('noatum-terminal')[5] ?? imagesFor('noatum-terminal')[0], items: ['Revit modelling', 'Schematic & IFC drawing sets', 'Interdisciplinary coordination', 'Design review to code'] },
   { t: 'Materials & FF&E', d: 'Material boards, finishes and furniture selection, sourced from suppliers worldwide and checked on site.', img: imagesFor('stc-hq')[4], items: ['Material boards & samples', 'Furniture, fixtures & equipment', 'Vendor collaboration', 'Site visits'] },
 ];
-const steps = [
+const servicesAr = [
+  { t: 'التصميم المبدئي', d: 'أفكار معمارية وداخلية، من الدراسات الأولى حتى اتجاه يعتمده العميل. الكتلة، والاستراتيجية الفراغية، ولغة الألوان والمواد، في عرض واضح.', items: ['دراسات ومخططات الفكرة', 'التخطيط الفراغي', 'اتجاه الأجواء والألوان والمواد', 'عروض الفكرة'] },
+  { t: 'الإظهار والتحريك', d: 'صور وجولات وأفلام ترويجية مصممة لكسب الموافقة، للعملاء ولجان التحكيم وفرق التسويق.', items: ['صور واقعية', 'أفلام الجولات', 'محتوى ترويجي', 'المعالجة النهائية'] },
+  { t: 'BIM وحزم التصميم', d: 'نماذج Revit ومجموعات رسومات منسقة، من التصميم التخطيطي حتى الحزم المعتمدة للتنفيذ.', items: ['النمذجة بـ Revit', 'رسومات تخطيطية ورسومات التنفيذ (IFC)', 'التنسيق بين التخصصات', 'مراجعة التصميم وفق الكود'] },
+  { t: 'المواد والأثاث والتجهيزات', d: 'لوحات المواد والتشطيبات واختيار الأثاث، من موردين حول العالم ومراجعتها في الموقع.', items: ['لوحات وعينات المواد', 'الأثاث والتجهيزات والمعدات', 'التعاون مع الموردين', 'الزيارات الميدانية'] },
+];
+const services = L.ar ? servicesEn.map((s, i) => ({ ...s, ...servicesAr[i] })) : servicesEn;
+const stepsEn = [
   ['Brief', 'Understand the client, the site and what the space has to do.'],
   ['Concept', 'One clear idea, tested through studies, diagrams and mood.'],
   ['Visualise', 'Model and render the concept until it can be believed.'],
   ['Package', 'Turn the approved concept into drawings, specs and selections.'],
 ];
+const steps = L.ar ? [
+  ['المتطلبات', 'فهم العميل والموقع وما يجب أن تؤديه المساحة.'],
+  ['الفكرة', 'فكرة واحدة واضحة، تُختبر بالدراسات والمخططات والأجواء.'],
+  ['الإظهار', 'نمذجة الفكرة وإظهارها حتى تصبح قابلة للتصديق.'],
+  ['الحزمة', 'تحويل الفكرة المعتمدة إلى رسومات ومواصفات واختيارات.'],
+] : stepsEn;
 ---
-<Base title="Services" description="Concept design, visualization and animation, BIM and design packages, and materials and FF&E selection.">
-  <PageHero images={[imagesFor('neom-oxagon')[0], imagesFor('fifth-square')[1], imagesFor('noatum-terminal')[0], imagesFor('stc-hq')[3]]} alt="Rendered public buildings at NEOM Oxagon">
-    <h1 class="display-xl lines"><span class="ln"><span>From concept</span></span><span class="ln"><span>to <em>drawing set.</em></span></span></h1>
-    <p class="lede">Concept design, visualization, BIM packages and material selection: the whole concept stage, carried by one hand.</p>
+<Base title={t('Services', 'الخدمات')} description={t('Concept design, visualization and animation, BIM and design packages, and materials and FF&E selection.', 'التصميم المبدئي، والإظهار والتحريك، وBIM وحزم التصميم، واختيار المواد والأثاث والتجهيزات.')}>
+  <PageHero images={[imagesFor('neom-oxagon')[0], imagesFor('fifth-square')[1], imagesFor('noatum-terminal')[0], imagesFor('stc-hq')[3]]} alt={t('Rendered public buildings at NEOM Oxagon', 'إظهار لمباني الخدمات العامة في أوكساجون، نيوم')}>
+    <h1 class="display-xl lines"><span class="ln"><span>{t('From concept', 'من الفكرة')}</span></span><span class="ln"><span>{L.ar ? <>إلى <em>الرسومات.</em></> : <>to <em>drawing set.</em></>}</span></span></h1>
+    <p class="lede">{t('Concept design, visualization, BIM packages and material selection: the whole concept stage, carried by one hand.', 'التصميم المبدئي والإظهار وحزم BIM واختيار المواد: مرحلة التصميم المبدئي كاملة، بيدٍ واحدة.')}</p>
   </PageHero>
 
   <section class="wrap list">
@@ -41,7 +57,7 @@ const steps = [
 
   <section class="process dark sheet" data-sp>
     <div class="wrap">
-      <div class="sheet-head"><span class="label">Process</span></div>
+      <div class="sheet-head"><span class="label">{t('Process', 'المنهجية')}</span></div>
       <ol>{steps.map(([t, d], i) => <li class="reveal"><h3 class="display-m">{t}</h3><p>{d}</p></li>)}</ol>
     </div>
   </section>

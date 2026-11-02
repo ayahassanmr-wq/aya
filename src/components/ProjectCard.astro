@@ -4,24 +4,27 @@ import { cover, type Project } from '../data/projects';
 import Scope from './Scope.astro';
 interface Props { p: Project; size?: 'l' | 'm'; eager?: boolean }
 const { p, size = 'm', eager = false } = Astro.props;
+import { i18n, localize, place } from '../i18n';
+const L = i18n(Astro.url);
+const q = localize(p, L.ar);
 const img = cover(p.slug);
 ---
-<a href={`/work/${p.slug}/`} class:list={['card', size, 'reveal']} data-cat={p.category} data-sector={p.sector} data-cursor="View">
+<a href={L.u(`/work/${p.slug}/`)} class:list={['card', size, 'reveal']} data-cat={p.category} data-sector={p.sector} data-cursor={L.t('View', 'عرض')}>
   <div class="frame" data-tilt>
     <div class="para zoom">
-      {img && <Image src={img} alt={`${p.title}, ${p.location}`} widths={size === 'l' ? [800, 1400, 1800] : [600, 900, 1200]} sizes={size === 'l' ? '(min-width: 900px) 66vw, 100vw' : '(min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw'} loading={eager ? 'eager' : 'lazy'} data-parallax="0.06" data-scale="1.1" />}
+      {img && <Image src={img} alt={`${q.title}، ${q.location}`.replace('، ', L.ar ? '، ' : ', ')} widths={size === 'l' ? [800, 1400, 1800] : [600, 900, 1200]} sizes={size === 'l' ? '(min-width: 900px) 66vw, 100vw' : '(min-width: 900px) 33vw, (min-width: 600px) 50vw, 100vw'} loading={eager ? 'eager' : 'lazy'} data-parallax="0.06" data-scale="1.1" />}
     </div>
     <span class="sheen" aria-hidden="true"></span>
-    {p.concept && <span class="tag flag glass">Concept exploration</span>}
+    {p.concept && <span class="tag flag glass">{L.t('Concept exploration', 'استكشاف مبدئي')}</span>}
     <span class="corner tl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
   </div>
   <div class="meta">
     <div class="t">
-      <h3><span class="u">{p.title}</span></h3>
-      <p class="label muted">{p.location}{p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}</p>
+      <h3><span class="u">{q.title}</span></h3>
+      <p class="label muted">{place(q)}</p>
       <Scope p={p} />
     </div>
-    <span class="label muted sector">{p.sector}</span>
+    <span class="label muted sector">{q.sector}</span>
   </div>
 </a>
 

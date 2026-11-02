@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Intro from '../components/Intro.astro';
+import { i18n } from '../i18n';
 interface Props { title?: string; description?: string; image?: string; overHero?: boolean; intro?: boolean; preloadImage?: { srcset: string; sizes: string } }
 const {
   title,
@@ -12,17 +13,21 @@ const {
   intro = false,
   preloadImage,
 } = Astro.props;
-const fullTitle = title ? `${title} · Aya Hassan` : 'Aya Hassan · Architect & Interior Designer';
+const L = i18n(Astro.url);
+const desc = L.ar && description.startsWith('Aya Hassan is an architect') ? 'آية حسن معمارية ومصممة داخلية في مرحلة التصميم المبدئي، من أعمالها مشاريع لنيوم ومقر سابك ومقر stc وسوديك وأوراسكوم.' : description;
+const fullTitle = title ? `${title} · ${L.t('Aya Hassan', 'آية حسن')}` : L.t('Aya Hassan · Architect & Interior Designer', 'آية حسن · معمارية ومصممة داخلية');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
 ---
 <!doctype html>
-<html lang="en">
+<html lang={L.lang} dir={L.dir}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{fullTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={desc} />
+    <link rel="alternate" hreflang="en" href={new URL(L.enPath, Astro.site)} />
+    <link rel="alternate" hreflang="ar" href={new URL(L.arPath, Astro.site)} />
     <meta name="theme-color" content="#5E1A24" />
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
@@ -30,7 +35,8 @@ const ogImage = new URL(image, Astro.site);
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:locale" content={L.ar ? 'ar_EG' : 'en_US'} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
@@ -48,12 +54,12 @@ const ogImage = new URL(image, Astro.site);
         }
       })();
     </script>
-    <link rel="preload" href="/fonts/syne-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={L.ar ? '/fonts/alexandria-arabic-wght-normal.woff2' : '/fonts/syne-latin-800-normal.woff2'} as="font" type="font/woff2" crossorigin />
     {preloadImage && <link rel="preload" as="image" imagesrcset={preloadImage.srcset} imagesizes={preloadImage.sizes} fetchpriority="high" />}
   </head>
   <body>
     {intro && <Intro />}
-    <a href="#main" class="skip">Skip to content</a>
+    <a href="#main" class="skip">{L.t('Skip to content', 'انتقل إلى المحتوى')}</a>
     <Header overHero={overHero} />
     <main id="main" tabindex="-1"><slot /></main>
     <Footer />

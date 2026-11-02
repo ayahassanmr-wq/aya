@@ -4,17 +4,20 @@ import PageHero from '../components/PageHero.astro';
 import Social from '../components/Social.astro';
 import Reel from '../components/Reel.astro';
 import { contact, imagesFor, cover } from '../data/projects';
+import { i18n } from '../i18n';
+const L = i18n(Astro.url);
+const { t } = L;
 ---
-<Base title="Contact" description="Contact Aya Hassan for concept design roles, collaborations with design firms and selected private commissions.">
-  <PageHero images={[imagesFor('stc-hq')[2], imagesFor('misr-italia-hilltop')[1]]} alt="Interior of the stc headquarters" meta={[['Based in', 'Cairo, Egypt'], ['Open to', 'Roles · Collaborations · Commissions'], ['Languages', 'Arabic · English']]}>
-    <h1 class="display-xl lines"><span class="ln"><span>Let’s talk</span></span><span class="ln"><span>about your <em>project.</em></span></span></h1>
-    <p class="lede">For concept design roles, collaborations with design firms, and selected private commissions in Saudi Arabia, the Gulf and Egypt.</p>
+<Base title={t('Contact', 'تواصل')} description={t('Contact Aya Hassan for concept design roles, collaborations with design firms and selected private commissions.', 'تواصل مع آية حسن لوظائف التصميم المبدئي، والتعاون مع مكاتب التصميم، ومشاريع خاصة مختارة.')}>
+  <PageHero images={[imagesFor('stc-hq')[2], imagesFor('misr-italia-hilltop')[1]]} alt={t('Interior of the stc headquarters', 'التصميم الداخلي لمقر stc')} meta={L.ar ? [['المقر', 'القاهرة، مصر'], ['متاحة لـ', 'وظائف · تعاون · مشاريع خاصة'], ['اللغات', 'العربية · الإنجليزية']] : [['Based in', 'Cairo, Egypt'], ['Open to', 'Roles · Collaborations · Commissions'], ['Languages', 'Arabic · English']]}>
+    <h1 class="display-xl lines"><span class="ln"><span>{t('Let’s talk', 'لنتحدث')}</span></span><span class="ln"><span>{L.ar ? <>عن <em>مشروعك.</em></> : <>about your <em>project.</em></>}</span></span></h1>
+    <p class="lede">{t('For concept design roles, collaborations with design firms, and selected private commissions in Saudi Arabia, the Gulf and Egypt.', 'لوظائف التصميم المبدئي، والتعاون مع مكاتب التصميم، ومشاريع خاصة مختارة في السعودية والخليج ومصر.')}</p>
   </PageHero>
 
   <section class="wrap rows">
-    <div class="row"><span class="label muted">Email</span><a href={`mailto:${contact.email}`} class="v link" id="em">{contact.email}</a><button type="button" class="btn copy" data-copy="em">Copy</button></div>
-    <div class="row"><span class="label muted">Social</span><Social size="l" /><span></span></div>
-    <div class="row"><span class="label muted">CV</span><a href="/Aya_Hassan_CV.pdf" class="v link">Download PDF</a><span class="arr">↓</span></div>
+    <div class="row"><span class="label muted">{t('Email', 'البريد')}</span><a href={`mailto:${contact.email}`} class="v link" id="em">{contact.email}</a><button type="button" class="btn copy" data-copy="em" data-done={t('Copied', 'تم النسخ')}>{t('Copy', 'انسخ')}</button></div>
+    <div class="row"><span class="label muted">{t('Social', 'التواصل')}</span><Social size="l" /><span></span></div>
+    <div class="row"><span class="label muted">CV</span><a href="/Aya_Hassan_CV.pdf" class="v link">{t('Download PDF', 'حمّل ملف PDF')}</a><span class="arr">↓</span></div>
   </section>
 
   <Reel rows={[['misr-italia-hilltop', 'sabic-hq', 'neom-oxagon', 'arches-restaurant', 'bmw-showroom', 'tech-park', 'linah-farms'].map((s) => cover(s)!)]} />
@@ -23,7 +26,7 @@ import { contact, imagesFor, cover } from '../data/projects';
 <script>
   document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
     const el = document.getElementById(b.dataset.copy!)!;
-    try { await navigator.clipboard.writeText(el.textContent ?? ''); b.textContent = 'Copied'; setTimeout(() => (b.textContent = 'Copy'), 1600); }
+    try { await navigator.clipboard.writeText(el.textContent ?? ''); const was = b.textContent; b.textContent = b.dataset.done ?? 'Copied'; setTimeout(() => (b.textContent = was), 1600); }
     catch { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s?.removeAllRanges(); s?.addRange(r); }
   }));
 </script>

@@ -257,6 +257,8 @@ if (fine && !reduce) {
   document.querySelectorAll<HTMLElement>('h1, h2.display-l, h2.display-m, .display-xl, .display-l, .display-m, .card h3 .u, .statement').forEach((el) => {
     if (el.closest('[data-intro], .hl, [data-no-split]') || el.querySelector('img, svg, a, button')) return;
     const words = el.matches('.statement');
+    // Arabic letters must stay joined: never split them into single-letter spans
+    if (!words && document.documentElement.dir === 'rtl') return;
     if (!words) { const host = el.closest<HTMLElement>('h1, h2, h3') || el; if (!host.hasAttribute('aria-label')) host.setAttribute('aria-label', (host.textContent || '').replace(/\s+/g, ' ').trim()); }
     const walk = (node: Node) => {
       [...node.childNodes].forEach((c) => {

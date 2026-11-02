@@ -21,6 +21,8 @@ export async function GET() {
     })));
     pages.push({ loc: `/work/${p.slug}/`, pr: p.featured ? '0.8' : '0.6', freq: 'yearly', imgs });
   }
+  // the Arabic version mirrors every page under /ar/
+  pages.push(...pages.map((x) => ({ ...x, loc: `/ar${x.loc}`, imgs: undefined })));
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${pages.map((u) => `  <url>

@@ -4,19 +4,21 @@ interface Props { overHero?: boolean }
 const { overHero = false } = Astro.props;
 const path = Astro.url.pathname;
 import Social from './Social.astro';
+import { i18n } from '../i18n';
+const L = i18n(Astro.url);
 const links = [
-  { href: '/work/', label: 'Work' },
-  { href: '/about/', label: 'About' },
-  { href: '/services/', label: 'Services' },
-  { href: '/contact/', label: 'Contact' },
+  { href: L.u('/work/'), label: L.t('Work', 'الأعمال') },
+  { href: L.u('/about/'), label: L.t('About', 'عنّي') },
+  { href: L.u('/services/'), label: L.t('Services', 'الخدمات') },
+  { href: L.u('/contact/'), label: L.t('Contact', 'تواصل') },
 ];
 ---
 <header class:list={['site', { over: overHero }]} data-header>
   <div class="bar glass-dark">
-    <a href="/" class="logo" aria-label="Aya Hassan, home" data-cursor="Home">
+    <a href={L.u('/')} class="logo" aria-label={L.t('Aya Hassan, home', 'آية حسن، الرئيسية')} data-cursor={L.t('Home', 'الرئيسية')}>
       <img src="/brand/aya.svg" alt="" width="88" height="42" />
     </a>
-    <nav aria-label="Main" class="main-nav">
+    <nav aria-label={L.t('Main', 'القائمة الرئيسية')} class="main-nav">
       <ul>
         {links.map((l, i) => (
           <li><a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}><span class="roll"><span>{l.label}</span><span aria-hidden="true">{l.label}</span></span></a></li>
@@ -24,13 +26,14 @@ const links = [
       </ul>
     </nav>
     <div class="right">
-      <a href="/contact/" class="talk label">Let’s talk <span class="arr" aria-hidden="true">→</span></a>
-      <button class="menu label" aria-expanded="false" aria-controls="mnav" data-menu><span class="mt">Menu</span><span class="lines" aria-hidden="true"><i></i><i></i></span></button>
+      <a href={L.other} class="lang label" hreflang={L.ar ? 'en' : 'ar'} lang={L.ar ? 'en' : 'ar'} aria-label={L.t('اقرأ بالعربية', 'Read in English')}>{L.ar ? 'EN' : 'ع'}</a>
+      <a href={L.u('/contact/')} class="talk label">{L.t('Let’s talk', 'لنتحدث')} <span class="arr" aria-hidden="true">{L.next}</span></a>
+      <button class="menu label" aria-expanded="false" aria-controls="mnav" data-menu data-open={L.t('Menu', 'القائمة')} data-close={L.t('Close', 'إغلاق')}><span class="mt">{L.t('Menu', 'القائمة')}</span><span class="lines" aria-hidden="true"><i></i><i></i></span></button>
     </div>
   </div>
 </header>
 <div class="mnav" id="mnav" hidden>
-  <nav aria-label="Mobile" class="wrap"><ul>{links.map((l, i) => <li><a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}<span class="arr" aria-hidden="true">→</span></a></li>)}</ul></nav>
+  <nav aria-label={L.t('Mobile', 'القائمة')} class="wrap"><ul>{links.map((l, i) => <li><a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}<span class="arr" aria-hidden="true">{L.next}</span></a></li>)}<li><a href={L.other} lang={L.ar ? 'en' : 'ar'}>{L.ar ? 'English' : 'العربية'}<span class="arr" aria-hidden="true">{L.next}</span></a></li></ul></nav>
   <div class="wrap foot"><Social /></div>
 </div>
 
@@ -40,7 +43,7 @@ const links = [
   const m = document.getElementById('mnav')!;
   const set = (open: boolean) => {
     btn.setAttribute('aria-expanded', String(open)); m.hidden = !open; h.classList.toggle('open', open); h.classList.remove('tuck');
-    btn.querySelector('.mt')!.textContent = open ? 'Close' : 'Menu';
+    btn.querySelector('.mt')!.textContent = (open ? btn.dataset.close : btn.dataset.open) ?? '';
     document.body.style.overflow = open ? 'hidden' : '';
     const l = (window as any).__lenis; open ? l?.stop() : l?.start();
     if (open) m.querySelector('a')?.focus();

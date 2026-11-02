@@ -25,7 +25,7 @@
       <svg class="mk fill" viewBox="0 0 941 453"><use href="/brand/aya-sprite.svg#aya" /></svg>
     </div>
   </div>
-  <button type="button" class="label skip-intro" data-skip tabindex="-1">Skip</button>
+  <button type="button" class="label skip-intro" data-skip tabindex="-1">{Astro.url.pathname.startsWith('/ar') ? 'تخطَّ' : 'Skip'}</button>
 </div>
 
 <script>

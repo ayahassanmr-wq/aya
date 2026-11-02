@@ -3,25 +3,29 @@ import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import { projects, imagesFor, drawingsFor, fileFor, disciplinesFor, type Project } from '../../data/projects';
 import Scope from '../../components/Scope.astro';
+import { i18n, localize, place as placeOf } from '../../i18n';
 
 export function getStaticPaths() {
   return projects.map((p, i) => ({ params: { slug: p.slug }, props: { p, prev: projects[(i - 1 + projects.length) % projects.length], next: projects[(i + 1) % projects.length], i } }));
 }
 interface Props { p: Project; prev: Project; next: Project; i: number }
-const { p, prev, next, i } = Astro.props;
+const L = i18n(Astro.url);
+const { t, u } = L;
+const p = localize(Astro.props.p, L.ar), prev = localize(Astro.props.prev, L.ar), next = localize(Astro.props.next, L.ar);
+const disc = p.category === 'architecture' ? t('Architecture', 'العمارة') : t('Interiors', 'التصميم الداخلي');
 const [hero, ...rest] = imagesFor(p.slug);
 const drawings = drawingsFor(p.slug);
 const bim = disciplinesFor(p).has('BIM');
 const process = (p.process ?? []).map(([label, name]) => ({ label, img: fileFor(p.slug, name) })).filter((x) => x.img);
 const nextCover = imagesFor(next.slug)[0];
-const place = `${p.location}${p.country !== p.location && p.country !== '—' ? `, ${p.country}` : ''}`;
+const place = placeOf(p);
 // full-size sources for the lightbox
 const all = [hero, ...rest, ...drawings].filter(Boolean);
 const big = await Promise.all(all.map(async (m) => (await getImage({ src: m, width: 2000, format: 'webp' })).src));
 // gallery rhythm: full · pair · offset · pair …
 const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 'full'; if (m === 3) return 'offset'; return (k === n - 1 && m === 1) ? 'full' : 'half'; };
 ---
-<Base title={p.title} description={p.summary ?? `${p.title}, ${place}. ${p.sector} project by Aya Hassan.`} image={hero?.src} overHero>
+<Base title={p.title} description={p.summary ?? (L.ar ? `${p.title}، ${place}. مشروع ${p.sector} من أعمال آية حسن.` : `${p.title}, ${place}. ${p.sector} project by Aya Hassan.`)} image={hero?.src} overHero>
   <div class="progress" aria-hidden="true"></div>
   <article data-lb-src={JSON.stringify(big)}>
     <!-- 01 hero -->
@@ -29,48 +33,48 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
       {hero && <div class="para bgwrap"><Image src={hero} alt={`${p.title}, ${place}`} widths={[900, 1600, 2000]} sizes="100vw" loading="eager" fetchpriority="high" data-parallax="0.2" data-scale="1.18" /></div>}
       <div class="veil"></div>
       <div class="wrap hi">
-        <nav class="crumbs label" aria-label="Breadcrumb"><a href="/work/" class="link">← All work</a></nav>
+        <nav class="crumbs label" aria-label={t('Breadcrumb', 'مسار التصفح')}><a href={u('/work/')} class="link">{L.back} {t('All work', 'كل الأعمال')}</a></nav>
         <h1 class="display-xl lines"><span class="ln"><span>{p.title}</span></span></h1>
-        <div class="hmeta label"><span>{place}</span><span>{p.category === 'architecture' ? 'Architecture' : 'Interiors'} · {p.sector}</span>{p.concept && <span class="tag">Concept exploration</span>}</div>
+        <div class="hmeta label"><span>{place}</span><span>{disc} · {p.sector}</span>{p.concept && <span class="tag">{t('Concept exploration', 'استكشاف مبدئي')}</span>}</div>
       </div>
     </header>
 
     <!-- 02 title block -->
     <section class="wrap tb">
       <dl class="block">
-        <div><dt class="label">Location</dt><dd>{place}</dd></div>
-        <div><dt class="label">Discipline</dt><dd>{p.category === 'architecture' ? 'Architecture' : 'Interiors'} · {p.sector}</dd></div>
-        <div><dt class="label">Practice</dt><dd>{p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent / portfolio'}</dd></div>
-        <div><dt class="label">Year</dt><dd>{p.year ?? '—'}</dd></div>
-        <div class="wide"><dt class="label">Scope</dt><dd class="sc"><Scope p={p} variant="full" /><span class="det">{p.scope.join(' · ')}</span></dd></div>
+        <div><dt class="label">{t('Location', 'الموقع')}</dt><dd>{place}</dd></div>
+        <div><dt class="label">{t('Discipline', 'التخصص')}</dt><dd>{disc} · {p.sector}</dd></div>
+        <div><dt class="label">{t('Practice', 'المكتب')}</dt><dd>{L.ar ? ({ 'ZFP': 'زهير فايز ومشاركوه · ZFP', 'Cosmos Studio': 'كوزموس ستوديو', 'Innovation Design Studio': 'إنوفيشن ديزاين ستوديو' } as Record<string, string>)[p.practice ?? ''] ?? 'عمل مستقل' : p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent / portfolio'}</dd></div>
+        <div><dt class="label">{t('Year', 'السنة')}</dt><dd>{p.year ?? '—'}</dd></div>
+        <div class="wide"><dt class="label">{t('Scope', 'النطاق')}</dt><dd class="sc"><Scope p={p} variant="full" />{!L.ar && <span class="det">{p.scope.join(' · ')}</span>}</dd></div>
       </dl>
     </section>
 
     <!-- 03 brief -->
     <section class="wrap brief">
-      <h2 class="label muted reveal">Brief</h2>
+      <h2 class="label muted reveal">{t('Brief', 'نبذة')}</h2>
       <div class="bt">
         {p.summary && <p class="statement reveal">{p.summary}</p>}
-        {p.overview && <div class="ov reveal">{p.overview.map((t) => <p>{t}</p>)}</div>}
+        {p.overview && <div class="ov reveal">{p.overview.map((x) => <p>{x}</p>)}</div>}
         {(p.deliverables || p.links) && (
           <div class="aside reveal">
-            {p.deliverables && <div><h2 class="label muted">Deliverables</h2><ul>{p.deliverables.map((d) => <li>{d}</li>)}</ul></div>}
-            {p.links && <div><h2 class="label muted">Client</h2><ul class="lk">{p.links.map((l) => <li><a href={l.url} target="_blank" rel="noopener" class="link">{l.label} <span class="arr">↗</span></a></li>)}</ul></div>}
+            {p.deliverables && <div><h2 class="label muted">{t('Deliverables', 'المخرجات')}</h2><ul>{p.deliverables.map((d) => <li>{d}</li>)}</ul></div>}
+            {p.links && <div><h2 class="label muted">{t('Client', 'العميل')}</h2><ul class="lk">{p.links.map((l) => <li><a href={l.url} target="_blank" rel="noopener" class="link">{l.label} <span class="arr">↗</span></a></li>)}</ul></div>}
           </div>
         )}
-        {p.concept && <p class="note reveal">AI-assisted concept explorations, used to study mood, light and material. Not presented as final renders.</p>}
+        {p.concept && <p class="note reveal">{t('AI-assisted concept explorations, used to study mood, light and material. Not presented as final renders.', 'استكشافات مبدئية بمساعدة الذكاء الاصطناعي لدراسة الأجواء والضوء والمواد، ولا تُعرض بوصفها صورًا نهائية.')}</p>}
       </div>
     </section>
 
     <!-- 04 visuals -->
     {rest.length > 0 && (
       <section class="wrap gal">
-        <div class="sheet-head"><h2 class="label">Visuals</h2></div>
+        <div class="sheet-head"><h2 class="label">{t('Visuals', 'الصور')}</h2></div>
         <div class="grid">
           {rest.map((img, k) => (
             <figure class:list={[layout(k, rest.length)]}>
-              <button type="button" class="para zoom lb wipe" data-lb={k + 1} data-cursor="Open" aria-label={`Open image ${k + 2}`}>
-                <Image src={img} alt={`${p.title}, view ${k + 2}`} widths={[700, 1200, 1800]} sizes={layout(k, rest.length) === 'full' ? '100vw' : '(min-width: 760px) 50vw, 100vw'} data-parallax="0.07" data-scale="1.1" />
+              <button type="button" class="para zoom lb wipe" data-lb={k + 1} data-cursor={t('Open', 'افتح')} aria-label={`${t('Open image', 'افتح الصورة')} ${k + 2}`}>
+                <Image src={img} alt={`${p.title}, ${t('view', 'منظور')} ${k + 2}`} widths={[700, 1200, 1800]} sizes={layout(k, rest.length) === 'full' ? '100vw' : '(min-width: 760px) 50vw, 100vw'} data-parallax="0.07" data-scale="1.1" />
               </button>
             </figure>
           ))}
@@ -82,9 +86,9 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
     {drawings.length > 0 && (
       <section class="dark draw sheet" data-sp>
         <div class="wrap">
-          <div class="sheet-head"><h2 class="label">{bim ? 'BIM package' : 'Drawings & diagrams'}</h2>{bim && <span class="label muted">Revit · coordinated model &amp; drawing set</span>}</div>
+          <div class="sheet-head"><h2 class="label">{bim ? t('BIM package', 'حزمة BIM') : t('Drawings & diagrams', 'الرسومات والمخططات')}</h2>{bim && <span class="label muted">{t('Revit · coordinated model & drawing set', 'Revit · نموذج منسق ومجموعة رسومات')}</span>}</div>
           {process.length > 1 && (
-            <ol class="proc reveal" aria-label="From concept to model">
+            <ol class="proc reveal" aria-label={t('From concept to model', 'من الفكرة إلى النموذج')}>
               {process.map((s, k) => (
                 <li>
                   <div class="pimg"><Image src={s.img!} alt={`${p.title}: ${s.label}`} widths={[500, 900]} sizes="(min-width: 760px) 30vw, 100vw" /></div>
@@ -96,7 +100,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
           <div class="dgrid">
             {drawings.map((d, k) => (
               <figure class="reveal">
-                <button type="button" class="paper lb" data-lb={rest.length + 1 + k} data-cursor="Open" aria-label={`Open drawing ${k + 1}`}><Image src={d} alt={`${p.title}, ${p.captions?.[k] ?? `drawing ${k + 1}`}`} widths={[600, 1100]} sizes="(min-width: 760px) 50vw, 100vw" /></button>
+                <button type="button" class="paper lb" data-lb={rest.length + 1 + k} data-cursor={t('Open', 'افتح')} aria-label={`${t('Open drawing', 'افتح الرسم')} ${k + 1}`}><Image src={d} alt={`${p.title}, ${p.captions?.[k] ?? `${t('drawing', 'رسم')} ${k + 1}`}`} widths={[600, 1100]} sizes="(min-width: 760px) 50vw, 100vw" /></button>
                 {p.captions?.[k] && <figcaption class="label muted">{String(k + 1).padStart(2, '0')} · {p.captions[k]}</figcaption>}
               </figure>
             ))}
@@ -109,7 +113,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
     {p.video && (
       <section class="dark film sheet" data-sp>
         <div class="wrap">
-          <div class="sheet-head"><h2 class="label">Film</h2><span class="label muted">{p.video.title ?? 'Animation'}</span></div>
+          <div class="sheet-head"><h2 class="label">{t('Film', 'فيلم')}</h2><span class="label muted">{p.video.title ?? t('Animation', 'تحريك')}</span></div>
           <div class="screen reveal">
             {p.video.file && <video src={p.video.file} poster={p.video.poster ?? hero?.src} controls playsinline preload="none"></video>}
             {p.video.youtube && <iframe src={`https://www.youtube-nocookie.com/embed/${p.video.youtube}?rel=0`} title={p.video.title ?? p.title} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>}
@@ -120,23 +124,23 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
     )}
 
     <!-- 07 prev / next -->
-    <nav class="pn wrap" aria-label="More projects">
-      <a href={`/work/${prev.slug}/`} class="label link">← {prev.title}</a>
-      <a href="/work/" class="label link">Index</a>
+    <nav class="pn wrap" aria-label={t('More projects', 'مشاريع أخرى')}>
+      <a href={u(`/work/${prev.slug}/`)} class="label link">{L.back} {prev.title}</a>
+      <a href={u('/work/')} class="label link">{t('Index', 'الفهرس')}</a>
     </nav>
-    <a href={`/work/${next.slug}/`} class="next" data-cursor="Next">
+    <a href={u(`/work/${next.slug}/`)} class="next" data-cursor={t('Next', 'التالي')}>
       {nextCover && <div class="para nb"><Image src={nextCover} alt="" widths={[900, 1600]} sizes="100vw" data-parallax="0.12" data-scale="1.15" /></div>}
       <div class="veil"></div>
-      <div class="wrap ni"><span class="label">Next project</span><span class="display-l">{next.title}</span><span class="label go">Open project <span class="arr">→</span></span></div>
+      <div class="wrap ni"><span class="label">{t('Next project', 'المشروع التالي')}</span><span class="display-l">{next.title}</span><span class="label go">{t('Open project', 'افتح المشروع')} <span class="arr">{L.next}</span></span></div>
     </a>
   </article>
 
   <!-- lightbox -->
-  <div class="lbx" hidden role="dialog" aria-modal="true" aria-label="Image viewer">
+  <div class="lbx" hidden role="dialog" aria-modal="true" aria-label={t('Image viewer', 'عارض الصور')}>
     <img alt="" />
-    <button type="button" class="x label glass-dark" data-x>Close <span aria-hidden="true">✕</span></button>
-    <button type="button" class="nav pv glass-dark" data-d="-1" aria-label="Previous image">←</button>
-    <button type="button" class="nav nx glass-dark" data-d="1" aria-label="Next image">→</button>
+    <button type="button" class="x label glass-dark" data-x>{t('Close', 'إغلاق')} <span aria-hidden="true">✕</span></button>
+    <button type="button" class="nav pv glass-dark" data-d="-1" aria-label={t('Previous image', 'الصورة السابقة')}>{L.back}</button>
+    <button type="button" class="nav nx glass-dark" data-d="1" aria-label={t('Next image', 'الصورة التالية')}>{L.next}</button>
     <span class="cnt label glass-dark" aria-live="polite"></span>
   </div>
 </Base>

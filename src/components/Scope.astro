@@ -4,20 +4,23 @@
 import { disciplinesFor, DISCIPLINES, type Project } from '../data/projects';
 interface Props { p: Project; variant?: 'compact' | 'full'; dark?: boolean }
 const { p, variant = 'compact', dark = false } = Astro.props;
+import { scopeAr } from '../data/projects-ar';
+const ar = Astro.url.pathname.startsWith('/ar');
+const tr = (d: string) => (ar ? scopeAr[d] ?? d : d);
 const on = disciplinesFor(p);
-const said = DISCIPLINES.filter((d) => on.has(d)).join(', ');
+const said = DISCIPLINES.filter((d) => on.has(d)).map(tr).join(ar ? '، ' : ', ');
 ---
 {variant === 'compact' ? (
-  <ul class="scope compact" aria-label="Scope">
-    {DISCIPLINES.filter((d) => on.has(d)).map((d) => <li class="c on"><span class="mark" aria-hidden="true"></span>{d}</li>)}
+  <ul class="scope compact" aria-label={ar ? 'النطاق' : 'Scope'}>
+    {DISCIPLINES.filter((d) => on.has(d)).map((d) => <li class="c on"><span class="mark" aria-hidden="true"></span>{tr(d)}</li>)}
   </ul>
 ) : (
-  <div class:list={['scope', variant, { dark }]} role="img" aria-label={`Scope: ${said}`}>
+  <div class:list={['scope', variant, { dark }]} role="img" aria-label={`${ar ? 'النطاق' : 'Scope'}: ${said}`}>
     {DISCIPLINES.map((d, i) => (
       <span class:list={['c', { on: on.has(d) }]} aria-hidden="true">
         <span class="n">{String(i + 1).padStart(2, '0')}</span>
         <span class="mark"></span>
-        <span class="t">{d}</span>
+        <span class="t">{tr(d)}</span>
       </span>
     ))}
   </div>
