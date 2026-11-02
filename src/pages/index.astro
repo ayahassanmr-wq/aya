@@ -57,22 +57,13 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
     <div class="wrap inner">
       <div class="top"></div>
       <div class="tb" dir="ltr">
-        <div class="dimn" aria-hidden="true"><i></i><span>{t('Architect · Interior designer', 'معمارية · مصممة داخلية')}</span><i></i></div>
+        <div class="dimn" aria-hidden="true"><span>{t('Architect · Interior designer', 'معمارية · مصممة داخلية')}</span></div>
         <h1 class="hl nm-h"><span class="ln"><span>AYA&nbsp;HASSAN</span></span></h1>
         <dl class="cells" dir={L.dir}>
           <div class="c mot"><dt class="sr-only">{t('Motto', 'الشعار')}</dt><dd>{L.ar ? <>من الفكرة إلى <em>الإقناع.</em></> : <>From concept to <em>conviction.</em></>}</dd></div>
           <div class="c"><dt class="label">{t('Based', 'المقر')}</dt><dd>{t('Cairo, EG', 'القاهرة، مصر')}</dd></div>
           <div class="c"><dt class="label">{t('Practice', 'منذ')}</dt><dd>2020 —</dd></div>
           <div class="c"><dt class="label">{t('Sheet', 'لوحة')}</dt><dd>A-000</dd></div>
-          <div class="c st">
-            <svg class="stamp" role="img" aria-label={t('Stamp: concept approved, Cairo 2026', 'ختم: الفكرة معتمدة، القاهرة 2026')} viewBox="0 0 160 160" dir="ltr">
-              <defs><path id="stamp-ring" d="M80 80 m -58 0 a 58 58 0 1 1 116 0 a 58 58 0 1 1 -116 0"></path></defs>
-              <circle cx="80" cy="80" r="76" fill="none" stroke="currentColor" stroke-width="2"></circle>
-              <circle cx="80" cy="80" r="44" fill="none" stroke="currentColor" stroke-width="1.2"></circle>
-              <text font-weight="600" font-size="11.5" letter-spacing="3.2" fill="currentColor" style="direction:ltr;unicode-bidi:bidi-override"><textPath href="#stamp-ring">CONCEPT APPROVED · CAIRO · MMXXVI ·</textPath></text>
-              <path d="M62 82 L 75 95 L 100 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-          </div>
         </dl>
       </div>
       <div class="bottom">
@@ -253,19 +244,14 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   .dimn i:first-child::before { left: 0; } .dimn i:last-child::before { right: 0; }
   .dimn span { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; white-space: nowrap; }
   .nm-h { font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(44px, 9.6vw, 176px); line-height: .86; letter-spacing: -.02em; white-space: nowrap; max-width: none; }
-  .cells { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr auto; margin: clamp(16px, 2vw, 28px) 0 0; border: 1px solid rgba(243, 237, 227, .35); }
-  .c { margin: 0; padding: 14px 18px; border-inline-start: 1px solid rgba(243, 237, 227, .35); display: flex; flex-direction: column; justify-content: center; gap: 6px; }
-  .c:first-child { border-inline-start: 0; }
+  .cells { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr; gap: clamp(16px, 2.4vw, 40px); margin: clamp(16px, 2vw, 28px) 0 0; }
+  .c { margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
   .c dt { color: rgba(243, 237, 227, .7); font-size: 10.5px; }
   .c dd { margin: 0; font-weight: 500; font-size: 15px; }
   .c.mot dd { font-weight: 600; font-size: clamp(18px, 1.7vw, 26px); line-height: 1.1; letter-spacing: -.02em; }
   .c.mot em { font-weight: 250; font-style: italic; color: var(--sand); }
-  .c.st { padding: 8px 14px; }
-  .stamp { width: 74px; height: auto; color: #D7A0A6; transform: rotate(-9deg); animation: stampin .7s 1.1s cubic-bezier(.3, 1.6, .5, 1) both; }
-  .stamp text { font-family: "Archivo Variable", sans-serif; }
-  @keyframes stampin { from { opacity: 0; transform: rotate(-26deg) scale(1.6); } }
-  @media (max-width: 900px) { .cells { grid-template-columns: 1fr 1fr 1fr auto; } .c.mot { grid-column: 1 / -1; border-inline-start: 0; border-bottom: 1px solid rgba(243, 237, 227, .35); } .c:nth-child(2) { border-inline-start: 0; } }
-  @media (max-width: 560px) { .cells { grid-template-columns: 1fr 1fr auto; } .c:nth-child(4) { display: none; } .dimn span { font-size: 9.5px; letter-spacing: .16em; } }
+  @media (max-width: 900px) { .cells { grid-template-columns: 1fr 1fr 1fr; } .c.mot { grid-column: 1 / -1; } }
+  @media (max-width: 560px) { .cells { grid-template-columns: 1fr 1fr; } .c:nth-child(4) { display: none; } .dimn span { font-size: 9.5px; letter-spacing: .16em; } }
   .hl .ln { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
   .hl .ln > span { display: inline-block; animation: lineup 1.3s var(--ease) both; }
   .hl .ln:nth-child(2) > span { animation-delay: .14s; }

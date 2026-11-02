@@ -230,13 +230,14 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
   .draw { padding-block: clamp(64px, 9vw, 130px); }
   .dgrid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
   .dgrid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 28px); margin-top: 28px; }
-  .paper { display: block; width: 100%; border: 0; cursor: zoom-in; background: var(--ow); padding: clamp(10px, 1.6vw, 22px); transition: transform .6s var(--ease); }
-  .paper:hover { transform: translateY(-6px); }
-  /* THE DRAWING SHEET — every plan, elevation, BIM capture and diagram gets the same treatment:
-     inked to warm graphite on bone paper, inside a hairline sheet border with a title strip. */
-  .paper { position: relative; background: #F6F1E8; border: 1px solid var(--rule); outline: 1px solid var(--rule); outline-offset: -8px; }
-  .paper :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; filter: grayscale(1) sepia(.22) contrast(1.18) brightness(1.04) !important; mix-blend-mode: multiply; }
-  .paper::after { content: attr(data-sheet); position: absolute; right: 14px; bottom: 12px; font: 500 10px/1 var(--sans); letter-spacing: .2em; color: var(--ox); }
+  /* THE DRAWING SHEET — plans, elevations, BIM captures and diagrams sit on a clean bone sheet
+     against the night section: full colour kept (only a light warm unify), natural proportions,
+     a hairline oxblood rule and a sheet-number strip underneath. */
+  .paper { position: relative; display: flex; flex-direction: column; width: 100%; border: 0; cursor: zoom-in; background: #FBF8F3; padding: clamp(14px, 2vw, 32px) clamp(14px, 2vw, 32px) 0; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .55); transition: transform .6s var(--ease), box-shadow .6s var(--ease); }
+  .paper:hover { transform: translateY(-6px); box-shadow: 0 40px 70px -30px rgba(0, 0, 0, .7); }
+  .paper :global(img) { width: 100%; height: auto; max-height: 78vh; object-fit: contain; filter: saturate(.9) sepia(.06) contrast(1.04) !important; }
+  .paper::after { content: attr(data-sheet); display: block; margin-top: clamp(12px, 1.6vw, 22px); padding: 12px 0 14px; border-top: 1px solid var(--ox); text-align: end; font-family: var(--sans); font-weight: 600; font-size: 10.5px; line-height: 1; letter-spacing: .22em; color: var(--ox); }
+  .dgrid { align-items: start; }
   @media (max-width: 760px) { .dgrid { grid-template-columns: 1fr; } }
 
   .film { padding-block: clamp(64px, 9vw, 130px); }
