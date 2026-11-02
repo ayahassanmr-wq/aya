@@ -88,11 +88,11 @@ export const projects: Project[] = [
     ],
     captions: ['Concept: solid mass, carved slots, palm-leaf framework', 'Revit model', 'Revit elevation, main facade', 'Site and ground-floor plan, phase 1'],
     process: [['Concept', 'd01'], ['Revit model', 'd02'], ['Render', '01']] },
-  { slug: 'mazeej', year: '2025', title: 'Mazeej Hotel & Housing Complex', location: 'Giza', country: 'Egypt', category: 'architecture', sector: 'Hospitality', scope: ['Design review', 'Redesign to code'], practice: 'Cosmos Studio',
+  { slug: 'mazeej', client: 'Guira Developments', year: '2025', title: 'Mazeej Hotel & Housing Complex', location: 'Giza', country: 'Egypt', category: 'architecture', sector: 'Hospitality', scope: ['Design review', 'Redesign to code'], practice: 'Cosmos Studio',
     summary: 'Design review and redesign of a hotel and housing complex to code and architectural standards.' },
   { slug: 'dry-port', client: 'Egyptian Government', year: '2021', title: 'Dry Port Buildings', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, B], practice: 'Cosmos Studio',
     summary: 'A Revit (BIM) sample: plans and 3D for a dry port’s buildings.' },
-  { slug: 'juba-resort', client: 'Confidential', title: 'Juba Resort Complex', location: 'Juba', country: 'South Sudan', category: 'architecture', sector: 'Hospitality', scope: [D, M, R], practice: 'Cosmos Studio',
+  { slug: 'juba-resort', year: '2023', client: 'Confidential', title: 'Juba Resort Complex', location: 'Juba', country: 'South Sudan', category: 'architecture', sector: 'Hospitality', scope: [D, M, R], practice: 'Cosmos Studio',
     summary: 'A resort complex arranged around a landscaped pool garden.' },
 
   // ---------- Residential developments (Innovation Design Studio)
@@ -113,11 +113,11 @@ export const projects: Project[] = [
   { slug: 'blue-villa', year: '2025', client: 'Private client', title: 'Blue Villa', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
 
   // ---------- Interiors · Residential & hospitality
-  { slug: 'modern-residence-new-cairo', client: 'Private client', title: 'Modern Residence', location: 'New Cairo', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
+  { slug: 'modern-residence-new-cairo', year: '2025', client: 'Private client', title: 'Modern Residence', location: 'New Cairo', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A full residence in warm timber, stone and soft neutrals: living, dining, bedrooms and baths.' },
   { slug: 'zayed-residence', year: '2024', client: 'Private client', title: 'Zayed Residence', location: 'Sheikh Zayed, Giza', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A bold residence of dark timber, marble and sculptural lighting.' },
-  { slug: 'arches-restaurant', year: '2022', title: 'Arches Restaurant', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'interiors', sector: 'Hospitality', scope: [D, M, R, P],
+  { slug: 'arches-restaurant', client: 'Private client', year: '2022', title: 'Arches Restaurant', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'interiors', sector: 'Hospitality', scope: [D, M, R, P],
     summary: 'A restaurant of timber arches, hanging greenery and halo lights.' },
   { slug: 'bmw-showroom', year: '2022', client: 'BMW Egypt', title: 'BMW Showroom', location: 'Cairo–Alex Road', country: 'Egypt', category: 'interiors', sector: 'Retail', scope: [D, M, R, P], practice: 'Cosmos Studio',
     summary: 'A brand showroom with a textured feature wall and bright display bays.' },
