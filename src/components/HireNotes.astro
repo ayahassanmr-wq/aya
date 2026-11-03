@@ -1,0 +1,31 @@
+---
+/* Short "why me" block + skills, shared by the CV & portfolio page and the contact page. Minimal by design. */
+import { i18n } from '../i18n';
+const L = i18n(Astro.url);
+const { t } = L;
+const points = L.ar ? [
+  ['من الفكرة إلى مجموعة الرسومات', 'الفكرة والنموذج ثلاثي الأبعاد والإظهار وحزم Revit، يحملها شخص واحد.'],
+  ['خبرة في مقرات الخليج', 'التصميم الداخلي لمقرّي سابك وstc في الرياض.'],
+  ['إظهار سريع', 'صور وأفلام تكسب موافقة العميل.'],
+] : [
+  ['Concept to drawing set', 'Idea, 3D model, visuals and Revit packages, carried by one person.'],
+  ['Gulf headquarters experience', 'SABIC and stc interiors in Riyadh.'],
+  ['Fast visuals', 'Renders and animation that win client approval.'],
+];
+const skills = 'Revit · AutoCAD · Navisworks · Rhino · SketchUp · 3ds Max · V-Ray · Corona · Lumion · Photoshop · InDesign · After Effects';
+---
+<section class="wrap hn">
+  <ol>{points.map(([h, d], i) => <li><span class="n" dir="ltr">{String(i + 1).padStart(2, '0')}</span><div><b>{h}</b><span>{d}</span></div></li>)}</ol>
+  <p class="sk"><span class="label muted">{t('Tools', 'الأدوات')}</span><span>{skills}</span></p>
+</section>
+
+<style>
+  .hn { padding-block: clamp(48px, 6vw, 96px) 0; }
+  .hn ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2.4vw, 40px); }
+  .hn li { display: grid; grid-template-columns: auto 1fr; gap: 14px; padding-top: 16px; border-top: 2px solid var(--ox); }
+  .hn .n { font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: 28px; line-height: .9; color: var(--ox); }
+  .hn b { display: block; font-weight: 700; font-size: 17px; margin-bottom: 4px; }
+  .hn li span:not(.n) { color: var(--ink-2); font-size: 15px; }
+  .sk { display: grid; grid-template-columns: 160px 1fr; gap: 16px; margin: clamp(24px, 3vw, 40px) 0 0; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 15px; color: var(--ink-2); }
+  @media (max-width: 800px) { .hn ol { grid-template-columns: 1fr; } .sk { grid-template-columns: 1fr; gap: 6px; } }
+</style>

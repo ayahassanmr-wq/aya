@@ -184,7 +184,7 @@ const links: Record<string, Project['links']> = {
 };
 /* ---------- films: drop a compressed mp4 in /public/video/<slug>.mp4, or add a YouTube/Vimeo id */
 const films: Record<string, Project['video']> = {
-  // 'jotun-office': { file: '/video/jotun-office.mp4', title: 'Promotional animation' },
+  'jotun-office': { file: '/video/jotun-office.mp4', poster: '/video/jotun-office.jpg', title: 'Office film · 0:51' },
   'juba-resort': { file: '/video/juba-resort.mp4', poster: '/video/juba-resort.jpg', title: 'Walkthrough animation · 1:55' },
 };
 for (const p of projects) { p.links ??= links[p.slug]; p.video ??= films[p.slug]; }
@@ -237,7 +237,10 @@ export const sectorGroups = (list: Project[]) => {
 };
 export const disciplineOrder: Project['category'][] = ['architecture', 'interiors'];
 export const ordered: Project[] = disciplineOrder.flatMap((c) => sectorGroups(projects.filter((p) => p.category === c)).flatMap((g) => g.list));
-export const projectNo = (slug: string) => String(ordered.findIndex((p) => p.slug === slug) + 1).padStart(2, '0');
+/* numbers restart per section: Architecture 01…, Interiors 01… (BIM section on the work page numbers its own list) */
+const inSection = (slug: string) => { const p = projects.find((x) => x.slug === slug)!; return ordered.filter((x) => x.category === p.category); };
+export const projectNo = (slug: string) => String(inSection(slug).findIndex((p) => p.slug === slug) + 1).padStart(2, '0');
+export const sectionTotal = (slug: string) => String(inSection(slug).length).padStart(2, '0');
 
 /* ---------- client logos (public/clients/<id>.png, official files supplied by Aya) */
 const logoBySlug: Record<string, string> = {

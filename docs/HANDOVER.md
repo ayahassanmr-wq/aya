@@ -39,6 +39,7 @@
 10. Practice since 2019 (freelance) → 7 years: home stat, hero "2019 —", About, portfolio, CV ("seven years", freelance 2019 — now), BRAND_VOICE.
 11. Homepage typology marquee ("Tech campus" bar) removed.
 12. CV + portfolio regenerated.
+13. (22:48 batch) Hero buttons blend: Start + Hiring = translucent bone glass, View the work = translucent oxblood. Contact: 'What is it about?' + hint 'Pick one — it becomes the subject of your email.' New `HireNotes` component (3 highlights + Tools line) on /cv/ and /contact/; 'I typically reply within 24 hours.' under email. Jotun film live on project (public/video/jotun-office.mp4, 5 MB). Numbers restart per section (Architecture 01–16, Interiors 01–12, BIM section 01–04 on work page); portfolio matches.
 **Next:** Aya reviews screenshots → "push live" = `git push origin rebrand-on-update:main` (fast-forward) → confirm Vercel production READY.
 
 ### Parked / next after that

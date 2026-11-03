@@ -74,7 +74,7 @@ const disciplines = await Promise.all([
           {d.groups.map((g, gi) => (
             <section class="grp" aria-label={g.name}>
               <header class="gh"><span class="label gn">{d.n}.{String(gi + 1).padStart(2, '0')}</span><h3 class="gt">{g.name}</h3><span class="label muted">{g.list.length}</span></header>
-              <div class="grid stagger">{g.list.map((p) => <div class="it"><ProjectCard p={p} /></div>)}</div>
+              <div class="grid stagger">{g.list.map((p) => <div class="it"><ProjectCard p={p} no={d.id === 'bim' ? String(d.groups.flatMap((x) => x.list).indexOf(p) + 1).padStart(2, '0') : undefined} /></div>)}</div>
             </section>
           ))}
         </div>

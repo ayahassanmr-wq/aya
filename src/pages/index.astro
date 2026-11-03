@@ -90,9 +90,9 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
       </div>
       <div class="bottom">
         <div class="ctas">
-          <a href={u('/contact/')} class="btn solid magnet cta-eq">{t('Start a project', 'ابدأ مشروعًا')} <span class="arr">{L.next}</span></a>
+          <a href={u('/contact/')} class="btn magnet cta-eq">{t('Start a project', 'ابدأ مشروعًا')} <span class="arr">{L.next}</span></a>
           <a href={u('/work/')} class="btn pop magnet">{t('View the work', 'شاهد الأعمال')} <span class="arr">{L.next}</span></a>
-          <a href={u('/cv/')} class="btn solid cta-eq">{t('Hiring? See CV', 'تبحث عن مصممة؟ اطّلع على السيرة الذاتية')} <span class="arr">{L.next}</span></a>
+          <a href={u('/cv/')} class="btn cta-eq">{t('Hiring? See CV', 'تبحث عن مصممة؟ اطّلع على السيرة الذاتية')} <span class="arr">{L.next}</span></a>
         </div>
         <div class="ctrl" role="group" aria-label={t('Featured projects', 'مشاريع مميزة')}>
           <div class="bars">{slides.map((x, i) => <button type="button" class:list={['bb', { on: i === 0 }]} data-go={i} aria-label={`${t('Show', 'اعرض')} ${loc(x.p).title}`}><i></i></button>)}</div>
@@ -326,11 +326,10 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   @keyframes up { from { opacity: 0; transform: translateY(14px); } }
   .ctas { display: flex; gap: 10px; flex-wrap: nowrap; }
   .ctas .btn { white-space: nowrap; }
-  .ctas .cta-eq { background: var(--ow); color: var(--ink); border-color: var(--ow); }
-  .ctas .pop { background: var(--ox); color: var(--ow); border: 1px solid var(--ox); font-weight: 700; padding-inline: 30px; box-shadow: 0 0 0 0 rgba(94,26,36,.6); animation: popring 2.6s 3.5s ease-out infinite; }
-  .ctas .pop:hover { background: #7A2430; }
-  @keyframes popring { 0% { box-shadow: 0 0 0 0 rgba(184,57,74,.55); } 70%, 100% { box-shadow: 0 0 0 14px rgba(184,57,74,0); } }
-  @media (prefers-reduced-motion: reduce) { .ctas .pop { animation: none; } }
+  .ctas .cta-eq { background: rgba(243,237,227,.12); color: var(--ow); border: 1px solid rgba(243,237,227,.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .ctas .cta-eq:hover { background: rgba(243,237,227,.24); }
+  .ctas .pop { background: rgba(94,26,36,.82); color: var(--ow); border: 1px solid rgba(214,203,190,.55); font-weight: 700; padding-inline: 30px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .ctas .pop:hover { background: rgba(122,36,48,.95); }
   .btn.solid { background: var(--ow); color: var(--ink); border-color: var(--ow); }
   .btn.solid::before { background: var(--ox) !important; }
   .btn.solid:hover { color: var(--ow) !important; border-color: var(--ox) !important; }

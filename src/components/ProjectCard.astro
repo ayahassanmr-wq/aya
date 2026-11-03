@@ -2,8 +2,8 @@
 import { Image } from 'astro:assets';
 import { cover, projectNo, type Project } from '../data/projects';
 import Scope from './Scope.astro';
-interface Props { p: Project; size?: 'l' | 'm'; eager?: boolean }
-const { p, size = 'm', eager = false } = Astro.props;
+interface Props { p: Project; size?: 'l' | 'm'; eager?: boolean; no?: string }
+const { p, size = 'm', eager = false, no } = Astro.props;
 import { i18n, localize, place } from '../i18n';
 const L = i18n(Astro.url);
 const q = localize(p, L.ar);
@@ -20,7 +20,7 @@ const img = cover(p.slug);
   </div>
   <div class="meta">
     <div class="t">
-      <h3><span class="no" dir="ltr">{projectNo(p.slug)}</span><span class="u">{q.title}</span></h3>
+      <h3><span class="no" dir="ltr">{no ?? projectNo(p.slug)}</span><span class="u">{q.title}</span></h3>
       <p class="label muted">{place(q)}</p>
       <Scope p={p} />
     </div>

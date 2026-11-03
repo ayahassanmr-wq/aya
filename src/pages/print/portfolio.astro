@@ -266,7 +266,7 @@ const year = new Date().getFullYear();
           <section class="pg op" id={`p${it.code}`}>
             <div class="im"><img class="grade" src={it.cover} alt="" /></div>
             <div class="side">
-              <span class="pno"><span class="lab ox" style="font-weight:700">{it.p.sector}</span><span class="big">{it.code}<small>/{String(projects.length).padStart(2, '0')}</small></span></span>
+              <span class="pno"><span class="lab ox" style="font-weight:700">{it.p.sector}</span><span class="big">{it.code}<small>/{String(projects.filter((x) => x.category === it.p.category).length).padStart(2, '0')}</small></span></span>
               <h2 class="wide"><a href={`https://ayahassan.com/work/${it.p.slug}/`}>{it.p.title}</a></h2>
               {it.p.concept && <span class="tag">Concept exploration</span>}
               {it.p.summary && <p class="sum">{it.p.summary}</p>}

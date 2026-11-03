@@ -1,7 +1,7 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
-import { projects, imagesFor, drawingsFor, fileFor, disciplinesFor, projectNo, clientLogo, ordered, type Project } from '../../data/projects';
+import { projects, imagesFor, drawingsFor, fileFor, disciplinesFor, projectNo, sectionTotal, clientLogo, ordered, type Project } from '../../data/projects';
 import Scope from '../../components/Scope.astro';
 import { i18n, localize, place as placeOf } from '../../i18n';
 
@@ -40,7 +40,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
       <div class="veil"></div>
       <div class="wrap hi">
         <nav class="crumbs label" aria-label={t('Breadcrumb', 'مسار التصفح')}><a href={u('/work/')} class="link">{L.back} {t('All work', 'كل الأعمال')}</a></nav>
-        <div class="pno" aria-label={`${t('Project', 'مشروع')} ${no}`}><span class="label">{t('Project', 'مشروع')}</span><span class="big" dir="ltr">{no}<small>/{String(ordered.length).padStart(2, '0')}</small></span></div>
+        <div class="pno" aria-label={`${t('Project', 'مشروع')} ${no}`}><span class="label">{t('Project', 'مشروع')}</span><span class="big" dir="ltr">{no}<small>/{sectionTotal(p.slug)}</small></span></div>
         <h1 class="display-xl lines"><span class="ln"><span>{p.title}</span></span></h1>
         <div class="hmeta label"><span>{place}</span><span>{disc} · {p.sector}</span>{p.concept && <span class="tag">{t('Concept exploration', 'استكشاف مبدئي')}</span>}</div>
       </div>
