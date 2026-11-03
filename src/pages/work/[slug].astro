@@ -44,6 +44,12 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
 
     <!-- 02 title block -->
     <section class="wrap tb">
+      {(p.role || p.team) && (
+        <dl class="block rt">
+          {p.role && <div><dt class="label">{t('My role', 'دوري')}</dt><dd>{L.ar ? (p.roleAr ?? p.role) : p.role}</dd></div>}
+          {p.team && <div><dt class="label">{t('Team size', 'حجم الفريق')}</dt><dd>{p.team}</dd></div>}
+        </dl>
+      )}
       <dl class="block">
         <div><dt class="label">{t('Location', 'الموقع')}</dt><dd>{place}</dd></div>
         <div><dt class="label">{t('Discipline', 'التخصص')}</dt><dd>{disc} · {p.sector}</dd></div>
@@ -192,6 +198,10 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
   .block { margin: 0; display: grid; grid-template-columns: 1.3fr 1.3fr 1.1fr 1.3fr .7fr; border-bottom: 1px solid var(--rule); }
   .block div { padding: 20px 18px 20px 0; border-right: 1px solid var(--rule); display: grid; gap: 6px; align-content: start; }
   .block div + div { padding-left: 18px; }
+  .block.rt { grid-template-columns: 4fr 1fr; }
+  .block.rt div:last-child { border-right: 0; }
+  .block.rt div:only-child { grid-column: 1 / -1; }
+  .block.rt dd { font-size: 17px; }
   .block .wide { grid-column: 1 / -1; border-top: 1px solid var(--rule); border-right: 0; padding-left: 0 !important; }
   .block div:nth-child(5) { border-right: 0; }
   dt { color: var(--muted); font-size: 11.5px; }
