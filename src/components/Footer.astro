@@ -21,7 +21,7 @@ const L = i18n(Astro.url);
         <li class="reveal"><a href={L.u('/services/')}><span>{L.t('Services', 'الخدمات')}</span></a></li>
         <li class="reveal"><a href={L.u('/contact/')}><span>{L.t('Contact', 'تواصل')}</span></a></li>
       </ul></div>
-      <div><p class="label muted">{L.t('Follow & message', 'تابعني وراسلني')}</p><Social /><ul class="cv"><li><a href="/Aya_Hassan_CV.pdf"><span>{L.t('Curriculum vitae', 'السيرة الذاتية')}</span> <i aria-hidden="true">↓</i></a></li></ul></div>
+      <div><p class="label muted">{L.t('Follow & message', 'تابعني وراسلني')}</p><Social /><ul class="cv"><li><a href={L.u("/cv/")}><span>{L.t('Curriculum vitae', 'السيرة الذاتية')}</span> <i aria-hidden="true">↓</i></a></li></ul></div>
       <div><p class="label muted">{L.t('Based in', 'المقر')}</p><p class="v">{L.t('Cairo, Egypt', 'القاهرة، مصر')}</p></div>
       <button type="button" class="top" data-top aria-label={L.t('Back to top', 'العودة إلى الأعلى')}><span aria-hidden="true">↑</span></button>
     </div>

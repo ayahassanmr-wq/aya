@@ -23,7 +23,8 @@ const { t } = L;
       </select><span class="arr" aria-hidden="true">↓</span></div>
     <div class="row"><span class="label muted">{t('Email', 'البريد')}</span><a href={`mailto:${contact.email}`} class="v link" id="em">{contact.email}</a><button type="button" class="btn copy" data-copy="em" data-done={t('Copied', 'تم النسخ')}>{t('Copy', 'انسخ')}</button></div>
     <div class="row"><span class="label muted">{t('Social', 'التواصل')}</span><Social size="l" /><span></span></div>
-    <div class="row"><span class="label muted">CV</span><a href="/Aya_Hassan_CV.pdf" class="v link">{t('Download PDF', 'حمّل ملف PDF')}</a><span class="arr">↓</span></div>
+    <div class="row"><span class="label muted">CV</span><a href={L.u('/cv/#cv')} class="v link">{t('View or download', 'اعرض أو حمّل')}</a><span class="arr">{L.next}</span></div>
+    <div class="row"><span class="label muted">{t('Portfolio', 'ملف الأعمال')}</span><a href={L.u('/cv/#portfolio')} class="v link">{t('View or download', 'اعرض أو حمّل')}</a><span class="arr">{L.next}</span></div>
   </section>
 
   <Reel rows={[['misr-italia-hilltop', 'sabic-hq', 'neom-oxagon', 'arches-restaurant', 'bmw-showroom', 'tech-park', 'linah-farms'].map((s) => cover(s)!)]} />

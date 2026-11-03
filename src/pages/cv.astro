@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { imagesFor } from '../data/projects';
+import { i18n } from '../i18n';
+const L = i18n(Astro.url);
+const { t } = L;
+const docs = [
+  { id: 'cv', file: '/Aya_Hassan_CV.pdf', t: t('CV', 'السيرة الذاتية'), d: t('Two pages: my roles, studios and the projects I carried at each.', 'صفحتان: أدواري والاستوديوهات التي عملت بها والمشاريع التي حملتها في كلٍّ منها.'), meta: 'PDF · 2 pp' },
+  { id: 'portfolio', file: '/Aya_Hassan_Portfolio.pdf', t: t('Portfolio', 'ملف الأعمال'), d: t('Every project, numbered as on this site, with renders and drawing sets.', 'كل المشاريع، مرقّمة كما في هذا الموقع، مع الصور ومجموعات الرسومات.'), meta: 'PDF · ~30 MB' },
+];
+---
+<Base title={t('CV & portfolio', 'السيرة الذاتية وملف الأعمال')} description={t('Aya Hassan’s CV and portfolio: view them here or download the PDFs.', 'السيرة الذاتية وملف أعمال آية حسن: اعرضهما هنا أو حمّل ملفات PDF.')}>
+  <PageHero images={[imagesFor('sabic-hq')[1], imagesFor('misr-italia-hilltop')[0]]} alt="" meta={L.ar ? [['متاحة', 'دوام كامل · مشاريع حرة'], ['المقر', 'القاهرة · عن بُعد · الانتقال']] : [['Open to', 'Full-time · Freelance'], ['Based', 'Cairo · Remote · Relocation']]}>
+    <h1 class="display-xl lines"><span class="ln"><span>{t('CV &', 'السيرة')}</span></span><span class="ln"><span><em>{t('portfolio.', 'وملف الأعمال.')}</em></span></span></h1>
+    <p class="lede">{t('Hiring? Everything you need is here. View it on the page or download the PDF.', 'تبحث عن مصممة؟ كل ما تحتاجه هنا. اعرضه على الصفحة أو حمّل ملف PDF.')}</p>
+  </PageHero>
+
+  <section class="wrap docs">
+    {docs.map((d, i) => (
+      <article class="doc" id={d.id}>
+        <div class="dh">
+          <span class="dno" dir="ltr">{String(i + 1).padStart(2, '0')}</span>
+          <div class="dt"><h2 class="display-m">{d.t}</h2><p>{d.d}</p><span class="label muted">{d.meta}</span></div>
+          <div class="da">
+            <button type="button" class="btn solid" data-view={d.id} aria-expanded="false">{t('View here', 'اعرض هنا')} <span class="arr">↓</span></button>
+            <a href={d.file} class="btn ghost" download>{t('Download', 'تحميل')} <span class="arr">↓</span></a>
+            <a href={d.file} class="label link" target="_blank" rel="noopener">{t('Open in new tab ↗', 'افتح في تبويب جديد ↗')}</a>
+          </div>
+        </div>
+        <div class="viewer" data-viewer={d.id} hidden><iframe title={d.t} data-src={`${d.file}#view=FitH`} loading="lazy"></iframe></div>
+      </article>
+    ))}
+  </section>
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((b) => b.addEventListener('click', () => {
+    const v = document.querySelector<HTMLElement>(`[data-viewer="${b.dataset.view}"]`)!;
+    const f = v.querySelector('iframe')!;
+    if (!f.src) f.src = f.dataset.src!;
+    const open = v.hidden; v.hidden = !open; b.setAttribute('aria-expanded', String(open));
+    if (open) v.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
+</script>
+
+<style>
+  .docs { padding-block: clamp(64px, 8vw, 120px); }
+  .doc { border-top: 1px solid var(--rule); }
+  .doc:last-child { border-bottom: 1px solid var(--rule); }
+  .dh { display: grid; grid-template-columns: auto 1fr auto; gap: clamp(20px, 3vw, 48px); align-items: center; padding-block: clamp(28px, 3.4vw, 48px); }
+  .dno { font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(44px, 5vw, 80px); line-height: .85; letter-spacing: -.03em; color: var(--ox); }
+  .dt p { margin: 8px 0 6px; color: var(--ink-2); }
+  .da { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: flex-end; }
+  .viewer { padding-bottom: clamp(28px, 3vw, 44px); }
+  .viewer iframe { width: 100%; height: 85vh; border: 1px solid var(--rule); border-radius: var(--r-2, 10px); background: var(--ow); }
+  @media (max-width: 800px) { .dh { grid-template-columns: 1fr; } .da { justify-content: flex-start; } }
+</style>

@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Reel from '../components/Reel.astro';
-import { projects, featured, countries, imagesFor, cover } from '../data/projects';
+import { projects, featured, countries, imagesFor, cover, projectNo } from '../data/projects';
 import { getImage } from 'astro:assets';
 import { i18n, localize, place as placeOf } from '../i18n';
 import { placeAr } from '../data/projects-ar';
@@ -31,7 +31,7 @@ const feats = await Promise.all(featured.slice(0, 6).map(async (p) => {
   return { p, srcset: set.join(', '), src: set[1].split(' ')[0], w: img.width, h: img.height };
 }));
 const services = [
-  { t: t('Full-time role', 'وظيفة بدوام كامل'), slug: 'stc-hq', href: '/Aya_Hassan_CV.pdf' },
+  { t: t('Full-time role', 'وظيفة بدوام كامل'), slug: 'stc-hq', href: u('/cv/') },
   { t: t('Full project', 'مشروع كامل'), slug: 'misr-italia-hilltop', href: u('/contact/?type=project') },
   { t: t('Studio support', 'دعم للاستوديوهات'), slug: 'sallan-creek', href: u('/contact/?type=studio') },
 ];
@@ -91,7 +91,8 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
       <div class="bottom">
         <div class="ctas">
           <a href={u('/contact/')} class="btn solid magnet">{t('Start a project', 'ابدأ مشروعًا')} <span class="arr">{L.next}</span></a>
-          <a href="/Aya_Hassan_CV.pdf" class="btn ghost glass-dark" target="_blank" rel="noopener">{t('Hiring? See CV', 'تبحث عن مصممة؟ اطّلع على السيرة الذاتية')} <span class="arr">{L.next}</span></a>
+          <a href={u('/work/')} class="btn ghost glass-dark">{t('View the work', 'شاهد الأعمال')} <span class="arr">{L.next}</span></a>
+          <a href={u('/cv/')} class="btn ghost glass-dark">{t('Hiring? See CV', 'تبحث عن مصممة؟ اطّلع على السيرة الذاتية')} <span class="arr">{L.next}</span></a>
         </div>
         <div class="ctrl" role="group" aria-label={t('Featured projects', 'مشاريع مميزة')}>
           <div class="bars">{slides.map((x, i) => <button type="button" class:list={['bb', { on: i === 0 }]} data-go={i} aria-label={`${t('Show', 'اعرض')} ${loc(x.p).title}`}><i></i></button>)}</div>
@@ -220,7 +221,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
               <img srcset={x.srcset} src={x.src} sizes="(min-width: 1840px) 1700px, 92vw" width={x.w} height={x.h} alt={`${loc(x.p).title}, ${place(x.p)}`} loading="lazy" decoding="async" />
               {x.p.concept && <span class="tag flag">{t('Concept exploration', 'استكشاف مبدئي')}</span>}
               <div class="scm glass-dark">
-                <div><h3>{loc(x.p).title}</h3><p class="label">{place(x.p)} · {loc(x.p).sector}</p></div>
+                <div><span class="fno" dir="ltr">{projectNo(x.p.slug)}</span><h3>{loc(x.p).title}</h3><p class="label">{place(x.p)} · {loc(x.p).sector}</p></div>
                 <span class="label go">{t('View project', 'اعرض المشروع')} <span class="arr">{L.next}</span></span>
               </div>
             </div>
@@ -312,6 +313,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   .dimn i:first-child::before { left: 0; } .dimn i:last-child::before { right: 0; }
   .dimn span { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; white-space: nowrap; }
   .nm-h { font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(44px, 9.6vw, 176px); line-height: .86; letter-spacing: -.02em; white-space: nowrap; max-width: none; }
+  .fno { display: block; font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(30px, 3vw, 48px); line-height: .85; letter-spacing: -.03em; color: var(--sand); margin-bottom: 6px; }
   .status { margin: clamp(12px, 1.4vw, 20px) 0 0; color: var(--sand); font-size: 11px; letter-spacing: .2em; }
   .cells { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr; gap: clamp(16px, 2.4vw, 40px); margin: clamp(16px, 2vw, 28px) 0 0; }
   .c { margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
@@ -328,7 +330,8 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   .hl em { font-style: italic; color: var(--sand); padding-right: .04em; }
   .bottom { grid-row: 4; display: grid; grid-template-columns: auto 1fr auto; gap: 20px 32px; align-items: end; padding-top: 20px; border-top: 1px solid var(--rule-light); animation: up .9s .2s var(--ease) both; }
   @keyframes up { from { opacity: 0; transform: translateY(14px); } }
-  .ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+  .ctas { display: flex; gap: 10px; flex-wrap: nowrap; }
+  .ctas .btn { white-space: nowrap; }
   .btn.solid { background: var(--ow); color: var(--ink); border-color: var(--ow); }
   .btn.solid::before { background: var(--ox) !important; }
   .btn.solid:hover { color: var(--ow) !important; border-color: var(--ox) !important; }

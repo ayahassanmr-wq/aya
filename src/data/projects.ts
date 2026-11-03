@@ -223,13 +223,18 @@ export const contact = {
   whatsapp: 'https://wa.me/201115318509', // the number is never printed on the site
 };
 
-/* ---------- project number: one canonical number per project, used on the site and in the PDF portfolio.
-   Order = Architecture then Interiors, featured first, then newest. */
-const byOrder = (a: Project, b: Project) => +(b.sector === 'Masterplan') - +(a.sector === 'Masterplan') || +!!b.featured - +!!a.featured || +(b.year ?? 0) - +(a.year ?? 0);
-export const ordered: Project[] = [
-  ...projects.filter((p) => p.category === 'architecture').sort(byOrder),
-  ...projects.filter((p) => p.category === 'interiors').sort(byOrder),
-];
+/* ---------- project number: one canonical order, used by the work page, project pages and the PDF portfolio.
+   Discipline (Architecture, Interiors) → category (Masterplan first, then by size) → featured first → newest. */
+const byOrder = (a: Project, b: Project) => +!!b.featured - +!!a.featured || +(b.year ?? 0) - +(a.year ?? 0);
+export const sectorGroups = (list: Project[]) => {
+  const m = new Map<string, Project[]>();
+  list.forEach((p) => m.set(p.sector, [...(m.get(p.sector) ?? []), p]));
+  return [...m.entries()]
+    .sort((a, b) => (+(b[0] === 'Masterplan') - +(a[0] === 'Masterplan')) || b[1].length - a[1].length || a[0].localeCompare(b[0]))
+    .map(([sector, l]) => ({ sector, list: [...l].sort(byOrder) }));
+};
+export const disciplineOrder: Project['category'][] = ['architecture', 'interiors'];
+export const ordered: Project[] = disciplineOrder.flatMap((c) => sectorGroups(projects.filter((p) => p.category === c)).flatMap((g) => g.list));
 export const projectNo = (slug: string) => String(ordered.findIndex((p) => p.slug === slug) + 1).padStart(2, '0');
 
 /* ---------- client logos (public/clients/<id>.png, official files supplied by Aya) */

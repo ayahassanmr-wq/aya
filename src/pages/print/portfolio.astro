@@ -4,18 +4,17 @@
 import '@fontsource-variable/archivo/wdth.css';
 import '@fontsource-variable/archivo/wdth-italic.css';
 import { getImage } from 'astro:assets';
-import { projects, imagesFor, drawingsFor, disciplinesFor, countries, contact, projectNo, clientLogo, type Project } from '../../data/projects';
+import { projects, imagesFor, drawingsFor, disciplinesFor, countries, contact, projectNo, clientLogo, sectorGroups, type Project } from '../../data/projects';
 
 const jpg = async (src: any, w = 1800) => (src ? (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: 74 })).src : '');
 const practice = (p: Project) => p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent';
 const place = (p: Project) => p.location === p.country || p.location.includes(p.country) ? p.location : `${p.location}, ${p.country}`;
 
+// same order and numbers as the website: discipline → category → project
 const groups: [string, string, Project[]][] = [
-  ['01', 'Architecture', projects.filter((p) => p.category === 'architecture')],
-  ['02', 'Interiors', projects.filter((p) => p.category === 'interiors')],
+  ['01', 'Architecture', sectorGroups(projects.filter((p) => p.category === 'architecture')).flatMap((g) => g.list)],
+  ['02', 'Interiors', sectorGroups(projects.filter((p) => p.category === 'interiors')).flatMap((g) => g.list)],
 ];
-const featuredFirst = (a: Project, b: Project) => +!!b.featured - +!!a.featured || +(b.year ?? 0) - +(a.year ?? 0);
-groups.forEach((g) => g[2].sort(featuredFirst));
 
 let page = 4; // cover, about, clients, index come first
 let sheet = 0;
@@ -126,6 +125,7 @@ const year = new Date().getFullYear();
   .ix h3 { margin: 0 0 3mm; font-size: 8pt; letter-spacing: .22em; text-transform: uppercase; color: var(--ox); font-weight: 600; }
   .ix ol { list-style: none; margin: 0; padding: 0; }
   .ix li { display: grid; grid-template-columns: 11mm 1fr auto 10mm; gap: 3mm; align-items: baseline; padding: 1.55mm 0; border-top: 1px solid var(--rule); font-size: 8.4pt; }
+  .ix li.sh { display: block; padding: 3mm 0 1mm; border-top: 0; font-weight: 800; font-stretch: 125%; font-size: 7.6pt; letter-spacing: .14em; text-transform: uppercase; color: var(--ox); }
   .ix li .c { color: var(--mut); font-size: 7pt; } .ix li .m { color: var(--mut); font-size: 7pt; } .ix li .n { text-align: right; font-weight: 600; }
 
   /* section divider */
@@ -246,7 +246,7 @@ const year = new Date().getFullYear();
     {sections.map((s) => (
       <div>
         <h3>{s.n} · {s.name}</h3>
-        <ol>{s.items.map((it) => <li><span class="c">{it.code}</span><a href={`#p${it.code}`}>{it.p.title}</a><span class="m">{it.p.location} · {it.p.year}</span><span class="n">{String((it as any).page).padStart(2, '0')}</span></li>)}</ol>
+        <ol>{s.items.map((it, k) => <>{(k === 0 || s.items[k - 1].p.sector !== it.p.sector) && <li class="sh">{it.p.sector}</li>}<li><span class="c">{it.code}</span><a href={`#p${it.code}`}>{it.p.title}</a><span class="m">{it.p.location} · {it.p.year}</span><span class="n">{String((it as any).page).padStart(2, '0')}</span></li></>)}</ol>
       </div>
     ))}
   </div>
@@ -267,7 +267,7 @@ const year = new Date().getFullYear();
           <section class="pg op" id={`p${it.code}`}>
             <div class="im"><img class="grade" src={it.cover} alt="" /></div>
             <div class="side">
-              <span class="pno"><span class="lab mut">Project</span><span class="big">{it.code}<small>/{String(projects.length).padStart(2, '0')}</small></span></span>
+              <span class="pno"><span class="lab ox" style="font-weight:700">{it.p.sector}</span><span class="big">{it.code}<small>/{String(projects.length).padStart(2, '0')}</small></span></span>
               <h2 class="wide"><a href={`https://ayahassan.com/work/${it.p.slug}/`}>{it.p.title}</a></h2>
               {it.p.concept && <span class="tag">Concept exploration</span>}
               {it.p.summary && <p class="sum">{it.p.summary}</p>}
