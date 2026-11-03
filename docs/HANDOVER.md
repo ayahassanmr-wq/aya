@@ -54,7 +54,7 @@ Status tags used throughout: **✅ DECIDED · ❓ NEEDS DECISION · ⏸ ON HOLD 
 
 **Core idea:** one person carries a project from idea to model to image to drawing set. Tagline: **"From concept to *conviction*."** Supporting line: *"Idea, model, image and drawing set — carried by one hand."*
 
-**Tone:** confident, precise, quiet luxury; architectural vocabulary (sheets, title blocks, dimensions); never salesy.
+**Tone:** confident, precise, quiet luxury; architectural vocabulary (sheets, title blocks, dimensions); never salesy. **First person everywhere** (site EN + AR, CV, portfolio) — decided 3 Nov. Full rules: `BRAND_VOICE.md` in the repo root.
 
 ### 2.1 Typography
 - **One typeface only: Archivo** (variable, with width axis) for Latin. Contrast comes from weight and width, never a second font.
@@ -296,6 +296,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | First person in all copy (EN + AR); BRAND_VOICE.md is the copy rulebook | Aya |
 | 2026-11-03 | Sallan Creek (DHIFAF) added; masterplan group first; Sphinx out of BIM; Mediterranean House removed | Aya request |
 | 2026-11-03 | Staff Housing Community published (anonymised El Gouna workers housing), featured No. 02 | Aya approved preview |
 | 2026-11-03 | East Vale = premium home only; no interiors | Aya: only designed the premium home |

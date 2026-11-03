@@ -8,7 +8,7 @@ Instructions for anyone (human or AI) editing this website. Follow these rules f
 
 Motto (keep): From concept to conviction.
 
-Proof points to draw from: NEOM, SABIC HQ, stc HQ, SODIC, Orascom, Misr Italia, BMW · 28 selected projects · 5 countries · 3 studios · since 2020 · Revit to IFC.
+Proof points to draw from: NEOM, SABIC HQ, stc HQ, SODIC, Orascom, Misr Italia, BMW · 28 selected projects · 5 countries (Saudi Arabia, Egypt, India, South Sudan, Oman) · 3 studios · since 2020 · Revit to IFC.
 
 ## Audiences — every page must serve all three
 
@@ -26,7 +26,7 @@ Proof points to draw from: NEOM, SABIC HQ, stc HQ, SODIC, Orascom, Misr Italia, 
 4. **Specific over general.** Numbers, names, places.
 5. **Warm in direct contact** (contact page, form confirmations): friendly, ends with a next step.
 
-- Home page: first person. About page: third person.
+- **First person everywhere** (Home, About, Services, project pages, CV, portfolio): "I", "my". Arabic in first person too. Only SEO meta descriptions may name "Aya Hassan" in the third person.
 - Use: concept, approved, buildable, convincing, carried, scale, craft, clear idea.
 - Never use: passionate, stunning, unique, creative solutions, detail-oriented, dynamic, award-worthy.
 - Keep the existing architectural details (Sheet A-000, "Concept approved", etc.) — they are the signature.
@@ -36,7 +36,7 @@ Proof points to draw from: NEOM, SABIC HQ, stc HQ, SODIC, Orascom, Misr Italia, 
 
 - [ ] Hero: add availability line under the name.
 - [ ] Hero: add second button "Hiring? See CV →" (links to /Aya_Hassan_CV.pdf) next to "Start a project →".
-- [ ] Fix country count: meta description says "six countries", stats say 5. Use **5** everywhere (Saudi Arabia, Egypt, India, South Sudan, Lebanon).
+- [ ] Fix country count: meta description says "six countries", stats say 5. Use **5** everywhere (Saudi Arabia, Egypt, India, South Sudan, Oman).
 - [ ] About: replace bio opening (copy below) so studio moves read as project-based.
 - [ ] Services: rename section to "Ways to work with me" with three options (copy below).
 - [ ] Every project page: add "My role" and "Team size" fields at the top (leave values as TODO for Aya to fill — do not invent them).
@@ -58,9 +58,9 @@ Proof points to draw from: NEOM, SABIC HQ, stc HQ, SODIC, Orascom, Misr Italia, 
 I turn early ideas into concepts clients approve, from public buildings to corporate headquarters and private homes. Idea, model, image and drawing set, carried by one hand.
 
 **About — bio opening**
-Aya is an architect and interior designer working at the concept stage. Since 2020 she has moved between three studios project by project, following the work: NEOM public buildings, the SABIC and stc headquarters in Riyadh, and residential developments for SODIC, Orascom and Misr Italia.
+I'm an architect and interior designer working at the concept stage. Since 2020 I have moved between three studios project by project, following the work: NEOM public buildings, the SABIC and stc headquarters in Riyadh, and residential developments for SODIC, Orascom and Misr Italia.
 
-She is open to full-time design architect roles and to freelance commissions.
+I'm open to full-time design architect roles and to freelance commissions.
 
 **Services — Ways to work with me**
 1. **Full-time role.** Design architect or senior designer in a studio or developer team. Cairo, remote, or relocation to the Gulf. → See CV
@@ -78,9 +78,9 @@ Have a concept, or a role to fill? Let's make it convincing.
 - الأزرار: ابدأ مشروعك ← · تبحث عن مصممة؟ اطّلع على السيرة الذاتية ←
 
 **نبذة**
-آية مهندسة معمارية ومصممة داخلية متخصصة في مرحلة التصميم المبدئي. منذ عام 2020 تنقّلت بين ثلاثة استوديوهات مع كل مشروع، من مباني الخدمات العامة في نيوم، إلى المقرات الرئيسية لسابك وstc في الرياض، وصولاً إلى مشروعات سكنية لسوديك وأوراسكوم ومصر إيطاليا.
+أنا مهندسة معمارية ومصممة داخلية متخصصة في مرحلة التصميم المبدئي. منذ عام 2020 تنقّلتُ بين ثلاثة استوديوهات مع كل مشروع، من مباني الخدمات العامة في نيوم، إلى المقرات الرئيسية لسابك وstc في الرياض، وصولاً إلى مشروعات سكنية لسوديك وأوراسكوم ومصر إيطاليا.
 
-متاحة الآن لوظائف مهندسة تصميم معماري، وللمشاريع الحرة.
+أنا متاحة الآن لوظائف مهندسة تصميم معماري، وللمشاريع الحرة.
 
 **طرق التعاون**
 1. **وظيفة بدوام كامل.** مهندسة تصميم أو مصممة أولى ضمن استوديو أو فريق مطوّر عقاري.
