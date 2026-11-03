@@ -1,7 +1,7 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
-import { projects, imagesFor, drawingsFor, fileFor, disciplinesFor, type Project } from '../../data/projects';
+import { projects, imagesFor, drawingsFor, fileFor, disciplinesFor, projectNo, clientLogo, ordered, type Project } from '../../data/projects';
 import Scope from '../../components/Scope.astro';
 import { i18n, localize, place as placeOf } from '../../i18n';
 
@@ -19,6 +19,8 @@ const bim = disciplinesFor(p).has('BIM');
 const process = (p.process ?? []).map(([label, name]) => ({ label, img: fileFor(p.slug, name) })).filter((x) => x.img);
 const nextCover = imagesFor(next.slug)[0];
 const place = placeOf(p);
+const no = projectNo(p.slug);
+const logo = clientLogo(p.slug);
 // full-size sources for the lightbox
 const all = [hero, ...rest, ...drawings].filter(Boolean);
 const big = await Promise.all(all.map(async (m) => (await getImage({ src: m, width: 2000, format: 'webp' })).src));
@@ -34,6 +36,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
       <div class="veil"></div>
       <div class="wrap hi">
         <nav class="crumbs label" aria-label={t('Breadcrumb', 'مسار التصفح')}><a href={u('/work/')} class="link">{L.back} {t('All work', 'كل الأعمال')}</a></nav>
+        <div class="pno" aria-label={`${t('Project', 'مشروع')} ${no}`}><span class="label">{t('Project', 'مشروع')}</span><span class="big" dir="ltr">{no}<small>/{String(ordered.length).padStart(2, '0')}</small></span></div>
         <h1 class="display-xl lines"><span class="ln"><span>{p.title}</span></span></h1>
         <div class="hmeta label"><span>{place}</span><span>{disc} · {p.sector}</span>{p.concept && <span class="tag">{t('Concept exploration', 'استكشاف مبدئي')}</span>}</div>
       </div>
@@ -45,7 +48,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
         <div><dt class="label">{t('Location', 'الموقع')}</dt><dd>{place}</dd></div>
         <div><dt class="label">{t('Discipline', 'التخصص')}</dt><dd>{disc} · {p.sector}</dd></div>
         <div><dt class="label">{t('Practice', 'المكتب')}</dt><dd>{L.ar ? ({ 'ZFP': 'زهير فايز ومشاركوه · ZFP', 'Cosmos Studio': 'كوزموس ستوديو', 'Innovation Design Studio': 'إنوفيشن ديزاين ستوديو' } as Record<string, string>)[p.practice ?? ''] ?? 'عمل مستقل' : p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent / portfolio'}</dd></div>
-        <div><dt class="label">{t('Client', 'العميل')}</dt><dd>{p.client ?? '—'}</dd></div>
+        <div class="cli"><dt class="label">{t('Client', 'العميل')}</dt><dd>{logo && <img src={logo} alt="" class="clogo" />}<span>{p.client ?? '—'}</span></dd></div>
         <div><dt class="label">{t('Year', 'السنة')}</dt><dd>{p.year ?? '—'}</dd></div>
         <div class="wide"><dt class="label">{t('Scope', 'النطاق')}</dt><dd class="sc"><Scope p={p} variant="full" />{!L.ar && <span class="det">{p.scope.join(' · ')}</span>}{p.scopeNote && <span class="det note">{L.ar ? (p.scopeNoteAr ?? p.scopeNote) : p.scopeNote}</span>}</dd></div>
       </dl>
@@ -180,6 +183,11 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
   h1 { max-width: 14ch; }
   .hmeta { font-size: 12px; display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: center; padding-top: 18px; border-top: 1px solid var(--rule-light); opacity: .9; }
 
+  .pno { display: flex; flex-direction: column; gap: 6px; color: var(--sand); }
+  .pno .big { font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(72px, 11vw, 190px); line-height: .8; letter-spacing: -.03em; color: var(--ow); }
+  .pno small { font-size: .22em; font-weight: 500; letter-spacing: .1em; color: var(--sand); margin-inline-start: .4em; vertical-align: top; }
+  .cli dd { display: grid; gap: 10px; justify-items: start; }
+  .clogo { height: 38px; width: auto; max-width: 150px; object-fit: contain; }
   .tb { padding-block: 0; }
   .block { margin: 0; display: grid; grid-template-columns: 1.3fr 1.3fr 1.1fr 1.3fr .7fr; border-bottom: 1px solid var(--rule); }
   .block div { padding: 20px 18px 20px 0; border-right: 1px solid var(--rule); display: grid; gap: 6px; align-content: start; }

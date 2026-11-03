@@ -4,7 +4,7 @@
 import '@fontsource-variable/archivo/wdth.css';
 import '@fontsource-variable/archivo/wdth-italic.css';
 import { getImage } from 'astro:assets';
-import { projects, imagesFor, drawingsFor, disciplinesFor, countries, contact, type Project } from '../../data/projects';
+import { projects, imagesFor, drawingsFor, disciplinesFor, countries, contact, projectNo, clientLogo, type Project } from '../../data/projects';
 
 const jpg = async (src: any, w = 1800) => (src ? (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: 74 })).src : '');
 const practice = (p: Project) => p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent';
@@ -24,7 +24,7 @@ const sections = await Promise.all(groups.map(async ([n, name, list]) => ({
   items: await Promise.all(list.map(async (p, i) => {
     const imgs = imagesFor(p.slug), dr = drawingsFor(p.slug);
     return {
-      p, code: `${n}.${String(i + 1).padStart(2, '0')}`,
+      p, code: projectNo(p.slug), logo: clientLogo(p.slug),
       cover: await jpg(imgs[0], 2000),
       rest: await Promise.all(imgs.slice(1, 5).map((x) => jpg(x, 1400))),
       draw: await Promise.all(dr.slice(0, 4).map((x) => jpg(x, 1400))),
@@ -135,8 +135,12 @@ const year = new Date().getFullYear();
   .op { display: grid; grid-template-columns: 1fr 92mm; }
   .op .im { height: 210mm; overflow: hidden; } .op .im img { width: 100%; height: 100%; object-fit: cover; }
   .op .side { padding: 12mm 11mm 22mm; display: flex; flex-direction: column; gap: 5mm; }
+  .pno { display: flex; flex-direction: column; gap: 1mm; }
+  .pno .big { font-weight: 800; font-stretch: 125%; font-size: 52pt; line-height: .8; letter-spacing: -.03em; color: var(--ox); }
+  .pno small { font-size: 10pt; font-weight: 500; color: var(--mut); margin-left: 1.5mm; vertical-align: top; letter-spacing: .08em; }
+  .blk .cl { display: flex; align-items: center; gap: 3mm; } .blk .cl img { height: 9mm; width: auto; max-width: 30mm; object-fit: contain; }
   .code { font-size: 9pt; font-weight: 600; letter-spacing: .12em; color: var(--ox); }
-  .op h2 { margin: 0; font-size: 25pt; line-height: .98; font-stretch: 112%; }
+  .op h2 { margin: 0; font-size: 22pt; line-height: .98; font-stretch: 112%; }
   .op .sum { font-size: 9.2pt; line-height: 1.5; margin: 0; }
   .blk { margin: auto 0 0; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule); }
   .blk div { padding: 2.6mm 0; border-bottom: 1px solid var(--rule); }
@@ -252,15 +256,15 @@ const year = new Date().getFullYear();
           <section class="pg op">
             <div class="im"><img class="grade" src={it.cover} alt="" /></div>
             <div class="side">
-              <span class="code">{it.code}</span>
+              <span class="pno"><span class="lab mut">Project</span><span class="big">{it.code}<small>/{String(projects.length).padStart(2, '0')}</small></span></span>
               <h2 class="wide">{it.p.title}</h2>
               {it.p.concept && <span class="tag">Concept exploration</span>}
               {it.p.summary && <p class="sum">{it.p.summary}</p>}
               <dl class="blk">
-                <div><dt>Client</dt><dd>{it.p.client}</dd></div>
+                <div class="w"><dt>Client</dt><dd class="cl">{it.logo && <img src={it.logo} alt="" />}<span>{it.p.client}</span></dd></div>
                 <div><dt>Year</dt><dd>{it.p.year}</dd></div>
-                <div><dt>Location</dt><dd>{place(it.p)}</dd></div>
                 <div><dt>Sector</dt><dd>{it.p.sector}</dd></div>
+                <div class="w"><dt>Location</dt><dd>{place(it.p)}</dd></div>
                 <div class="w"><dt>Practice</dt><dd>{practice(it.p)}</dd></div>
                 <div class="w"><dt>Scope</dt><dd><span class="disc">{it.disc.map((d) => <span>{d}</span>)}</span>{it.p.scopeNote && <span class="mut" style="display:block;margin-top:1.5mm;font-size:7.4pt">{it.p.scopeNote}</span>}</dd></div>
               </dl>
@@ -270,13 +274,13 @@ const year = new Date().getFullYear();
           {it.rest.length > 0 && (
             <section class="pg">
               <div class:list={['gal', `n${it.rest.length}`]}>{it.rest.map((r) => <img class="grade" src={r} alt="" />)}</div>
-              <div class="foot"><span class="lab"><span class="ox">{it.code}</span> · {it.p.title}</span><span class="lab mut">{String(pg0 + 1).padStart(2, '0')} / {total}</span></div>
+              <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {it.p.title}</span><span class="lab mut">{String(pg0 + 1).padStart(2, '0')} / {total}</span></div>
             </section>
           )}
           {it.draw.length > 0 && (
             <section class="pg dark">
               <div class:list={['drw', `n${it.draw.length}`]}>{it.draw.map((d, k) => <figure><img src={d} alt="" /><figcaption><span>{it.p.captions?.[k] ?? `Drawing ${String(k + 1).padStart(2, '0')}`}</span><span>{next()}</span></figcaption></figure>)}</div>
-              <div class="foot"><span class="lab"><span style="color:var(--sand)">{it.code}</span> · {it.p.title} · Drawings</span><span class="lab mut">{String(pg0 + 1 + (it.rest.length ? 1 : 0)).padStart(2, '0')} / {total}</span></div>
+              <div class="foot"><span class="lab"><span style="color:var(--sand);font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {it.p.title} · Drawings</span><span class="lab mut">{String(pg0 + 1 + (it.rest.length ? 1 : 0)).padStart(2, '0')} / {total}</span></div>
             </section>
           )}
         </>

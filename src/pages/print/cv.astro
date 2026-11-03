@@ -8,22 +8,26 @@ import { projects, imagesFor, contact } from '../../data/projects';
 const jpg = async (src: any, w = 900) => (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: 74 })).src;
 const grid = await Promise.all(['sodic-ogami', 'travco-west-island', 'fifth-square', 'chery-showroom', 'jotun-office', 'hb-fuller'].map((s) => jpg(imagesFor(s)[0], 700)));
 const strip = await Promise.all(['misr-italia-hilltop', 'stc-hq', 'neom-oxagon', 'sabic-hq'].map((s) => jpg(imagesFor(s)[0])));
-const exp = [
+// [years, role, employer, highlights, projects grouped by type]. Projects marked * are CV-only (not on the website).
+const exp: [string, string, string, string[], [string, string[]][]][] = [
   ['2026 — now', 'Mid-senior Design Architect', 'Innovation Design Studio · Cairo', [
-    'Architectural concepts, 3D modelling and visuals for residential developments by SODIC, Orascom, Misr Italia and Travco on the North Coast and in Greater Cairo.',
-    'AI-assisted post-production and presentation material for developer approvals.']],
+    'Architectural concepts, 3D modelling and visuals for residential developments on the North Coast and in Greater Cairo, with AI-assisted post-production for developer approvals.'],
+    [['Architecture', ['Misr Italia Hilltop, Ras El Hekma', 'SODIC Ogami, Ras El Hekma', 'SODIC East Vale, New Cairo', 'Travco West Island, Almaza Bay', 'Orascom O West Midyard, 6th of October']]]],
   ['2025', 'Mid-senior Design Architect & Interior Designer', 'Cosmos Studio · Cairo', [
-    'Commercial and industrial architecture: Fifth Square (canopy design), Chery showroom & admin, NOATUM automotive terminal, Linah Farms, Mazeej hotel & housing redesign to code.',
-    'Developed projects through to coordinated Revit (BIM) drawing packages.']],
-  ['2024', 'Design Architect & Interior Designer', 'ZFP · Zuhair Fayez Partnership · Riyadh projects', [
-    'Headquarters interiors for SABIC and STC: design concepts, 3D modelling and visuals.',
-    'Material selection through site visits and vendor collaboration; FF&E sourced from suppliers worldwide.']],
-  ['2020 — 2023', 'Design Architect & Interior Designer', 'Cosmos Studio · Cairo', [
-    'BIM development for NEOM public service buildings; 3D modelling, animation and promotional content for NEOM Oxagon and Um Qasr Logistic City.',
-    'Interior concepts and schematic & IFC packages for Sphinx, HB Fuller, Jotun, Tech Park and BMW.']],
+    'Conceptual studies, 3D models, visuals and animation, developed through to coordinated Revit (BIM) drawing packages; design review and redesign to code.'],
+    [['Architecture', ['Fifth Square Commercial Complex, New Cairo (canopy design)', 'Chery Showroom & Admin, 6th of October', 'NOATUM Automotive Terminal, Ain Sokhna', 'Linah Farms Industrial & Admin, 6th of October', 'Mazeej Hotel & Housing, Giza']]]],
+  ['2024', 'Design Architect & Interior Designer', 'ZFP · Zuhair Fayez Partnership', [
+    'Design concepts, 3D modelling and visuals; material selection through site visits and vendor collaboration; FF&E sourced from suppliers worldwide.'],
+    [['Interiors', ['SABIC HQ Office Tower, Riyadh', 'STC HQ Office Tower, Riyadh']]]],
+  ['2020 — 2023', 'Design Architect & Interior Designer', 'Cosmos Studio · Concept Design Department', [
+    '3D modelling and animation for client communication and promotional content; Revit modelling and drafting.',
+    'Led BIM development for NEOM interior & architectural packages; 2D schematic packages, 3D animation and material selection for workplace interiors.'],
+    [['Architecture', ['NEOM Oxagon Public Service Buildings, KSA', 'Um Qasr Logistic City, Iraq', 'Juba Hotel & Resort, South Sudan', 'Zamalek Club, 6th of October', 'Sharm El Sheikh Tower Hotel', 'Estadat City Club Complexes, Egypt', 'Dry Port Buildings, 6th of October', 'SIAC Office Building, Fifth Settlement', 'One 90 Retail, Fifth Settlement']],
+     ['Interiors', ['Sphinx Business Building, Giza', 'HB Fuller Admin Building, 6th of October', 'Jotun Admin Building, 5th Settlement', 'Tech Park Admin Building', 'BMW Showroom, Cairo–Alex Road', 'NEOM Public Service Buildings (BIM), KSA', 'Misk Schools, NEOM (design review)']]]],
+  ['2022 — now', 'Independent practice', 'Freelance · private clients', [
+    'End-to-end design, modelling and rendering for private residences, workspaces and hospitality.'],
+    [['Architecture', ['Minimal Villa, Egypt', 'Mediterranean House, Lebanon (concept)', 'Blue Villa, KSA (concept)']], ['Interiors', ['Modern Residence, New Cairo', 'Zayed Residence, Sheikh Zayed', 'Suits Workspaces, India', 'Arches Restaurant, KSA']]]],
 ];
-const sel = ['misr-italia-hilltop', 'sodic-ogami', 'sodic-east-vale', 'travco-west-island', 'stc-hq', 'sabic-hq', 'neom-oxagon', 'fifth-square', 'chery-showroom', 'noatum-terminal', 'jotun-office', 'juba-resort']
-  .map((s) => projects.find((p) => p.slug === s)!).filter(Boolean);
 const skills = [
   ['Concept design', 'Massing, facades, interiors, FF&E and material palettes'],
   ['Visualization', 'Photoreal stills, animation, post-production, AI-assisted concepts'],
@@ -71,6 +75,7 @@ const tools = [
   .job { display: grid; grid-template-columns: 22mm 1fr; gap: 3mm; padding: 2.6mm 0; border-bottom: 1px solid var(--rule); }
   .job .y { font-weight: 600; color: var(--ox); }
   .job b { font-weight: 650; font-size: 9.4pt; display: block; }
+  .pl { margin: 1.2mm 0 0; font-size: 7.6pt; line-height: 1.45; } .pk { display: inline-block; min-width: 19mm; font-size: 6pt; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ox); }
   .job ul { margin: 1.4mm 0 0; padding-left: 3.4mm; } .job li { margin: .6mm 0; }
   .job li::marker { color: var(--ox); }
   .side p { margin: 0 0 2.6mm; }
@@ -105,8 +110,8 @@ const tools = [
       </section>
       <section>
         <h2>Experience</h2>
-        {exp.map(([y, r, o, pts]) => (
-          <div class="job"><span class="y">{y}</span><div><b>{r}</b><span class="mut">{o}</span><ul>{(pts as string[]).map((x) => <li>{x}</li>)}</ul></div></div>
+        {exp.slice(0, 3).map(([y, r, o, pts, pj]) => (
+          <div class="job"><span class="y">{y}</span><div><b>{r}</b><span class="mut">{o}</span><ul>{pts.map((x) => <li>{x}</li>)}</ul>{pj.map(([k, list]) => <p class="pl"><span class="pk">{k}</span>{list.join(' · ')}</p>)}</div></div>
         ))}
       </section>
     </div>
@@ -129,8 +134,10 @@ const tools = [
 
 <section class="pg">
   <section>
-    <h2>Selected projects</h2>
-    <div class="pj">{sel.map((p) => <div><span><b>{p.title}</b>{p.client} · {p.location}</span><span class="mut">{p.year}</span></div>)}</div>
+    <h2>Experience · continued</h2>
+    {exp.slice(3).map(([y, r, o, pts, pj]) => (
+      <div class="job"><span class="y">{y}</span><div><b>{r}</b><span class="mut">{o}</span><ul>{pts.map((x) => <li>{x}</li>)}</ul>{pj.map(([k, list]) => <p class="pl"><span class="pk">{k}</span>{list.join(' · ')}</p>)}</div></div>
+    ))}
   </section>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:9mm;margin:6mm 0">
     <section style="margin:0">
@@ -151,7 +158,6 @@ const tools = [
     <h2>Clients</h2>
     <p style="margin:0">SODIC · Orascom Development · Misr Italia Properties · Travco · NEOM · stc · SABIC · Jotun · BMW Egypt · Chery Egypt · NOATUM · H.B. Fuller · Al Marasem · Guira Developments · Linah Farms · Suits Workspaces</p>
   </section>
-  <div class="strip" style="grid-template-columns:repeat(3,1fr);height:auto;grid-auto-rows:21mm;margin-top:5mm">{grid.map((s) => <img src={s} alt="" />)}</div>
   <div class="quote" style="margin-top:5mm"><p>A concept is only useful once<br />someone <em>believes in it.</em></p></div>
   <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">CV · 02 / 02</span></div>
 </section>

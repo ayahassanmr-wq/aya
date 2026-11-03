@@ -131,7 +131,7 @@ No gold anywhere.
 ### 4.3 Site structure (✅ DECIDED)
 - **Home:** intro → hero → **client logo strip** → intro statement → numbers → selected work → typology marquee → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): two scrollable rows directly under the hero, drifting in opposite directions ("Trusted by"): official full-colour logos (`public/clients/<id>.png`, cut from Aya's logo sheet 3 Nov), always drifting (keeps moving on hover; pauses ~2.5 s only after a manual scroll), drag/wheel/swipe/arrow keys to scroll, each links to its project. NOATUM and Suits have no logo yet → typed names. Confidential and private clients excluded.
 - **Work:** opens on **three disciplines** — *Architectural design*, *Interior design*, *BIM & technical*. Choosing one shows its projects grouped by type (Residential, Workplace, Commercial…), numbered 01.01, 01.02…
-- **Project page:** title block with Location · Discipline · Practice · **Client** · **Year** · Scope (+ optional scope note) → renders → drawing sheets → client links.
+- **Project page:** big project number (01–28, same as the PDF portfolio; order = Architecture then Interiors, featured first, newest first — `ordered`/`projectNo` in projects.ts) above the title; title block with Location · Discipline · Practice · **Client (with logo)** · **Year** · Scope (+ optional scope note) → renders → drawing sheets → client links.
 - **About:** timeline (section 1), bio, tools.
 - Client names: allowed on project pages (Client row + links); homepage uses typologies.
 
@@ -141,6 +141,7 @@ No gold anywhere.
 - Both are generated from hidden pages `/print/portfolio/` and `/print/cv/` (noindex) using the site data, so they update with the site. Rebuild: `npx astro build && python3 scripts/grade-print.py && (npx astro preview --port 4321 &) && node scripts/make-pdfs.mjs`, then commit the PDFs.
 - Downloads: both buttons on the About page.
 - Phone/WhatsApp number deliberately not printed (same rule as the site).
+- Portfolio project openers: big project number + client logo. CV: experience grouped by employer, each with its projects (Architecture / Interiors), incl. CV-only projects from the old CV: Zamalek Club, Sharm El Sheikh Tower Hotel, Um Qasr Logistic City, Estadat City Club Complexes, SIAC Office Building, One 90 Retail, Misk Schools (NEOM) — Cosmos 2020–23. Freelance listed as "2022 — now" (❓ confirm start year).
 
 ### 4.4 Content rules
 - Every project must have **client** and **year** (no "—").
@@ -291,6 +292,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | Big project numbers + client logos on project pages and PDF; CV grouped by employer with old-CV projects added | Aya request |
 | 2026-11-03 | PDF portfolio + CV generated from the site, downloadable on About | Aya: for offline clients |
 | 2026-11-03 | Client strip → two rows, opposite drift; motion fixed for scaled displays / reduced-motion | Aya: bar wasn't moving |
 | 2026-11-03 | Hero keeps the intro's dimension ruler | Aya request |
@@ -398,6 +400,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | Project numbers + client logos (site & PDF); CV restructured with 7 extra projects. Live. |
 | 2026-11-03 | Claude | Built PDF portfolio (71 pp, A4 landscape) and 2-page CV from the site; About page download buttons. Live. |
 | 2026-11-03 | Claude | Client strip: two rows, float-based drift (works at 125% Windows scaling and with animations off). Live. |
 | 2026-11-03 | Claude | Hero ruler restored; client strip moves on hover; old A-pattern cursor spotlight removed. Live. |

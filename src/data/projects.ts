@@ -190,3 +190,21 @@ export const contact = {
   facebook: 'https://www.facebook.com/share/1CLSC4gxvc/',
   whatsapp: 'https://wa.me/201115318509', // the number is never printed on the site
 };
+
+/* ---------- project number: one canonical number per project, used on the site and in the PDF portfolio.
+   Order = Architecture then Interiors, featured first, then newest. */
+const byOrder = (a: Project, b: Project) => +!!b.featured - +!!a.featured || +(b.year ?? 0) - +(a.year ?? 0);
+export const ordered: Project[] = [
+  ...projects.filter((p) => p.category === 'architecture').sort(byOrder),
+  ...projects.filter((p) => p.category === 'interiors').sort(byOrder),
+];
+export const projectNo = (slug: string) => String(ordered.findIndex((p) => p.slug === slug) + 1).padStart(2, '0');
+
+/* ---------- client logos (public/clients/<id>.png, official files supplied by Aya) */
+const logoBySlug: Record<string, string> = {
+  'sodic-ogami': 'sodic', 'sodic-east-vale': 'sodic', 'orascom-o-west': 'orascom', 'misr-italia-hilltop': 'misr-italia',
+  'travco-west-island': 'travco', 'neom-oxagon': 'neom', 'stc-hq': 'stc', 'sabic-hq': 'sabic', 'jotun-office': 'jotun',
+  'bmw-showroom': 'bmw', 'chery-showroom': 'chery', 'hb-fuller': 'hb-fuller', 'fifth-square': 'al-marasem',
+  'mazeej': 'guira', 'linah-farms': 'linah',
+};
+export const clientLogo = (slug: string) => (logoBySlug[slug] ? `/clients/${logoBySlug[slug]}.png` : undefined);
