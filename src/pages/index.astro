@@ -81,6 +81,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
       <div class="tb" dir="ltr">
         <div class="dimn" aria-hidden="true"><i></i><span>{t('Architect · Interior designer', 'معمارية · مصممة داخلية')}</span><i></i></div>
         <h1 class="hl nm-h"><span class="ln"><span>AYA&nbsp;HASSAN</span></span></h1>
+        <p class="label status" dir={L.dir}>{t('Open to full-time roles and freelance commissions · Cairo / Remote / Relocation', 'متاحة لوظائف بدوام كامل ولمشاريع حرة · القاهرة / عن بُعد / مستعدة للانتقال')}</p>
         <dl class="cells" dir={L.dir}>
           <div class="c mot"><dt class="sr-only">{t('Motto', 'الشعار')}</dt><dd>{L.ar ? <>من الفكرة إلى <em>الإقناع.</em></> : <>From concept to <em>conviction.</em></>}</dd></div>
           <div class="c"><dt class="label">{t('Based', 'المقر')}</dt><dd>{t('Cairo, EG', 'القاهرة، مصر')}</dd></div>
@@ -91,7 +92,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
       <div class="bottom">
         <div class="ctas">
           <a href={u('/contact/')} class="btn solid magnet">{t('Start a project', 'ابدأ مشروعًا')} <span class="arr">{L.next}</span></a>
-          <a href={u('/work/')} class="btn ghost glass-dark">{t('View the work', 'شاهد الأعمال')}</a>
+          <a href="/Aya_Hassan_CV.pdf" class="btn ghost glass-dark" target="_blank" rel="noopener">{t('Hiring? See CV', 'تبحث عن مصممة؟ اطّلع على السيرة الذاتية')} <span class="arr">{L.next}</span></a>
         </div>
         <div class="ctrl" role="group" aria-label={t('Featured projects', 'مشاريع مميزة')}>
           <div class="bars">{slides.map((x, i) => <button type="button" class:list={['bb', { on: i === 0 }]} data-go={i} aria-label={`${t('Show', 'اعرض')} ${loc(x.p).title}`}><i></i></button>)}</div>
@@ -312,6 +313,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   .dimn i:first-child::before { left: 0; } .dimn i:last-child::before { right: 0; }
   .dimn span { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; white-space: nowrap; }
   .nm-h { font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(44px, 9.6vw, 176px); line-height: .86; letter-spacing: -.02em; white-space: nowrap; max-width: none; }
+  .status { margin: clamp(12px, 1.4vw, 20px) 0 0; color: var(--sand); font-size: 11px; letter-spacing: .2em; }
   .cells { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr; gap: clamp(16px, 2.4vw, 40px); margin: clamp(16px, 2vw, 28px) 0 0; }
   .c { margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
   .c dt { color: rgba(243, 237, 227, .7); font-size: 10.5px; }

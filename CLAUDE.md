@@ -7,6 +7,7 @@ Read `docs/HANDOVER.md` (copy of G:\Portfolio\Portfolio Projects\Aya_Hassan_Hand
 - Deployed on Vercel from GitHub ayahassanmr-wq/aya. Work branch: `rebrand-on-update`. `main` = live.
 
 ## Rules
+- Follow BRAND_VOICE.md for all copy and site-content changes.
 - Brand: One Hand (see handover §2). One typeface only. No new fonts, no gold, no blue.
 - Images: renders get the house grade (global.css); drawings get the drawing-sheet style ([slug].astro). Never add STC/SABIC real-tower photos.
 - Project data lives in src/data/projects.ts (+ projects-ar.ts). Every project needs client + year.
