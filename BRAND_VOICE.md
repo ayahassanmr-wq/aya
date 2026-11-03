@@ -65,7 +65,7 @@ I'm open to full-time design architect roles and to freelance commissions.
 **Services — Ways to work with me**
 1. **Full-time role.** Design architect or senior designer in a studio or developer team. Cairo, remote, or relocation to the Gulf. → See CV
 2. **Full project.** Concept design for a building or interior, from brief to drawing set. → Start a project
-3. **Studio support.** Renders, animation or Revit packages for studios on deadline. Tight deadline? Send the brief and I'll confirm timing within 24 hours. → Send a brief
+3. **Studio support.** Renders, animation or Revit packages for studios on deadline. **Tight deadline?** Send the brief — I'll confirm timing within 24 hours. (shown as a large oxblood callout) → Send a brief
 
 **Closing CTA (all pages)**
 Have a concept, or a role to fill? Let's make it convincing.

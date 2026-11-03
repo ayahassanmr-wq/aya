@@ -22,11 +22,11 @@ const servicesAr = [
 const ways = L.ar ? [
   { t: 'وظيفة بدوام كامل', d: 'مهندسة تصميم أو مصممة أولى ضمن استوديو أو فريق مطوّر عقاري. في القاهرة، أو عن بُعد، أو بالانتقال إلى الخليج.', cta: 'اطّلع على السيرة الذاتية', href: '/Aya_Hassan_CV.pdf' },
   { t: 'مشروع كامل', d: 'تصميم مبدئي لمبنى أو مساحة داخلية، من الفكرة حتى حزمة الرسومات.', cta: 'ابدأ مشروعك', href: u('/contact/?type=project') },
-  { t: 'دعم للاستوديوهات', d: 'صور واقعية، أنيميشن أو حزم Revit بمواعيد تسليم سريعة. موعدك ضيّق؟ أرسل الموجز وسأؤكد لك المدة خلال 24 ساعة.', cta: 'أرسل الموجز', href: u('/contact/?type=studio') },
+  { t: 'دعم للاستوديوهات', d: 'صور واقعية، أنيميشن أو حزم Revit بمواعيد تسليم سريعة.', note: ['موعدك ضيّق؟', 'أرسل الموجز، وسأؤكد لك المدة خلال 24 ساعة.'], cta: 'أرسل الموجز', href: u('/contact/?type=studio') },
 ] : [
   { t: 'Full-time role', d: 'Design architect or senior designer in a studio or developer team. Cairo, remote, or relocation to the Gulf.', cta: 'See CV', href: '/Aya_Hassan_CV.pdf' },
   { t: 'Full project', d: 'Concept design for a building or interior, from brief to drawing set.', cta: 'Start a project', href: u('/contact/?type=project') },
-  { t: 'Studio support', d: 'Renders, animation or Revit packages for studios on deadline. Tight deadline? Send the brief and I’ll confirm timing within 24 hours.', cta: 'Send a brief', href: u('/contact/?type=studio') },
+  { t: 'Studio support', d: 'Renders, animation or Revit packages for studios on deadline.', note: ['Tight deadline?', 'Send the brief — I’ll confirm timing within 24 hours.'], cta: 'Send a brief', href: u('/contact/?type=studio') },
 ];
 const services = L.ar ? servicesEn.map((s, i) => ({ ...s, ...servicesAr[i] })) : servicesEn;
 const stepsEn = [
@@ -55,6 +55,7 @@ const steps = L.ar ? [
         <div class="c">
           <h2 class="display-m">{String(i + 1).padStart(2, '0')} · {w.t}</h2>
           <p>{w.d}</p>
+          {w.note && <p class="hook"><em>{w.note[0]}</em> {w.note[1]}</p>}
         </div>
         <p><a href={w.href} class="link">{w.cta} <span class="arr">{L.next}</span></a></p>
       </article>
@@ -88,6 +89,8 @@ const steps = L.ar ? [
 
 <style>
   .list { padding-top: clamp(64px, 9vw, 130px); padding-bottom: clamp(64px, 9vw, 130px); }
+  .hook { margin-top: 18px; font-family: "Archivo Variable", sans-serif; font-weight: 600; font-size: clamp(20px, 1.9vw, 28px); line-height: 1.25; letter-spacing: -.01em; color: var(--ink); max-width: 30ch; }
+  .hook em { display: block; font-weight: 800; font-stretch: 112%; font-style: italic; font-size: 1.35em; color: var(--ox); }
   .svc h2 { transition: color .3s; } .svc:hover h2 { color: var(--ox); font-style: italic; }
   .svc { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(24px, 4vw, 64px); padding-block: clamp(32px, 4vw, 56px); border-top: 1px solid var(--rule); align-items: start; }
   .c { display: grid; gap: 18px; }
