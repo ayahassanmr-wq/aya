@@ -3,34 +3,33 @@
 import '@fontsource-variable/archivo/wdth.css';
 import '@fontsource-variable/archivo/wdth-italic.css';
 import { getImage } from 'astro:assets';
-import { projects, imagesFor, contact, disciplinesFor } from '../../data/projects';
+import { imagesFor, contact } from '../../data/projects';
 
 const jpg = async (src: any, w = 900) => (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: 74 })).src;
 const grid = await Promise.all(['sodic-ogami', 'travco-west-island', 'fifth-square', 'chery-showroom', 'jotun-office', 'hb-fuller'].map((s) => jpg(imagesFor(s)[0], 700)));
 const strip = await Promise.all(['misr-italia-hilltop', 'stc-hq', 'neom-oxagon', 'sabic-hq'].map((s) => jpg(imagesFor(s)[0])));
-// Experience: each employer with its projects as rows [name, location, scope, website slug?].
-// Scope codes: D design · M 3D modelling · R rendering · A animation · B BIM / Revit · V design review
-const SC: Record<string, string> = { D: 'Design', M: 'Modelling', R: 'Rendering', A: 'Animation', B: 'BIM', V: 'Review' };
-const sc = (slug: string) => { const d = disciplinesFor(projects.find((p) => p.slug === slug)!); return [d.has('Design') && 'D', d.has('Modelling') && 'M', d.has('Rendering') && 'R', d.has('Animation') && 'A', d.has('BIM') && 'B'].filter(Boolean).join(''); };
-type Row = [string, string, string, string?];
-const site = (slug: string, loc?: string): Row => { const p = projects.find((x) => x.slug === slug)!; return [p.title, loc ?? p.location, sc(slug), slug]; };
-const exp: [string, string, string, string, [string, Row[]][]][] = [
-  ['2026 — now', 'Mid-senior Design Architect', 'Innovation Design Studio · Cairo',
-    'Concepts, 3D models and visuals for residential developments on the North Coast and in Greater Cairo, with AI-assisted post-production for developer approvals.',
-    [['Architecture', [site('misr-italia-hilltop'), site('sodic-ogami'), site('sodic-east-vale'), site('travco-west-island'), site('orascom-o-west')]]]],
-  ['2025', 'Mid-senior Design Architect & Interior Designer', 'Cosmos Studio · Cairo',
-    'Conceptual studies, 3D models, visuals and animation, developed to coordinated Revit (BIM) packages; design review and redesign to code.',
-    [['Architecture', [site('fifth-square'), site('chery-showroom'), site('noatum-terminal'), site('linah-farms'), ['Mazeej Hotel & Housing', 'Giza', 'V', 'mazeej']]]]],
-  ['2024', 'Design Architect & Interior Designer', 'ZFP · Zuhair Fayez Partnership',
-    'Design concepts, 3D modelling and visuals; materials through site visits and vendors; FF&E sourced worldwide.',
-    [['Interiors', [site('sabic-hq'), site('stc-hq')]]]],
-  ['2020 — 2023', 'Design Architect & Interior Designer', 'Cosmos Studio · Concept Design Department',
-    '3D modelling and animation for client communication and promotional content; Revit modelling and drafting; led BIM development for NEOM packages.',
-    [['Architecture', [site('neom-oxagon'), ['Um Qasr Logistic City', 'Iraq', 'MA'], site('juba-resort'), ['Zamalek Club', '6th of October', 'DMR'], ['Sharm El Sheikh Tower Hotel', 'Sharm El Sheikh', 'DMR'], ['Estadat City Club Complexes', 'Egypt', 'B'], site('dry-port'), ['SIAC Office Building', 'Fifth Settlement', 'B'], ['One 90 Retail', 'Fifth Settlement', 'B']]],
-     ['Interiors', [site('sphinx'), site('hb-fuller'), site('jotun-office'), site('tech-park'), site('bmw-showroom'), site('conference-room'), ['NEOM Public Service Buildings', 'NEOM, KSA', 'B'], ['Misk Schools', 'NEOM, KSA', 'V']]]]],
-  ['2022 — now', 'Independent practice', 'Freelance · private clients',
-    'End-to-end design, modelling and rendering for residences, workspaces and hospitality.',
-    [['Architecture', [site('minimal-villa'), site('mediterranean-house')]], ['Interiors', [site('modern-residence-new-cairo'), site('zayed-residence'), site('suits-workspaces'), site('arches-restaurant')]]]],
+// Experience, written as plain sentences. [[slug|Name]] becomes a link to that project on the website.
+const link = (t: string) => t.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, '<a href="https://ayahassan.com/work/$1/">$2</a>');
+const exp: [string, string, string, string[]][] = [
+  ['2026 — now', 'Mid-senior Design Architect', 'Innovation Design Studio, Cairo', [
+    'Concept design, 3D modelling and visuals for residential developments on the North Coast and in New Cairo: [[sodic-ogami|SODIC Ogami]], [[sodic-east-vale|SODIC East Vale]], [[travco-west-island|Travco West Island]] and [[orascom-o-west|Orascom O West Midyard]].',
+    'Modelled and rendered the three apartment prototypes of [[misr-italia-hilltop|Misr Italia Hilltop]], Ras El Hekma.',
+    'AI-assisted post-production to bring models to approval-ready imagery for developers.']],
+  ['2025', 'Mid-senior Design Architect & Interior Designer', 'Cosmos Studio, Cairo', [
+    'Took the [[chery-showroom|Chery showroom and admin building]], the [[noatum-terminal|NOATUM automotive terminal]] in Ain Sokhna and [[linah-farms|Linah Farms]]’ industrial building from concept and visuals to coordinated Revit packages.',
+    'Designed the canopy of [[fifth-square|Fifth Square]], New Cairo, and modelled and rendered the whole complex.',
+    'Reviewed the [[mazeej|Mazeej hotel and housing complex]] in Giza and redesigned it to code.']],
+  ['2024', 'Design Architect & Interior Designer', 'ZFP · Zuhair Fayez Partnership', [
+    'Headquarters interiors for [[sabic-hq|SABIC]] and [[stc-hq|STC]] in Riyadh: design concepts, 3D models and visuals for lobbies, executive floors and open offices.',
+    'Selected materials through site visits and vendor meetings, and sourced furniture and fixtures from suppliers worldwide.']],
+  ['2020 — 2023', 'Design Architect & Interior Designer', 'Cosmos Studio, Concept Design Department', [
+    'Modelled and animated the [[neom-oxagon|NEOM Oxagon public service buildings]] and Um Qasr Logistic City in Iraq, for client presentations and promotional films; led the BIM development of the NEOM interior and architectural packages.',
+    'Designed, modelled and rendered [[juba-resort|Juba Hotel & Resort]] in South Sudan, Zamalek Club in 6th of October and the Sharm El Sheikh Tower Hotel.',
+    'Revit modelling and drafting for the [[dry-port|Dry Port buildings]], Estadat City Club complexes, the SIAC office building and One 90 retail in the Fifth Settlement.',
+    'Workplace and retail interiors for [[sphinx|Sphinx]], [[hb-fuller|HB Fuller]], [[jotun-office|Jotun]], [[tech-park|Tech Park]] and the [[bmw-showroom|BMW showroom]]: concepts, 3D models, schematic packages and animation. Design reviews for Misk Schools, NEOM.']],
+  ['2022 — now', 'Independent practice', 'Freelance, private clients', [
+    'Designed, modelled and rendered the [[minimal-villa|Minimal Villa]] in Egypt and a concept for a [[mediterranean-house|Mediterranean house]] in Lebanon.',
+    'Interiors for private homes in [[modern-residence-new-cairo|New Cairo]] and [[zayed-residence|Sheikh Zayed]], [[suits-workspaces|Suits Workspaces]] in India and [[arches-restaurant|Arches Restaurant]] in Saudi Arabia.']],
 ];
 const skills = [
   ['Concept design', 'Massing, facades, interiors, FF&E and material palettes'],
@@ -76,18 +75,13 @@ const tools = [
   .cols { display: grid; grid-template-columns: 1fr 58mm; gap: 9mm; }
   h2 { margin: 0 0 3mm; padding-bottom: 1.8mm; border-bottom: 1px solid var(--ox); font-size: 7pt; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--ox); }
   section + section { margin-top: 6mm; }
-  .job { display: block; padding: 2.6mm 0 3mm; border-bottom: 1px solid var(--rule); }
-  .jh { display: grid; grid-template-columns: 22mm 1fr; gap: 3mm; }
-  .jh b { display: block; font-weight: 650; font-size: 9.4pt; }
-  .jd { margin: 1.2mm 0 1.8mm 25mm; color: var(--ink); }
-  .pt { width: calc(100% - 25mm); margin-left: 25mm; border-collapse: collapse; font-size: 7.6pt; }
-  .pt th { text-align: left; padding: 1.3mm 0 .6mm; font-size: 5.8pt; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--ox); }
-  .pt td { padding: .55mm 0; border-top: 1px solid var(--rule); vertical-align: baseline; }
-  .pn { font-weight: 600; width: 44%; } .pn a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(94,26,36,.35); }
-  .pl2 { color: var(--mut); width: 24%; padding-right: 2mm !important; }
-  .ps { text-align: right; white-space: nowrap; }
-  .ps span { display: inline-block; margin-left: 1.2mm; font-size: 5.6pt; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ox); }
-  .ps span::before { content: ""; display: inline-block; width: 1.4mm; height: 1.4mm; background: var(--ox); margin-right: .8mm; vertical-align: .1mm; }
+  .job { display: grid; grid-template-columns: 24mm 1fr; gap: 4mm; padding: 4mm 0; border-bottom: 1px solid var(--rule); }
+  .job .y { font-weight: 600; color: var(--ox); padding-top: .6mm; }
+  .job b { display: block; font-weight: 650; font-size: 10pt; letter-spacing: -.005em; }
+  .org { display: block; color: var(--mut); font-style: italic; font-weight: 300; margin-top: .4mm; }
+  .job ul { margin: 2.2mm 0 0; padding-left: 4mm; } .job li { margin: 1.2mm 0; line-height: 1.5; }
+  .job li::marker { color: var(--ox); content: "–  "; }
+  .job li a { border-bottom: 1px solid rgba(94,26,36,.3); }
   .side p { margin: 0 0 2.6mm; }
   .kv { padding: 2mm 0; border-bottom: 1px solid var(--rule); } .kv b { display: block; font-weight: 600; }
   .ct a { color: inherit; text-decoration: none; }
@@ -105,7 +99,8 @@ const tools = [
   .cbar dt { font-size: 6pt; letter-spacing: .22em; text-transform: uppercase; color: var(--mut); margin-bottom: 1mm; }
   .cbar dd { margin: 0; font-weight: 500; }
   .trio { display: grid; grid-template-columns: 2fr 1fr; gap: 7mm; margin-top: 6mm; } .trio section { margin: 0 !important; }
-  .pn { width: 42%; } .pl2 { width: 22%; }
+  .gallery { position: absolute; left: 14mm; right: 14mm; bottom: 20mm; display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 38mm; gap: 2.5mm; }
+  .gallery img { width: 100%; height: 100%; object-fit: cover; }
 </style>
 </head>
 <body>
@@ -130,8 +125,8 @@ const tools = [
   </section>
   <section>
     <h2>Experience</h2>
-    {exp.slice(0, 3).map(([y, r, o, d, pj]) => (
-      <div class="job"><div class="jh"><span class="y">{y}</span><span><b>{r}</b><span class="mut">{o}</span></span></div><p class="jd">{d}</p><table class="pt">{pj.map(([k, rows]) => <><tr><th colspan="3">{k}</th></tr>{rows.map(([n, l, c, slug]) => <tr><td class="pn">{slug ? <a href={`https://ayahassan.com/work/${slug}/`}>{n}</a> : n}</td><td class="pl2">{l}</td><td class="ps">{[...c].map((x) => <span>{SC[x]}</span>)}</td></tr>)}</>)}</table></div>
+    {exp.slice(0, 3).map(([y, r, o, pts]) => (
+      <div class="job"><span class="y">{y}</span><div><b>{r}</b><span class="org">{o}</span><ul>{pts.map((x) => <li set:html={link(x)} />)}</ul></div></div>
     ))}
   </section>
   <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">CV · 01 / 02</span></div>
@@ -140,8 +135,8 @@ const tools = [
 <section class="pg">
   <section>
     <h2>Experience · continued</h2>
-    {exp.slice(3).map(([y, r, o, d, pj]) => (
-      <div class="job"><div class="jh"><span class="y">{y}</span><span><b>{r}</b><span class="mut">{o}</span></span></div><p class="jd">{d}</p><table class="pt">{pj.map(([k, rows]) => <><tr><th colspan="3">{k}</th></tr>{rows.map(([n, l, c, slug]) => <tr><td class="pn">{slug ? <a href={`https://ayahassan.com/work/${slug}/`}>{n}</a> : n}</td><td class="pl2">{l}</td><td class="ps">{[...c].map((x) => <span>{SC[x]}</span>)}</td></tr>)}</>)}</table></div>
+    {exp.slice(3).map(([y, r, o, pts]) => (
+      <div class="job"><span class="y">{y}</span><div><b>{r}</b><span class="org">{o}</span><ul>{pts.map((x) => <li set:html={link(x)} />)}</ul></div></div>
     ))}
   </section>
   <div class="trio">
@@ -159,6 +154,7 @@ const tools = [
     <h2>Clients</h2>
     <p style="margin:0">SODIC · Orascom Development · Misr Italia Properties · Travco · NEOM · stc · SABIC · Jotun · BMW Egypt · Chery Egypt · NOATUM · H.B. Fuller · Al Marasem · Guira Developments · Linah Farms · Suits Workspaces</p>
   </section>
+  <div class="gallery">{grid.slice(0, 3).map((g) => <img src={g} alt="" />)}</div>
   <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">CV · 02 / 02</span></div>
 </section>
 </body>
