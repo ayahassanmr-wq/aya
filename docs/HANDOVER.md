@@ -161,8 +161,9 @@ No gold anywhere.
 |---|---|---|---|---|---|---|
 | misr-italia-hilltop | Misr Italia Hilltop | Arch | Innovation | Misr Italia Properties | 2026 | Featured, hero slide 1 |
 | sodic-ogami | SODIC Ogami | Arch | Innovation | SODIC | 2026 | + ground floor plan |
-| sodic-east-vale | SODIC East Vale | Arch | Innovation | SODIC | 2026 | 3 renders + 3 plans (GF, FF, roof) |
+| sodic-east-vale | SODIC East Vale · Premium Home | Arch | Innovation | SODIC | 2026 | Aya designed the premium home only (two stacked units). MADA City, New Cairo. 3 renders + form generation + GF 202.6 / FF 194.3 / roof 184 m² plans |
 | travco-west-island | Travco West Island | Arch | Innovation | Travco · Almaza Bay | 2026 | |
+| staff-housing | Staff Housing Community | Arch | Innovation | Confidential developer | 2026 | From the Orascom Workers Housing (El Gouna) proposal — client & location anonymised (shown as Egypt); featured (No. 02); Option 01 only; 3 renders + 11 sheets |
 | orascom-o-west | Orascom O West Midyard | Arch | Innovation | Orascom Development | 2026 | 2 images only |
 | stc-hq | STC HQ Office Tower | Interior | ZFP | stc | 2024 | NDA; no real-tower photos |
 | sabic-hq | SABIC HQ Renovation | Interior | ZFP | SABIC | 2024 | NDA; no real-tower photos |
@@ -262,7 +263,6 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 10. **Missing views:** export more renders for Orascom O West (2), Misr Italia (4), SODIC East Vale (3)?
 
 ### ⏸ ON HOLD
-- **Orascom Workers Housing Proposal (El Gouna)** — Aya will upload images to its folder; Claude to publish and confirm when they appear.
 - **Video editing** — blocked until videos are reachable (PC on & awake, or uploaded to Google Drive + connector, or Claude Code run locally on the PC).
 - **Copying videos into `_Videos`** — Aya to run the PowerShell above.
 - **Juba render upgrade** — needs AI upscaler (outside Claude) or Aya's Photoshop pass.
@@ -294,6 +294,9 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | Staff Housing Community published (anonymised El Gouna workers housing), featured No. 02 | Aya approved preview |
+| 2026-11-03 | East Vale = premium home only; no interiors | Aya: only designed the premium home |
+| 2026-11-03 | Wide drawings span full width on project pages | Fix dark gaps |
 | 2026-11-03 | NOATUM = team collaboration; Fifth Square wording generic; no animation for NEOM Oxagon (scope fixed site-wide); Zamalek Club = modelling, rendering, animation | Aya correction |
 | 2026-11-03 | CV tone: senior, leadership and teamwork language; profile rewritten | Aya request |
 | 2026-11-03 | CV experience rewritten as human sentences; contact row on portfolio cover | Aya: tables looked robotic |
@@ -407,6 +410,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | Staff Housing added; East Vale rebuilt around the premium home; CV + portfolio regenerated. Live. |
 | 2026-11-03 | Claude | CV facts corrected (NOATUM team, Fifth Square, NEOM no animation, Zamalek animation); NEOM Oxagon scope + About timeline fixed. Live. |
 | 2026-11-03 | Claude | CV rewritten in leadership voice (claims kept to old-CV facts). Live. |
 | 2026-11-03 | Claude | CV projects rewritten as prose per employer; portfolio cover contact links. Live. |

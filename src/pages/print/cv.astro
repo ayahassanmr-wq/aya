@@ -12,7 +12,8 @@ const strip = await Promise.all(['misr-italia-hilltop', 'stc-hq', 'neom-oxagon',
 const link = (t: string) => t.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, '<a href="https://ayahassan.com/work/$1/">$2</a>');
 const exp: [string, string, string, string[]][] = [
   ['2026 — now', 'Mid-senior Design Architect', 'Innovation Design Studio, Cairo', [
-    'Spearhead concept design, 3D modelling and visualization for flagship residential developments by leading Egyptian developers — [[sodic-ogami|SODIC Ogami]], [[sodic-east-vale|SODIC East Vale]], [[travco-west-island|Travco West Island]] and [[orascom-o-west|Orascom O West Midyard]] — shaping each scheme from first massing to approval-ready imagery.',
+    'Spearhead concept design, 3D modelling and visualization for flagship residential developments by leading Egyptian developers — [[sodic-ogami|SODIC Ogami]], the [[sodic-east-vale|SODIC East Vale premium home]], [[travco-west-island|Travco West Island]] and [[orascom-o-west|Orascom O West Midyard]] — shaping each scheme from first massing to approval-ready imagery.',
+    'Masterplanned and designed a [[staff-housing|staff housing community]] for close to seven thousand residents — cluster masterplan, zoning and accessibility studies, two repeatable residential prototypes and a Nubian-inspired elevation language, through to 3D models and renders.',
     'Delivered the complete modelling and rendering package for the three apartment prototypes of [[misr-italia-hilltop|Misr Italia Hilltop]], Ras El Hekma.',
     'Introduced AI-assisted post-production into the studio’s visualization workflow, accelerating turnaround and elevating presentation quality for developer approvals.']],
   ['2025', 'Mid-senior Design Architect & Interior Designer', 'Cosmos Studio, Cairo', [
@@ -127,7 +128,7 @@ const tools = [
   </section>
   <section>
     <h2>Experience</h2>
-    {exp.slice(0, 3).map(([y, r, o, pts]) => (
+    {exp.slice(0, 2).map(([y, r, o, pts]) => (
       <div class="job"><span class="y">{y}</span><div><b>{r}</b><span class="org">{o}</span><ul>{pts.map((x) => <li set:html={link(x)} />)}</ul></div></div>
     ))}
   </section>
@@ -137,7 +138,7 @@ const tools = [
 <section class="pg">
   <section>
     <h2>Experience · continued</h2>
-    {exp.slice(3).map(([y, r, o, pts]) => (
+    {exp.slice(2).map(([y, r, o, pts]) => (
       <div class="job"><span class="y">{y}</span><div><b>{r}</b><span class="org">{o}</span><ul>{pts.map((x) => <li set:html={link(x)} />)}</ul></div></div>
     ))}
   </section>
@@ -156,7 +157,6 @@ const tools = [
     <h2>Clients</h2>
     <p style="margin:0">SODIC · Orascom Development · Misr Italia Properties · Travco · NEOM · stc · SABIC · Jotun · BMW Egypt · Chery Egypt · NOATUM · H.B. Fuller · Al Marasem · Guira Developments · Linah Farms · Suits Workspaces</p>
   </section>
-  <div class="gallery">{grid.slice(0, 3).map((g) => <img src={g} alt="" />)}</div>
   <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">CV · 02 / 02</span></div>
 </section>
 </body>
