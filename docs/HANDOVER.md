@@ -96,6 +96,8 @@ No gold anywhere.
 - **Shaded BIM/3D model views:** soft ink→bone duotone with lifted shadows (not the line-drawing map). **Presentation boards with renders** (Fifth Square, Linah concept, Ogami, Travco boards): full colour, only white paper swapped to bone.
 - **Project page extras (✅ 3 Nov):** cover render repeated uncropped at the top of Visuals. Auto close-up Details section ❌ removed — Aya will hand-pick close-ups (see TO DO).
 - **For future renders (guidance):** one signature light hour (warm late-afternoon "Cairo 5 pm"), camera height ~1.2 m, 35 mm interiors, verticals always corrected, consistent entourage (neutral, slightly blurred people; one plant family), fine grain at fixed strength, crops 4:5 and 21:9 only.
+- **Coloured diagrams/studies (✅ 3 Nov):** recoloured to brand — bone paper, ink lines, oxblood key layer, taupe open space (Staff Housing studies). Photos/renders keep colour. Several related sheets are combined into one labelled grid (Archivo labels) instead of many full pages.
+- **Old/dated renders:** regrade (muted water, olive greens, haze, S-curve, vignette) — done for Sallan Creek.
 - **Exclusions:** STC and SABIC folders contain photos of the real towers — never on the site.
 - **Juba renders look dated (⏸):** fix without re-rendering — AI upscale at low creativity (Magnific / Krea Enhance / Topaz), Photoshop sky + foliage + people replacement, then house grade. 21 more 2021 Juba renders exist in `G:\Portfolio\pot\Juba Render`.
 
@@ -130,7 +132,7 @@ No gold anywhere.
 
 ### 4.3 Site structure (✅ DECIDED)
 - **Home:** intro → hero → **client logo strip** → intro statement → numbers → selected work → typology marquee → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): two scrollable rows directly under the hero, drifting in opposite directions ("Trusted by"): official full-colour logos (`public/clients/<id>.png`, cut from Aya's logo sheet 3 Nov), always drifting (keeps moving on hover; pauses ~2.5 s only after a manual scroll), drag/wheel/swipe/arrow keys to scroll, each links to its project. NOATUM and Suits have no logo yet → typed names. Confidential and private clients excluded.
-- **Work:** opens on **three disciplines** — *Architectural design*, *Interior design*, *BIM & technical*. Choosing one shows its projects grouped by type (Residential, Workplace, Commercial…), numbered 01.01, 01.02…
+- **Work:** Masterplan group always first (Sallan Creek, Staff Housing); project numbers also start with masterplans. Opens on **three disciplines** — *Architectural design*, *Interior design*, *BIM & technical*. Choosing one shows its projects grouped by type (Residential, Workplace, Commercial…), numbered 01.01, 01.02…
 - **Project page:** big project number (01–28, same as the PDF portfolio; order = Architecture then Interiors, featured first, newest first — `ordered`/`projectNo` in projects.ts) above the title; title block with Location · Discipline · Practice · **Client (with logo)** · **Year** · Scope (+ optional scope note) → renders → drawing sheets → client links.
 - **About:** timeline (section 1), bio, tools.
 - Client names: allowed on project pages (Client row + links); homepage uses typologies.
@@ -163,7 +165,8 @@ No gold anywhere.
 | sodic-ogami | SODIC Ogami | Arch | Innovation | SODIC | 2026 | + ground floor plan |
 | sodic-east-vale | SODIC East Vale · Premium Home | Arch | Innovation | SODIC | 2026 | Aya designed the premium home only (two stacked units). MADA City, New Cairo. 3 renders + form generation + GF 202.6 / FF 194.3 / roof 184 m² plans |
 | travco-west-island | Travco West Island | Arch | Innovation | Travco · Almaza Bay | 2026 | |
-| staff-housing | Staff Housing Community | Arch | Innovation | Confidential developer | 2026 | From the Orascom Workers Housing (El Gouna) proposal — client & location anonymised (shown as Egypt); featured (No. 02); Option 01 only; 3 renders + 11 sheets |
+| sallan-creek | Sallan Creek (DHIFAF) | Arch / Masterplan | Cosmos | North Al Batinah Governor’s Office | 2025 | Oman; Aya: masterplan refinement, 3D model, renders, presentation; 4 regraded aerials + masterplan strip + look & feel grid |
+| staff-housing | Staff Housing Community | Arch / Masterplan | Innovation | Confidential developer | 2026 | From the Orascom Workers Housing (El Gouna) proposal — client & location anonymised (shown as Egypt); featured (No. 02); Option 01 only; 3 renders + 11 sheets |
 | orascom-o-west | Orascom O West Midyard | Arch | Innovation | Orascom Development | 2026 | 2 images only |
 | stc-hq | STC HQ Office Tower | Interior | ZFP | stc | 2024 | NDA; no real-tower photos |
 | sabic-hq | SABIC HQ Renovation | Interior | ZFP | SABIC | 2024 | NDA; no real-tower photos |
@@ -184,11 +187,10 @@ No gold anywhere.
 | suits-workspaces | Suits Workspaces | Interior | Freelance | Suits Workspaces | 2025 | |
 | arches-restaurant | Arches Restaurant | Interior | Freelance | Private client | 2022 | Location: Saudi Arabia |
 | minimal-villa | Minimal Villa | Arch | Freelance | Private client | 2026 | NEW · 2 renders; full scope (design, modelling, rendering) |
-| mediterranean-house | Mediterranean House | Arch | Freelance | Private client | 2025 | Concept |
 | modern-residence-new-cairo | Modern Residence | Interior | Freelance | Private client | 2025 | |
 | zayed-residence | Zayed Residence | Interior | Freelance | Private client | 2024 | |
 
-**Removed (✅):** Blue Villa (3 Nov), Classic House (folder deleted 2 Nov), Modern Villa, Apartment Building, Concept Sketches, Jeddah Residence (+ earlier: Studio K, HK Inc, Commercial Mall, Modern Villa I, Majlis, Jubail, Sea Residence, Neo-Classical Residence, Modern Residence II).
+**Removed (✅):** Mediterranean House (3 Nov), Blue Villa (3 Nov), Classic House (folder deleted 2 Nov), Modern Villa, Apartment Building, Concept Sketches, Jeddah Residence (+ earlier: Studio K, HK Inc, Commercial Mall, Modern Villa I, Majlis, Jubail, Sea Residence, Neo-Classical Residence, Modern Residence II).
 
 ---
 
@@ -294,6 +296,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | Sallan Creek (DHIFAF) added; masterplan group first; Sphinx out of BIM; Mediterranean House removed | Aya request |
 | 2026-11-03 | Staff Housing Community published (anonymised El Gouna workers housing), featured No. 02 | Aya approved preview |
 | 2026-11-03 | East Vale = premium home only; no interiors | Aya: only designed the premium home |
 | 2026-11-03 | Wide drawings span full width on project pages | Fix dark gaps |
@@ -410,6 +413,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | Sallan Creek live; Staff Housing condensed + brand-recoloured studies; masterplans first; Sphinx not BIM; Mediterranean removed; CV + portfolio regenerated. |
 | 2026-11-03 | Claude | Staff Housing added; East Vale rebuilt around the premium home; CV + portfolio regenerated. Live. |
 | 2026-11-03 | Claude | CV facts corrected (NOATUM team, Fifth Square, NEOM no animation, Zamalek animation); NEOM Oxagon scope + About timeline fixed. Live. |
 | 2026-11-03 | Claude | CV rewritten in leadership voice (claims kept to old-CV facts). Live. |

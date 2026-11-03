@@ -11,7 +11,7 @@ const isBim = (p: Project) => p.scope.some((x) => /BIM|IFC/i.test(x));
 const groupBy = (list: Project[]) => {
   const m = new Map<string, Project[]>();
   list.forEach((p) => m.set(p.sector, [...(m.get(p.sector) ?? []), p]));
-  return [...m.entries()].sort((a, b) => b[1].length - a[1].length).map(([k, v]) => ({ key: k, name: localize(v[0], L.ar).sector, list: v }));
+  return [...m.entries()].sort((a, b) => (+(b[0] === 'Masterplan') - +(a[0] === 'Masterplan')) || b[1].length - a[1].length).map(([k, v]) => ({ key: k, name: localize(v[0], L.ar).sector, list: v }));
 };
 const prev = Object.fromEntries(await Promise.all(projects.map(async (p) => [p.slug, (await getImage({ src: cover(p.slug)!, width: 700, format: 'webp' })).src])));
 const disciplines = await Promise.all([

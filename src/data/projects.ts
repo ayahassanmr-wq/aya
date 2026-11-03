@@ -68,7 +68,7 @@ export const projects: Project[] = [
     deliverables: ['Conceptual design presentation', 'Detailed design plans', 'Material samples', 'Implementation guidelines'] },
   { slug: 'suits-workspaces', year: '2025', client: 'Suits Workspaces', title: 'Suits Workspaces Office Building', location: 'India', country: 'India', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P],
     summary: 'Executive offices, meeting rooms and lounges for a flexible-workspace operator.' },
-  { slug: 'sphinx', client: 'Confidential', title: 'Sphinx Business Building', location: 'Giza', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, 'Schematic & IFC drawing packages'], practice: 'Cosmos Studio', year: '2022',
+  { slug: 'sphinx', client: 'Confidential', title: 'Sphinx Business Building', location: 'Giza', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, 'Schematic & issued-for-construction drawing sets'], practice: 'Cosmos Studio', year: '2022',
     summary: 'Formal reception salons and executive suites, delivered through to issued-for-construction drawings.' },
   { slug: 'conference-room', client: 'Confidential', year: '2022', title: 'Formal Conference Room', location: 'New Capital', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio',
     summary: 'A formal boardroom in warm timber and soft light for the New Administrative Capital.' },
@@ -126,7 +126,7 @@ export const projects: Project[] = [
   { slug: 'orascom-o-west', client: 'Orascom Development', year: '2026', title: 'Orascom O West Midyard', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'Mid-rise apartment blocks for the Midyard district of O West.' },
 
-  { slug: 'staff-housing', fullSheets: [1, 2], client: 'Confidential developer', year: '2026', title: 'Staff Housing Community', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Masterplanning', 'Concept design', M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
+  { slug: 'staff-housing', fullSheets: [1, 2], client: 'Confidential developer', year: '2026', title: 'Staff Housing Community', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Masterplan', scope: ['Masterplanning', 'Concept design', M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
     summary: 'A walkable town for nearly 7,000 resort staff: clustered courtyards, two repeatable prototypes and a refined Nubian language of arches, shade and earth.',
     overview: [
       'A secluded desert plot transformed into a self-sufficient community for close to seven thousand employees of a coastal resort town. The brief asked for dignity at scale: 130,000 m² of built area, a central amenities hub with dining, kitchen, laundry and retail, and a landscape that makes the whole livable.',
@@ -140,7 +140,6 @@ export const projects: Project[] = [
   // ---------- Residential architecture (concept exploration)
   { slug: 'minimal-villa', year: '2026', client: 'Private client', title: 'Minimal Villa', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A two-storey villa in pale stone and dark glazing: one carved volume, a deep garden terrace and a quiet street face.' },
-  { slug: 'mediterranean-house', year: '2025', client: 'Private client', title: 'Mediterranean House', location: 'Lebanon', country: 'Lebanon', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
   // ---------- Interiors · Residential & hospitality
   { slug: 'modern-residence-new-cairo', year: '2025', client: 'Private client', title: 'Modern Residence', location: 'New Cairo', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A full residence in warm timber, stone and soft neutrals: living, dining, bedrooms and baths.' },
@@ -221,7 +220,7 @@ export const contact = {
 
 /* ---------- project number: one canonical number per project, used on the site and in the PDF portfolio.
    Order = Architecture then Interiors, featured first, then newest. */
-const byOrder = (a: Project, b: Project) => +!!b.featured - +!!a.featured || +(b.year ?? 0) - +(a.year ?? 0);
+const byOrder = (a: Project, b: Project) => +(b.sector === 'Masterplan') - +(a.sector === 'Masterplan') || +!!b.featured - +!!a.featured || +(b.year ?? 0) - +(a.year ?? 0);
 export const ordered: Project[] = [
   ...projects.filter((p) => p.category === 'architecture').sort(byOrder),
   ...projects.filter((p) => p.category === 'interiors').sort(byOrder),
