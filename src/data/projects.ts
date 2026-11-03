@@ -146,7 +146,7 @@ export const projects: Project[] = [
   { slug: 'minimal-villa', year: '2026', client: 'Private client', title: 'Minimal Villa', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A two-storey villa in pale stone and dark glazing: one carved volume, a deep garden terrace and a quiet street face.' },
   // ---------- Interiors · Residential & hospitality
-  { slug: 'modern-residence-new-cairo', year: '2025', client: 'Private client', title: 'Modern Residence', location: 'New Cairo', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
+  { slug: 'modern-residence-new-cairo', fullSheets: [1], captions: ['Drawing set · architectural, furniture, ceiling and power plans'], year: '2025', client: 'Private client', title: 'Modern Residence', location: 'New Cairo', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A full residence in warm timber, stone and soft neutrals: living, dining, bedrooms and baths.' },
   { slug: 'zayed-residence', year: '2024', client: 'Private client', title: 'Zayed Residence', location: 'Sheikh Zayed, Giza', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A bold residence of dark timber, marble and sculptural lighting.' },
