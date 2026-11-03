@@ -137,45 +137,46 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
       setTimeout(schedule, document.documentElement.classList.contains('has-intro') ? 4400 : 0);
     }
   
-  // client wall: slow drift, pauses on interaction; drag, wheel and swipe scroll it; loops seamlessly
-  {
-    const el = document.querySelector<HTMLElement>('[data-cl]');
-    if (el) {
-      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let pause = 0, down = false, sx = 0, sl = 0, moved = false;
-      const half = () => (el.firstElementChild as HTMLElement).scrollWidth / 2;
-      const wrap = () => { const h = half(); if (el.scrollLeft >= h) el.scrollLeft -= h; else if (el.scrollLeft <= 0) el.scrollLeft += h; };
-      const hold = () => (pause = performance.now() + 2500);
-      el.scrollLeft = 1;
-      const tick = () => { if (!reduce && !down && performance.now() > pause) el.scrollLeft += 0.6; wrap(); requestAnimationFrame(tick); };
-      requestAnimationFrame(tick);
-      el.addEventListener('wheel', (e) => { if (Math.abs(e.deltaX) < Math.abs(e.deltaY) && !e.shiftKey) return; hold(); }, { passive: true });
-      el.addEventListener('touchstart', hold, { passive: true });
-      el.addEventListener('scroll', () => { if (down) hold(); }, { passive: true });
-      el.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = el.scrollLeft; el.classList.add('drag'); });
-      addEventListener('pointermove', (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; el.scrollLeft = sl - dx; wrap(); });
-      addEventListener('pointerup', () => { if (!down) return; down = false; el.classList.remove('drag'); hold(); });
-      el.addEventListener('click', (e) => { if (moved) { e.preventDefault(); moved = false; } }, true);
-      el.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { el.scrollBy({ left: 240, behavior: 'smooth' }); hold(); } if (e.key === 'ArrowLeft') { el.scrollBy({ left: -240, behavior: 'smooth' }); hold(); } });
-    }
-  }
+  // client wall: two rows drift in opposite directions; drag / wheel / swipe / arrows scroll them; seamless loop.
+  // Position is kept as a float (scrollLeft alone rounds sub-pixel steps away on scaled Windows displays).
+  document.querySelectorAll<HTMLElement>('[data-cl]').forEach((el) => {
+    const dir = +(el.dataset.dir || 1), speed = 0.5;
+    let pos = 0, pause = 0, down = false, sx = 0, sp = 0, moved = false, self = false;
+    const third = () => (el.firstElementChild as HTMLElement).scrollWidth / 3;
+    const set = (v: number) => { const t = third(); if (t > 0) { while (v >= 2 * t) v -= t; while (v < t) v += t; } pos = v; self = true; el.scrollLeft = v; };
+    const hold = () => (pause = performance.now() + 2500);
+    const start = () => set(third());
+    requestAnimationFrame(start); addEventListener('load', start);
+    const tick = () => { if (!down && performance.now() > pause) set(pos + speed * dir); requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+    el.addEventListener('scroll', () => { if (self) { self = false; return; } pos = el.scrollLeft; set(pos); hold(); }, { passive: true });
+    el.addEventListener('wheel', (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) hold(); }, { passive: true });
+    el.addEventListener('touchstart', hold, { passive: true });
+    el.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sp = pos; el.classList.add('drag'); });
+    addEventListener('pointermove', (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; set(sp - dx); });
+    addEventListener('pointerup', () => { if (!down) return; down = false; el.classList.remove('drag'); hold(); });
+    el.addEventListener('click', (e) => { if (moved) { e.preventDefault(); moved = false; } }, true);
+    el.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { set(pos + 240); hold(); } if (e.key === 'ArrowLeft') { set(pos - 240); hold(); } });
+  });
 </script>
 
   <section class="clients" aria-labelledby="cl-h">
     <div class="wrap cl-head"><h2 id="cl-h" class="label">{t('Trusted by · 2020 —', 'عملاؤنا · 2020 —')}</h2><span class="label muted cl-hint">{t('Drag or scroll →', 'اسحب أو مرّر ←')}</span></div>
-    <div class="cl-scroll" data-cl tabindex="0" aria-label={t('Client logos, scrollable', 'شعارات العملاء، قابلة للتمرير')}>
-      <ul class="cl-track">
-        {[...clients, ...clients].map((c, k) => (
-          <li aria-hidden={k >= clients.length ? 'true' : undefined}>
-            <a href={u(`/work/${c.slug}/`)} class="cl" style={`--bc:${c.c}`} tabindex={k >= clients.length ? -1 : undefined} draggable="false" data-cursor={t('Project', 'المشروع')}>
-              {c.logo
-                ? <img src={c.logo} alt={c.n} class="logo-img" loading="lazy" decoding="async" draggable="false" />
-                : <span class="wmk" dir="ltr" style={`font-stretch:${c.w ?? 100}%;font-weight:${c.wt ?? 700};letter-spacing:${c.tr ?? '-.01em'};${c.lc ? 'text-transform:lowercase;' : ''}${c.it ? 'font-style:italic;' : ''}`}>{c.n}</span>}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
+    {[clients.filter((_, k) => k % 2 === 0), clients.filter((_, k) => k % 2 === 1)].map((row, r) => (
+      <div class="cl-scroll" data-cl data-dir={r === 0 ? '1' : '-1'} tabindex="0" aria-label={t(`Client logos, row ${r + 1}, scrollable`, `شعارات العملاء، الصف ${r + 1}، قابلة للتمرير`)}>
+        <ul class="cl-track">
+          {[...row, ...row, ...row].map((c, k) => (
+            <li aria-hidden={k >= row.length ? 'true' : undefined}>
+              <a href={u(`/work/${c.slug}/`)} class="cl" style={`--bc:${c.c}`} tabindex={k >= row.length ? -1 : undefined} draggable="false" data-cursor={t('Project', 'المشروع')}>
+                {c.logo
+                  ? <img src={c.logo} alt={c.n} class="logo-img" loading="lazy" decoding="async" draggable="false" />
+                  : <span class="wmk" dir="ltr" style={`font-stretch:${c.w ?? 100}%;font-weight:${c.wt ?? 700};letter-spacing:${c.tr ?? '-.01em'};${c.lc ? 'text-transform:lowercase;' : ''}${c.it ? 'font-style:italic;' : ''}`}>{c.n}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </section>
 
   <section class="dark intro" aria-labelledby="intro-h">
@@ -449,7 +450,8 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   .clients { background: var(--ow); color: var(--ink); padding-block: clamp(36px, 5vw, 72px); }
   .cl-head { display: flex; justify-content: space-between; gap: 16px; margin-bottom: clamp(18px, 2.4vw, 32px); }
   .cl-head h2 { color: var(--ox); }
-  .cl-scroll { overflow-x: auto; scrollbar-width: none; cursor: grab; border-block: 1px solid var(--rule); -webkit-overflow-scrolling: touch; }
+  .cl-scroll { overflow-x: auto; scrollbar-width: none; cursor: grab; border-top: 1px solid var(--rule); direction: ltr; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  .cl-scroll:last-of-type { border-bottom: 1px solid var(--rule); }
   .cl-scroll::-webkit-scrollbar { display: none; }
   .cl-scroll.drag { cursor: grabbing; }
   .cl-scroll:focus-visible { outline: 2px solid var(--ox); outline-offset: 4px; }

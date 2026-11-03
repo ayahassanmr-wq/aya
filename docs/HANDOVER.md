@@ -129,7 +129,7 @@ No gold anywhere.
 | About/timeline | `src/pages/about.astro` |
 
 ### 4.3 Site structure (✅ DECIDED)
-- **Home:** intro → hero → **client logo strip** → intro statement → numbers → selected work → typology marquee → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): one scrollable strip directly under the hero ("Trusted by"): official full-colour logos (`public/clients/<id>.png`, cut from Aya's logo sheet 3 Nov), always drifting (keeps moving on hover; pauses ~2.5 s only after a manual scroll), drag/wheel/swipe/arrow keys to scroll, each links to its project. NOATUM and Suits have no logo yet → typed names. Confidential and private clients excluded.
+- **Home:** intro → hero → **client logo strip** → intro statement → numbers → selected work → typology marquee → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): two scrollable rows directly under the hero, drifting in opposite directions ("Trusted by"): official full-colour logos (`public/clients/<id>.png`, cut from Aya's logo sheet 3 Nov), always drifting (keeps moving on hover; pauses ~2.5 s only after a manual scroll), drag/wheel/swipe/arrow keys to scroll, each links to its project. NOATUM and Suits have no logo yet → typed names. Confidential and private clients excluded.
 - **Work:** opens on **three disciplines** — *Architectural design*, *Interior design*, *BIM & technical*. Choosing one shows its projects grouped by type (Residential, Workplace, Commercial…), numbered 01.01, 01.02…
 - **Project page:** title block with Location · Discipline · Practice · **Client** · **Year** · Scope (+ optional scope note) → renders → drawing sheets → client links.
 - **About:** timeline (section 1), bio, tools.
@@ -283,6 +283,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | Client strip → two rows, opposite drift; motion fixed for scaled displays / reduced-motion | Aya: bar wasn't moving |
 | 2026-11-03 | Hero keeps the intro's dimension ruler | Aya request |
 | 2026-11-03 | Remove cursor 'A' monogram spotlight | Old brand pattern |
 | 2026-11-03 | Official client logos; strip moved under hero, scrollable | Aya supplied logos; wants clients prominent |
@@ -388,6 +389,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | Client strip: two rows, float-based drift (works at 125% Windows scaling and with animations off). Live. |
 | 2026-11-03 | Claude | Hero ruler restored; client strip moves on hover; old A-pattern cursor spotlight removed. Live. |
 | 2026-11-03 | Claude | 14 official logos in a scrollable strip under the hero; site merged to main (live). |
 | 2026-11-03 | Claude | Client brand colours on wall; Details section removed; scope = done only; 6 BIM shots re-toned light, 4 boards restored to colour. |
