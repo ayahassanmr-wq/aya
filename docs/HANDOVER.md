@@ -93,7 +93,8 @@ No gold anywhere.
 
 - **Renders:** one grade on the site — `sepia(.14) saturate(.86) contrast(1.05) brightness(1.01)`: warm sand highlights, slightly matte blacks, quieter greens/blues.
 - **Drawings, plans, elevations, BIM captures, diagrams (✅ 3 Nov):** recoloured *in the files* to the brand palette — gradient map: near-black ink `#1A1615` linework → warm graphite → sand fills → bone `#F3EDE3` background (no white). Shown at natural proportions on a bone sheet with soft shadow against the night section, oxblood hairline + sheet number (A-001…). New drawings must get the same gradient map before upload (script in the 3 Nov commit / ask Claude).
-- **Project page extras (✅ 3 Nov):** cover render repeated uncropped at the top of Visuals; a **Details** section of artistic close-up crops (D-01…D-05, zoom ×1.7–3.2) in an off-grid layout.
+- **Shaded BIM/3D model views:** soft ink→bone duotone with lifted shadows (not the line-drawing map). **Presentation boards with renders** (Fifth Square, Linah concept, Ogami, Travco boards): full colour, only white paper swapped to bone.
+- **Project page extras (✅ 3 Nov):** cover render repeated uncropped at the top of Visuals. Auto close-up Details section ❌ removed — Aya will hand-pick close-ups (see TO DO).
 - **For future renders (guidance):** one signature light hour (warm late-afternoon "Cairo 5 pm"), camera height ~1.2 m, 35 mm interiors, verticals always corrected, consistent entourage (neutral, slightly blurred people; one plant family), fine grain at fixed strength, crops 4:5 and 21:9 only.
 - **Exclusions:** STC and SABIC folders contain photos of the real towers — never on the site.
 - **Juba renders look dated (⏸):** fix without re-rendering — AI upscale at low creativity (Magnific / Krea Enhance / Topaz), Photoshop sky + foliage + people replacement, then house grade. 21 more 2021 Juba renders exist in `G:\Portfolio\pot\Juba Render`.
@@ -128,7 +129,7 @@ No gold anywhere.
 | About/timeline | `src/pages/about.astro` |
 
 ### 4.3 Site structure (✅ DECIDED)
-- **Home:** intro → hero → intro statement → numbers → selected work → typology marquee → **client wall** → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): two counter-scrolling rows of 16 client marks, each linking to its project; typographic marks in Archivo until real logos are dropped in `public/clients/<id>.svg` (auto-tinted ink). Confidential and private clients excluded.
+- **Home:** intro → hero → intro statement → numbers → selected work → typology marquee → **client wall** → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): two counter-scrolling rows of 16 client marks in each client's brand colour (hover fills the tile with it), each linking to its project; typographic marks in Archivo until real logos are dropped in `public/clients/<id>.svg` (auto-tinted ink). Confidential and private clients excluded.
 - **Work:** opens on **three disciplines** — *Architectural design*, *Interior design*, *BIM & technical*. Choosing one shows its projects grouped by type (Residential, Workplace, Commercial…), numbered 01.01, 01.02…
 - **Project page:** title block with Location · Discipline · Practice · **Client** · **Year** · Scope (+ optional scope note) → renders → drawing sheets → client links.
 - **About:** timeline (section 1), bio, tools.
@@ -234,10 +235,11 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - Minimal Villa: 2026, full scope.
 - Max 5 renders per project (best picks; first = cover). Drawings/plans not counted.
 - Hero: no stamp, no table lines.
-- Drawings recoloured to brand palette (ink lines, bone background); cover shown uncropped; Details close-up section; client wall on homepage; footer = AYA | HASSAN wordmark.
+- Drawings recoloured to brand palette (ink lines, bone background); BIM model shots light duotone; cover shown uncropped; client wall in client brand colours; footer = AYA | HASSAN wordmark.
+- Project Scope strip shows only the disciplines actually done (no greyed-out ones).
 
 ### ❓ NEEDS DECISION (Aya)
-0. **Client logos:** send SVG logos (or approve typographic marks as final). Also confirm STC, SABIC, NEOM (NDA projects) may appear by name on the homepage wall — they're shown now.
+0. **Client logos:** send SVG logos (or approve typographic marks as final). Brand colours applied from best knowledge — confirm/correct: SODIC #0E2B4C, Orascom #00467F, Misr Italia #B5893C, Al Marasem #7A5C3E, Guira #2F6B4F, Linah #3E8E41, Travco #00508F. Also confirm STC, SABIC, NEOM (NDA projects) may appear by name on the homepage wall — they're shown now.
 1. **Merge `rebrand-on-update` to `main` (go live)?** — after reviewing preview.
 2. **Which Vercel project to keep** (`aya`, `aya-hassan`, `ayahassan`) and delete the other two.
 3. **Video edits wanted:** web cuts (30–60 s) / Instagram reels / one showreel / logo & titles / compression only?
@@ -257,6 +259,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - **Linah Farms re-render / upscale.**
 
 ### 🔧 TO DO (next actions, in order)
+0. Aya: hand-pick close-up/detail crops per project (auto Details section removed 3 Nov) — send picks, Claude builds the section.
 1. Aya: review preview → decide #1.
 2. Aya: run PowerShell to fill `_Videos`; keep PC awake or upload to Drive.
 3. Claude Code: compress Jotun animation → `public/video/jotun-office.mp4` + poster; enable in `films` in `projects.ts`.
@@ -280,6 +283,10 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | Remove auto close-up Details; Aya picks manually | Aya request |
+| 2026-11-03 | Scope shows done disciplines only | Aya request |
+| 2026-11-03 | Client wall in client brand colours | Aya request |
+| 2026-11-03 | BIM model shots: light duotone; colour boards kept in colour | Line-map made them very dark |
 | 2026-11-03 | Drawings recoloured to palette in the image files; bone background, ink lines | Aya: drawings must blend with brand |
 | 2026-11-03 | Client wall on homepage | Aya request (reopens typologies-only rule) |
 | 2026-11-03 | Cover repeated uncropped; Details close-up section | Aya request — avant-garde detail shots |
@@ -377,6 +384,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | Client brand colours on wall; Details section removed; scope = done only; 6 BIM shots re-toned light, 4 boards restored to colour. |
 | 2026-11-03 | Claude | Modern Residence wrong 5th image replaced; 40 drawings recoloured; cover uncropped + Details section; client wall; new footer wordmark. |
 | 2026-11-03 | Claude | Hero: stamp + table lines removed; 15 projects back to 5 renders (5th from previous set); new colour drawing-sheet style. |
 | 2026-11-03 | Claude (chat) | Curated every project to its best 4 renders (15 projects trimmed); drawings unchanged. |

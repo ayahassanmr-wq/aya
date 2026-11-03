@@ -23,13 +23,6 @@ const place = placeOf(p);
 const all = [hero, ...rest, ...drawings].filter(Boolean);
 const big = await Promise.all(all.map(async (m) => (await getImage({ src: m, width: 2000, format: 'webp' })).src));
 // gallery rhythm: full · pair · offset · pair …
-// detail crops: close-ups cut from the renders, placed off-grid
-const pool = [hero, ...rest].filter(Boolean);
-const cuts = [
-  { c: 'c1', z: 2.4, o: '32% 46%' }, { c: 'c2', z: 2.8, o: '70% 60%' }, { c: 'c3', z: 3.2, o: '50% 30%' },
-  { c: 'c4', z: 2.2, o: '20% 70%' }, { c: 'c5', z: 1.7, o: '60% 50%' },
-];
-const details = pool.length >= 2 ? cuts.slice(0, Math.min(5, pool.length + 2)).map((x, k) => ({ ...x, img: pool[(k * 2 + 1) % pool.length], n: k + 1 })) : [];
 const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 'full'; if (m === 3) return 'offset'; return (k === n - 1 && m === 1) ? 'full' : 'half'; };
 ---
 <Base title={p.title} description={p.summary ?? (L.ar ? `${p.title}، ${place}. مشروع ${p.sector} من أعمال آية حسن.` : `${p.title}, ${place}. ${p.sector} project by Aya Hassan.`)} image={hero?.src} overHero>
@@ -87,23 +80,6 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
               </button>
             </figure>
           ))}
-        </div>
-      </section>
-    )}
-
-    <!-- 04b details -->
-    {details.length > 0 && (
-      <section class="details" aria-label={t('Details', 'تفاصيل')}>
-        <div class="wrap">
-          <div class="sheet-head"><h2 class="label">{t('Details', 'تفاصيل')}</h2><span class="label muted">{t('Close-ups · light, joint, material', 'لقطات قريبة · الضوء والوصلة والمادة')}</span></div>
-          <div class="dt-grid">
-            {details.map((d) => (
-              <figure class:list={['cut', d.c, 'reveal']}>
-                <div class="crop"><Image src={d.img} alt="" widths={[1200, 2000]} sizes="(min-width: 760px) 50vw, 100vw" style={`object-position:${d.o};transform-origin:${d.o}`} data-parallax="0.05" data-scale={String(d.z)} /></div>
-                <figcaption class="label"><span>D-{String(d.n).padStart(2, '0')}</span><span class="muted">× {d.z.toFixed(1)}</span></figcaption>
-              </figure>
-            ))}
-          </div>
         </div>
       </section>
     )}
@@ -258,19 +234,6 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
   .cover :global(img) { width: 100%; height: auto; display: block; }
   .gal .grid { margin-top: clamp(16px, 2vw, 28px); }
 
-  /* details: avant-garde close-ups, off-grid */
-  .details { padding-block: clamp(40px, 6vw, 100px) clamp(80px, 10vw, 150px); overflow: hidden; }
-  .dt-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(14px, 2vw, 28px); margin-top: 28px; align-items: start; }
-  .cut { margin: 0; display: grid; gap: 10px; }
-  .cut figcaption { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--ox); border-top: 1px solid var(--ox); padding-top: 8px; }
-  .crop { overflow: hidden; background: var(--night); }
-  .crop :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .c1 { grid-column: 1 / span 5; } .c1 .crop { aspect-ratio: 3 / 4; }
-  .c2 { grid-column: 7 / span 6; margin-top: clamp(60px, 14vw, 220px); } .c2 .crop { aspect-ratio: 16 / 10; }
-  .c3 { grid-column: 2 / span 3; margin-top: clamp(30px, 5vw, 80px); } .c3 .crop { aspect-ratio: 1; }
-  .c4 { grid-column: 8 / span 4; margin-top: clamp(20px, 4vw, 60px); } .c4 .crop { aspect-ratio: 4 / 5; }
-  .c5 { grid-column: 2 / span 10; margin-top: clamp(30px, 5vw, 80px); } .c5 .crop { aspect-ratio: 21 / 7; }
-  @media (max-width: 760px) { .c1, .c3 { grid-column: span 6; margin-top: 0; } .c2, .c4, .c5 { grid-column: 1 / -1; margin-top: 0; } .c4 { grid-column: 3 / -1; } }
 
   .draw { padding-block: clamp(64px, 9vw, 130px); }
   .dgrid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
