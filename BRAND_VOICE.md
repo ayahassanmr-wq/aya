@@ -41,7 +41,7 @@ Proof points to draw from: NEOM, SABIC HQ, stc HQ, SODIC, Orascom, Misr Italia, 
 - [ ] Services: rename section to "Ways to work with me" with three options (copy below).
 - [ ] Every project page: add "My role" and "Team size" fields at the top (leave values as TODO for Aya to fill — do not invent them).
 - [ ] Contact: add a dropdown — Job opportunity / Project / Studio support.
-- [ ] Studio support: show a typical turnaround (placeholder: "3–5 days for a set of 4 stills" — confirm with Aya).
+- [x] Studio support: "Tight deadline? Send the brief and I'll confirm timing within 24 hours." (Aya, 3 Nov — no fixed turnaround figure)
 - [ ] Update closing CTA site-wide.
 - [ ] Mirror every change on the Arabic site (/ar/).
 
@@ -65,7 +65,7 @@ I'm open to full-time design architect roles and to freelance commissions.
 **Services — Ways to work with me**
 1. **Full-time role.** Design architect or senior designer in a studio or developer team. Cairo, remote, or relocation to the Gulf. → See CV
 2. **Full project.** Concept design for a building or interior, from brief to drawing set. → Start a project
-3. **Studio support.** Renders, animation or Revit packages for studios on deadline. Typical turnaround: days, not weeks. → Send a brief
+3. **Studio support.** Renders, animation or Revit packages for studios on deadline. Tight deadline? Send the brief and I'll confirm timing within 24 hours. → Send a brief
 
 **Closing CTA (all pages)**
 Have a concept, or a role to fill? Let's make it convincing.
