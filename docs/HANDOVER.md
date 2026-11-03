@@ -108,7 +108,7 @@ No gold anywhere.
 - **Hosting:** Vercel team "AYA". Three Vercel projects (`aya`, `aya-hassan`, `ayahassan`) build the same repo → 🔧 keep one, delete two.
 - **Domain:** ayahassan.com · bilingual EN + AR (`/ar/`, RTL).
 - **Branches:**
-  - `main` — live site (old brand).
+  - `main` — live site (One Hand brand since 3 Nov).
   - `update-projects-from-folder` — project/content update (superseded by below).
   - **`rebrand-on-update` — CURRENT WORK. Contains everything: project update + One Hand rebrand + all fixes below.** Not live yet.
   - `rebrand-one-hand` — early experiment, ignore/delete.
@@ -129,7 +129,7 @@ No gold anywhere.
 | About/timeline | `src/pages/about.astro` |
 
 ### 4.3 Site structure (✅ DECIDED)
-- **Home:** intro → hero → intro statement → numbers → selected work → typology marquee → **client wall** → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): two counter-scrolling rows of 16 client marks in each client's brand colour (hover fills the tile with it), each linking to its project; typographic marks in Archivo until real logos are dropped in `public/clients/<id>.svg` (auto-tinted ink). Confidential and private clients excluded.
+- **Home:** intro → hero → **client logo strip** → intro statement → numbers → selected work → typology marquee → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): one scrollable strip directly under the hero ("Trusted by"): official full-colour logos (`public/clients/<id>.png`, cut from Aya's logo sheet 3 Nov), slow auto-drift, drag/wheel/swipe/arrow keys to scroll, each links to its project. NOATUM and Suits have no logo yet → typed names. Confidential and private clients excluded.
 - **Work:** opens on **three disciplines** — *Architectural design*, *Interior design*, *BIM & technical*. Choosing one shows its projects grouped by type (Residential, Workplace, Commercial…), numbered 01.01, 01.02…
 - **Project page:** title block with Location · Discipline · Practice · **Client** · **Year** · Scope (+ optional scope note) → renders → drawing sheets → client links.
 - **About:** timeline (section 1), bio, tools.
@@ -239,8 +239,8 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - Project Scope strip shows only the disciplines actually done (no greyed-out ones).
 
 ### ❓ NEEDS DECISION (Aya)
-0. **Client logos:** send SVG logos (or approve typographic marks as final). Brand colours applied from best knowledge — confirm/correct: SODIC #0E2B4C, Orascom #00467F, Misr Italia #B5893C, Al Marasem #7A5C3E, Guira #2F6B4F, Linah #3E8E41, Travco #00508F. Also confirm STC, SABIC, NEOM (NDA projects) may appear by name on the homepage wall — they're shown now.
-1. **Merge `rebrand-on-update` to `main` (go live)?** — after reviewing preview.
+0. **Missing logos:** NOATUM and Suits Workspaces (send files). STC/SABIC/NEOM logos are shown — Aya supplied them, treated as approved.
+1. ✅ Merged to `main` and live 3 Nov.
 2. **Which Vercel project to keep** (`aya`, `aya-hassan`, `ayahassan`) and delete the other two.
 3. **Video edits wanted:** web cuts (30–60 s) / Instagram reels / one showreel / logo & titles / compression only?
 4. **Sphinx Airport & City Club animations:** add as new projects, attach to existing Sphinx page, or keep off site?
@@ -283,6 +283,8 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | Official client logos; strip moved under hero, scrollable | Aya supplied logos; wants clients prominent |
+| 2026-11-03 | Go live: `rebrand-on-update` → `main` | Aya approved |
 | 2026-11-03 | Remove auto close-up Details; Aya picks manually | Aya request |
 | 2026-11-03 | Scope shows done disciplines only | Aya request |
 | 2026-11-03 | Client wall in client brand colours | Aya request |
@@ -384,6 +386,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | 14 official logos in a scrollable strip under the hero; site merged to main (live). |
 | 2026-11-03 | Claude | Client brand colours on wall; Details section removed; scope = done only; 6 BIM shots re-toned light, 4 boards restored to colour. |
 | 2026-11-03 | Claude | Modern Residence wrong 5th image replaced; 40 drawings recoloured; cover uncropped + Details section; client wall; new footer wordmark. |
 | 2026-11-03 | Claude | Hero: stamp + table lines removed; 15 projects back to 5 renders (5th from previous set); new colour drawing-sheet style. |

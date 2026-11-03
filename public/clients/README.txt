@@ -1,1 +1,0 @@
-Drop real client logos here as <id>.svg (sodic, orascom, misr-italia, neom, stc, sabic, travco, jotun, bmw, chery, noatum, hb-fuller, al-marasem, guira, linah, suits). They replace the typographic mark automatically and are tinted to the brand ink.
