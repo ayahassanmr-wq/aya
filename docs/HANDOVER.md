@@ -1,9 +1,52 @@
 # Aya Hassan — Master Handover (v3)
 
-**Last updated:** 3 Nov 2026 · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
+**Last updated:** 3 Nov 2026 (22:15) · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
 **Lives at:** `G:\Portfolio\Portfolio Projects\Aya_Hassan_Handover_v3.md`
 
 > **Rule for everyone (people, Claude chat, Claude Code):** read this file first. When you finish a session, update the sections you touched — Status board, Decisions log, Changelog — and bump the date. Never keep project knowledge only in a chat. One file, one truth.
+
+---
+
+## ▶ RESUME HERE — state at 3 Nov 2026, 22:15 (for a new Claude account / new session)
+
+**Repo:** GitHub `ayahassanmr-wq/aya` (Astro 7). **Live site:** ayahassan.com = Vercel project `aya-hassan` (team "aya-d9cd"), builds from `main`.
+**Branches:** `main` = live (last live commit `8c0f3bb`, 3 Nov 20:05). `rebrand-on-update` = preview/work branch, AHEAD of main with unpublished work (see below). Never push to `main` without Aya's OK; she reviews screenshots/preview first.
+**Rules:** read `CLAUDE.md` + `BRAND_VOICE.md` (copy rules, FIRST PERSON everywhere, EN + AR in sync) + this file.
+**How Aya works:** one change at a time → build → screenshots (EN + AR) → she says "next" / "push live". Keep replies short (usage limits).
+
+### Tools/scripts in the repo
+- PDFs: `npx astro build && python3 scripts/grade-print.py && (npx astro preview --port 4321 &) && node scripts/make-pdfs.mjs` → writes `public/Aya_Hassan_CV.pdf` + `public/Aya_Hassan_Portfolio.pdf` (from hidden pages `/print/cv/`, `/print/portfolio/`). Needs Chrome (`/usr/bin/google-chrome` or env CHROME) and `puppeteer-core` (devDependency).
+- Project order + numbers: `ordered` / `projectNo` / `sectorGroups` in `src/data/projects.ts` (Architecture → Interiors; categories Masterplan first then by size; featured first, newest). Work page, project pages and portfolio all use it.
+- Composite grids / brand recolour of studies were made with Python (PIL) in the session — results are committed as images; no script kept. Recolour rule: bone paper #F3EDE3, ink lines, oxblood #5E1A24 key layer, taupe open space; photos keep colour.
+
+### Done on preview (`rebrand-on-update`) but NOT live yet
+- BRAND_VOICE items 5–10: "Ways to work with me" (Home + Services), contact Topic dropdown (pre-fills email subject), Studio support "Tight deadline?" callout, closing line "Have a concept, or a role to fill?", "About me" links, Arabic mirror checked.
+- DHIFAF (Sallan Creek) third render replaced (district aerial). Modern Residence drawing set (4 plans, one grid).
+- Bold project numbers on cards; distinct oxblood category headings on Work; portfolio uses same order + category headers in index.
+- Hero buttons: Start a project · View the work · Hiring? See CV. New page `/cv/` (+ `/ar/cv/`): view/download CV and portfolio. Contact page rows for CV + Portfolio.
+- PDFs regenerated with the new order (in `public/`).
+
+### Aya's requests still TO DO (in this order) — last messages of 3 Nov
+1. Hero buttons: "View the work" distinctive/popping; "Start a project" and "Hiring? See CV" identical to each other but clearly visible.
+2. All contact info (email, WhatsApp, LinkedIn, Instagram, socials) on the `/cv/` (hire) page and on the Start-a-project path (contact page/services full-project) as well.
+3. Homepage project thumbnail bar at the bottom (marquee/ticker) → scrollable (drag/scroll) and each item clickable to its project.
+4. About page: remove the "current studio" part (Role/Studio meta in About hero: "Studio: Innovation Design Studio").
+5. Project page order where a project has studies: best render first → studies & inspiration → remaining renders → architectural drawings last. (Today visuals come before drawings; needs a per-project "studies" set shown after the cover — e.g. Staff Housing, Sallan Creek, East Vale.)
+6. Juba Resort: remove "Design" from scope (scope → modelling, rendering only).
+7. Website logo icon (favicon / apple-touch-icon / brand svgs) → new One Hand brand (old AYA monogram is retired). Suggest: "A|H" or "AH" in Archivo 800/125% bone on oxblood, or the AYA | HASSAN divider mark.
+8. Remove "Sheet A-000" from the hero on the website AND the portfolio cover.
+9. Homepage "In numbers": replace the Juba image with a Travco render.
+10. Years in practice = 7 (freelance since 2019), not 6. Update stat (index.astro uses `getFullYear() - 2020`), portfolio About numbers, CV profile ("six years" → "seven"), BRAND_VOICE "since 2020" wording → practice since 2019, About intro line ("Six years at the concept stage…").
+11. Remove the "Tech campus" bar (photo Aya sent): the big homepage typology marquee strip below "Selected work" (image marquee with words like Public, Headquarters, Tech campus…) — remove it.
+12. Then: show preview screenshots, regenerate CV + portfolio, push live on Aya's OK.
+
+### Parked / next after that
+- BRAND_VOICE item 6 (My role / Team size) → one "Role" field = position · team size; code ready, hidden until filled; sheet `docs/ROLES_TODO.md`.
+- Real contact form (e.g. Formspree) using the Topic dropdown.
+- Two portfolio PDFs: freelance/collaboration vs full-time studio roles (proposed split in chat: ~12 projects each, built from site data).
+- Shorter "Selected works" PDF (~15 projects) and a lighter (<25 MB) email version.
+- Arabic copy needs a native-reader check (BRAND_VOICE Arabic, new labels).
+- Reminders set: 4 Nov 11:00 (push live/PDFs) and 4 Nov 19:00 (pick close-up shots) — in the old account only.
 
 ---
 
