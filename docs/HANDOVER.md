@@ -10,7 +10,7 @@
 ## ▶ RESUME HERE — state at 3 Nov 2026, 22:15 (for a new Claude account / new session)
 
 **Repo:** GitHub `ayahassanmr-wq/aya` (Astro 7). **Live site:** ayahassan.com = Vercel project `aya-hassan` (team "aya-d9cd"), builds from `main`.
-**Branches:** `main` = live (last live commit `8c0f3bb`, 3 Nov 20:05). `rebrand-on-update` = preview/work branch, AHEAD of main with unpublished work (see below). Never push to `main` without Aya's OK; she reviews screenshots/preview first.
+**Branches:** `main` = live (3 Nov 23:10, everything below is live). `rebrand-on-update` = preview/work branch, same as main right now. Never push to `main` without Aya's OK; she reviews screenshots/preview first.
 **Rules:** read `CLAUDE.md` + `BRAND_VOICE.md` (copy rules, FIRST PERSON everywhere, EN + AR in sync) + this file.
 **How Aya works:** one change at a time → build → screenshots (EN + AR) → she says "next" / "push live". Keep replies short (usage limits).
 
@@ -19,14 +19,14 @@
 - Project order + numbers: `ordered` / `projectNo` / `sectorGroups` in `src/data/projects.ts` (Architecture → Interiors; categories Masterplan first then by size; featured first, newest). Work page, project pages and portfolio all use it.
 - Composite grids / brand recolour of studies were made with Python (PIL) in the session — results are committed as images; no script kept. Recolour rule: bone paper #F3EDE3, ink lines, oxblood #5E1A24 key layer, taupe open space; photos keep colour.
 
-### Done on preview (`rebrand-on-update`) but NOT live yet
+### Done earlier on 3 Nov (now live)
 - BRAND_VOICE items 5–10: "Ways to work with me" (Home + Services), contact Topic dropdown (pre-fills email subject), Studio support "Tight deadline?" callout, closing line "Have a concept, or a role to fill?", "About me" links, Arabic mirror checked.
 - DHIFAF (Sallan Creek) third render replaced (district aerial). Modern Residence drawing set (4 plans, one grid).
 - Bold project numbers on cards; distinct oxblood category headings on Work; portfolio uses same order + category headers in index.
 - Hero buttons: Start a project · View the work · Hiring? See CV. New page `/cv/` (+ `/ar/cv/`): view/download CV and portfolio. Contact page rows for CV + Portfolio.
 - PDFs regenerated with the new order (in `public/`).
 
-### Aya's 3 Nov evening requests — DONE on preview (`rebrand-on-update`), awaiting her OK to push live
+### Aya's 3 Nov evening requests — ✅ LIVE (main = ff9e16f, 3 Nov 23:10)
 1. Hero: "View the work" = oxblood with a soft pulse ring; "Start a project" + "Hiring? See CV" = identical bone buttons.
 2. `/cv/` page has a "Get in touch" block (email with Job-opportunity subject, WhatsApp/LinkedIn/Instagram icons); contact page already has all contact info + CV & Portfolio rows.
 3. Homepage project thumbnail strip (Reel) = drag/scroll, each tile clickable with its title (Reel `links` prop).
@@ -40,7 +40,7 @@
 11. Homepage typology marquee ("Tech campus" bar) removed.
 12. CV + portfolio regenerated.
 13. (22:48 batch) Hero buttons blend: Start + Hiring = translucent bone glass, View the work = translucent oxblood. Contact: 'What is it about?' + hint 'Pick one — it becomes the subject of your email.' New `HireNotes` component (3 highlights + Tools line) on /cv/ and /contact/; 'I typically reply within 24 hours.' under email. Jotun film live on project (public/video/jotun-office.mp4, 5 MB). Numbers restart per section (Architecture 01–16, Interiors 01–12, BIM section 01–04 on work page); portfolio matches.
-**Next:** Aya reviews screenshots → "push live" = `git push origin rebrand-on-update:main` (fast-forward) → confirm Vercel production READY.
+**Next:** parked items below (Role field, contact form, two portfolios, Selected Works PDF, Arabic native check). Push-live recipe: `git push origin rebrand-on-update:main` (fast-forward) → confirm Vercel production READY.
 
 ### Parked / next after that
 - BRAND_VOICE item 6 (My role / Team size) → one "Role" field = position · team size; code ready, hidden until filled; sheet `docs/ROLES_TODO.md`.
