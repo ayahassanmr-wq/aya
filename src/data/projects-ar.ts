@@ -52,6 +52,7 @@ export const projectsAr: Record<string, ArText> = {
   'sodic-east-vale': { title: 'إيست فيل، سوديك · المنزل المميز', summary: 'منزلان في فيلا واحدة: وحدة أرضية بحديقة ومسبح خاص، ووحدة علوية يتوجها تراس سطح بمساحة 184 م².', captions: ['توليد الكتلة · البرنامج المساحي، كتلة التوزيع، الشكل المبدئي', 'الدور الأرضي · الوحدة السفلية، 202.6 م²', 'الدور الأول · الوحدة العلوية، 194.3 م²', 'تراس السطح · 184 م²'] },
   'staff-housing': { title: 'مجتمع سكن العاملين', summary: 'بلدة قابلة للمشي لنحو سبعة آلاف من العاملين في المنتجعات: أفنية متجمعة، ونموذجان متكرران، ولغة نوبية مُنقّاة من الأقواس والظلال والطين.',
     captions: ['الإلهام · أقواس محلية وكتل منحوتة', 'المنهج · من القوس النوبي إلى واجهة السكن', 'تصميم الواجهات · الظل والتجاويف والإيقاع', 'المخطط العام', 'الفكرة · التجمعات والدوران وشبكة المشاة', 'المصمت والفراغ', 'المساحات المفتوحة · عامة وشبه عامة وخاصة', 'الوصولية · الطرق والتنقل ومسارات المشاة', 'النموذج على شكل L · استراتيجية التصميم', 'النموذج على شكل L · مسقط الدور الأرضي', 'النموذج الخطي · مسقط الدور الأرضي'] },
+  'sallan-creek': { title: 'خور صلان (ضفاف)', summary: 'مخطط عام استراتيجي للنمو المستدام ودمج التراث: حي جديد على ممر مائي من تسع عشرة منطقة، من أرض المعارض ومركز التعليم إلى السياحة الزراعية والمارينا والسكن على الواجهة المائية.' },
   'orascom-o-west': { title: 'ميديارد، أو ويست، أوراسكوم', summary: 'عمارات سكنية متوسطة الارتفاع لحي ميديارد في أو ويست.' },
   'minimal-villa': { title: 'فيلا مينيمال', summary: 'فيلا من طابقين بحجر فاتح وزجاج داكن: كتلة واحدة منحوتة وتراس حديقة عميق وواجهة شارع هادئة.' },
   'mediterranean-house': { title: 'منزل متوسطي' },
@@ -61,7 +62,7 @@ export const projectsAr: Record<string, ArText> = {
   'bmw-showroom': { title: 'معرض BMW', summary: 'معرض لعلامة سيارات بجدار مميز ذي ملمس وأجنحة عرض مضيئة.' },
 };
 
-export const placeAr: Record<string, string> = {
+export const placeAr: Record<string, string> = { 'Oman': 'عُمان', 
   'Riyadh': 'الرياض', 'Saudi Arabia': 'السعودية', 'Egypt': 'مصر', 'India': 'الهند', 'Lebanon': 'لبنان', 'South Sudan': 'جنوب السودان',
   'Confidential client': 'عميل سري', '6th of October': 'السادس من أكتوبر', 'Giza': 'الجيزة', 'New Capital': 'العاصمة الإدارية',
   'Oxagon, NEOM': 'أوكساجون، نيوم', 'New Cairo': 'القاهرة الجديدة', 'Ain Sokhna': 'العين السخنة', 'Juba': 'جوبا',
@@ -69,12 +70,12 @@ export const placeAr: Record<string, string> = {
   'Jeddah': 'جدة', 'Various': 'متنوع',
 };
 
-export const sectorAr: Record<string, string> = {
+export const sectorAr: Record<string, string> = { 'Masterplan': 'مخطط عام', 
   'Workplace': 'بيئات عمل', 'Public': 'مبانٍ عامة', 'Commercial': 'تجاري', 'Industrial': 'صناعي', 'Hospitality': 'ضيافة',
   'Residential': 'سكني', 'Retail': 'تجزئة', 'Sketches': 'اسكتشات',
 };
 
-export const scopeAr: Record<string, string> = {
+export const scopeAr: Record<string, string> = { 'Masterplan refinement': 'تطوير المخطط العام', 'Presentation': 'العرض التقديمي', 
   'Design': 'التصميم', 'Modelling': 'النمذجة', 'Rendering': 'الإظهار', 'Animation': 'التحريك', 'BIM': 'BIM',
   'Concept': 'الفكرة', 'Revit model': 'نموذج Revit', 'Render': 'الإظهار',
   'Conceptual design presentation': 'عرض التصميم المبدئي', 'Detailed design plans': 'مخططات التصميم التفصيلي',
