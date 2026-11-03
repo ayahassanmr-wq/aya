@@ -8,7 +8,7 @@ Instructions for anyone (human or AI) editing this website. Follow these rules f
 
 Motto (keep): From concept to conviction.
 
-Proof points to draw from: NEOM, SABIC HQ, stc HQ, SODIC, Orascom, Misr Italia, BMW · 28 selected projects · 5 countries (Saudi Arabia, Egypt, India, South Sudan, Oman) · 3 studios · since 2020 · Revit to IFC.
+Proof points to draw from: NEOM, SABIC HQ, stc HQ, SODIC, Orascom, Misr Italia, BMW · 28 selected projects · 5 countries (Saudi Arabia, Egypt, India, South Sudan, Oman) · 3 studios · since 2019 (freelance), 7 years · Revit to IFC.
 
 ## Audiences — every page must serve all three
 
@@ -58,7 +58,7 @@ Proof points to draw from: NEOM, SABIC HQ, stc HQ, SODIC, Orascom, Misr Italia, 
 I turn early ideas into concepts clients approve, from public buildings to corporate headquarters and private homes. Idea, model, image and drawing set, carried by one hand.
 
 **About — bio opening**
-I'm an architect and interior designer working at the concept stage. Since 2020 I have moved between three studios project by project, following the work: NEOM public buildings, the SABIC and stc headquarters in Riyadh, and residential developments for SODIC, Orascom and Misr Italia.
+I'm an architect and interior designer working at the concept stage. Since 2019 I have worked freelance and moved between three studios project by project, following the work: NEOM public buildings, the SABIC and stc headquarters in Riyadh, and residential developments for SODIC, Orascom and Misr Italia.
 
 I'm open to full-time design architect roles and to freelance commissions.
 

@@ -37,6 +37,8 @@ export interface Project {
   roleAr?: string;
   /** Team size, e.g. '4' or '6–8' (TODO: Aya to fill per project). */
   team?: string;
+  /** Drawing numbers (1-based) that are studies/inspiration: shown right after the cover render, before the other renders. */
+  studies?: number[];
   /** Drawing numbers (1-based) shown full width at natural height, e.g. composite grids. */
   fullSheets?: number[];
   /** Concept → model → render strip: [label, image file name without .jpg]. */
@@ -83,7 +85,7 @@ export const projects: Project[] = [
     summary: 'Public service buildings for Oxagon, NEOM’s port city: brick volumes, shaded courtyards and planted roofs.' },
   { slug: 'fifth-square', client: 'Al Marasem', year: '2025', title: 'Fifth Square Commercial Complex', location: 'New Cairo', country: 'Egypt', category: 'architecture', sector: 'Commercial', scope: ['Canopy design', M, R, P], scopeNote: 'Design: the canopy. Modelling and rendering: the whole building.', scopeNoteAr: 'التصميم: المظلة. النمذجة والإظهار: المبنى بالكامل.', practice: 'Cosmos Studio', featured: true,
     summary: 'A terraced commercial complex whose canopy “trees” become the landmark at night.' },
-  { slug: 'sallan-creek', fullSheets: [1, 2], client: 'North Al Batinah Governor’s Office', year: '2025', title: 'Sallan Creek (DHIFAF)', location: 'Oman', country: 'Oman', category: 'architecture', sector: 'Masterplan', scope: ['Masterplan refinement', M, R, P, 'Presentation'], practice: 'Cosmos Studio', featured: true,
+  { slug: 'sallan-creek', studies: [2], fullSheets: [1, 2], client: 'North Al Batinah Governor’s Office', year: '2025', title: 'Sallan Creek (DHIFAF)', location: 'Oman', country: 'Oman', category: 'architecture', sector: 'Masterplan', scope: ['Masterplan refinement', M, R, P, 'Presentation'], practice: 'Cosmos Studio', featured: true,
     summary: 'A strategic masterplan for sustainable growth and heritage integration: a new waterway district of nineteen zones, from expo grounds and an education hub to agri-tourism, a marina and waterfront living.',
     overview: [
       'Sallan Creek reimagines a coastal creek in North Al Batinah as the spine of a new mixed-use district. A navigable waterway — DHIFAF — threads through nineteen zones, binding economic hubs, tourism and community life into one walkable landscape.',
@@ -109,7 +111,7 @@ export const projects: Project[] = [
     summary: 'Design review and redesign of a hotel and housing complex to code and architectural standards.' },
   { slug: 'dry-port', client: 'Egyptian Government', year: '2021', title: 'Dry Port Buildings', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, B], practice: 'Cosmos Studio',
     summary: 'A Revit (BIM) sample: plans and 3D for a dry port’s buildings.' },
-  { slug: 'juba-resort', year: '2023', client: 'Confidential', title: 'Juba Resort Complex', location: 'Juba', country: 'South Sudan', category: 'architecture', sector: 'Hospitality', scope: [D, M, R], practice: 'Cosmos Studio',
+  { slug: 'juba-resort', year: '2023', client: 'Confidential', title: 'Juba Resort Complex', location: 'Juba', country: 'South Sudan', category: 'architecture', sector: 'Hospitality', scope: [M, R], practice: 'Cosmos Studio',
     summary: 'A resort complex arranged around a landscaped pool garden.' },
 
   // ---------- Residential developments (Innovation Design Studio)
@@ -119,7 +121,7 @@ export const projects: Project[] = [
     summary: 'A twin villa and a town home for a coastal community, in warm terracotta render with deep, shaded terraces.' },
   { slug: 'travco-west-island', client: 'Travco · Almaza Bay', year: '2026', title: 'Travco West Island', location: 'Almaza Bay', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'A coastal chalet and a coastal town home on the lagoon at Almaza Bay.' },
-  { slug: 'sodic-east-vale', client: 'SODIC', year: '2026', title: 'SODIC East Vale · Premium Home', location: 'MADA City, New Cairo', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
+  { slug: 'sodic-east-vale', studies: [1], client: 'SODIC', year: '2026', title: 'SODIC East Vale · Premium Home', location: 'MADA City, New Cairo', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     captions: ['Form generation · area program, zoning mass, conceptual form', 'Ground floor · lower unit, 202.6 m²', 'First floor · upper unit, 194.3 m²', 'Roof terrace · 184 m²'],
     summary: 'Two homes in one villa: a garden unit with its own pool below, and an upper unit crowned by a 184 m² roof terrace.',
     overview: [
@@ -131,7 +133,7 @@ export const projects: Project[] = [
   { slug: 'orascom-o-west', client: 'Orascom Development', year: '2026', title: 'Orascom O West Midyard', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'Mid-rise apartment blocks for the Midyard district of O West.' },
 
-  { slug: 'staff-housing', fullSheets: [1, 2], client: 'Confidential developer', year: '2026', title: 'Staff Housing Community', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Masterplan', scope: ['Masterplanning', 'Concept design', M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
+  { slug: 'staff-housing', studies: [1, 2], fullSheets: [1, 2], client: 'Confidential developer', year: '2026', title: 'Staff Housing Community', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Masterplan', scope: ['Masterplanning', 'Concept design', M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
     summary: 'A walkable town for nearly 7,000 resort staff: clustered courtyards, two repeatable prototypes and a refined Nubian language of arches, shade and earth.',
     overview: [
       'A secluded desert plot transformed into a self-sufficient community for close to seven thousand employees of a coastal resort town. The brief asked for dignity at scale: 130,000 m² of built area, a central amenities hub with dining, kitchen, laundry and retail, and a landscape that makes the whole livable.',

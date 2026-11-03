@@ -14,7 +14,11 @@ const { t, u } = L;
 const p = localize(Astro.props.p, L.ar), prev = localize(Astro.props.prev, L.ar), next = localize(Astro.props.next, L.ar);
 const disc = p.category === 'architecture' ? t('Architecture', 'العمارة') : t('Interiors', 'التصميم الداخلي');
 const [hero, ...rest] = imagesFor(p.slug);
-const drawings = drawingsFor(p.slug);
+const allDrawings = drawingsFor(p.slug);
+const studyIdx = new Set((p.studies ?? []).map((n) => n - 1));
+const studies = allDrawings.map((d, k) => ({ d, k })).filter((x) => studyIdx.has(x.k));
+const drawings = allDrawings.filter((_, k) => !studyIdx.has(k));
+const drawK = allDrawings.map((_, k) => k).filter((k) => !studyIdx.has(k));
 const bim = disciplinesFor(p).has('BIM');
 const process = (p.process ?? []).map(([label, name]) => ({ label, img: fileFor(p.slug, name) })).filter((x) => x.img);
 const nextCover = imagesFor(next.slug)[0];
@@ -22,7 +26,7 @@ const place = placeOf(p);
 const no = projectNo(p.slug);
 const logo = clientLogo(p.slug);
 // full-size sources for the lightbox
-const all = [hero, ...rest, ...drawings].filter(Boolean);
+const all = [hero, ...rest, ...allDrawings].filter(Boolean);
 const big = await Promise.all(all.map(async (m) => (await getImage({ src: m, width: 2000, format: 'webp' })).src));
 // gallery rhythm: full · pair · offset · pair …
 const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 'full'; if (m === 3) return 'offset'; return (k === n - 1 && m === 1) ? 'full' : 'half'; };
@@ -81,6 +85,16 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
       <section class="wrap gal">
         <div class="sheet-head"><h2 class="label">{t('Visuals', 'الصور')}</h2></div>
         {hero && <button type="button" class="cover lb" data-lb={0} data-cursor={t('Open', 'افتح')} aria-label={t('Open cover image', 'افتح صورة الغلاف')}><Image src={hero} alt={`${p.title}, ${t('cover view', 'المنظور الرئيسي')}`} widths={[900, 1600, 2400]} sizes="100vw" /></button>}
+        {studies.length > 0 && (
+          <div class="studies dgrid">
+            {studies.map(({ d, k }) => (
+              <figure class:list={['reveal', { wide: d.width / d.height > 1.45 || p.fullSheets?.includes(k + 1), full: p.fullSheets?.includes(k + 1) }]}>
+                <button type="button" class="paper lb" data-lb={rest.length + 1 + k} data-cursor={t('Open', 'افتح')} aria-label={`${t('Open drawing', 'افتح الرسم')} ${k + 1}`}><Image src={d} alt={`${p.title}, ${p.captions?.[k] ?? ''}`} widths={[900, 1600, 2400]} sizes="100vw" /></button>
+                {p.captions?.[k] && <figcaption class="label muted">{p.captions[k]}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        )}
         <div class="grid">
           {rest.map((img, k) => (
             <figure class:list={[layout(k, rest.length)]}>
@@ -109,12 +123,12 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
             </ol>
           )}
           <div class="dgrid">
-            {drawings.map((d, k) => (
+            {drawings.map((d, j) => { const k = drawK[j]; return (
               <figure class:list={['reveal', { wide: d.width / d.height > 1.45 || p.fullSheets?.includes(k + 1), full: p.fullSheets?.includes(k + 1) }]}>
                 <button type="button" class="paper lb" data-sheet={`A-${String(k + 1).padStart(3, "0")}`} data-lb={rest.length + 1 + k} data-cursor={t('Open', 'افتح')} aria-label={`${t('Open drawing', 'افتح الرسم')} ${k + 1}`}><Image src={d} alt={`${p.title}, ${p.captions?.[k] ?? `${t('drawing', 'رسم')} ${k + 1}`}`} widths={[600, 1100]} sizes="(min-width: 760px) 50vw, 100vw" /></button>
                 {p.captions?.[k] && <figcaption class="label muted">{String(k + 1).padStart(2, '0')} · {p.captions[k]}</figcaption>}
               </figure>
-            ))}
+            ); })}
           </div>
         </div>
       </section>
@@ -249,6 +263,9 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
 
   /* cover, shown whole */
   .cover { margin-top: 28px; }
+  .studies { margin-top: clamp(16px, 2vw, 28px); }
+  .studies .paper { background: #F3EDE3; }
+  .studies figcaption { margin-top: 8px; }
   .cover :global(img) { width: 100%; height: auto; display: block; }
   .gal .grid { margin-top: clamp(16px, 2vw, 28px); }
 

@@ -17,12 +17,13 @@ const slides = await Promise.all(slideSlugs.map(async (slug) => {
   return { p, img, srcset: later.join(', '), thumb: (await getImage({ src: img, width: 240, format: 'webp' })).src };
 }));
 const place = (p: typeof projects[number]) => placeOf(loc(p));
-const years = new Date().getFullYear() - 2020;
+const years = new Date().getFullYear() - 2019; // freelance practice since 2019
+const reelRows = [['neom-oxagon', 'jotun-office', 'fifth-square', 'zayed-residence', 'chery-showroom', 'arches-restaurant', 'noatum-terminal'], ['stc-hq', 'sodic-ogami', 'bmw-showroom', 'linah-farms', 'tech-park', 'sallan-creek', 'staff-housing']];
 const thumb = async (slug: string) => (await getImage({ src: cover(slug)!, width: 480, height: 360, fit: 'cover', format: 'webp', quality: 62 })).src;
 const stats = [
   { n: projects.length, l: t('Selected projects', 'مشروعًا مختارًا'), d: t('A selection of architecture and interiors, from first concept to drawing set.', 'مختارات من العمارة والتصميم الداخلي، من الفكرة الأولى حتى مجموعة الرسومات.'), img: await thumb('neom-oxagon') },
-  { n: countries.length, l: t('Countries', 'دول'), d: countries.map((c) => (L.ar ? placeAr[c] ?? c : c)).join(' · '), img: await thumb('juba-resort') },
-  { n: years, l: t('Years in practice', 'سنوات من الممارسة'), d: t('Concept design since 2020.', 'في التصميم المبدئي منذ 2020.'), img: await thumb('fifth-square') },
+  { n: countries.length, l: t('Countries', 'دول'), d: countries.map((c) => (L.ar ? placeAr[c] ?? c : c)).join(' · '), img: await thumb('travco-west-island') },
+  { n: years, l: t('Years in practice', 'سنوات من الممارسة'), d: t('Concept design since 2019.', 'في التصميم المبدئي منذ 2019.'), img: await thumb('fifth-square') },
   { n: 3, l: t('Studios', 'استوديوهات'), d: t('ZFP (Zuhair Fayez Partnership), Cosmos Studio and Innovation Design Studio.', 'زهير فايز ومشاركوه (ZFP)، وكوزموس ستوديو، وإنوفيشن ديزاين ستوديو.'), img: await thumb('stc-hq') },
 ];
 const feats = await Promise.all(featured.slice(0, 6).map(async (p) => {
@@ -84,15 +85,14 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
         <dl class="cells" dir={L.dir}>
           <div class="c mot"><dt class="sr-only">{t('Motto', 'الشعار')}</dt><dd>{L.ar ? <>من الفكرة إلى <em>الإقناع.</em></> : <>From concept to <em>conviction.</em></>}</dd></div>
           <div class="c"><dt class="label">{t('Based', 'المقر')}</dt><dd>{t('Cairo, EG', 'القاهرة، مصر')}</dd></div>
-          <div class="c"><dt class="label">{t('Practice', 'منذ')}</dt><dd>2020 —</dd></div>
-          <div class="c"><dt class="label">{t('Sheet', 'لوحة')}</dt><dd>A-000</dd></div>
+          <div class="c"><dt class="label">{t('Practice', 'منذ')}</dt><dd>2019 —</dd></div>
         </dl>
       </div>
       <div class="bottom">
         <div class="ctas">
-          <a href={u('/contact/')} class="btn solid magnet">{t('Start a project', 'ابدأ مشروعًا')} <span class="arr">{L.next}</span></a>
-          <a href={u('/work/')} class="btn ghost glass-dark">{t('View the work', 'شاهد الأعمال')} <span class="arr">{L.next}</span></a>
-          <a href={u('/cv/')} class="btn ghost glass-dark">{t('Hiring? See CV', 'تبحث عن مصممة؟ اطّلع على السيرة الذاتية')} <span class="arr">{L.next}</span></a>
+          <a href={u('/contact/')} class="btn solid magnet cta-eq">{t('Start a project', 'ابدأ مشروعًا')} <span class="arr">{L.next}</span></a>
+          <a href={u('/work/')} class="btn pop magnet">{t('View the work', 'شاهد الأعمال')} <span class="arr">{L.next}</span></a>
+          <a href={u('/cv/')} class="btn solid cta-eq">{t('Hiring? See CV', 'تبحث عن مصممة؟ اطّلع على السيرة الذاتية')} <span class="arr">{L.next}</span></a>
         </div>
         <div class="ctrl" role="group" aria-label={t('Featured projects', 'مشاريع مميزة')}>
           <div class="bars">{slides.map((x, i) => <button type="button" class:list={['bb', { on: i === 0 }]} data-go={i} aria-label={`${t('Show', 'اعرض')} ${loc(x.p).title}`}><i></i></button>)}</div>
@@ -232,9 +232,6 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
     </section>
   </div>
 
-  <section class="dark marquee" aria-label={t('Clients and projects', 'العملاء والمشاريع')}>
-    <div class="track">{[...strip, ...strip].map((x, k) => <span class="mi" aria-hidden={k >= strip.length ? 'true' : undefined}><img src={x.src} alt="" width="160" height="110" loading="lazy" decoding="async" />{x.n}<i aria-hidden="true">✦</i></span>)}</div>
-  </section>
 
 
 
@@ -253,10 +250,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
     </div>
   </section>
 
-  <Reel dark rows={[
-    ['neom-oxagon', 'jotun-office', 'fifth-square', 'zayed-residence', 'chery-showroom', 'arches-restaurant', 'noatum-terminal'].map((s) => cover(s)!),
-    ['stc-hq', 'sodic-ogami', 'bmw-showroom', 'linah-farms', 'tech-park', 'juba-resort', 'sphinx'].map((s) => cover(s)!),
-  ]} />
+  <Reel dark rows={reelRows.map((r) => r.map((s) => cover(s)!))} links={reelRows.map((r) => r.map((s) => ({ href: u(`/work/${s}/`), title: loc(projects.find((p) => p.slug === s)!).title })))} />
 
   <section class="dark svc" data-svc>
     <div class="wrap">
@@ -315,7 +309,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   .nm-h { font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(44px, 9.6vw, 176px); line-height: .86; letter-spacing: -.02em; white-space: nowrap; max-width: none; }
   .fno { display: block; font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(30px, 3vw, 48px); line-height: .85; letter-spacing: -.03em; color: var(--sand); margin-bottom: 6px; }
   .status { margin: clamp(12px, 1.4vw, 20px) 0 0; color: var(--sand); font-size: 11px; letter-spacing: .2em; }
-  .cells { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr; gap: clamp(16px, 2.4vw, 40px); margin: clamp(16px, 2vw, 28px) 0 0; }
+  .cells { display: grid; grid-template-columns: 2.2fr 1fr 1fr; gap: clamp(16px, 2.4vw, 40px); margin: clamp(16px, 2vw, 28px) 0 0; }
   .c { margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
   .c dt { color: rgba(243, 237, 227, .7); font-size: 10.5px; }
   .c dd { margin: 0; font-weight: 500; font-size: 15px; }
@@ -332,6 +326,11 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   @keyframes up { from { opacity: 0; transform: translateY(14px); } }
   .ctas { display: flex; gap: 10px; flex-wrap: nowrap; }
   .ctas .btn { white-space: nowrap; }
+  .ctas .cta-eq { background: var(--ow); color: var(--ink); border-color: var(--ow); }
+  .ctas .pop { background: var(--ox); color: var(--ow); border: 1px solid var(--ox); font-weight: 700; padding-inline: 30px; box-shadow: 0 0 0 0 rgba(94,26,36,.6); animation: popring 2.6s 3.5s ease-out infinite; }
+  .ctas .pop:hover { background: #7A2430; }
+  @keyframes popring { 0% { box-shadow: 0 0 0 0 rgba(184,57,74,.55); } 70%, 100% { box-shadow: 0 0 0 14px rgba(184,57,74,0); } }
+  @media (prefers-reduced-motion: reduce) { .ctas .pop { animation: none; } }
   .btn.solid { background: var(--ow); color: var(--ink); border-color: var(--ow); }
   .btn.solid::before { background: var(--ox) !important; }
   .btn.solid:hover { color: var(--ow) !important; border-color: var(--ox) !important; }

@@ -90,7 +90,7 @@ const year = new Date().getFullYear();
   .cover .cbar a { border-bottom: 1px solid rgba(243,237,227,.45); }
   .cover .tb { position: absolute; left: 12mm; right: 12mm; bottom: 26mm; color: var(--ow); }
   .cover h1 { margin: 3mm 0 6mm; font-size: 76pt; white-space: nowrap; }
-  .cells { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr; gap: 8mm; align-items: end; }
+  .cells { display: grid; grid-template-columns: 2.2fr 1fr 1fr; gap: 8mm; align-items: end; }
   .cells .mot { font-size: 17pt; font-weight: 600; letter-spacing: -.02em; }
   .cells .mot em { color: var(--sand); }
   .cells dt { font-size: 6.5pt; letter-spacing: .22em; text-transform: uppercase; opacity: .7; margin-bottom: 1.5mm; }
@@ -196,8 +196,7 @@ const year = new Date().getFullYear();
     <dl class="cells">
       <div class="mot">From concept to <em>conviction.</em></div>
       <div><dt>Based</dt><dd>Cairo, EG</dd></div>
-      <div><dt>Practice</dt><dd>2020 —</dd></div>
-      <div><dt>Sheet</dt><dd>A-000</dd></div>
+      <div><dt>Practice</dt><dd>2019 —</dd></div>
     </dl>
   </div>
   <nav class="cbar">
@@ -217,13 +216,13 @@ const year = new Date().getFullYear();
       <p class="stmt">A concept is only useful once someone believes in it.</p>
     </div>
     <div style="display:grid;gap:6mm;align-content:start">
-      <p class="bio">I'm an architect and interior designer working at the concept stage, based in Cairo. Since 2020 I have moved between three studios project by project, following the work: NEOM public buildings, the SABIC and stc headquarters in Riyadh, and residential developments for SODIC, Orascom, Misr Italia and Travco. My work covers the full concept stage — the idea, the 3D model, the visuals and animation that win approval, and the drawing packages and material selections that make it buildable. I'm open to full-time design architect roles and to freelance commissions.</p>
+      <p class="bio">I'm an architect and interior designer working at the concept stage, based in Cairo. Since 2019 I have worked freelance and moved between three studios project by project, following the work: NEOM public buildings, the SABIC and stc headquarters in Riyadh, and residential developments for SODIC, Orascom, Misr Italia and Travco. My work covers the full concept stage — the idea, the 3D model, the visuals and animation that win approval, and the drawing packages and material selections that make it buildable. I'm open to full-time design architect roles and to freelance commissions.</p>
       <div class="tl">{timeline.map(([y, r, o, d]) => <div><span class="y">{y}</span><span><b>{r}</b> · {o}<br /><span class="mut">{d}</span></span></div>)}</div>
     </div>
     <div class="nums">
       <div><b>{projects.length}</b><span class="lab mut">Selected projects</span></div>
       <div><b>{countries.length}</b><span class="lab mut">Countries</span></div>
-      <div><b>{year - 2020}</b><span class="lab mut">Years in practice</span></div>
+      <div><b>{year - 2019}</b><span class="lab mut">Years in practice</span></div>
     </div>
   </div>
   <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">02 / {total}</span></div>
@@ -231,7 +230,7 @@ const year = new Date().getFullYear();
 
 <!-- clients -->
 <section class="pg clients">
-  <div class="head"><h2 class="wide">Clients</h2><span class="lab ox">Trusted by · 2020 —</span></div>
+  <div class="head"><h2 class="wide">Clients</h2><span class="lab ox">Trusted by · 2019 —</span></div>
   <div class="lg">
     {clients.map((c) => <div><img src={`/clients/${c}.png`} alt={c} /></div>)}
     {typed.map((c) => <div><span>{c}</span></div>)}
@@ -241,7 +240,7 @@ const year = new Date().getFullYear();
 
 <!-- index -->
 <section class="pg index">
-  <div class="head"><h2 class="wide">Index</h2><span class="lab ox">{projects.length} projects · 2020 — {year}</span></div>
+  <div class="head"><h2 class="wide">Index</h2><span class="lab ox">{projects.length} projects · 2019 — {year}</span></div>
   <div class="ix">
     {sections.map((s) => (
       <div>

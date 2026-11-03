@@ -26,19 +26,20 @@
 - Hero buttons: Start a project · View the work · Hiring? See CV. New page `/cv/` (+ `/ar/cv/`): view/download CV and portfolio. Contact page rows for CV + Portfolio.
 - PDFs regenerated with the new order (in `public/`).
 
-### Aya's requests still TO DO (in this order) — last messages of 3 Nov
-1. Hero buttons: "View the work" distinctive/popping; "Start a project" and "Hiring? See CV" identical to each other but clearly visible.
-2. All contact info (email, WhatsApp, LinkedIn, Instagram, socials) on the `/cv/` (hire) page and on the Start-a-project path (contact page/services full-project) as well.
-3. Homepage project thumbnail bar at the bottom (marquee/ticker) → scrollable (drag/scroll) and each item clickable to its project.
-4. About page: remove the "current studio" part (Role/Studio meta in About hero: "Studio: Innovation Design Studio").
-5. Project page order where a project has studies: best render first → studies & inspiration → remaining renders → architectural drawings last. (Today visuals come before drawings; needs a per-project "studies" set shown after the cover — e.g. Staff Housing, Sallan Creek, East Vale.)
-6. Juba Resort: remove "Design" from scope (scope → modelling, rendering only).
-7. Website logo icon (favicon / apple-touch-icon / brand svgs) → new One Hand brand (old AYA monogram is retired). Suggest: "A|H" or "AH" in Archivo 800/125% bone on oxblood, or the AYA | HASSAN divider mark.
-8. Remove "Sheet A-000" from the hero on the website AND the portfolio cover.
-9. Homepage "In numbers": replace the Juba image with a Travco render.
-10. Years in practice = 7 (freelance since 2019), not 6. Update stat (index.astro uses `getFullYear() - 2020`), portfolio About numbers, CV profile ("six years" → "seven"), BRAND_VOICE "since 2020" wording → practice since 2019, About intro line ("Six years at the concept stage…").
-11. Remove the "Tech campus" bar (photo Aya sent): the big homepage typology marquee strip below "Selected work" (image marquee with words like Public, Headquarters, Tech campus…) — remove it.
-12. Then: show preview screenshots, regenerate CV + portfolio, push live on Aya's OK.
+### Aya's 3 Nov evening requests — DONE on preview (`rebrand-on-update`), awaiting her OK to push live
+1. Hero: "View the work" = oxblood with a soft pulse ring; "Start a project" + "Hiring? See CV" = identical bone buttons.
+2. `/cv/` page has a "Get in touch" block (email with Job-opportunity subject, WhatsApp/LinkedIn/Instagram icons); contact page already has all contact info + CV & Portfolio rows.
+3. Homepage project thumbnail strip (Reel) = drag/scroll, each tile clickable with its title (Reel `links` prop).
+4. About hero: "Studio" removed; "Since 2019".
+5. Project page order: cover render → studies (`studies: [n]` per project: Staff Housing [1,2], Sallan Creek [2], East Vale [1]) → other renders → drawings.
+6. Juba scope = Modelling + Rendering (no Design).
+7. New favicon / apple-touch-icon: "AH" Archivo 800 wide, bone on oxblood tile (public/favicon.svg|.ico, apple-touch-icon.png).
+8. "Sheet A-000" removed from website hero and portfolio cover.
+9. In numbers: Countries image = Travco render.
+10. Practice since 2019 (freelance) → 7 years: home stat, hero "2019 —", About, portfolio, CV ("seven years", freelance 2019 — now), BRAND_VOICE.
+11. Homepage typology marquee ("Tech campus" bar) removed.
+12. CV + portfolio regenerated.
+**Next:** Aya reviews screenshots → "push live" = `git push origin rebrand-on-update:main` (fast-forward) → confirm Vercel production READY.
 
 ### Parked / next after that
 - BRAND_VOICE item 6 (My role / Team size) → one "Role" field = position · team size; code ready, hidden until filled; sheet `docs/ROLES_TODO.md`.
