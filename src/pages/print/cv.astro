@@ -1,0 +1,159 @@
+---
+/* Print-only CV, A4 portrait, two pages. Rendered to /Aya_Hassan_CV.pdf with headless Chrome. */
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/archivo/wdth-italic.css';
+import { getImage } from 'astro:assets';
+import { projects, imagesFor, contact } from '../../data/projects';
+
+const jpg = async (src: any, w = 900) => (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: 74 })).src;
+const grid = await Promise.all(['sodic-ogami', 'travco-west-island', 'fifth-square', 'chery-showroom', 'jotun-office', 'hb-fuller'].map((s) => jpg(imagesFor(s)[0], 700)));
+const strip = await Promise.all(['misr-italia-hilltop', 'stc-hq', 'neom-oxagon', 'sabic-hq'].map((s) => jpg(imagesFor(s)[0])));
+const exp = [
+  ['2026 — now', 'Mid-senior Design Architect', 'Innovation Design Studio · Cairo', [
+    'Architectural concepts, 3D modelling and visuals for residential developments by SODIC, Orascom, Misr Italia and Travco on the North Coast and in Greater Cairo.',
+    'AI-assisted post-production and presentation material for developer approvals.']],
+  ['2025', 'Mid-senior Design Architect & Interior Designer', 'Cosmos Studio · Cairo', [
+    'Commercial and industrial architecture: Fifth Square (canopy design), Chery showroom & admin, NOATUM automotive terminal, Linah Farms, Mazeej hotel & housing redesign to code.',
+    'Developed projects through to coordinated Revit (BIM) drawing packages.']],
+  ['2024', 'Design Architect & Interior Designer', 'ZFP · Zuhair Fayez Partnership · Riyadh projects', [
+    'Headquarters interiors for SABIC and STC: design concepts, 3D modelling and visuals.',
+    'Material selection through site visits and vendor collaboration; FF&E sourced from suppliers worldwide.']],
+  ['2020 — 2023', 'Design Architect & Interior Designer', 'Cosmos Studio · Cairo', [
+    'BIM development for NEOM public service buildings; 3D modelling, animation and promotional content for NEOM Oxagon and Um Qasr Logistic City.',
+    'Interior concepts and schematic & IFC packages for Sphinx, HB Fuller, Jotun, Tech Park and BMW.']],
+];
+const sel = ['misr-italia-hilltop', 'sodic-ogami', 'sodic-east-vale', 'travco-west-island', 'stc-hq', 'sabic-hq', 'neom-oxagon', 'fifth-square', 'chery-showroom', 'noatum-terminal', 'jotun-office', 'juba-resort']
+  .map((s) => projects.find((p) => p.slug === s)!).filter(Boolean);
+const skills = [
+  ['Concept design', 'Massing, facades, interiors, FF&E and material palettes'],
+  ['Visualization', 'Photoreal stills, animation, post-production, AI-assisted concepts'],
+  ['BIM & documentation', 'Revit models, coordinated drawing sets, schematic & IFC packages'],
+];
+const tools = [
+  ['Design & BIM', 'AutoCAD, Revit, Navisworks, BIM 360, Rhino, Grasshopper, SketchUp'],
+  ['Visualization', '3ds Max, V-Ray, Corona, Lumion, AI concept tools'],
+  ['Presentation', 'Photoshop, InDesign, Premiere, After Effects'],
+];
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="robots" content="noindex" />
+<title>Aya Hassan — CV</title>
+<style is:global>
+  @page { size: 210mm 297mm; margin: 0; }
+  :root { --ow: #F3EDE3; --ink: #2B2826; --night: #201C1B; --ox: #5E1A24; --sand: #D6CBBE; --mut: #8C857D; --rule: rgba(43,40,38,.18); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #777; }
+  body { font-family: "Archivo Variable", sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 8.2pt; line-height: 1.42; }
+  .pg { width: 210mm; height: 297mm; position: relative; overflow: hidden; background: var(--ow); break-after: page; margin: 0 auto 8mm; padding: 14mm 14mm 20mm; }
+  @media print { html, body { background: none; } .pg { margin: 0; } }
+  .lab { font-size: 6.8pt; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; }
+  .mut { color: var(--mut); } .ox { color: var(--ox); }
+  .wide { font-weight: 800; font-stretch: 125%; letter-spacing: -.02em; line-height: .9; }
+  em { font-weight: 250; font-style: italic; font-stretch: 100%; }
+  .dim { display: flex; align-items: center; gap: 4mm; color: var(--ox); }
+  .dim i { flex: 1; height: 1px; background: currentColor; position: relative; opacity: .6; }
+  .dim i::before { content: ""; position: absolute; top: -2mm; width: 1px; height: 4.2mm; background: currentColor; }
+  .dim i:first-child::before { left: 0; } .dim i:last-child::before { right: 0; }
+  .dim span { font-size: 7pt; letter-spacing: .26em; text-transform: uppercase; white-space: nowrap; }
+  h1 { font-size: 46pt; margin: 3mm 0 4mm; white-space: nowrap; }
+  .row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 6mm; padding-bottom: 5mm; border-bottom: 1px solid var(--ink); }
+  .row .mot { font-size: 12.5pt; font-weight: 600; letter-spacing: -.02em; } .row .mot em { color: var(--ox); }
+  .row dt { font-size: 6pt; letter-spacing: .22em; text-transform: uppercase; color: var(--mut); margin-bottom: 1mm; }
+  .row dd { margin: 0; font-weight: 500; }
+  .strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5mm; margin: 5mm 0; height: 22mm; }
+  .strip img { width: 100%; height: 100%; object-fit: cover; }
+  .cols { display: grid; grid-template-columns: 1fr 58mm; gap: 9mm; }
+  h2 { margin: 0 0 3mm; padding-bottom: 1.8mm; border-bottom: 1px solid var(--ox); font-size: 7pt; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--ox); }
+  section + section { margin-top: 6mm; }
+  .job { display: grid; grid-template-columns: 22mm 1fr; gap: 3mm; padding: 2.6mm 0; border-bottom: 1px solid var(--rule); }
+  .job .y { font-weight: 600; color: var(--ox); }
+  .job b { font-weight: 650; font-size: 9.4pt; display: block; }
+  .job ul { margin: 1.4mm 0 0; padding-left: 3.4mm; } .job li { margin: .6mm 0; }
+  .job li::marker { color: var(--ox); }
+  .side p { margin: 0 0 2.6mm; }
+  .kv { padding: 2mm 0; border-bottom: 1px solid var(--rule); } .kv b { display: block; font-weight: 600; }
+  .ct a { color: inherit; text-decoration: none; }
+  .pj { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8mm; }
+  .pj div { display: grid; grid-template-columns: 1fr auto; gap: 3mm; padding: 2mm 0; border-bottom: 1px solid var(--rule); }
+  .pj b { font-weight: 600; display: block; } .pj span { font-size: 7.4pt; }
+  .foot { position: absolute; left: 14mm; right: 14mm; bottom: 9mm; display: flex; justify-content: space-between; padding-top: 2.5mm; border-top: 1px solid var(--rule); }
+  .wm { display: inline-flex; align-items: center; gap: 2.2mm; font-weight: 800; font-stretch: 125%; font-size: 7.5pt; letter-spacing: .06em; }
+  .wm i { width: 1px; height: 2.8mm; background: currentColor; opacity: .45; }
+  .quote { margin-top: 8mm; padding: 5mm 7mm; background: var(--night); color: var(--ow); }
+  .quote p { margin: 0; font-size: 13pt; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; } .quote em { color: var(--sand); }
+</style>
+</head>
+<body>
+<section class="pg">
+  <div class="dim"><i></i><span>Architect · Interior designer</span><i></i></div>
+  <h1 class="wide">AYA HASSAN</h1>
+  <dl class="row">
+    <div class="mot">From concept to <em>conviction.</em></div>
+    <div><dt>Based</dt><dd>Cairo, Egypt</dd></div>
+    <div><dt>Practice</dt><dd>2020 —</dd></div>
+    <div><dt>Web</dt><dd>ayahassan.com</dd></div>
+  </dl>
+  <div class="strip">{strip.map((s) => <img src={s} alt="" />)}</div>
+  <div class="cols">
+    <div>
+      <section>
+        <h2>Profile</h2>
+        <p style="margin:0">Architect and interior designer in concept design. I carry a project with one hand from idea to 3D model, to the visuals and animation that win approval, to the BIM drawing set that makes it buildable — on Gulf-scale work from NEOM to the headquarters of SABIC and stc, and residential developments for SODIC, Orascom, Misr Italia and Travco.</p>
+      </section>
+      <section>
+        <h2>Experience</h2>
+        {exp.map(([y, r, o, pts]) => (
+          <div class="job"><span class="y">{y}</span><div><b>{r}</b><span class="mut">{o}</span><ul>{(pts as string[]).map((x) => <li>{x}</li>)}</ul></div></div>
+        ))}
+      </section>
+    </div>
+    <div class="side">
+      <section class="ct">
+        <h2>Contact</h2>
+        <div class="kv"><b>Email</b><a href={`mailto:${contact.email}`}>{contact.email}</a></div>
+        <div class="kv"><b>LinkedIn</b><a href={contact.linkedin}>{contact.linkedinLabel}</a></div>
+        <div class="kv"><b>Instagram</b><a href={contact.instagram}>@ayahassanmr</a></div>
+        <div class="kv"><b>Portfolio</b><a href="https://ayahassan.com">ayahassan.com</a></div>
+      </section>
+      <section>
+        <h2>Education</h2>
+        <div class="kv"><b>B.Sc. Architectural Engineering</b>Future University in Egypt<br /><span class="mut">2014 — 2019 · Graduation project A−</span></div>
+      </section>
+    </div>
+  </div>
+  <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">CV · 01 / 02</span></div>
+</section>
+
+<section class="pg">
+  <section>
+    <h2>Selected projects</h2>
+    <div class="pj">{sel.map((p) => <div><span><b>{p.title}</b>{p.client} · {p.location}</span><span class="mut">{p.year}</span></div>)}</div>
+  </section>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:9mm;margin:6mm 0">
+    <section style="margin:0">
+      <h2>Expertise</h2>
+      {skills.map(([a, b]) => <div class="kv"><b>{a}</b><span class="mut">{b}</span></div>)}
+    </section>
+    <section style="margin:0">
+      <h2>Languages</h2>
+      <div class="kv"><b>Arabic</b><span class="mut">Native</span></div>
+      <div class="kv"><b>English</b><span class="mut">Fluent</span></div>
+    </section>
+  </div>
+  <section>
+    <h2>Software</h2>
+    <div class="pj">{tools.map(([a, b]) => <div style="grid-template-columns:30mm 1fr"><b>{a}</b><span>{b}</span></div>)}</div>
+  </section>
+  <section>
+    <h2>Clients</h2>
+    <p style="margin:0">SODIC · Orascom Development · Misr Italia Properties · Travco · NEOM · stc · SABIC · Jotun · BMW Egypt · Chery Egypt · NOATUM · H.B. Fuller · Al Marasem · Guira Developments · Linah Farms · Suits Workspaces</p>
+  </section>
+  <div class="strip" style="grid-template-columns:repeat(3,1fr);height:auto;grid-auto-rows:21mm;margin-top:5mm">{grid.map((s) => <img src={s} alt="" />)}</div>
+  <div class="quote" style="margin-top:5mm"><p>A concept is only useful once<br />someone <em>believes in it.</em></p></div>
+  <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">CV · 02 / 02</span></div>
+</section>
+</body>
+</html>

@@ -135,6 +135,13 @@ No gold anywhere.
 - **About:** timeline (section 1), bio, tools.
 - Client names: allowed on project pages (Client row + links); homepage uses typologies.
 
+### 4.3b PDFs (✅ 3 Nov)
+- **Portfolio** `public/Aya_Hassan_Portfolio.pdf` — A4 landscape, ~71 pages, ~28 MB: cover (title block), about + timeline + numbers, client logos, index with page numbers, Architecture / Interiors dividers, per project: opener (cover + title block), renders page, drawings page; contact back cover.
+- **CV** `public/Aya_Hassan_CV.pdf` — A4 portrait, 2 pages, One Hand style.
+- Both are generated from hidden pages `/print/portfolio/` and `/print/cv/` (noindex) using the site data, so they update with the site. Rebuild: `npx astro build && python3 scripts/grade-print.py && (npx astro preview --port 4321 &) && node scripts/make-pdfs.mjs`, then commit the PDFs.
+- Downloads: both buttons on the About page.
+- Phone/WhatsApp number deliberately not printed (same rule as the site).
+
 ### 4.4 Content rules
 - Every project must have **client** and **year** (no "—").
 - Fifth Square scope note: *"Design: the canopy. Modelling and rendering: the whole building."*
@@ -259,6 +266,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - **Linah Farms re-render / upscale.**
 
 ### 🔧 TO DO (next actions, in order)
+0b. Aya: review PDFs; decide whether to add phone number to CV; Mazeej cover render shows a 'VANILLA' watermark — replace image.
 0. Aya: hand-pick close-up/detail crops per project (auto Details section removed 3 Nov) — send picks, Claude builds the section.
 1. Aya: review preview → decide #1.
 2. Aya: run PowerShell to fill `_Videos`; keep PC awake or upload to Drive.
@@ -283,6 +291,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | PDF portfolio + CV generated from the site, downloadable on About | Aya: for offline clients |
 | 2026-11-03 | Client strip → two rows, opposite drift; motion fixed for scaled displays / reduced-motion | Aya: bar wasn't moving |
 | 2026-11-03 | Hero keeps the intro's dimension ruler | Aya request |
 | 2026-11-03 | Remove cursor 'A' monogram spotlight | Old brand pattern |
@@ -389,6 +398,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | Built PDF portfolio (71 pp, A4 landscape) and 2-page CV from the site; About page download buttons. Live. |
 | 2026-11-03 | Claude | Client strip: two rows, float-based drift (works at 125% Windows scaling and with animations off). Live. |
 | 2026-11-03 | Claude | Hero ruler restored; client strip moves on hover; old A-pattern cursor spotlight removed. Live. |
 | 2026-11-03 | Claude | 14 official logos in a scrollable strip under the hero; site merged to main (live). |

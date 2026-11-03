@@ -1,0 +1,304 @@
+---
+/* Print-only portfolio, A4 landscape. Rendered to /Aya_Hassan_Portfolio.pdf with headless Chrome
+   (see docs/HANDOVER.md §4 "PDFs"). Built from the same data and images as the site, so it never drifts. */
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/archivo/wdth-italic.css';
+import { getImage } from 'astro:assets';
+import { projects, imagesFor, drawingsFor, disciplinesFor, countries, contact, type Project } from '../../data/projects';
+
+const jpg = async (src: any, w = 1800) => (src ? (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: 74 })).src : '');
+const practice = (p: Project) => p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent';
+const place = (p: Project) => p.location === p.country || p.location.includes(p.country) ? p.location : `${p.location}, ${p.country}`;
+
+const groups: [string, string, Project[]][] = [
+  ['01', 'Architecture', projects.filter((p) => p.category === 'architecture')],
+  ['02', 'Interiors', projects.filter((p) => p.category === 'interiors')],
+];
+const featuredFirst = (a: Project, b: Project) => +!!b.featured - +!!a.featured || +(b.year ?? 0) - +(a.year ?? 0);
+groups.forEach((g) => g[2].sort(featuredFirst));
+
+let page = 4; // cover, about, clients, index come first
+let sheet = 0;
+const sections = await Promise.all(groups.map(async ([n, name, list]) => ({
+  n, name,
+  items: await Promise.all(list.map(async (p, i) => {
+    const imgs = imagesFor(p.slug), dr = drawingsFor(p.slug);
+    return {
+      p, code: `${n}.${String(i + 1).padStart(2, '0')}`,
+      cover: await jpg(imgs[0], 2000),
+      rest: await Promise.all(imgs.slice(1, 5).map((x) => jpg(x, 1400))),
+      draw: await Promise.all(dr.slice(0, 4).map((x) => jpg(x, 1400))),
+      disc: [...disciplinesFor(p)],
+    };
+  })),
+})));
+// page numbers for the index
+for (const s of sections) { (s as any).start = page + 1; page += 1; for (const it of s.items) { (it as any).page = page + 1; page += 1 + (it.rest.length ? 1 : 0) + (it.draw.length ? 1 : 0); } }
+const total = page + 1;
+const next = () => `A-${String(++sheet).padStart(3, '0')}`;
+
+const coverImg = await jpg(imagesFor('misr-italia-hilltop')[0], 2400);
+const aboutImg = await jpg(imagesFor('sabic-hq')[1], 1400);
+const backImg = await jpg(imagesFor('neom-oxagon')[0], 2400);
+const clients = ['sodic', 'orascom', 'misr-italia', 'travco', 'neom', 'stc', 'sabic', 'jotun', 'bmw', 'chery', 'hb-fuller', 'al-marasem', 'guira', 'linah'];
+const typed = ['NOATUM', 'Suits Workspaces'];
+const timeline = [
+  ['2026 — now', 'Mid-senior Design Architect', 'Innovation Design Studio', 'Concepts, 3D models and visuals for residential developments by SODIC, Orascom, Misr Italia and Travco.'],
+  ['2025', 'Mid-senior Design Architect & Interior Designer', 'Cosmos Studio', 'Fifth Square, Chery, NOATUM, Linah Farms and Mazeej, through to Revit (BIM) packages.'],
+  ['2024', 'Design Architect & Interior Designer', 'ZFP · Zuhair Fayez Partnership', 'Headquarters interiors for SABIC and STC in Riyadh, materials and FF&E sourcing.'],
+  ['2020 — 2023', 'Design Architect & Interior Designer', 'Cosmos Studio', 'BIM for NEOM public service buildings; interiors for Sphinx, HB Fuller, Jotun and Tech Park.'],
+  ['2014 — 2019', 'B.Sc. Architectural Engineering', 'Future University in Egypt', 'Graduation project grade A−.'],
+];
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="robots" content="noindex" />
+<title>Aya Hassan — Portfolio</title>
+<style is:global>
+  @page { size: 297mm 210mm; margin: 0; }
+  :root { --ow: #F3EDE3; --ink: #2B2826; --night: #201C1B; --ox: #5E1A24; --sand: #D6CBBE; --mut: #8C857D; --rule: rgba(43,40,38,.18); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #777; }
+  body { font-family: "Archivo Variable", sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .pg { width: 297mm; height: 210mm; position: relative; overflow: hidden; background: var(--ow); page-break-after: always; break-after: page; margin: 0 auto 8mm; }
+  @media print { html, body { background: none; } .pg { margin: 0; } }
+  .dark { background: var(--night); color: var(--ow); }
+  img { display: block; }
+  .grade { }
+  .lab { font-size: 7.5pt; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; }
+  .mut { color: var(--mut); } .dark .mut { color: rgba(243,237,227,.6); }
+  .ox { color: var(--ox); }
+  .wide { font-weight: 800; font-stretch: 125%; letter-spacing: -.02em; line-height: .9; }
+  em { font-weight: 250; font-style: italic; font-stretch: 100%; }
+  /* sheet frame: footer strip on every page */
+  .foot { position: absolute; left: 12mm; right: 12mm; bottom: 8mm; display: flex; justify-content: space-between; align-items: center; padding-top: 3mm; border-top: 1px solid var(--rule); }
+  .dark .foot, .on-img .foot { border-color: rgba(243,237,227,.3); }
+  .wm { display: inline-flex; align-items: center; gap: 2.4mm; font-weight: 800; font-stretch: 125%; font-size: 8pt; letter-spacing: .06em; }
+  .wm i { width: 1px; height: 3mm; background: currentColor; opacity: .45; }
+  .dim { display: flex; align-items: center; gap: 4mm; color: var(--sand); }
+  .dim i { flex: 1; height: 1px; background: currentColor; position: relative; }
+  .dim i::before { content: ""; position: absolute; top: -2mm; width: 1px; height: 4.2mm; background: currentColor; }
+  .dim i:first-child::before { left: 0; } .dim i:last-child::before { right: 0; }
+  .dim span { font-size: 7.5pt; letter-spacing: .26em; text-transform: uppercase; white-space: nowrap; }
+
+  /* cover */
+  .cover img.bg, .back img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(32,28,27,.25), rgba(32,28,27,.72)); }
+  .cover .tb { position: absolute; left: 12mm; right: 12mm; bottom: 24mm; color: var(--ow); }
+  .cover h1 { margin: 3mm 0 6mm; font-size: 76pt; white-space: nowrap; }
+  .cells { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr; gap: 8mm; align-items: end; }
+  .cells .mot { font-size: 17pt; font-weight: 600; letter-spacing: -.02em; }
+  .cells .mot em { color: var(--sand); }
+  .cells dt { font-size: 6.5pt; letter-spacing: .22em; text-transform: uppercase; opacity: .7; margin-bottom: 1.5mm; }
+  .cells dd { margin: 0; font-size: 10pt; font-weight: 500; }
+  .cover .top { position: absolute; left: 12mm; right: 12mm; top: 10mm; display: flex; justify-content: space-between; color: var(--ow); }
+
+  /* about */
+  .about { display: grid; grid-template-columns: 96mm 1fr; }
+  .about .ph { height: 210mm; overflow: hidden; } .about .ph img { width: 100%; height: 100%; object-fit: cover; }
+  .about .tx { padding: 14mm 14mm 22mm 14mm; display: grid; grid-template-rows: auto auto 1fr auto; gap: 6mm; }
+  .stmt { font-size: 21pt; font-weight: 800; line-height: 1.12; letter-spacing: -.02em; margin: 0; }
+  .bio { font-size: 9pt; line-height: 1.55; columns: 2; column-gap: 8mm; margin: 0; }
+  .tl { display: grid; gap: 0; align-content: start; }
+  .tl div { display: grid; grid-template-columns: 26mm 1fr; gap: 4mm; padding: 2.4mm 0; border-top: 1px solid var(--rule); font-size: 8pt; line-height: 1.4; }
+  .tl b { font-weight: 600; } .tl .y { color: var(--ox); font-weight: 600; }
+  .nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; }
+  .nums div { border-top: 1px solid var(--ox); padding-top: 2.5mm; }
+  .nums b { display: block; font-size: 30pt; font-weight: 800; font-stretch: 125%; line-height: 1; color: var(--ox); }
+
+  /* clients */
+  .clients { padding: 14mm 12mm 22mm; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8mm; }
+  .head h2 { margin: 0; font-size: 34pt; }
+  .lg { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
+  .lg div { height: 33mm; display: grid; place-items: center; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 6mm 10mm; }
+  .lg img { max-width: 100%; max-height: 19mm; object-fit: contain; }
+  .lg span { font-size: 15pt; font-weight: 800; font-stretch: 112%; }
+
+  /* index */
+  .index { padding: 14mm 12mm 22mm; }
+  .ix { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12mm; }
+  .ix h3 { margin: 0 0 3mm; font-size: 8pt; letter-spacing: .22em; text-transform: uppercase; color: var(--ox); font-weight: 600; }
+  .ix ol { list-style: none; margin: 0; padding: 0; }
+  .ix li { display: grid; grid-template-columns: 11mm 1fr auto 10mm; gap: 3mm; align-items: baseline; padding: 1.55mm 0; border-top: 1px solid var(--rule); font-size: 8.4pt; }
+  .ix li .c { color: var(--mut); font-size: 7pt; } .ix li .m { color: var(--mut); font-size: 7pt; } .ix li .n { text-align: right; font-weight: 600; }
+
+  /* section divider */
+  .divider { display: grid; align-content: end; padding: 12mm 12mm 26mm; }
+  .divider .big { font-size: 120pt; color: var(--sand); line-height: .8; }
+  .divider h2 { margin: 4mm 0 0; font-size: 58pt; }
+
+  /* project opener */
+  .op { display: grid; grid-template-columns: 1fr 92mm; }
+  .op .im { height: 210mm; overflow: hidden; } .op .im img { width: 100%; height: 100%; object-fit: cover; }
+  .op .side { padding: 12mm 11mm 22mm; display: flex; flex-direction: column; gap: 5mm; }
+  .code { font-size: 9pt; font-weight: 600; letter-spacing: .12em; color: var(--ox); }
+  .op h2 { margin: 0; font-size: 25pt; line-height: .98; font-stretch: 112%; }
+  .op .sum { font-size: 9.2pt; line-height: 1.5; margin: 0; }
+  .blk { margin: auto 0 0; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule); }
+  .blk div { padding: 2.6mm 0; border-bottom: 1px solid var(--rule); }
+  .blk div:nth-child(odd) { padding-right: 3mm; }
+  .blk .w { grid-column: 1 / -1; }
+  .blk dt { font-size: 6.3pt; letter-spacing: .2em; text-transform: uppercase; color: var(--mut); margin-bottom: 1mm; }
+  .blk dd { margin: 0; font-size: 8.4pt; line-height: 1.35; }
+  .disc { display: flex; flex-wrap: wrap; gap: 1.6mm 4mm; }
+  .disc span { display: inline-flex; align-items: center; gap: 1.5mm; font-size: 6.8pt; letter-spacing: .14em; text-transform: uppercase; color: var(--ox); }
+  .disc span::before { content: ""; width: 2mm; height: 2mm; background: var(--ox); }
+  .tag { align-self: flex-start; font-size: 6.5pt; letter-spacing: .2em; text-transform: uppercase; border: 1px solid var(--ox); color: var(--ox); padding: 1mm 2mm; }
+
+  /* renders page */
+  .gal { padding: 10mm 12mm 22mm; display: grid; gap: 4mm; height: 210mm; }
+  .gal img { width: 100%; height: 100%; object-fit: cover; min-height: 0; }
+  .gal.n1 { grid-template: 1fr / 1fr; }
+  .gal.n2 { grid-template: 1fr / 1fr 1fr; }
+  .gal.n3 { grid-template: 1fr 1fr / 1.5fr 1fr; } .gal.n3 img:first-child { grid-row: 1 / 3; }
+  .gal.n4 { grid-template: 1fr 1fr / 1.4fr 1fr 1fr; } .gal.n4 img:first-child { grid-row: 1 / 3; } .gal.n4 img:nth-child(4) { grid-column: 2 / 4; }
+  .gal > * { min-height: 0; overflow: hidden; }
+
+  /* drawings page */
+  .drw { padding: 10mm 12mm 22mm; display: grid; gap: 5mm; height: 210mm; }
+  .drw.n1 { grid-template: 1fr / 1fr; } .drw.n2 { grid-template: 1fr / 1fr 1fr; } .drw.n3 { grid-template: 1fr / 1fr 1fr 1fr; } .drw.n4 { grid-template: 1fr 1fr / 1fr 1fr; }
+  .drw figure { margin: 0; background: var(--ow); padding: 4mm 4mm 0; display: flex; flex-direction: column; min-height: 0; outline: 1px solid rgba(214,203,190,.25); }
+  .drw figure img { flex: 1; min-height: 0; width: 100%; object-fit: contain; }
+  .drw figcaption { display: flex; justify-content: space-between; padding: 2mm 0 2.4mm; margin-top: 2mm; border-top: 1px solid var(--ox); font-size: 6.4pt; letter-spacing: .2em; text-transform: uppercase; color: var(--ox); }
+
+  /* back */
+  .back .ct { position: absolute; left: 12mm; right: 12mm; bottom: 24mm; color: var(--ow); }
+  .back h2 { margin: 0 0 8mm; font-size: 46pt; line-height: .95; }
+  .back h2 em { color: var(--sand); }
+  .back dl { display: grid; grid-template-columns: repeat(4, auto); justify-content: start; gap: 12mm; margin: 0; }
+  .back dt { font-size: 6.5pt; letter-spacing: .22em; text-transform: uppercase; opacity: .7; margin-bottom: 1.5mm; }
+  .back dd { margin: 0; font-size: 10.5pt; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<!-- cover -->
+<section class="pg cover dark on-img">
+  <img class="bg grade" src={coverImg} alt="" />
+  <div class="veil"></div>
+  <div class="top"><span class="wm">AYA<i></i>HASSAN</span><span class="lab">Portfolio · {year}</span></div>
+  <div class="tb">
+    <div class="dim"><i></i><span>Architect · Interior designer</span><i></i></div>
+    <h1 class="wide">AYA HASSAN</h1>
+    <dl class="cells">
+      <div class="mot">From concept to <em>conviction.</em></div>
+      <div><dt>Based</dt><dd>Cairo, EG</dd></div>
+      <div><dt>Practice</dt><dd>2020 —</dd></div>
+      <div><dt>Sheet</dt><dd>A-000</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- about -->
+<section class="pg about">
+  <div class="ph"><img class="grade" src={aboutImg} alt="" /></div>
+  <div class="tx">
+    <div class="lab ox">About</div>
+    <div>
+      <p class="stmt">A concept is only useful once someone believes in it.</p>
+    </div>
+    <div style="display:grid;gap:6mm;align-content:start">
+      <p class="bio">Aya Hassan is an architect and interior designer working in concept design, based in Cairo. She is a mid-senior design architect at Innovation Design Studio, on residential developments for SODIC, Orascom, Misr Italia and Travco. Before that she shaped the headquarters interiors of SABIC and STC in Riyadh at ZFP (Zuhair Fayez Partnership), and worked at Cosmos Studio on architecture, interiors and BIM — including public service buildings at NEOM. Her work covers the full concept stage: the idea, the 3D model, the visuals and animation that win approval, and the drawing packages and material selections that make it buildable.</p>
+      <div class="tl">{timeline.map(([y, r, o, d]) => <div><span class="y">{y}</span><span><b>{r}</b> · {o}<br /><span class="mut">{d}</span></span></div>)}</div>
+    </div>
+    <div class="nums">
+      <div><b>{projects.length}</b><span class="lab mut">Selected projects</span></div>
+      <div><b>{countries.length}</b><span class="lab mut">Countries</span></div>
+      <div><b>{year - 2020}</b><span class="lab mut">Years in practice</span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">02 / {total}</span></div>
+</section>
+
+<!-- clients -->
+<section class="pg clients">
+  <div class="head"><h2 class="wide">Clients</h2><span class="lab ox">Trusted by · 2020 —</span></div>
+  <div class="lg">
+    {clients.map((c) => <div><img src={`/clients/${c}.png`} alt={c} /></div>)}
+    {typed.map((c) => <div><span>{c}</span></div>)}
+  </div>
+  <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">03 / {total}</span></div>
+</section>
+
+<!-- index -->
+<section class="pg index">
+  <div class="head"><h2 class="wide">Index</h2><span class="lab ox">{projects.length} projects · 2020 — {year}</span></div>
+  <div class="ix">
+    {sections.map((s) => (
+      <div>
+        <h3>{s.n} · {s.name}</h3>
+        <ol>{s.items.map((it) => <li><span class="c">{it.code}</span><span>{it.p.title}</span><span class="m">{it.p.location} · {it.p.year}</span><span class="n">{String((it as any).page).padStart(2, '0')}</span></li>)}</ol>
+      </div>
+    ))}
+  </div>
+  <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">04 / {total}</span></div>
+</section>
+
+{sections.map((s) => (
+  <>
+    <section class="pg dark divider">
+      <span class="big wide">{s.n}</span>
+      <h2 class="wide">{s.name}</h2>
+      <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">{String((s as any).start).padStart(2, '0')} / {total}</span></div>
+    </section>
+    {s.items.map((it) => {
+      const pg0 = (it as any).page;
+      return (
+        <>
+          <section class="pg op">
+            <div class="im"><img class="grade" src={it.cover} alt="" /></div>
+            <div class="side">
+              <span class="code">{it.code}</span>
+              <h2 class="wide">{it.p.title}</h2>
+              {it.p.concept && <span class="tag">Concept exploration</span>}
+              {it.p.summary && <p class="sum">{it.p.summary}</p>}
+              <dl class="blk">
+                <div><dt>Client</dt><dd>{it.p.client}</dd></div>
+                <div><dt>Year</dt><dd>{it.p.year}</dd></div>
+                <div><dt>Location</dt><dd>{place(it.p)}</dd></div>
+                <div><dt>Sector</dt><dd>{it.p.sector}</dd></div>
+                <div class="w"><dt>Practice</dt><dd>{practice(it.p)}</dd></div>
+                <div class="w"><dt>Scope</dt><dd><span class="disc">{it.disc.map((d) => <span>{d}</span>)}</span>{it.p.scopeNote && <span class="mut" style="display:block;margin-top:1.5mm;font-size:7.4pt">{it.p.scopeNote}</span>}</dd></div>
+              </dl>
+            </div>
+            <div class="foot" style="left:auto;width:70mm;right:11mm"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">{String(pg0).padStart(2, '0')} / {total}</span></div>
+          </section>
+          {it.rest.length > 0 && (
+            <section class="pg">
+              <div class:list={['gal', `n${it.rest.length}`]}>{it.rest.map((r) => <img class="grade" src={r} alt="" />)}</div>
+              <div class="foot"><span class="lab"><span class="ox">{it.code}</span> · {it.p.title}</span><span class="lab mut">{String(pg0 + 1).padStart(2, '0')} / {total}</span></div>
+            </section>
+          )}
+          {it.draw.length > 0 && (
+            <section class="pg dark">
+              <div class:list={['drw', `n${it.draw.length}`]}>{it.draw.map((d, k) => <figure><img src={d} alt="" /><figcaption><span>{it.p.captions?.[k] ?? `Drawing ${String(k + 1).padStart(2, '0')}`}</span><span>{next()}</span></figcaption></figure>)}</div>
+              <div class="foot"><span class="lab"><span style="color:var(--sand)">{it.code}</span> · {it.p.title} · Drawings</span><span class="lab mut">{String(pg0 + 1 + (it.rest.length ? 1 : 0)).padStart(2, '0')} / {total}</span></div>
+            </section>
+          )}
+        </>
+      );
+    })}
+  </>
+))}
+
+<!-- back -->
+<section class="pg back dark on-img">
+  <img class="bg grade" src={backImg} alt="" />
+  <div class="veil"></div>
+  <div class="ct">
+    <h2 class="wide">Have a concept?<br />Let’s make it <em>convincing.</em></h2>
+    <dl>
+      <div><dt>Email</dt><dd>{contact.email}</dd></div>
+      <div><dt>Web</dt><dd>ayahassan.com</dd></div>
+      <div><dt>LinkedIn</dt><dd>{contact.linkedinLabel}</dd></div>
+      <div><dt>Instagram</dt><dd>@ayahassanmr</dd></div>
+    </dl>
+  </div>
+  <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">{total} / {total}</span></div>
+</section>
+</body>
+</html>

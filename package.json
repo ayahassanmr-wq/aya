@@ -19,6 +19,7 @@
     "lenis": "^1.1.20"
   },
   "devDependencies": {
+    "puppeteer-core": "^25.16.0",
     "svgo": "^3.3.2"
   }
 }
