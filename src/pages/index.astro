@@ -31,10 +31,9 @@ const feats = await Promise.all(featured.slice(0, 6).map(async (p) => {
   return { p, srcset: set.join(', '), src: set[1].split(' ')[0], w: img.width, h: img.height };
 }));
 const services = [
-  { t: t('Concept design', 'التصميم المبدئي'), slug: 'neom-oxagon' },
-  { t: t('Visualization & animation', 'الإظهار والتحريك'), slug: 'fifth-square' },
-  { t: t('BIM & design packages', 'BIM وحزم التصميم'), slug: 'noatum-terminal' },
-  { t: t('Materials & FF&E', 'المواد والأثاث والتجهيزات'), slug: 'stc-hq' },
+  { t: t('Full-time role', 'وظيفة بدوام كامل'), slug: 'stc-hq', href: '/Aya_Hassan_CV.pdf' },
+  { t: t('Full project', 'مشروع كامل'), slug: 'misr-italia-hilltop', href: u('/contact/?type=project') },
+  { t: t('Studio support', 'دعم للاستوديوهات'), slug: 'sallan-creek', href: u('/contact/?type=studio') },
 ];
 const previews = await Promise.all(services.map(async (s) => (await getImage({ src: cover(s.slug), width: 900, format: 'webp', quality: 70 })).src));
 const stripSlugs: [string, string][] = L.ar ? [['مبانٍ عامة', 'neom-oxagon'], ['مقرات', 'sabic-hq'], ['أبراج إدارية', 'stc-hq'], ['مكاتب', 'jotun-office'], ['تصميم داخلي', 'hb-fuller'], ['معارض', 'chery-showroom'], ['لوجستيات', 'noatum-terminal'], ['مجمعات تقنية', 'tech-park'], ['تجاري', 'fifth-square'], ['لاندسكيب', 'linah-farms']] : [['Public', 'neom-oxagon'], ['Headquarters', 'sabic-hq'], ['Office towers', 'stc-hq'], ['Offices', 'jotun-office'], ['Interiors', 'hb-fuller'], ['Showrooms', 'chery-showroom'], ['Logistics', 'noatum-terminal'], ['Tech campus', 'tech-park'], ['Commercial', 'fifth-square'], ['Landscape', 'linah-farms']];
@@ -260,7 +259,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
 
   <section class="dark svc" data-svc>
     <div class="wrap">
-      <div class="sheet-head"><h2 class="label">{t('Services', 'الخدمات')}</h2><a href={u('/services/')} class="label link">{t('How I work →', 'كيف أعمل ←')}</a></div>
+      <div class="sheet-head"><h2 class="label">{t('Ways to work with me', 'طرق التعاون')}</h2><a href={u('/services/')} class="label link">{t('How I work →', 'كيف أعمل ←')}</a></div>
       <div class="sg">
         <div class="sticky" aria-hidden="true">
           <div class="sframe">
@@ -269,7 +268,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
         </div>
         <ol>
           {services.map((s, i) => (
-            <li class="reveal"><a href={u('/services/')} data-sv={i}><span class="display-m">{s.t}</span><span class="arr">{L.next}</span></a></li>
+            <li class="reveal"><a href={s.href} data-sv={i}><span class="display-m">{s.t}</span><span class="arr">{L.next}</span></a></li>
           ))}
         </ol>
       </div>

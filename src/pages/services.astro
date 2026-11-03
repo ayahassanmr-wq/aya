@@ -6,7 +6,7 @@ import Reel from '../components/Reel.astro';
 import { imagesFor, cover } from '../data/projects';
 import { i18n } from '../i18n';
 const L = i18n(Astro.url);
-const { t } = L;
+const { t, u } = L;
 const servicesEn = [
   { t: 'Concept design', d: 'Architectural and interior concepts, from the first studies to a direction the client signs off. Massing, spatial strategy, colour and material language, set out in a clear presentation.', img: imagesFor('neom-oxagon')[3] ?? imagesFor('neom-oxagon')[0], items: ['Concept studies & diagrams', 'Spatial planning', 'Mood, colour & material direction', 'Concept presentations'] },
   { t: 'Visualization & animation', d: 'Renders, walkthroughs and promotional films built to win approval, for clients, juries and marketing teams.', img: imagesFor('fifth-square')[0], items: ['Photoreal stills', 'Walkthrough animation', 'Promotional content', 'Post-production'] },
@@ -18,6 +18,15 @@ const servicesAr = [
   { t: 'الإظهار والتحريك', d: 'صور وجولات وأفلام ترويجية مصممة لكسب الموافقة، للعملاء ولجان التحكيم وفرق التسويق.', items: ['صور واقعية', 'أفلام الجولات', 'محتوى ترويجي', 'المعالجة النهائية'] },
   { t: 'BIM وحزم التصميم', d: 'نماذج Revit ومجموعات رسومات منسقة، من التصميم التخطيطي حتى الحزم المعتمدة للتنفيذ.', items: ['النمذجة بـ Revit', 'رسومات تخطيطية ورسومات التنفيذ (IFC)', 'التنسيق بين التخصصات', 'مراجعة التصميم وفق الكود'] },
   { t: 'المواد والأثاث والتجهيزات', d: 'لوحات المواد والتشطيبات واختيار الأثاث، من موردين حول العالم ومراجعتها في الموقع.', items: ['لوحات وعينات المواد', 'الأثاث والتجهيزات والمعدات', 'التعاون مع الموردين', 'الزيارات الميدانية'] },
+];
+const ways = L.ar ? [
+  { t: 'وظيفة بدوام كامل', d: 'مهندسة تصميم أو مصممة أولى ضمن استوديو أو فريق مطوّر عقاري. في القاهرة، أو عن بُعد، أو بالانتقال إلى الخليج.', cta: 'اطّلع على السيرة الذاتية', href: '/Aya_Hassan_CV.pdf' },
+  { t: 'مشروع كامل', d: 'تصميم مبدئي لمبنى أو مساحة داخلية، من الفكرة حتى حزمة الرسومات.', cta: 'ابدأ مشروعك', href: u('/contact/?type=project') },
+  { t: 'دعم للاستوديوهات', d: 'صور واقعية، أنيميشن أو حزم Revit بمواعيد تسليم سريعة. مدة التسليم المعتادة: أيام، لا أسابيع.', cta: 'أرسل الموجز', href: u('/contact/?type=studio') },
+] : [
+  { t: 'Full-time role', d: 'Design architect or senior designer in a studio or developer team. Cairo, remote, or relocation to the Gulf.', cta: 'See CV', href: '/Aya_Hassan_CV.pdf' },
+  { t: 'Full project', d: 'Concept design for a building or interior, from brief to drawing set.', cta: 'Start a project', href: u('/contact/?type=project') },
+  { t: 'Studio support', d: 'Renders, animation or Revit packages for studios on deadline. Typical turnaround: days, not weeks.', cta: 'Send a brief', href: u('/contact/?type=studio') },
 ];
 const services = L.ar ? servicesEn.map((s, i) => ({ ...s, ...servicesAr[i] })) : servicesEn;
 const stepsEn = [
@@ -40,6 +49,20 @@ const steps = L.ar ? [
   </PageHero>
 
   <section class="wrap list">
+    <div class="sheet-head"><h2 class="label">{t('Ways to work with me', 'طرق التعاون')}</h2></div>
+    {ways.map((w, i) => (
+      <article class="svc reveal">
+        <div class="c">
+          <h2 class="display-m">{String(i + 1).padStart(2, '0')} · {w.t}</h2>
+          <p>{w.d}</p>
+        </div>
+        <p><a href={w.href} class="link">{w.cta} <span class="arr">{L.next}</span></a></p>
+      </article>
+    ))}
+  </section>
+
+  <section class="wrap list">
+    <div class="sheet-head"><h2 class="label">{t('What I deliver', 'ما أقدّمه')}</h2></div>
     {services.map((s, i) => (
       <article class="svc reveal">
         
