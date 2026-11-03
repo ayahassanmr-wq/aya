@@ -78,7 +78,7 @@ No gold anywhere.
 
 ### 2.3 Identity elements
 - **Wordmark (nav/header):** `AYA | HASSAN` — Archivo 800, width 125%, one line, thin vertical divider.
-- **Hero name:** "AYA HASSAN" on one line: small label "Architect · Interior designer" above, the name, then an unruled info row: motto · Based: Cairo, EG · Practice: 2020 — · Sheet: A-000. No stamp, no table lines, no dimension line (✅ 3 Nov).
+- **Hero name:** "AYA HASSAN" on one line: the intro's dimension ruler (end ticks, draws out from centre) labelled "Architect · Interior designer" above, the name, then an unruled info row: motto · Based: Cairo, EG · Practice: 2020 — · Sheet: A-000. No stamp, no table lines (✅ 3 Nov); dimension ruler kept, same as intro.
 - **Approval stamp:** ❌ removed from hero and intro (3 Nov).
 - **Intro screen:** dimension line draws out → name rises → title block wipes in → stamp lands → screen parts onto the hero (~3 s, skippable, off with reduced motion).
 - **Footer:** big `AYA | HASSAN` wordmark (Archivo 800/125%) fades in — old AYA sprite logo retired (✅ 3 Nov).
@@ -129,7 +129,7 @@ No gold anywhere.
 | About/timeline | `src/pages/about.astro` |
 
 ### 4.3 Site structure (✅ DECIDED)
-- **Home:** intro → hero → **client logo strip** → intro statement → numbers → selected work → typology marquee → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): one scrollable strip directly under the hero ("Trusted by"): official full-colour logos (`public/clients/<id>.png`, cut from Aya's logo sheet 3 Nov), slow auto-drift, drag/wheel/swipe/arrow keys to scroll, each links to its project. NOATUM and Suits have no logo yet → typed names. Confidential and private clients excluded.
+- **Home:** intro → hero → **client logo strip** → intro statement → numbers → selected work → typology marquee → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): one scrollable strip directly under the hero ("Trusted by"): official full-colour logos (`public/clients/<id>.png`, cut from Aya's logo sheet 3 Nov), always drifting (keeps moving on hover; pauses ~2.5 s only after a manual scroll), drag/wheel/swipe/arrow keys to scroll, each links to its project. NOATUM and Suits have no logo yet → typed names. Confidential and private clients excluded.
 - **Work:** opens on **three disciplines** — *Architectural design*, *Interior design*, *BIM & technical*. Choosing one shows its projects grouped by type (Residential, Workplace, Commercial…), numbered 01.01, 01.02…
 - **Project page:** title block with Location · Discipline · Practice · **Client** · **Year** · Scope (+ optional scope note) → renders → drawing sheets → client links.
 - **About:** timeline (section 1), bio, tools.
@@ -283,6 +283,8 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | Hero keeps the intro's dimension ruler | Aya request |
+| 2026-11-03 | Remove cursor 'A' monogram spotlight | Old brand pattern |
 | 2026-11-03 | Official client logos; strip moved under hero, scrollable | Aya supplied logos; wants clients prominent |
 | 2026-11-03 | Go live: `rebrand-on-update` → `main` | Aya approved |
 | 2026-11-03 | Remove auto close-up Details; Aya picks manually | Aya request |
@@ -386,6 +388,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | Hero ruler restored; client strip moves on hover; old A-pattern cursor spotlight removed. Live. |
 | 2026-11-03 | Claude | 14 official logos in a scrollable strip under the hero; site merged to main (live). |
 | 2026-11-03 | Claude | Client brand colours on wall; Details section removed; scope = done only; 6 BIM shots re-toned light, 4 boards restored to colour. |
 | 2026-11-03 | Claude | Modern Residence wrong 5th image replaced; 40 drawings recoloured; cover uncropped + Details section; client wall; new footer wordmark. |

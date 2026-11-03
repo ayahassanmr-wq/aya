@@ -175,7 +175,7 @@ a:hover .zoom img { transform: scale(1.05); }
   -webkit-mask-repeat: repeat, no-repeat; mask-repeat: repeat, no-repeat;
   -webkit-mask-composite: source-in; mask-composite: intersect;
 }
-.fx-on .spot { opacity: .16; }
+.fx .spot, .fx-on .spot { display: none !important; }
 .fx-on .spot.on-dark { background-color: var(--sand); opacity: .12; }
 
 /* floating image preview for list rows ([data-preview]) */

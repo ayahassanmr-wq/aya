@@ -79,7 +79,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
     <div class="wrap inner">
       <div class="top"></div>
       <div class="tb" dir="ltr">
-        <div class="dimn" aria-hidden="true"><span>{t('Architect · Interior designer', 'معمارية · مصممة داخلية')}</span></div>
+        <div class="dimn" aria-hidden="true"><i></i><span>{t('Architect · Interior designer', 'معمارية · مصممة داخلية')}</span><i></i></div>
         <h1 class="hl nm-h"><span class="ln"><span>AYA&nbsp;HASSAN</span></span></h1>
         <dl class="cells" dir={L.dir}>
           <div class="c mot"><dt class="sr-only">{t('Motto', 'الشعار')}</dt><dd>{L.ar ? <>من الفكرة إلى <em>الإقناع.</em></> : <>From concept to <em>conviction.</em></>}</dd></div>
@@ -147,7 +147,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
       const wrap = () => { const h = half(); if (el.scrollLeft >= h) el.scrollLeft -= h; else if (el.scrollLeft <= 0) el.scrollLeft += h; };
       const hold = () => (pause = performance.now() + 2500);
       el.scrollLeft = 1;
-      const tick = () => { if (!reduce && !down && performance.now() > pause && !el.matches(':hover')) el.scrollLeft += 0.6; wrap(); requestAnimationFrame(tick); };
+      const tick = () => { if (!reduce && !down && performance.now() > pause) el.scrollLeft += 0.6; wrap(); requestAnimationFrame(tick); };
       requestAnimationFrame(tick);
       el.addEventListener('wheel', (e) => { if (Math.abs(e.deltaX) < Math.abs(e.deltaY) && !e.shiftKey) return; hold(); }, { passive: true });
       el.addEventListener('touchstart', hold, { passive: true });
@@ -303,10 +303,13 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
   /* hero name as a drawing title block: dimension string, name, then the block's cells */
   .tb { grid-row: 3; display: grid; gap: 0; }
   .dimn { display: flex; align-items: center; gap: 14px; color: var(--sand); margin-bottom: clamp(10px, 1.2vw, 18px); }
-  .dimn i { flex: 1; height: 1px; background: currentColor; position: relative; }
-  .dimn i::before { content: ""; position: absolute; top: -6px; width: 1px; height: 13px; background: currentColor; }
+  .dimn i { flex: 1; height: 1px; background: currentColor; position: relative; transform: scaleX(0); animation: dimdraw .9s .3s var(--ease-io) forwards; }
+  .dimn i:first-child { transform-origin: right; } .dimn i:last-child { transform-origin: left; }
+  @keyframes dimdraw { to { transform: scaleX(1); } }
+  @media (prefers-reduced-motion: reduce) { .dimn i { animation: none; transform: none; } }
+  .dimn i::before { content: ""; position: absolute; top: -7px; width: 1px; height: 15px; background: currentColor; }
   .dimn i:first-child::before { left: 0; } .dimn i:last-child::before { right: 0; }
-  .dimn span { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; white-space: nowrap; }
+  .dimn span { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; white-space: nowrap; }
   .nm-h { font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(44px, 9.6vw, 176px); line-height: .86; letter-spacing: -.02em; white-space: nowrap; max-width: none; }
   .cells { display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr; gap: clamp(16px, 2.4vw, 40px); margin: clamp(16px, 2vw, 28px) 0 0; }
   .c { margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
