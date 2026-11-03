@@ -34,16 +34,16 @@ Proof points to draw from: NEOM, SABIC HQ, stc HQ, SODIC, Orascom, Misr Italia, 
 
 ## Site changes to implement (priority order)
 
-- [ ] Hero: add availability line under the name.
-- [ ] Hero: add second button "Hiring? See CV →" (links to /Aya_Hassan_CV.pdf) next to "Start a project →".
-- [ ] Fix country count: meta description says "six countries", stats say 5. Use **5** everywhere (Saudi Arabia, Egypt, India, South Sudan, Oman).
-- [ ] About: replace bio opening (copy below) so studio moves read as project-based.
-- [ ] Services: rename section to "Ways to work with me" with three options (copy below).
-- [ ] Every project page: add "My role" and "Team size" fields at the top (leave values as TODO for Aya to fill — do not invent them).
-- [ ] Contact: add a dropdown — Job opportunity / Project / Studio support.
+- [x] Hero: add availability line under the name.
+- [x] Hero: add second button "Hiring? See CV →" (links to /Aya_Hassan_CV.pdf) next to "Start a project →".
+- [x] Fix country count: meta description says "six countries", stats say 5. Use **5** everywhere (Saudi Arabia, Egypt, India, South Sudan, Oman).
+- [x] About: replace bio opening (copy below) so studio moves read as project-based.
+- [x] Services: rename section to "Ways to work with me" with three options (copy below).
+- [ ] (PARKED) Every project page: add "My role" and "Team size" fields at the top (leave values as TODO for Aya to fill — do not invent them).
+- [x] Contact: add a dropdown (labels the email subject; real form = next task) — Job opportunity / Project / Studio support.
 - [x] Studio support: "Tight deadline? Send the brief and I'll confirm timing within 24 hours." (Aya, 3 Nov — no fixed turnaround figure)
-- [ ] Update closing CTA site-wide.
-- [ ] Mirror every change on the Arabic site (/ar/).
+- [x] Update closing CTA site-wide.
+- [x] Mirror every change on the Arabic site (/ar/). Arabic copy still to be checked by a native reader.
 
 ## Copy — English
 

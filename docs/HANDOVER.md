@@ -271,6 +271,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - **Linah Farms re-render / upscale.**
 
 ### 🔧 TO DO (next actions, in order)
+0e. **Two portfolio PDFs** — one for freelance/collaboration (clients + studios: visuals, process, studio support) and one for full-time studio jobs (role, scale, BIM, CV-led). Scope to agree with Aya after the checklist.
 0d. **Contact form** — after the BRAND_VOICE checklist: add a real form (e.g. Formspree free tier) using the existing Topic dropdown (Job opportunity / Project / Studio support). Remind Aya when the checklist is finished.
 0c. BRAND_VOICE item 6 (My role / Team size) — PARKED until end of checklist. Plan: one 'Role' field = position · team size (e.g. 'Lead designer · team of 4'), not tasks (scope already covers tasks). Code is in place (hidden until filled); fill-in sheet docs/ROLES_TODO.md.
 0b. Aya: review PDFs; decide whether to add phone number to CV; Mazeej cover render shows a 'VANILLA' watermark — replace image.
@@ -298,6 +299,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | BRAND_VOICE checklist items 1–5, 7–10 done (item 6 parked); studio support = 'Tight deadline?' callout, no fixed turnaround | Aya |
 | 2026-11-03 | First person in all copy (EN + AR); BRAND_VOICE.md is the copy rulebook | Aya |
 | 2026-11-03 | Sallan Creek (DHIFAF) added; masterplan group first; Sphinx out of BIM; Mediterranean House removed | Aya request |
 | 2026-11-03 | Staff Housing Community published (anonymised El Gouna workers housing), featured No. 02 | Aya approved preview |
