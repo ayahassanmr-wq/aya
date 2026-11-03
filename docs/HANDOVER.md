@@ -142,7 +142,7 @@ No gold anywhere.
 - Downloads: both buttons on the About page.
 - Portfolio cover carries a clickable contact row (email, website, LinkedIn, Instagram).
 - All links clickable in both PDFs (contacts, website, project pages, client links; portfolio index jumps to each project).
-- CV-only project scopes are assumed from the old CV — ❓ confirm: Um Qasr (Modelling, Animation), Zamalek Club & Sharm El Sheikh Tower Hotel (Design, Modelling, Rendering), Estadat / SIAC / One 90 / NEOM PSB interiors (BIM), Misk Schools (Review).
+- CV-only project scopes are assumed from the old CV — ❓ confirm: Um Qasr (Modelling, Animation), Zamalek Club (✅ Modelling, Rendering, Animation), Sharm El Sheikh Tower Hotel (Design, Modelling, Rendering), Estadat / SIAC / One 90 / NEOM PSB interiors (BIM), Misk Schools (Review).
 - Phone/WhatsApp number deliberately not printed (same rule as the site).
 - Portfolio project openers: big project number + client logo. CV: experience grouped by employer, in a senior/leadership voice (led, authored, delivered, coordinated) naming each project and Aya's role — ❓ confirm 'Introduced AI-assisted post-production into the studio’s workflow' (Innovation) is accurate (project names link to the site; no tables or scope chips), incl. CV-only projects from the old CV: Zamalek Club, Sharm El Sheikh Tower Hotel, Um Qasr Logistic City, Estadat City Club Complexes, SIAC Office Building, One 90 Retail, Misk Schools (NEOM) — Cosmos 2020–23. Freelance listed as "2022 — now" (❓ confirm start year).
 
@@ -294,6 +294,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | NOATUM = team collaboration; Fifth Square wording generic; no animation for NEOM Oxagon (scope fixed site-wide); Zamalek Club = modelling, rendering, animation | Aya correction |
 | 2026-11-03 | CV tone: senior, leadership and teamwork language; profile rewritten | Aya request |
 | 2026-11-03 | CV experience rewritten as human sentences; contact row on portfolio cover | Aya: tables looked robotic |
 | 2026-11-03 | Remove Blue Villa | Aya request |
@@ -406,6 +407,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | CV facts corrected (NOATUM team, Fifth Square, NEOM no animation, Zamalek animation); NEOM Oxagon scope + About timeline fixed. Live. |
 | 2026-11-03 | Claude | CV rewritten in leadership voice (claims kept to old-CV facts). Live. |
 | 2026-11-03 | Claude | CV projects rewritten as prose per employer; portfolio cover contact links. Live. |
 | 2026-11-03 | Claude | Blue Villa removed; Ogami plan re-mapped from purple export to sand/ink; clickable links in PDFs; CV project tables. Live. |
