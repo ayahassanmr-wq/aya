@@ -414,6 +414,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | Live: BRAND_VOICE items 1–4 (availability line, Hiring? See CV button, 5 countries, new About bio), About timeline edits, first person on About + portfolio; CV + portfolio regenerated. Remaining checklist items 5–10 pending. |
 | 2026-11-03 | Claude | Sallan Creek live; Staff Housing condensed + brand-recoloured studies; masterplans first; Sphinx not BIM; Mediterranean removed; CV + portfolio regenerated. |
 | 2026-11-03 | Claude | Staff Housing added; East Vale rebuilt around the premium home; CV + portfolio regenerated. Live. |
 | 2026-11-03 | Claude | CV facts corrected (NOATUM team, Fifth Square, NEOM no animation, Zamalek animation); NEOM Oxagon scope + About timeline fixed. Live. |
