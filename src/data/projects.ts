@@ -102,8 +102,16 @@ export const projects: Project[] = [
     summary: 'A twin villa and a town home for a coastal community, in warm terracotta render with deep, shaded terraces.' },
   { slug: 'travco-west-island', client: 'Travco · Almaza Bay', year: '2026', title: 'Travco West Island', location: 'Almaza Bay', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'A coastal chalet and a coastal town home on the lagoon at Almaza Bay.' },
-  { slug: 'sodic-east-vale', client: 'SODIC', year: '2026', title: 'SODIC East Vale', location: 'New Cairo', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio', captions: ['Ground floor plan', 'First floor plan', 'Roof plan'],
-    summary: 'A premium family home with planted roof terraces and a garden pool.' },
+  { slug: 'sodic-east-vale', client: 'SODIC', year: '2026', title: 'SODIC East Vale', location: 'MADA City, New Cairo', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
+    captions: ['Inspiration · the spaces that define the villa', 'Form generation · front villa', 'Form generation · single-storey villa', 'Form generation · premium home', 'Ground floor plan', 'First floor plan', 'Roof plan', 'Interior look & feel', 'Material board', 'Material palette · grayish, light wood vein, beige porcelain, oak, walnut'],
+    summary: 'Private sanctuaries in a connected city: three villa prototypes built around high-ceiling living, an inner court and a roof terrace.',
+    overview: [
+      'Positioned within MADA City at the heart of New Cairo’s eastern expansion, the villas of East Vale balance accessibility with retreat. Major roads, schools and urban destinations are minutes away, yet the residential experience stays grounded in calm, landscaped surroundings.',
+      'Three prototypes — a front villa, a single-storey villa and a premium home — are each oriented to maximise daylight, ventilation and views to the greenery, in a seamless dialogue between architecture and landscape.',
+      'At the core of every home is a high-ceiling living space, an indoor courtyard that draws light and air to the centre, and a double-height stair. An English court brings daylight to the basement family and leisure floor, bedrooms rise to shade the parking beneath, and a spacious roof terrace adds a further outdoor room.',
+      'Inside, the palette is warm and quiet: travertine-veined stone, beige porcelain, oak and walnut, with brushed brass and olive accents.',
+    ],
+    deliverables: ['Pre-concept report', 'Form generation for three villa prototypes', 'Floor plans', 'Facade design and exterior renders', 'Interior look & feel and material board'] },
   { slug: 'orascom-o-west', client: 'Orascom Development', year: '2026', title: 'Orascom O West Midyard', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'Mid-rise apartment blocks for the Midyard district of O West.' },
 
