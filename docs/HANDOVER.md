@@ -271,6 +271,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - **Linah Farms re-render / upscale.**
 
 ### 🔧 TO DO (next actions, in order)
+0c. BRAND_VOICE item 6 (My role / Team size) — PARKED until end of checklist. Plan: one 'Role' field = position · team size (e.g. 'Lead designer · team of 4'), not tasks (scope already covers tasks). Code is in place (hidden until filled); fill-in sheet docs/ROLES_TODO.md.
 0b. Aya: review PDFs; decide whether to add phone number to CV; Mazeej cover render shows a 'VANILLA' watermark — replace image.
 0. Aya: hand-pick close-up/detail crops per project (auto Details section removed 3 Nov) — send picks, Claude builds the section.
 1. Aya: review preview → decide #1.
