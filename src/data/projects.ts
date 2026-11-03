@@ -84,8 +84,8 @@ export const projects: Project[] = [
       'An urban mobility network of main, secondary and service roads is layered with golf-cart promenades, shaded pedestrian paths and cycle lanes, so every zone is reachable without a car.',
       'I refined the concept masterplan, built the 3D model of the entire district and produced the aerial renders and presentation that carried it to the client.',
     ],
-    deliverables: ['Masterplan refinement and zoning', 'Area program across 19 zones', 'Urban mobility sections', 'District-wide 3D model', 'Aerial renders', 'Client presentation and look & feel'],
-    captions: ['Masterplan · figure-ground, zoning and site', 'Mobility · main, secondary and service roads', 'Mobility · promenades and pedestrian paths', 'Look & feel · one image for every zone'] },
+    deliverables: ['Masterplan refinement and zoning', 'Area program across 19 zones', 'District-wide 3D model', 'Aerial renders', 'Client presentation and look & feel'],
+    captions: ['Masterplan · figure-ground, zoning and site', 'Look & feel · one image for every zone'] },
   { slug: 'chery-showroom', client: 'Chery Egypt', year: '2025', title: 'Chery Showroom & Admin', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Commercial', scope: [D, M, R, P, B], practice: 'Cosmos Studio',
     summary: 'A brand showroom and admin building with a sculpted, illuminated entrance canopy.' },
   { slug: 'noatum-terminal', client: 'NOATUM', year: '2025', title: 'NOATUM Automotive Terminal', location: 'Ain Sokhna', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, R, P, B], practice: 'Cosmos Studio',
@@ -133,7 +133,7 @@ export const projects: Project[] = [
       'The elevations reinterpret Nubian heritage for everyday living: the traditional arch simplified for the ground floor, solid masses carved by recesses and voids, and timber pergolas and screens that answer the climate with shade, privacy and depth.',
     ],
     deliverables: ['Masterplan and cluster strategy', 'Zoning, open-space and accessibility studies', 'L-shaped and linear residential prototypes', 'Elevation design and visual approach', '3D model and renders'],
-    captions: ['Inspiration · vernacular arches and carved masses', 'Approach · from the Nubian arch to the housing facade', 'Elevation design · shade, recesses and rhythm', 'Masterplan', 'Concept · clusters, rotation, pedestrian network', 'Solid & void', 'Open spaces · public, semi-public, private', 'Accessibility · roads, mobility and pedestrian routes', 'L-shaped prototype · design strategy', 'L-shaped prototype · ground floor plan', 'Linear prototype · ground floor plan'] },
+    captions: ['Inspiration, approach and elements', 'Masterplan studies · masterplan, solid & void, open spaces, accessibility, concept', 'L-shaped prototype · design strategy', 'L-shaped prototype · ground floor plan', 'Linear prototype · ground floor plan'] },
 
   // ---------- Residential architecture (concept exploration)
   { slug: 'minimal-villa', year: '2026', client: 'Private client', title: 'Minimal Villa', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: [D, M, R, P],
