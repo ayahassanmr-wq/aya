@@ -107,6 +107,17 @@ export const projects: Project[] = [
   { slug: 'orascom-o-west', client: 'Orascom Development', year: '2026', title: 'Orascom O West Midyard', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'Mid-rise apartment blocks for the Midyard district of O West.' },
 
+  { slug: 'staff-housing', client: 'Confidential developer', year: '2026', title: 'Staff Housing Community', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Masterplanning', 'Concept design', M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
+    summary: 'A walkable town for nearly 7,000 resort staff: clustered courtyards, two repeatable prototypes and a refined Nubian language of arches, shade and earth.',
+    overview: [
+      'A secluded desert plot transformed into a self-sufficient community for close to seven thousand employees of a coastal resort town. The brief asked for dignity at scale: 130,000 m² of built area, a central amenities hub with dining, kitchen, laundry and retail, and a landscape that makes the whole livable.',
+      'The masterplan is built from clusters. Residential blocks rotate and shift around shared courtyards, so every turn opens a new view and every cluster holds its own semi-private garden. A continuous pedestrian spine links clusters, open spaces and amenities, while service roads stay on the perimeter.',
+      'Two prototypes — an L-shaped and a linear block — carry the entire programme: compact units, stacked service shafts and efficient central circulation, repeated with rhythm rather than monotony.',
+      'The elevations reinterpret Nubian heritage for everyday living: the traditional arch simplified for the ground floor, solid masses carved by recesses and voids, and timber pergolas and screens that answer the climate with shade, privacy and depth.',
+    ],
+    deliverables: ['Masterplan and cluster strategy', 'Zoning, open-space and accessibility studies', 'L-shaped and linear residential prototypes', 'Elevation design and visual approach', '3D model and renders'],
+    captions: ['Inspiration · vernacular arches and carved masses', 'Approach · from the Nubian arch to the housing facade', 'Elevation design · shade, recesses and rhythm', 'Masterplan', 'Concept · clusters, rotation, pedestrian network', 'Solid & void', 'Open spaces · public, semi-public, private', 'Accessibility · roads, mobility and pedestrian routes', 'L-shaped prototype · design strategy', 'L-shaped prototype · ground floor plan', 'Linear prototype · ground floor plan'] },
+
   // ---------- Residential architecture (concept exploration)
   { slug: 'minimal-villa', year: '2026', client: 'Private client', title: 'Minimal Villa', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A two-storey villa in pale stone and dark glazing: one carved volume, a deep garden terrace and a quiet street face.' },
