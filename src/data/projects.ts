@@ -32,6 +32,8 @@ export interface Project {
   video?: { file?: string; youtube?: string; vimeo?: string; poster?: string; title?: string };
   /** Captions for the drawings (d01, d02 …), in order. */
   captions?: string[];
+  /** Drawing numbers (1-based) shown full width at natural height, e.g. composite grids. */
+  fullSheets?: number[];
   /** Concept → model → render strip: [label, image file name without .jpg]. */
   process?: [string, string][];
 }
@@ -76,7 +78,7 @@ export const projects: Project[] = [
     summary: 'Public service buildings for Oxagon, NEOM’s port city: brick volumes, shaded courtyards and planted roofs.' },
   { slug: 'fifth-square', client: 'Al Marasem', year: '2025', title: 'Fifth Square Commercial Complex', location: 'New Cairo', country: 'Egypt', category: 'architecture', sector: 'Commercial', scope: ['Canopy design', M, R, P], scopeNote: 'Design: the canopy. Modelling and rendering: the whole building.', scopeNoteAr: 'التصميم: المظلة. النمذجة والإظهار: المبنى بالكامل.', practice: 'Cosmos Studio', featured: true,
     summary: 'A terraced commercial complex whose canopy “trees” become the landmark at night.' },
-  { slug: 'sallan-creek', client: 'North Al Batinah Governor’s Office', year: '2025', title: 'Sallan Creek (DHIFAF)', location: 'Oman', country: 'Oman', category: 'architecture', sector: 'Masterplan', scope: ['Masterplan refinement', M, R, P, 'Presentation'], practice: 'Cosmos Studio', featured: true,
+  { slug: 'sallan-creek', fullSheets: [1, 2], client: 'North Al Batinah Governor’s Office', year: '2025', title: 'Sallan Creek (DHIFAF)', location: 'Oman', country: 'Oman', category: 'architecture', sector: 'Masterplan', scope: ['Masterplan refinement', M, R, P, 'Presentation'], practice: 'Cosmos Studio', featured: true,
     summary: 'A strategic masterplan for sustainable growth and heritage integration: a new waterway district of nineteen zones, from expo grounds and an education hub to agri-tourism, a marina and waterfront living.',
     overview: [
       'Sallan Creek reimagines a coastal creek in North Al Batinah as the spine of a new mixed-use district. A navigable waterway — DHIFAF — threads through nineteen zones, binding economic hubs, tourism and community life into one walkable landscape.',
@@ -124,7 +126,7 @@ export const projects: Project[] = [
   { slug: 'orascom-o-west', client: 'Orascom Development', year: '2026', title: 'Orascom O West Midyard', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'Mid-rise apartment blocks for the Midyard district of O West.' },
 
-  { slug: 'staff-housing', client: 'Confidential developer', year: '2026', title: 'Staff Housing Community', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Masterplanning', 'Concept design', M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
+  { slug: 'staff-housing', fullSheets: [1, 2], client: 'Confidential developer', year: '2026', title: 'Staff Housing Community', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Masterplanning', 'Concept design', M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
     summary: 'A walkable town for nearly 7,000 resort staff: clustered courtyards, two repeatable prototypes and a refined Nubian language of arches, shade and earth.',
     overview: [
       'A secluded desert plot transformed into a self-sufficient community for close to seven thousand employees of a coastal resort town. The brief asked for dignity at scale: 130,000 m² of built area, a central amenities hub with dining, kitchen, laundry and retail, and a landscape that makes the whole livable.',

@@ -104,7 +104,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
           )}
           <div class="dgrid">
             {drawings.map((d, k) => (
-              <figure class:list={['reveal', { wide: d.width / d.height > 1.45 }]}>
+              <figure class:list={['reveal', { wide: d.width / d.height > 1.45 || p.fullSheets?.includes(k + 1), full: p.fullSheets?.includes(k + 1) }]}>
                 <button type="button" class="paper lb" data-sheet={`A-${String(k + 1).padStart(3, "0")}`} data-lb={rest.length + 1 + k} data-cursor={t('Open', 'افتح')} aria-label={`${t('Open drawing', 'افتح الرسم')} ${k + 1}`}><Image src={d} alt={`${p.title}, ${p.captions?.[k] ?? `${t('drawing', 'رسم')} ${k + 1}`}`} widths={[600, 1100]} sizes="(min-width: 760px) 50vw, 100vw" /></button>
                 {p.captions?.[k] && <figcaption class="label muted">{String(k + 1).padStart(2, '0')} · {p.captions[k]}</figcaption>}
               </figure>
@@ -245,6 +245,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
 
   .draw { padding-block: clamp(64px, 9vw, 130px); }
   .dgrid > .wide { grid-column: 1 / -1; }
+  .dgrid > .full .paper :global(img) { max-height: none; }
   .dgrid { grid-auto-flow: row dense; }
   .dgrid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 28px); margin-top: 28px; }
   /* THE DRAWING SHEET — plans, elevations, BIM captures and diagrams sit on a clean bone sheet
