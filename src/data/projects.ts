@@ -111,8 +111,6 @@ export const projects: Project[] = [
   { slug: 'minimal-villa', year: '2026', client: 'Private client', title: 'Minimal Villa', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A two-storey villa in pale stone and dark glazing: one carved volume, a deep garden terrace and a quiet street face.' },
   { slug: 'mediterranean-house', year: '2025', client: 'Private client', title: 'Mediterranean House', location: 'Lebanon', country: 'Lebanon', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
-  { slug: 'blue-villa', year: '2025', client: 'Private client', title: 'Blue Villa', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'architecture', sector: 'Residential', scope: [D], concept: true },
-
   // ---------- Interiors · Residential & hospitality
   { slug: 'modern-residence-new-cairo', year: '2025', client: 'Private client', title: 'Modern Residence', location: 'New Cairo', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A full residence in warm timber, stone and soft neutrals: living, dining, bedrooms and baths.' },

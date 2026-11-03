@@ -53,7 +53,6 @@ export const projectsAr: Record<string, ArText> = {
   'orascom-o-west': { title: 'ميديارد، أو ويست، أوراسكوم', summary: 'عمارات سكنية متوسطة الارتفاع لحي ميديارد في أو ويست.' },
   'minimal-villa': { title: 'فيلا مينيمال', summary: 'فيلا من طابقين بحجر فاتح وزجاج داكن: كتلة واحدة منحوتة وتراس حديقة عميق وواجهة شارع هادئة.' },
   'mediterranean-house': { title: 'منزل متوسطي' },
-  'blue-villa': { title: 'الفيلا الزرقاء' },
   'modern-residence-new-cairo': { title: 'مسكن معاصر', summary: 'مسكن كامل من الخشب الدافئ والحجر والألوان المحايدة الهادئة: معيشة وطعام وغرف نوم وحمامات.' },
   'zayed-residence': { title: 'مسكن زايد', summary: 'مسكن جريء من الخشب الداكن والرخام والإضاءة النحتية.' },
   'arches-restaurant': { title: 'مطعم آرتشز', summary: 'مطعم من الأقواس الخشبية والنباتات المتدلية وحلقات الإضاءة.' },

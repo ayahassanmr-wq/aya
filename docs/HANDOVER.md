@@ -140,8 +140,10 @@ No gold anywhere.
 - **CV** `public/Aya_Hassan_CV.pdf` — A4 portrait, 2 pages, One Hand style.
 - Both are generated from hidden pages `/print/portfolio/` and `/print/cv/` (noindex) using the site data, so they update with the site. Rebuild: `npx astro build && python3 scripts/grade-print.py && (npx astro preview --port 4321 &) && node scripts/make-pdfs.mjs`, then commit the PDFs.
 - Downloads: both buttons on the About page.
+- All links clickable in both PDFs (contacts, website, project pages, client links; portfolio index jumps to each project).
+- CV-only project scopes are assumed from the old CV — ❓ confirm: Um Qasr (Modelling, Animation), Zamalek Club & Sharm El Sheikh Tower Hotel (Design, Modelling, Rendering), Estadat / SIAC / One 90 / NEOM PSB interiors (BIM), Misk Schools (Review).
 - Phone/WhatsApp number deliberately not printed (same rule as the site).
-- Portfolio project openers: big project number + client logo. CV: experience grouped by employer, each with its projects (Architecture / Interiors), incl. CV-only projects from the old CV: Zamalek Club, Sharm El Sheikh Tower Hotel, Um Qasr Logistic City, Estadat City Club Complexes, SIAC Office Building, One 90 Retail, Misk Schools (NEOM) — Cosmos 2020–23. Freelance listed as "2022 — now" (❓ confirm start year).
+- Portfolio project openers: big project number + client logo. CV: experience grouped by employer, each with a project table (name · location · scope labels; names link to the site), incl. CV-only projects from the old CV: Zamalek Club, Sharm El Sheikh Tower Hotel, Um Qasr Logistic City, Estadat City Club Complexes, SIAC Office Building, One 90 Retail, Misk Schools (NEOM) — Cosmos 2020–23. Freelance listed as "2022 — now" (❓ confirm start year).
 
 ### 4.4 Content rules
 - Every project must have **client** and **year** (no "—").
@@ -181,11 +183,10 @@ No gold anywhere.
 | arches-restaurant | Arches Restaurant | Interior | Freelance | Private client | 2022 | Location: Saudi Arabia |
 | minimal-villa | Minimal Villa | Arch | Freelance | Private client | 2026 | NEW · 2 renders; full scope (design, modelling, rendering) |
 | mediterranean-house | Mediterranean House | Arch | Freelance | Private client | 2025 | Concept |
-| blue-villa | Blue Villa | Arch | Freelance | Private client | 2025 | Concept |
 | modern-residence-new-cairo | Modern Residence | Interior | Freelance | Private client | 2025 | |
 | zayed-residence | Zayed Residence | Interior | Freelance | Private client | 2024 | |
 
-**Removed (✅):** Classic House (folder deleted 2 Nov), Modern Villa, Apartment Building, Concept Sketches, Jeddah Residence (+ earlier: Studio K, HK Inc, Commercial Mall, Modern Villa I, Majlis, Jubail, Sea Residence, Neo-Classical Residence, Modern Residence II).
+**Removed (✅):** Blue Villa (3 Nov), Classic House (folder deleted 2 Nov), Modern Villa, Apartment Building, Concept Sketches, Jeddah Residence (+ earlier: Studio K, HK Inc, Commercial Mall, Modern Villa I, Majlis, Jubail, Sea Residence, Neo-Classical Residence, Modern Residence II).
 
 ---
 
@@ -292,6 +293,8 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-02 | Remove Modern Villa, Apartment Bldg, Sketches, Jeddah Residence | Aya request |
 | 2026-11-02 | Client + year on all projects; Fifth Square canopy note | Aya request |
 | 2026-11-02 | Don't swap in larger originals | Site caps at 2400 px; no visible gain, slower |
+| 2026-11-03 | Remove Blue Villa | Aya request |
+| 2026-11-03 | CV projects as tables with scope; all PDF links clickable | Aya: list looked random |
 | 2026-11-03 | Big project numbers + client logos on project pages and PDF; CV grouped by employer with old-CV projects added | Aya request |
 | 2026-11-03 | PDF portfolio + CV generated from the site, downloadable on About | Aya: for offline clients |
 | 2026-11-03 | Client strip → two rows, opposite drift; motion fixed for scaled displays / reduced-motion | Aya: bar wasn't moving |
@@ -400,6 +403,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-03 | Claude | Blue Villa removed; Ogami plan re-mapped from purple export to sand/ink; clickable links in PDFs; CV project tables. Live. |
 | 2026-11-03 | Claude | Project numbers + client logos (site & PDF); CV restructured with 7 extra projects. Live. |
 | 2026-11-03 | Claude | Built PDF portfolio (71 pp, A4 landscape) and 2-page CV from the site; About page download buttons. Live. |
 | 2026-11-03 | Claude | Client strip: two rows, float-based drift (works at 125% Windows scaling and with animations off). Live. |

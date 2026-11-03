@@ -151,6 +151,9 @@ const year = new Date().getFullYear();
   .disc { display: flex; flex-wrap: wrap; gap: 1.6mm 4mm; }
   .disc span { display: inline-flex; align-items: center; gap: 1.5mm; font-size: 6.8pt; letter-spacing: .14em; text-transform: uppercase; color: var(--ox); }
   .disc span::before { content: ""; width: 2mm; height: 2mm; background: var(--ox); }
+  a { color: inherit; text-decoration: none; }
+  .blk .lk { display: flex; flex-wrap: wrap; gap: 1mm 4mm; } .blk .lk a { color: var(--ox); border-bottom: 1px solid rgba(94,26,36,.35); }
+  .back dd a { border-bottom: 1px solid rgba(243,237,227,.5); }
   .tag { align-self: flex-start; font-size: 6.5pt; letter-spacing: .2em; text-transform: uppercase; border: 1px solid var(--ox); color: var(--ox); padding: 1mm 2mm; }
 
   /* renders page */
@@ -184,7 +187,7 @@ const year = new Date().getFullYear();
 <section class="pg cover dark on-img">
   <img class="bg grade" src={coverImg} alt="" />
   <div class="veil"></div>
-  <div class="top"><span class="wm">AYA<i></i>HASSAN</span><span class="lab">Portfolio · {year}</span></div>
+  <div class="top"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab">Portfolio · {year}</span></div>
   <div class="tb">
     <div class="dim"><i></i><span>Architect · Interior designer</span><i></i></div>
     <h1 class="wide">AYA HASSAN</h1>
@@ -215,7 +218,7 @@ const year = new Date().getFullYear();
       <div><b>{year - 2020}</b><span class="lab mut">Years in practice</span></div>
     </div>
   </div>
-  <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">02 / {total}</span></div>
+  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">02 / {total}</span></div>
 </section>
 
 <!-- clients -->
@@ -225,7 +228,7 @@ const year = new Date().getFullYear();
     {clients.map((c) => <div><img src={`/clients/${c}.png`} alt={c} /></div>)}
     {typed.map((c) => <div><span>{c}</span></div>)}
   </div>
-  <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">03 / {total}</span></div>
+  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">03 / {total}</span></div>
 </section>
 
 <!-- index -->
@@ -235,11 +238,11 @@ const year = new Date().getFullYear();
     {sections.map((s) => (
       <div>
         <h3>{s.n} · {s.name}</h3>
-        <ol>{s.items.map((it) => <li><span class="c">{it.code}</span><span>{it.p.title}</span><span class="m">{it.p.location} · {it.p.year}</span><span class="n">{String((it as any).page).padStart(2, '0')}</span></li>)}</ol>
+        <ol>{s.items.map((it) => <li><span class="c">{it.code}</span><a href={`#p${it.code}`}>{it.p.title}</a><span class="m">{it.p.location} · {it.p.year}</span><span class="n">{String((it as any).page).padStart(2, '0')}</span></li>)}</ol>
       </div>
     ))}
   </div>
-  <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">04 / {total}</span></div>
+  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">04 / {total}</span></div>
 </section>
 
 {sections.map((s) => (
@@ -247,17 +250,17 @@ const year = new Date().getFullYear();
     <section class="pg dark divider">
       <span class="big wide">{s.n}</span>
       <h2 class="wide">{s.name}</h2>
-      <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">{String((s as any).start).padStart(2, '0')} / {total}</span></div>
+      <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{String((s as any).start).padStart(2, '0')} / {total}</span></div>
     </section>
     {s.items.map((it) => {
       const pg0 = (it as any).page;
       return (
         <>
-          <section class="pg op">
+          <section class="pg op" id={`p${it.code}`}>
             <div class="im"><img class="grade" src={it.cover} alt="" /></div>
             <div class="side">
               <span class="pno"><span class="lab mut">Project</span><span class="big">{it.code}<small>/{String(projects.length).padStart(2, '0')}</small></span></span>
-              <h2 class="wide">{it.p.title}</h2>
+              <h2 class="wide"><a href={`https://ayahassan.com/work/${it.p.slug}/`}>{it.p.title}</a></h2>
               {it.p.concept && <span class="tag">Concept exploration</span>}
               {it.p.summary && <p class="sum">{it.p.summary}</p>}
               <dl class="blk">
@@ -266,10 +269,11 @@ const year = new Date().getFullYear();
                 <div><dt>Sector</dt><dd>{it.p.sector}</dd></div>
                 <div class="w"><dt>Location</dt><dd>{place(it.p)}</dd></div>
                 <div class="w"><dt>Practice</dt><dd>{practice(it.p)}</dd></div>
+                {it.p.links && <div class="w"><dt>Links</dt><dd class="lk">{it.p.links.map((l) => <a href={l.url}>{l.label} ↗</a>)}<a href={`https://ayahassan.com/work/${it.p.slug}/`}>ayahassan.com/work/{it.p.slug} ↗</a></dd></div>}
                 <div class="w"><dt>Scope</dt><dd><span class="disc">{it.disc.map((d) => <span>{d}</span>)}</span>{it.p.scopeNote && <span class="mut" style="display:block;margin-top:1.5mm;font-size:7.4pt">{it.p.scopeNote}</span>}</dd></div>
               </dl>
             </div>
-            <div class="foot" style="left:auto;width:70mm;right:11mm"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">{String(pg0).padStart(2, '0')} / {total}</span></div>
+            <div class="foot" style="left:auto;width:70mm;right:11mm"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{String(pg0).padStart(2, '0')} / {total}</span></div>
           </section>
           {it.rest.length > 0 && (
             <section class="pg">
@@ -296,13 +300,13 @@ const year = new Date().getFullYear();
   <div class="ct">
     <h2 class="wide">Have a concept?<br />Let’s make it <em>convincing.</em></h2>
     <dl>
-      <div><dt>Email</dt><dd>{contact.email}</dd></div>
-      <div><dt>Web</dt><dd>ayahassan.com</dd></div>
-      <div><dt>LinkedIn</dt><dd>{contact.linkedinLabel}</dd></div>
-      <div><dt>Instagram</dt><dd>@ayahassanmr</dd></div>
+      <div><dt>Email</dt><dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd></div>
+      <div><dt>Web</dt><dd><a href="https://ayahassan.com">ayahassan.com</a></dd></div>
+      <div><dt>LinkedIn</dt><dd><a href={contact.linkedin}>{contact.linkedinLabel}</a></dd></div>
+      <div><dt>Instagram</dt><dd><a href={contact.instagram}>@ayahassanmr</a></dd></div>
     </dl>
   </div>
-  <div class="foot"><span class="wm">AYA<i></i>HASSAN</span><span class="lab mut">{total} / {total}</span></div>
+  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{total} / {total}</span></div>
 </section>
 </body>
 </html>
