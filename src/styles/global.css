@@ -314,3 +314,10 @@ main .sheet[data-sp] { border-radius: var(--r-3); clip-path: inset(0 calc((1 - v
 /* THE HOUSE LOOK — one grade over every project image so every project reads as one hand:
    warm sand highlights, slightly matte blacks, quieter greens and blues. Logos and SVG marks are left alone. */
 main img:not([src$=".svg"]) { filter: sepia(.14) saturate(.86) contrast(1.05) brightness(1.01); }
+
+/* Design System (5 Nov): lifted oxblood for text/lines on dark, square corners except buttons. */
+:root { --r-1: 0px; --r-2: 0px; --r-3: 0px; --r-btn: 10px; }
+.dark, .hero, footer, .next, .mnav { --ox: #D9768A; }
+.dark .btn::before, .hero .btn::before, footer .btn::before, .next .btn::before,
+.dark .btn.solid::before, footer .btn.solid::before, .dark .more::before { background: #5E1A24 !important; }
+.dark .paper, .dark .sheet .paper { --ox: #5E1A24; }
