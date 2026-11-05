@@ -130,7 +130,7 @@ a:hover .arr, .btn:hover .arr { transform: translateX(5px); }
 .reveal { transition: opacity 1.3s var(--ease-out), transform 1.4s var(--ease-out); }
 .reveal.pre { opacity: 0; transform: translateY(48px); }
 /* line-by-line headline reveal: wrap each line in <span class="ln"><span>…</span></span> */
-.lines .ln { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
+.lines .ln { display: block; overflow: hidden; padding-bottom: .2em; margin-bottom: -.2em; }
 .lines .ln > span { display: inline-block; animation: lineup 1.1s var(--ease) both; }
 .lines .ln:nth-child(2) > span { animation-delay: .08s; } .lines .ln:nth-child(3) > span { animation-delay: .16s; }
 .lines.pre .ln > span { animation: none; transform: translateY(105%); }
@@ -309,7 +309,7 @@ main .sheet[data-sp] { border-radius: var(--r-3); clip-path: inset(0 calc((1 - v
 [dir="rtl"] :is(a:hover .arr, .btn:hover .arr) { transform: translateX(-5px); }
 [dir="rtl"] :is(footer ul a:hover, dl div:hover dd) { transform: translateX(-6px); }
 [dir="rtl"] .progress, [dir="rtl"] .sheet-head::before { transform-origin: right; }
-[dir="rtl"] :is(.lines, .hl) .ln { padding-top: .28em; margin-top: -.28em; padding-bottom: .2em; margin-bottom: -.2em; }
+[dir="rtl"] :is(.lines, .hl) .ln { padding-top: .28em; margin-top: -.28em; padding-bottom: .4em; margin-bottom: -.25em; }
 
 /* THE HOUSE LOOK — one grade over every project image so every project reads as one hand:
    warm sand highlights, slightly matte blacks, quieter greens and blues. Logos and SVG marks are left alone. */
