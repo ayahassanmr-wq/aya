@@ -22,7 +22,7 @@ const reelRows = [['neom-oxagon', 'jotun-office', 'fifth-square', 'zayed-residen
 const thumb = async (slug: string) => (await getImage({ src: cover(slug)!, width: 480, height: 360, fit: 'cover', format: 'webp', quality: 62 })).src;
 const stats = [
   { n: projects.length, l: t('Selected projects', 'مشروعًا مختارًا'), d: t('A selection of architecture and interiors, from first concept to drawing set.', 'مختارات من العمارة والتصميم الداخلي، من الفكرة الأولى حتى مجموعة الرسومات.'), img: await thumb('neom-oxagon') },
-  { n: countries.length, l: t('Countries', 'دول'), d: countries.map((c) => (L.ar ? placeAr[c] ?? c : c)).join(' · '), img: await thumb('travco-west-island') },
+  { n: countries.length, l: t('Countries', 'دول'), d: countries.map((c) => (L.ar ? placeAr[c] ?? c : c).replace(/ /g, '\u00a0')).join(' · '), img: await thumb('travco-west-island') },
   { n: years, l: t('Years in practice', 'سنوات من الممارسة'), d: t('Concept design since 2019.', 'في التصميم المبدئي منذ 2019.'), img: await thumb('fifth-square') },
   { n: 3, l: t('Studios', 'استوديوهات'), d: t('ZFP (Zuhair Fayez Partnership), Cosmos Studio and Innovation Design Studio.', 'زهير فايز ومشاركوه (ZFP)، وكوزموس ستوديو، وإنوفيشن ديزاين ستوديو.'), img: await thumb('stc-hq') },
 ];
