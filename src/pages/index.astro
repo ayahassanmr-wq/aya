@@ -81,7 +81,6 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
       <div class="tb" dir="ltr">
         <div class="dimn" aria-hidden="true"><i></i><span>{t('Architect · Interior designer', 'معمارية · مصممة داخلية')}</span><i></i></div>
         <h1 class="hl nm-h"><span class="ln"><span>AYA&nbsp;HASSAN</span></span></h1>
-        <p class="label status" dir={L.dir}>{t('Open to full-time roles and selected commissions · Cairo / Remote / Relocation', 'متاحة لوظائف بدوام كامل ولمشاريع مختارة · القاهرة / عن بُعد / مستعدة للانتقال')}</p>
         <dl class="cells" dir={L.dir}>
           <div class="c mot"><dt class="sr-only">{t('Motto', 'الشعار')}</dt><dd>{L.ar ? <>جريئة على الورق، <em>راسخة على الأرض.</em></> : <>Bold on paper. <em>Solid on ground.</em></>}</dd></div>
           <div class="c"><dt class="label">{t('Based', 'المقر')}</dt><dd>{t('Cairo, EG', 'القاهرة، مصر')}</dd></div>
@@ -90,9 +89,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
       </div>
       <div class="bottom">
         <div class="ctas">
-          <a href={u('/contact/')} class="btn magnet cta-eq">{t('Start a project', 'ابدأ مشروعًا')} <span class="arr">{L.next}</span></a>
           <a href={u('/work/')} class="btn pop magnet">{t('View the work', 'شاهد الأعمال')} <span class="arr">{L.next}</span></a>
-          <a href={u('/cv/')} class="btn cta-eq">{t('Hiring? See CV', 'تبحث عن مصممة؟ اطّلع على السيرة الذاتية')} <span class="arr">{L.next}</span></a>
         </div>
         <div class="ctrl" role="group" aria-label={t('Featured projects', 'مشاريع مميزة')}>
           <div class="bars">{slides.map((x, i) => <button type="button" class:list={['bb', { on: i === 0 }]} data-go={i} aria-label={`${t('Show', 'اعرض')} ${loc(x.p).title}`}><i></i></button>)}</div>
@@ -252,23 +249,6 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
 
   <Reel dark rows={reelRows.map((r) => r.map((s) => cover(s)!))} links={reelRows.map((r) => r.map((s) => ({ href: u(`/work/${s}/`), title: loc(projects.find((p) => p.slug === s)!).title })))} />
 
-  <section class="dark svc" data-svc>
-    <div class="wrap">
-      <div class="sheet-head"><h2 class="label">{t('Ways to work with me', 'طرق التعاون')}</h2><a href={u('/services/')} class="label link">{t('How I work →', 'كيف أعمل ←')}</a></div>
-      <div class="sg">
-        <div class="sticky" aria-hidden="true">
-          <div class="sframe">
-            {previews.map((src, i) => <img src={src} alt="" width="700" height="525" loading="lazy" decoding="async" class:list={{ on: i === 0 }} data-si={i} />)}
-          </div>
-        </div>
-        <ol>
-          {services.map((s, i) => (
-            <li class="reveal"><a href={s.href} data-sv={i}><span class="display-m">{s.t}</span><span class="arr">{L.next}</span></a></li>
-          ))}
-        </ol>
-      </div>
-    </div>
-  </section>
 
   <script>
     const sv = document.querySelector<HTMLElement>('[data-svc]');
