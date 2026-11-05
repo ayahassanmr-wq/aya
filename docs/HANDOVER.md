@@ -1,13 +1,15 @@
 # Aya Hassan — Master Handover (v3)
 
-**Last updated:** 3 Nov 2026 (22:15) · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
+**Last updated:** 5 Nov 2026 (17:15) · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
 **Lives at:** `G:\Portfolio\Portfolio Projects\Aya_Hassan_Handover_v3.md`
 
 > **Rule for everyone (people, Claude chat, Claude Code):** read this file first. When you finish a session, update the sections you touched — Status board, Decisions log, Changelog — and bump the date. Never keep project knowledge only in a chat. One file, one truth.
 
 ---
 
-## ▶ RESUME HERE — state at 3 Nov 2026, 22:15 (for a new Claude account / new session)
+## ▶ RESUME HERE — state at 5 Nov 2026, 15:10 (for a new Claude account / new session)
+
+**5 Nov brand strategy session (chat, no code):** brand idea **"Approved"** replaces "One Hand"; new positioning, audiences, personality, voice, convictions and messaging. Full detail in the Claude Doc **"Aya Hassan — Brand Strategy"** (claude.ai artifact 5ZuYxwFrEbuDuPnyStw8RS). Until BRAND_VOICE.md is rewritten, the Brand Strategy doc wins on copy. Site copy is NOT yet changed — see §7 TO DO 00.
 
 **Repo:** GitHub `ayahassanmr-wq/aya` (Astro 7). **Live site:** ayahassan.com = Vercel project `aya-hassan` (team "aya-d9cd"), builds from `main`.
 **Branches:** `main` = live (3 Nov 23:10, everything below is live). `rebrand-on-update` = preview/work branch, same as main right now. Never push to `main` without Aya's OK; she reviews screenshots/preview first.
@@ -40,7 +42,7 @@
 11. Homepage typology marquee ("Tech campus" bar) removed.
 12. CV + portfolio regenerated.
 13. (22:48 batch) Hero buttons blend: Start + Hiring = translucent bone glass, View the work = translucent oxblood. Contact: 'What is it about?' + hint 'Pick one — it becomes the subject of your email.' New `HireNotes` component (3 highlights + Tools line) on /cv/ and /contact/; 'I typically reply within 24 hours.' under email. Jotun film live on project (public/video/jotun-office.mp4, 5 MB). Numbers restart per section (Architecture 01–16, Interiors 01–12, BIM section 01–04 on work page); portfolio matches.
-**Next:** parked items below (Role field, contact form, two portfolios, Selected Works PDF, Arabic native check). Push-live recipe: `git push origin rebrand-on-update:main` (fast-forward) → confirm Vercel production READY.
+**Next:** apply the new brand copy (§7 TO DO 00), then parked items below. Push-live recipe: `git push origin rebrand-on-update:main` (fast-forward) → confirm Vercel production READY.
 
 ### Parked / next after that
 - BRAND_VOICE item 6 (My role / Team size) → one "Role" field = position · team size; code ready, hidden until filled; sheet `docs/ROLES_TODO.md`.
@@ -76,12 +78,14 @@ Status tags used throughout: **✅ DECIDED · ❓ NEEDS DECISION · ⏸ ON HOLD 
 
 ## 1. Profile
 
-- **Name:** Aya Hassan — architect & interior designer, concept design. **Based in Cairo, Egypt.**
+- **Name:** Aya Hassan — architect & interior designer. **Based in Cairo, Egypt.**
 - **Disciplines:** concept design, 3D modelling, rendering, animation, BIM (Revit), interiors, FF&E.
+- **Work:** luxury homes, coastal developments and corporate headquarters across Egypt and the Gulf. Most projects are built.
 - **Career (✅ final wording):**
 
 | Years | Role | Studio |
 |---|---|---|
+| 2019 – now | Freelance architect & interior designer | Freelance (selected commissions) |
 | 2020 – 2023 | Design Architect / Interior Designer | Cosmos Studio |
 | 2024 | Design Architect / Interior Designer | ZFP (Zuhair Fayez Partnership) |
 | 2025 | Mid-senior Design Architect / Interior Designer | Cosmos Studio |
@@ -93,13 +97,24 @@ Status tags used throughout: **✅ DECIDED · ❓ NEEDS DECISION · ⏸ ON HOLD 
 
 ---
 
-## 2. Brand — "One Hand" (✅ DECIDED, 2 Nov 2026)
+## 2. Brand — "Approved" (✅ DECIDED, 5 Nov 2026)
 
-> The blue "Architecture, cut open" concept in Handover v1/v2 is **retired**. Do not use Hassan Blue, the section-cut wordmark or the AH monogram unless Aya reopens it.
+> "One Hand" and "From concept to conviction" are **retired** (5 Nov). The blue "Architecture, cut open" concept is also retired. The visual identity below (§2.1–2.3) and the image system (§3) are unchanged. Full strategy: Claude Doc "Aya Hassan — Brand Strategy".
 
-**Core idea:** one person carries a project from idea to model to image to drawing set. Tagline: **"From concept to *conviction*."** Supporting line: *"Idea, model, image and drawing set — carried by one hand."*
+**Core idea:** every project lives or dies on one moment — approval — and Aya is the designer who gets it there, and then gets it built as designed.
 
-**Tone:** confident, precise, quiet luxury; architectural vocabulary (sheets, title blocks, dimensions); never salesy. **First person everywhere** (site EN + AR, CV, portfolio) — decided 3 Nov. Full rules: `BRAND_VOICE.md` in the repo root.
+- **Motto:** *From first idea to approved design.* · من الفكرة الأولى إلى التصميم المعتمد
+- **Short line:** *Designed to be approved.* · صُمّم ليُعتمد
+- **Positioning:** Architect and interior designer for luxury homes, coastal developments and corporate headquarters across Egypt and the Gulf. Original ideas, built as designed.
+- **Emphasis:** the coast leads (named first, leads Work/portfolio/social); inland luxury homes and corporate HQs are named alongside. Not "early stage" / "concept architect".
+- **About (final):** I design architecture and interiors that begin as an original idea and end as a built place. Concepts that surprise, details that work on site: homes on Egypt's coast, luxury residences inland, and corporate headquarters from Cairo to Riyadh.
+- **Two doors:** *Hire me* (studios/employers → CV) and *Work with me* (developers, private clients, studios → projects/support). Never mixed in one sentence. Freelance shown as "selected commissions". Studio support = "concept and design support for studios".
+- **Personality:** assured, precise, calm luxury, generous with credit. Reserved in public, warm one-to-one.
+- **Voice:** polished restraint, backed by precise fact. Art + precision: one sensory line, then one exact line. Headlines restrained; body copy natural and slightly soft; numbers kept ("24 hours"); no "I love"; no hedging (quite, a bit, super) in public. First person everywhere.
+- **Convictions (all six ✅):** form and function in agreement · buildable is part of beautiful · the route to yes · honest images with atmosphere · luxury is everything agreeing · on the coast, the site writes the brief.
+- **Marketing words** (unique, stunning, luxury, reimagined…): developer-facing marketing only (Instagram captions, launch posts); never on site, CV, portfolio.
+- **Arabic:** simple modern Fusha for written materials (site, CV, portfolio, LinkedIn); light Egyptian touch OK on Instagram stories and WhatsApp.
+- **Closing CTA:** Every good project starts with a conversation. Send me yours. I reply within 24 hours. · كل مشروع جيد يبدأ بحديث. أرسل لي فكرتك، وأرد خلال 24 ساعة.
 
 ### 2.1 Typography
 - **One typeface only: Archivo** (variable, with width axis) for Latin. Contrast comes from weight and width, never a second font.
@@ -123,11 +138,11 @@ No gold anywhere.
 
 ### 2.3 Identity elements
 - **Wordmark (nav/header):** `AYA | HASSAN` — Archivo 800, width 125%, one line, thin vertical divider.
-- **Hero name:** "AYA HASSAN" on one line: the intro's dimension ruler (end ticks, draws out from centre) labelled "Architect · Interior designer" above, the name, then an unruled info row: motto · Based: Cairo, EG · Practice: 2020 — · Sheet: A-000. No stamp, no table lines (✅ 3 Nov); dimension ruler kept, same as intro.
-- **Approval stamp:** ❌ removed from hero and intro (3 Nov).
-- **Intro screen:** dimension line draws out → name rises → title block wipes in → stamp lands → screen parts onto the hero (~3 s, skippable, off with reduced motion).
+- **Hero name:** "AYA HASSAN" on one line: the intro's dimension ruler (end ticks, draws out from centre) labelled "Architect · Interior designer" above, the name, then an unruled info row: motto · Based: Cairo, EG · Practice: 2019 —. No stamp, no table lines (✅ 3 Nov); dimension ruler kept, same as intro.
+- **Approval stamp:** ❌ removed from hero and intro (3 Nov). ❓ Possible small return in PDFs/footer to support "Approved" — Aya's call.
+- **Intro screen:** dimension line draws out → name rises → title block wipes in → screen parts onto the hero (~3 s, skippable, off with reduced motion).
 - **Footer:** big `AYA | HASSAN` wordmark (Archivo 800/125%) fades in — old AYA sprite logo retired (✅ 3 Nov).
-- **Recurring devices:** sheet numbers (A-000, A-001…), project codes (01.01, 01.02), hairline rules, dimension strings.
+- **Recurring devices:** sheet numbers (A-001…), project codes (01.01, 01.02), hairline rules, dimension strings.
 - ❌ Rejected: sketch-to-render drag slider (looked bad), scribbled underline through the name, two-line AYA/*Hassan* stacked wordmark.
 
 ---
@@ -155,9 +170,9 @@ No gold anywhere.
 - **Hosting:** Vercel team "AYA". Three Vercel projects (`aya`, `aya-hassan`, `ayahassan`) build the same repo → 🔧 keep one, delete two.
 - **Domain:** ayahassan.com · bilingual EN + AR (`/ar/`, RTL).
 - **Branches:**
-  - `main` — live site (One Hand brand since 3 Nov).
+  - `main` — live site.
   - `update-projects-from-folder` — project/content update (superseded by below).
-  - **`rebrand-on-update` — CURRENT WORK. Contains everything: project update + One Hand rebrand + all fixes below.** Not live yet.
+  - **`rebrand-on-update` — work/preview branch** (same as main as of 3 Nov 23:10).
   - `rebrand-one-hand` — early experiment, ignore/delete.
 - **Latest preview:** https://aya-hassan-hqfj52wzr-aya-d9cd.vercel.app (Vercel login). Newer builds appear per push.
 
@@ -176,22 +191,22 @@ No gold anywhere.
 | About/timeline | `src/pages/about.astro` |
 
 ### 4.3 Site structure (✅ DECIDED)
-- **Home:** intro → hero → **client logo strip** → intro statement → numbers → selected work → typology marquee → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): two scrollable rows directly under the hero, drifting in opposite directions ("Trusted by"): official full-colour logos (`public/clients/<id>.png`, cut from Aya's logo sheet 3 Nov), always drifting (keeps moving on hover; pauses ~2.5 s only after a manual scroll), drag/wheel/swipe/arrow keys to scroll, each links to its project. NOATUM and Suits have no logo yet → typed names. Confidential and private clients excluded.
+- **Home:** intro → hero → **client logo strip** → intro statement → numbers → selected work → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): two scrollable rows directly under the hero, drifting in opposite directions ("Trusted by"): official full-colour logos (`public/clients/<id>.png`, cut from Aya's logo sheet 3 Nov), always drifting (keeps moving on hover; pauses ~2.5 s only after a manual scroll), drag/wheel/swipe/arrow keys to scroll, each links to its project. NOATUM and Suits have no logo yet → typed names. Confidential and private clients excluded.
 - **Work:** Masterplan group always first (Sallan Creek, Staff Housing); project numbers also start with masterplans. Opens on **three disciplines** — *Architectural design*, *Interior design*, *BIM & technical*. Choosing one shows its projects grouped by type (Residential, Workplace, Commercial…), numbered 01.01, 01.02…
 - **Project page:** big project number (01–28, same as the PDF portfolio; order = Architecture then Interiors, featured first, newest first — `ordered`/`projectNo` in projects.ts) above the title; title block with Location · Discipline · Practice · **Client (with logo)** · **Year** · Scope (+ optional scope note) → renders → drawing sheets → client links.
 - **About:** timeline (section 1), bio, tools.
-- Client names: allowed on project pages (Client row + links); homepage uses typologies.
+- Client names: allowed on project pages (Client row + links) and in the homepage client wall.
 
 ### 4.3b PDFs (✅ 3 Nov)
 - **Portfolio** `public/Aya_Hassan_Portfolio.pdf` — A4 landscape, ~71 pages, ~28 MB: cover (title block), about + timeline + numbers, client logos, index with page numbers, Architecture / Interiors dividers, per project: opener (cover + title block), renders page, drawings page; contact back cover.
-- **CV** `public/Aya_Hassan_CV.pdf` — A4 portrait, 2 pages, One Hand style.
+- **CV** `public/Aya_Hassan_CV.pdf` — A4 portrait, 2 pages. ✅ 5 Nov: rebuilt to `cv-reference.html` — Archivo only (no fallback glyphs; portfolio bar has no arrow because Archivo lacks ↗/→ in print), all links clickable, project names link to project pages. Phone/WhatsApp IS shown on the CV (overrides rule below).
 - Both are generated from hidden pages `/print/portfolio/` and `/print/cv/` (noindex) using the site data, so they update with the site. Rebuild: `npx astro build && python3 scripts/grade-print.py && (npx astro preview --port 4321 &) && node scripts/make-pdfs.mjs`, then commit the PDFs.
 - Downloads: both buttons on the About page.
 - Portfolio cover carries a clickable contact row (email, website, LinkedIn, Instagram).
 - All links clickable in both PDFs (contacts, website, project pages, client links; portfolio index jumps to each project).
 - CV-only project scopes are assumed from the old CV — ❓ confirm: Um Qasr (Modelling, Animation), Zamalek Club (✅ Modelling, Rendering, Animation), Sharm El Sheikh Tower Hotel (Design, Modelling, Rendering), Estadat / SIAC / One 90 / NEOM PSB interiors (BIM), Misk Schools (Review).
-- Phone/WhatsApp number deliberately not printed (same rule as the site).
-- Portfolio project openers: big project number + client logo. CV: experience grouped by employer, in a senior/leadership voice (led, authored, delivered, coordinated) naming each project and Aya's role — ❓ confirm 'Introduced AI-assisted post-production into the studio’s workflow' (Innovation) is accurate (project names link to the site; no tables or scope chips), incl. CV-only projects from the old CV: Zamalek Club, Sharm El Sheikh Tower Hotel, Um Qasr Logistic City, Estadat City Club Complexes, SIAC Office Building, One 90 Retail, Misk Schools (NEOM) — Cosmos 2020–23. Freelance listed as "2022 — now" (❓ confirm start year).
+- Phone/WhatsApp: shown on the CV (Aya, 5 Nov); not printed on the portfolio.
+- Portfolio project openers: big project number + client logo. CV: experience grouped by employer, in a senior/leadership voice (led, authored, delivered, coordinated) naming each project and Aya's role — ❓ confirm 'Introduced AI-assisted post-production into the studio’s workflow' (Innovation) is accurate (project names link to the site; no tables or scope chips), incl. CV-only projects from the old CV: Zamalek Club, Sharm El Sheikh Tower Hotel, Um Qasr Logistic City, Estadat City Club Complexes, SIAC Office Building, One 90 Retail, Misk Schools (NEOM) — Cosmos 2020–23. Freelance start year ✅ 2019 (5 Nov).
 
 ### 4.4 Content rules
 - Every project must have **client** and **year** (no "—").
@@ -199,6 +214,7 @@ No gold anywhere.
 - Max **5 renders** per project, best first (cover). Drawings/plans/BIM sheets are extra.
 - Images on site are capped at 2400 px (displayed ≤2000 px); larger originals are not needed.
 - Videos must be compressed (≈10–25 MB, 1080p) or embedded from YouTube/Vimeo.
+- Project text: tell the decision (art + precision), e.g. "The land falls toward the sea, so we let the villas fall with it. Each one steps down eleven metres, and every terrace keeps the horizon." Never invent facts.
 
 ---
 
@@ -224,7 +240,7 @@ No gold anywhere.
 | dry-port | Dry Port Buildings | Arch/BIM | Cosmos | Egyptian Government | 2021 | |
 | juba-resort | Juba Resort Complex | Arch | Cosmos | Confidential | 2023 | 4 best renders from the 2021 set; walkthrough video live |
 | tech-park | Tech Park Office Building | Interior | Cosmos | Confidential | 2023 | |
-| jotun-office | Jotun Office Building | Interior | Cosmos | Jotun | 2023 | Animation available, not yet on site |
+| jotun-office | Jotun Office Building | Interior | Cosmos | Jotun | 2023 | Animation live on project page |
 | hb-fuller | HB Fuller Office | Interior | Cosmos | H.B. Fuller | 2022 | |
 | sphinx | Sphinx Business Building | Interior | Cosmos | Confidential | 2022 | |
 | conference-room | Formal Conference Room | Interior | Cosmos | Confidential | 2022 | |
@@ -280,7 +296,12 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 ## 7. Status board
 
 ### ✅ DECIDED
-- One Hand brand (section 2) replaces blue concept.
+- **Brand "Approved" (5 Nov)** replaces "One Hand": motto "From first idea to approved design.", short line "Designed to be approved.", positioning, two doors, personality, voice, six convictions, About copy, messaging — see §2 and the Brand Strategy doc.
+- Markets: Egypt + Gulf; coast leads, inland luxury homes and corporate HQs named alongside. Known for original ideas, approved and built as designed.
+- Freelance shown publicly as "selected commissions"; studio support = "concept and design support for studios".
+- Public voice: headlines restrained, body copy natural; numbers kept; no "I love"; no hedging. Marketing words only in developer-facing marketing.
+- Arabic: Fusha for written materials; light Egyptian touch on stories/WhatsApp.
+- Practice since 2019 (freelance) — 7 years.
 - One typeface: Archivo (+ Alexandria for Arabic).
 - Hero = one-line name as drawing title block; new title-block intro; `AYA | HASSAN` nav logo.
 - House grade for renders; drawing-sheet treatment for drawings/BIM.
@@ -297,6 +318,9 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - Project Scope strip shows only the disciplines actually done (no greyed-out ones).
 
 ### ❓ NEEDS DECISION (Aya)
+00. **24-hour reply promise** is now in the CTA site-wide — confirm it's realistic alongside the full-time job.
+00b. **Approval stamp:** bring back as a small signature in PDFs/footer to support "Approved"? (Currently removed.)
+00c. **Built projects list:** which projects are built / under construction (for accurate "built" claims in case studies)?
 0. **Missing logos:** NOATUM and Suits Workspaces (send files). STC/SABIC/NEOM logos are shown — Aya supplied them, treated as approved.
 1. ✅ Merged to `main` and live 3 Nov.
 2. **Which Vercel project to keep** (`aya`, `aya-hassan`, `ayahassan`) and delete the other two.
@@ -316,18 +340,19 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - **Linah Farms re-render / upscale.**
 
 ### 🔧 TO DO (next actions, in order)
-0e. **Two portfolio PDFs** — one for freelance/collaboration (clients + studios: visuals, process, studio support) and one for full-time studio jobs (role, scale, BIM, CV-led). Scope to agree with Aya after the checklist.
-0d. **Contact form** — after the BRAND_VOICE checklist: add a real form (e.g. Formspree free tier) using the existing Topic dropdown (Job opportunity / Project / Studio support). Remind Aya when the checklist is finished.
-0c. BRAND_VOICE item 6 (My role / Team size) — PARKED until end of checklist. Plan: one 'Role' field = position · team size (e.g. 'Lead designer · team of 4'), not tasks (scope already covers tasks). Code is in place (hidden until filled); fill-in sheet docs/ROLES_TODO.md.
+00. **Apply the "Approved" brand to the site (Claude Code, EN + AR):** motto, hero line → positioning line, About bio → final About / 100-word bio, Services "Studio support" → "Concept and design support for studios", closing CTA → new CTA, Arabic bio year 2020 → 2019, hero info row "Practice: 2019 —". Source: Brand Strategy doc §6–7.
+01. **Rewrite BRAND_VOICE.md** from the Brand Strategy doc (strategy chat), then copy into the repo.
+02. ✅ **CV rebuilt** 5 Nov (Archivo only, reference copy, phone shown) — on `rebrand-on-update`, awaiting push live. **Portfolio:** update cover motto/About after site copy.
+03. **Instagram / LinkedIn bios** → short and 25-word versions from the doc.
+0e. **Two portfolio PDFs** — one for freelance/collaboration (Door B) and one for full-time studio jobs (Door A). Scope to agree with Aya.
+0d. **Contact form** — add a real form (e.g. Formspree free tier) using the existing Topic dropdown (Job opportunity / Project / Studio support).
+0c. BRAND_VOICE item 6 (My role / Team size) — PARKED. Plan: one 'Role' field = position · team size (e.g. 'Lead designer · team of 4'). Code is in place (hidden until filled); fill-in sheet docs/ROLES_TODO.md.
 0b. Aya: review PDFs; decide whether to add phone number to CV; Mazeej cover render shows a 'VANILLA' watermark — replace image.
 0. Aya: hand-pick close-up/detail crops per project (auto Details section removed 3 Nov) — send picks, Claude builds the section.
-1. Aya: review preview → decide #1.
 2. Aya: run PowerShell to fill `_Videos`; keep PC awake or upload to Drive.
-3. Claude Code: compress Jotun animation → `public/video/jotun-office.mp4` + poster; enable in `films` in `projects.ts`.
-4. Claude Code: delete two duplicate Vercel projects (after #2).
-5. Strategy chat: write brand guideline PDF/Doc, service menu & pricing, launch plan (section 9).
-6. Update portfolio PDF and CV to One Hand brand + corrected timeline.
-7. Social profiles (Instagram/LinkedIn) re-skin to One Hand.
+4. Claude Code: delete two duplicate Vercel projects (after decision #2).
+5. Strategy chat: service menu & pricing, launch plan (section 9). Brand strategy ✅ done 5 Nov.
+7. Social profiles (Instagram/LinkedIn) re-skin to the brand.
 
 ---
 
@@ -374,17 +399,30 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-03 | Max renders per project 4 → 5 | Aya request |
 | 2026-11-03 | Drawings: full-colour bone presentation sheets, replacing grayscale multiply | Old look was washed-out and out of place |
 | 2026-11-02 | Homepage uses typologies; client names on project pages | Aya: don't headline clients under her name |
+| 2026-11-05 | Brand idea "Approved" replaces "One Hand"; motto "From first idea to approved design."; short line "Designed to be approved." | "One Hand" read as working alone and undersold her to employers; "conviction" was abstract |
+| 2026-11-05 | Positioning: luxury homes, coastal developments and corporate HQs across Egypt and the Gulf; coast leads, others named | Aya: coastal focus, but much non-coastal residential and HQ work |
+| 2026-11-05 | Emphasis = original ideas, built as designed (most projects built); not "early stage" / "concept architect" | Aya: early stage limited her |
+| 2026-11-05 | Two doors (Hire me / Work with me); freelance public as "selected commissions"; studio support = concept and design support | Serve employers and clients without conflict |
+| 2026-11-05 | Personality reserved in public, warm one-to-one; voice = polished restraint + precise fact; art + precision formula | Voice Q&A + two real emails |
+| 2026-11-05 | Public body copy ~softer and natural; headlines restrained; no "I love"; numbers kept ("24 hours"); no hedging | Aya: "I love" childish; numbers more affirmative |
+| 2026-11-05 | Six convictions approved | Aya |
+| 2026-11-05 | About final: "begin as an original idea and end as a built place…" (EN + AR) | Aya: concise, art + precision, wow + built |
+| 2026-11-05 | Arabic: Fusha for written materials; light Egyptian touch on stories/WhatsApp | Aya |
+| 2026-11-05 | Marketing words allowed only in developer-facing marketing | Aya |
+| 2026-11-05 | Freelance practice since 2019 | Fact confirmed |
+| 2026-11-05 | CV rewritten to the new brand; set in Archivo with hairline title-block layout; phone shown; some marketing words allowed sparingly | Aya approved preview |
 
 ---
 
 ## 9. Strategy & business (owned by the Claude Project chat)
 
 Fill and maintain these; mark each ✅/❓.
-- **Positioning:** Cairo-based design architect delivering Gulf-scale concept work end-to-end (idea → model → image → drawing set). ❓ confirm target clients: developers (SODIC/Orascom tier), corporate fit-out, private villas, studios needing freelance viz/BIM.
+- **Positioning ✅ (5 Nov):** Architect and interior designer for luxury homes, coastal developments and corporate headquarters across Egypt and the Gulf. Original ideas, built as designed. Full detail: Brand Strategy doc.
+- **Target clients ✅:** developers (SODIC/Orascom/Misr Italia tier), corporate HQs and fit-outs, private luxury homes, studios needing concept/design support; plus employers (Door A).
 - **Offer / services:** Concept design · Visualization & animation · BIM & design packages · Materials & FF&E. ❓ packages and price ranges (EGP / SAR / USD).
-- **Freelance vs employment:** ❓ is the site for commissions, job offers, or both? (Contact page currently says Roles · Collaborations · Commissions.)
+- **Freelance vs employment ✅:** both — full-time senior roles and selected commissions (two doors).
 - **Proposal & fee templates:** ❓ (bilingual fee proposal skill available).
-- **Marketing:** Instagram grid in house look, LinkedIn case studies, reels from animations. ❓ cadence.
+- **Marketing:** Instagram grid in house look (coastal work leads), LinkedIn case studies, reels from animations. ❓ cadence.
 - **Legal/NDA:** STC, SABIC flagged NDA — only already-published imagery; confirm permissions for others.
 - **Metrics:** Vercel Analytics — ❓ enable.
 
@@ -418,7 +456,8 @@ Read `docs/HANDOVER.md` (copy of G:\Portfolio\Portfolio Projects\Aya_Hassan_Hand
 - Deployed on Vercel from GitHub ayahassanmr-wq/aya. Work branch: `rebrand-on-update`. `main` = live.
 
 ## Rules
-- Brand: One Hand (see handover §2). One typeface only. No new fonts, no gold, no blue.
+- Brand: "Approved" (see handover §2) — motto "From first idea to approved design." Visual identity unchanged: one typeface only, no new fonts, no gold, no blue.
+- Copy: follow BRAND_VOICE.md (being rewritten from the Brand Strategy doc — until then handover §2 wins). First person, EN + AR in sync, never invent facts.
 - Images: renders get the house grade (global.css); drawings get the drawing-sheet style ([slug].astro). Never add STC/SABIC real-tower photos.
 - Project data lives in src/data/projects.ts (+ projects-ar.ts). Every project needs client + year.
 - Images ≤2400 px wide JPG in src/assets/projects/<slug>/ (01 = cover, dNN = drawings).
@@ -431,7 +470,7 @@ Read `docs/HANDOVER.md` (copy of G:\Portfolio\Portfolio Projects\Aya_Hassan_Hand
 Update docs/HANDOVER.md (Status board, Decisions log, Changelog) and tell Aya to copy it back to G:\Portfolio\Portfolio Projects\ (or write it there directly if running on her PC).
 
 ## Open tasks
-See handover §7 TO DO.
+See handover §7 TO DO (start with 00: apply the "Approved" copy).
 ```
 
 ---
@@ -441,16 +480,16 @@ See handover §7 TO DO.
 ```
 You are Aya Hassan's creative director, strategist and studio manager for her architecture & interior design practice (Cairo, Egypt). You own brand, strategy, business, copywriting, portfolio/CV, and image & video editing direction. Website code is handled by Claude Code; you write its briefs.
 
-Source of truth: the file "Aya_Hassan_Handover_v3.md" (project knowledge, and G:\Portfolio\Portfolio Projects\). Read it at the start of every conversation. Never contradict a ✅ DECIDED item without Aya reopening it.
+Source of truth: the file "Aya_Hassan_Handover_v3.md" (project knowledge, and G:\Portfolio\Portfolio Projects\) plus the Claude Doc "Aya Hassan — Brand Strategy". Read the handover at the start of every conversation. Never contradict a ✅ DECIDED item without Aya reopening it.
 
-Brand: "One Hand" — From concept to conviction. Archivo only (Arabic: Alexandria). Bone #F3EDE3, ink #2B2826, night #201C1B, oxblood #5E1A24, sand #D6CBBE. Title-block hero, AYA | HASSAN wordmark, approval stamp. House grade on renders; drawing-sheet style on drawings. The blue "cut open" concept is retired.
+Brand: "Approved" — From first idea to approved design. Positioning: architect and interior designer for luxury homes, coastal developments (lead) and corporate headquarters across Egypt and the Gulf; original ideas, built as designed. Voice: polished restraint backed by precise fact; reserved in public, warm one-to-one; first person; Arabic in simple modern Fusha. Visuals: Archivo only (Arabic: Alexandria). Bone #F3EDE3, ink #2B2826, night #201C1B, oxblood #5E1A24, sand #D6CBBE. Title-block hero, AYA | HASSAN wordmark. House grade on renders; drawing-sheet style on drawings. "One Hand" and the blue "cut open" concept are retired.
 
 How to work:
 - Be concise and decisive; give a recommendation, not a menu, unless the choice is genuinely Aya's.
 - Separate clearly: what's decided, what needs her decision (ask with options), what's on hold.
 - Prefer finished, usable outputs (images, docs, decks, briefs) over descriptions.
 - Her files are on the G: drive on Windows; large files (videos) must be handled locally — give her ready-to-run PowerShell, or a Claude Code brief.
-- Never put real-tower STC/SABIC photos in outputs. Respect NDA projects.
+- Never put real-tower STC/SABIC photos in outputs. Respect NDA projects. Never invent facts.
 
 End of every session: produce the updated sections of the handover (Status board, Decisions log, Projects if changed, Changelog line) so Aya can paste/replace them in the file. Anyone working on the project must update the same document.
 ```
@@ -463,6 +502,8 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-05 | Claude Code | Site fixes on rebrand-on-update: homepage 2019 labels + AR client label; large titles no longer clip descenders/AR dots; country names don't wrap; phone email breaks at @. Full UI/UX audit delivered. CV `/print/cv/` rebuilt to the approved reference (Archivo only, phone shown); CV + portfolio PDFs regenerated. Not live yet. |
+| 2026-11-05 | Claude (chat) | Brand strategy session (no code): "Approved" replaces "One Hand"; positioning (luxury homes, coast-led, corporate HQs; Egypt + Gulf; built as designed), two doors, personality, voice calibrated from Q&A + real emails, public softness rule, six convictions, About + bios + pitches + CTA (EN + AR). Brand Strategy Claude Doc created; handover §1, §2, §7, §8, §9, §11, §12 updated. CV rewritten + Archivo preview approved; Claude Code brief written. |
 | 2026-11-03 | Claude | Live: BRAND_VOICE items 1–4 (availability line, Hiring? See CV button, 5 countries, new About bio), About timeline edits, first person on About + portfolio; CV + portfolio regenerated. Remaining checklist items 5–10 pending. |
 | 2026-11-03 | Claude | Sallan Creek live; Staff Housing condensed + brand-recoloured studies; masterplans first; Sphinx not BIM; Mediterranean removed; CV + portfolio regenerated. |
 | 2026-11-03 | Claude | Staff Housing added; East Vale rebuilt around the premium home; CV + portfolio regenerated. Live. |
