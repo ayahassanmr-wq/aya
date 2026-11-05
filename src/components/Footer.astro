@@ -10,7 +10,7 @@ const L = i18n(Astro.url);
       <h2 class="big lines"><span class="ln"><span>{L.t('Have a concept, or a role to fill?', 'لديك فكرة، أو وظيفة تبحث لها عن الشخص المناسب؟')}</span></span><span class="ln"><span>{L.ar ? <>لنجعلها <em>مقنعة.</em></> : <>Let’s make it <em>convincing.</em></>}</span></span></h2>
       <div class="actions">
         <a href={L.u('/contact/')} class="btn solid magnet">{L.t('Start a project', 'ابدأ مشروعًا')} <span class="arr">{L.next}</span></a>
-        <a href={`mailto:${contact.email}`} class="mail link">{contact.email}</a>
+        <a href={`mailto:${contact.email}`} class="mail link">{contact.email.split("@")[0]}<wbr />@{contact.email.split("@")[1]}</a>
       </div>
     </div>
 
