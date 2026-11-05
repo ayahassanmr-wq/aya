@@ -26,7 +26,7 @@ const ways = L.ar ? [
 ] : [
   { t: 'Full-time role', d: 'Design architect or senior designer in a studio or developer team. Cairo, remote, or relocation to the Gulf.', cta: 'See CV', href: u('/cv/') },
   { t: 'Full project', d: 'Concept design for a building or interior, from brief to drawing set.', cta: 'Start a project', href: u('/contact/?type=project') },
-  { t: 'Studio support', d: 'Renders, animation or Revit packages for studios on deadline.', note: ['Tight deadline?', 'Send the brief — I’ll confirm timing within 24 hours.'], cta: 'Send a brief', href: u('/contact/?type=studio') },
+  { t: 'Studio support', d: 'Concept and design support for studios: renders, animation or Revit packages on deadline.', note: ['Tight deadline?', 'Send the brief — I’ll confirm timing within 24 hours.'], cta: 'Send a brief', href: u('/contact/?type=studio') },
 ];
 const services = L.ar ? servicesEn.map((s, i) => ({ ...s, ...servicesAr[i] })) : servicesEn;
 const stepsEn = [
@@ -45,7 +45,7 @@ const steps = L.ar ? [
 <Base title={t('Services', 'الخدمات')} description={t('Concept design, visualization and animation, BIM and design packages, and materials and FF&E selection.', 'التصميم المبدئي، والإظهار والتحريك، وBIM وحزم التصميم، واختيار المواد والأثاث والتجهيزات.')}>
   <PageHero images={[imagesFor('neom-oxagon')[0], imagesFor('fifth-square')[1], imagesFor('noatum-terminal')[0], imagesFor('stc-hq')[3]]} alt={t('Rendered public buildings at NEOM Oxagon', 'إظهار لمباني الخدمات العامة في أوكساجون، نيوم')}>
     <h1 class="display-xl lines"><span class="ln"><span>{t('From concept', 'من الفكرة')}</span></span><span class="ln"><span>{L.ar ? <>إلى <em>الرسومات.</em></> : <>to <em>drawing set.</em></>}</span></span></h1>
-    <p class="lede">{t('Concept design, visualization, BIM packages and material selection: the whole concept stage, carried by one hand.', 'التصميم المبدئي والإظهار وحزم BIM واختيار المواد: مرحلة التصميم المبدئي كاملة، بيدٍ واحدة.')}</p>
+    <p class="lede">{t('Concept design, visualization, BIM packages and material selection, from first idea to approved design.', 'التصميم المبدئي والإظهار وحزم BIM واختيار المواد، من الفكرة الأولى إلى التصميم المعتمد.')}</p>
   </PageHero>
 
   <section class="wrap list">

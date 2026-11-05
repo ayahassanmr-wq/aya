@@ -340,7 +340,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - **Linah Farms re-render / upscale.**
 
 ### 🔧 TO DO (next actions, in order)
-00. **Apply the "Approved" brand to the site (Claude Code, EN + AR):** motto, hero line → positioning line, About bio → final About / 100-word bio, Services "Studio support" → "Concept and design support for studios", closing CTA → new CTA, Arabic bio year 2020 → 2019, hero info row "Practice: 2019 —". Source: Brand Strategy doc §6–7.
+00. ✅ (5 Nov, on `rebrand-on-update`, awaiting push live) **Apply the "Approved" brand to the site (Claude Code, EN + AR):** motto, hero line → positioning line, About bio → final About / 100-word bio, Services "Studio support" → "Concept and design support for studios", closing CTA → new CTA, Arabic bio year 2020 → 2019, hero info row "Practice: 2019 —". Source: Brand Strategy doc §6–7.
 01. **Rewrite BRAND_VOICE.md** from the Brand Strategy doc (strategy chat), then copy into the repo.
 02. ✅ **CV rebuilt** 5 Nov (Archivo only, reference copy, phone shown) — on `rebrand-on-update`, awaiting push live. **Portfolio:** update cover motto/About after site copy.
 03. **Instagram / LinkedIn bios** → short and 25-word versions from the doc.
@@ -502,6 +502,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-05 | Claude Code | "Approved" copy applied site-wide EN + AR: hero motto + status (selected commissions), intro screen motto, home statement + About bio = final About copy, About lede/role (Mid-senior)/timeline intro, "Rehired" removed, Services lede + studio support wording, HireNotes, new closing CTA (24 h), meta descriptions; footer email in Archivo. Arabic of new About/statement written in Fusha by Claude — needs native check. Not live yet. |
 | 2026-11-05 | Claude Code | Site fixes on rebrand-on-update: homepage 2019 labels + AR client label; large titles no longer clip descenders/AR dots; country names don't wrap; phone email breaks at @. Full UI/UX audit delivered. CV `/print/cv/` rebuilt to the approved reference (Archivo only, phone shown); CV + portfolio PDFs regenerated. Not live yet. |
 | 2026-11-05 | Claude (chat) | Brand strategy session (no code): "Approved" replaces "One Hand"; positioning (luxury homes, coast-led, corporate HQs; Egypt + Gulf; built as designed), two doors, personality, voice calibrated from Q&A + real emails, public softness rule, six convictions, About + bios + pitches + CTA (EN + AR). Brand Strategy Claude Doc created; handover §1, §2, §7, §8, §9, §11, §12 updated. CV rewritten + Archivo preview approved; Claude Code brief written. |
 | 2026-11-03 | Claude | Live: BRAND_VOICE items 1–4 (availability line, Hiring? See CV button, 5 countries, new About bio), About timeline edits, first person on About + portfolio; CV + portfolio regenerated. Remaining checklist items 5–10 pending. |

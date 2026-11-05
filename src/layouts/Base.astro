@@ -9,14 +9,14 @@ import { i18n } from '../i18n';
 interface Props { title?: string; description?: string; image?: string; overHero?: boolean; intro?: boolean; preloadImage?: { srcset: string; sizes: string } }
 const {
   title,
-  description = 'Aya Hassan is an architect and interior designer in concept design, based in Cairo: workplaces, public buildings, residences and interiors across five countries.',
+  description = 'Aya Hassan is an architect and interior designer based in Cairo, for luxury homes, coastal developments and corporate headquarters across Egypt and the Gulf.',
   image = '/og.jpg',
   overHero = false,
   intro = false,
   preloadImage,
 } = Astro.props;
 const L = i18n(Astro.url);
-const desc = L.ar && description.startsWith('Aya Hassan is an architect') ? 'آية حسن معمارية ومصممة داخلية في مرحلة التصميم المبدئي، مقيمة في القاهرة: مبانٍ إدارية وعامة ومساكن وتصميم داخلي في خمس دول.' : description;
+const desc = L.ar && description.startsWith('Aya Hassan is an architect') ? 'آية حسن معمارية ومصممة داخلية مقيمة في القاهرة، للبيوت الفاخرة والمشروعات الساحلية والمقرات الرئيسية في مصر والخليج.' : description;
 const fullTitle = title ? `${title} · ${L.t('Aya Hassan', 'آية حسن')}` : L.t('Aya Hassan · Architect & Interior Designer', 'آية حسن · معمارية ومصممة داخلية');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
