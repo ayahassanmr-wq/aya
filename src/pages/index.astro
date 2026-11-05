@@ -162,7 +162,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
 </script>
 
   <section class="clients" aria-labelledby="cl-h">
-    <div class="wrap cl-head"><h2 id="cl-h" class="label">{t('Trusted by · 2020 —', 'عملاؤنا · 2020 —')}</h2><span class="label muted cl-hint">{t('Drag or scroll →', 'اسحب أو مرّر ←')}</span></div>
+    <div class="wrap cl-head"><h2 id="cl-h" class="label">{t('Trusted by · since 2019', 'وثقوا بي · منذ 2019')}</h2><span class="label muted cl-hint">{t('Drag or scroll →', 'اسحب أو مرّر ←')}</span></div>
     {[clients.filter((_, k) => k % 2 === 0), clients.filter((_, k) => k % 2 === 1)].map((row, r) => (
       <div class="cl-scroll" data-cl data-dir={r === 0 ? '1' : '-1'} tabindex="0" aria-label={t(`Client logos, row ${r + 1}, scrollable`, `شعارات العملاء، الصف ${r + 1}، قابلة للتمرير`)}>
         <ul class="cl-track">
@@ -199,7 +199,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
 
   <section class="dark nums" aria-labelledby="nums-h">
     <div class="wrap">
-      <div class="sheet-head"><h2 id="nums-h" class="label">{t('In numbers', 'بالأرقام')}</h2><span class="label muted">2020 — {new Date().getFullYear()}</span></div>
+      <div class="sheet-head"><h2 id="nums-h" class="label">{t('In numbers', 'بالأرقام')}</h2><span class="label muted">2019 — {new Date().getFullYear()}</span></div>
       {stats.map((x) => (
         <div class="stat" data-sp>
           <p class="sr-only">{x.n} {x.l}. {x.d}</p>
