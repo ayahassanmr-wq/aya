@@ -54,17 +54,6 @@ const tools = L.ar ? [
 
   <Reel rows={[['sabic-hq', 'neom-oxagon', 'hb-fuller', 'modern-residence-new-cairo', 'mazeej', 'conference-room', 'dry-port'].map((s) => cover(s)!)]} />
 
-  <section class="dark tl sheet" data-sp><div class="wrap">
-    <div class="sheet-head"><span class="label">{t('Experience & education', 'الخبرة والتعليم')}</span></div>
-    <p class="d reveal" style="max-width: 56ch; margin: 0 0 8px;">{t('Seven years across Egypt and the Gulf, from first idea to built place.', 'سبع سنوات بين مصر والخليج، من الفكرة الأولى إلى المكان المبني.')}</p>
-    {timeline.map((t) => (
-      <div class="row reveal">
-        <span class="label muted yr">{t.y}</span>
-        <div><h2 class="display-m">{t.r}</h2><p class="label org">{t.o}</p></div>
-        <p class="d">{t.d}</p>
-      </div>
-    ))}
-  </div></section>
 
   <section class="wrap tools">
     <div class="sheet-head"><span class="label">{t('Tools', 'الأدوات')}</span></div>

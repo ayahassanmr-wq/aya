@@ -218,7 +218,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
               <img srcset={x.srcset} src={x.src} sizes="(min-width: 1840px) 1700px, 92vw" width={x.w} height={x.h} alt={`${loc(x.p).title}, ${place(x.p)}`} loading="lazy" decoding="async" />
               {x.p.concept && <span class="tag flag">{t('Concept exploration', 'استكشاف مبدئي')}</span>}
               <div class="scm glass-dark">
-                <div><span class="fno" dir="ltr">{projectNo(x.p.slug)}</span><h3>{loc(x.p).title}</h3><p class="label">{place(x.p)} · {loc(x.p).sector}</p></div>
+                <div><h3>{loc(x.p).title}</h3><p class="label">{place(x.p)} · {loc(x.p).sector}</p></div>
                 <span class="label go">{t('View project', 'اعرض المشروع')} <span class="arr">{L.next}</span></span>
               </div>
             </div>
