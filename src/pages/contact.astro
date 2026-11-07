@@ -10,7 +10,7 @@ const L = i18n(Astro.url);
 const { t } = L;
 ---
 <Base title={t('Contact', 'تواصل')} description={t('Contact Aya Hassan for concept design roles, collaborations with design firms and selected private commissions.', 'تواصل مع آية حسن لوظائف التصميم المبدئي، والتعاون مع مكاتب التصميم، ومشاريع خاصة مختارة.')}>
-  <PageHero images={[imagesFor('stc-hq')[2], imagesFor('misr-italia-hilltop')[1]]} alt={t('Interior of the stc headquarters', 'التصميم الداخلي لمقر stc')} meta={L.ar ? [['المقر', 'القاهرة، مصر'], ['متاحة لـ', 'وظائف · تعاون · مشاريع خاصة'], ['اللغات', 'العربية · الإنجليزية']] : [['Based in', 'Cairo, Egypt'], ['Open to', 'Roles · Collaborations · Commissions'], ['Languages', 'Arabic · English']]}>
+  <PageHero images={[imagesFor('stc-hq')[2], imagesFor('misr-italia-hilltop')[1]]} alt={t('Interior of the stc headquarters', 'التصميم الداخلي لمقر stc')} meta={L.ar ? [['المقر', 'القاهرة، مصر'], ['اللغات', 'العربية · الإنجليزية']] : [['Based in', 'Cairo, Egypt'], ['Languages', 'Arabic · English']]}>
     <h1 class="display-xl lines"><span class="ln"><span>{t('Let’s talk', 'لنتحدث')}</span></span><span class="ln"><span>{L.ar ? <>عن <em>مشروعك.</em></> : <>about your <em>project.</em></>}</span></span></h1>
     <p class="lede">{t('For concept design roles, collaborations with design firms, and selected private commissions in Saudi Arabia, the Gulf and Egypt.', 'لوظائف التصميم المبدئي، والتعاون مع مكاتب التصميم، ومشاريع خاصة مختارة في السعودية والخليج ومصر.')}</p>
   </PageHero>

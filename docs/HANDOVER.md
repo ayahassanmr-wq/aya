@@ -1,6 +1,6 @@
 # Aya Hassan — Master Handover (v3)
 
-**Last updated:** 5 Nov 2026 (18:00) · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
+**Last updated:** 7 Nov 2026 (18:45) · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
 **Lives at:** `G:\Portfolio\Portfolio Projects\Aya_Hassan_Handover_v3.md`
 
 > **Rule for everyone (people, Claude chat, Claude Code):** read this file first. When you finish a session, update the sections you touched — Status board, Decisions log, Changelog — and bump the date. Never keep project knowledge only in a chat. One file, one truth.
@@ -318,6 +318,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - Project Scope strip shows only the disciplines actually done (no greyed-out ones).
 
 ### ❓ NEEDS DECISION (Aya)
+0z. **Design System styling on site** — square corners (buttons keep soft) + oxblood #D9768A on dark. Preview branch `preview-design-system` (https://aya-hassan-jmvburdqb-aya-d9cd.vercel.app). Reply both / corners only / neither.
 00. **24-hour reply promise** is now in the CTA site-wide — confirm it's realistic alongside the full-time job.
 00b. **Approval stamp:** bring back as a small signature in PDFs/footer to support the brand? (Currently removed.)
 00c. **Built projects list:** which projects are built / under construction (for accurate "built" claims in case studies)?
@@ -414,6 +415,8 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-05 | Brand idea evolved: "Approved" → "Built as designed"; motto "Bold on paper. Solid on ground."; short line "Designed to be built." Updated in strategy doc, design system, brand book, CV | Aya: built is the stronger story; approval is only a step |
 | 2026-11-05 | Motto → "Bold on paper. Solid on ground." · «جريئة على الورق، راسخة على الأرض» (brand idea "Built as designed" and short line "Designed to be built." stay) | Aya: more creative and catchy; art + precision in one line |
 | 2026-11-05 | Identity kit = Design System (for tools) + Brand Book deck (for people); dark-theme oxblood lifted to #D9768A for contrast; square corners except buttons | Aya: “give me everything for my identity” — chose both |
+| 2026-11-06 | Homepage: no availability line, no 'Start a project' / 'Hiring?' buttons, no 'Ways to work with me' (Services only) | Aya: don't look eager for work |
+| 2026-11-07 | Tone softened site-wide: About bio drops 'open to…' line; CV page shows Based/Practice (no 'Available'); Contact drops 'Open to'; Services deadline note is a normal-size line | Aya: confident, not desperate |
 | 2026-11-05 | CV rewritten to the new brand; set in Archivo with hairline title-block layout; phone shown; some marketing words allowed sparingly | Aya approved preview |
 
 ---
@@ -506,6 +509,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-07 | Claude Code | LIVE: calmer homepage (no availability line, single 'View the work' button, Ways section removed); eager wording removed from About, CV page, Contact; Services deadline note toned down. Portfolio PDF: About headline + back-cover CTA updated to the new brand, ↗ removed (Archivo only). CV + portfolio PDFs regenerated (CV 2 pp; portfolio 75 pp, ~30 MB). |
 | 2026-11-05 | Claude Code | On `rebrand-on-update`, not live: site fixes (2019 labels, title descenders, country wrap, phone email); full UI/UX audit; CV rebuilt (Archivo only, phone shown); "Built as designed" copy EN + AR — motto "Bold on paper. Solid on ground." (hero, intro, CV, portfolio cover), home statement = final About (official Arabic), About = 100-word bio, Services lede "Designed to be built.", studio support wording, new CTA, meta, Rehired removed, senior title. Arabic 2nd About paragraph + Arabic closing line on About written by Claude (no 100-word Arabic in strategy doc) — needs native check. |
 | 2026-11-05 | Claude (chat) | Brand strategy session (no code): "Approved" replaces "One Hand"; positioning (luxury homes, coast-led, corporate HQs; Egypt + Gulf; built as designed), two doors, personality, voice calibrated from Q&A + real emails, public softness rule, six convictions, About + bios + pitches + CTA (EN + AR). Brand Strategy Claude Doc created; handover §1, §2, §7, §8, §9, §11, §12 updated. CV rewritten + Archivo preview approved; Claude Code brief written. Design System + 16-slide Brand Book created. Brand idea evolved to "Built as designed" across all files; motto set to "Bold on paper. Solid on ground." |
 | 2026-11-03 | Claude | Live: BRAND_VOICE items 1–4 (availability line, Hiring? See CV button, 5 countries, new About bio), About timeline edits, first person on About + portfolio; CV + portfolio regenerated. Remaining checklist items 5–10 pending. |

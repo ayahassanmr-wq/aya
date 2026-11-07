@@ -213,10 +213,10 @@ const year = new Date().getFullYear();
   <div class="tx">
     <div class="lab ox">About</div>
     <div>
-      <p class="stmt">A concept is only useful once someone believes in it.</p>
+      <p class="stmt">An idea only counts once it stands on real ground.</p>
     </div>
     <div style="display:grid;gap:6mm;align-content:start">
-      <p class="bio">I design architecture and interiors that begin as an original idea and end as a built place. Concepts that surprise, details that work on site. Since 2019 I have worked freelance and across three studios, project by project: the SABIC and stc headquarters in Riyadh at ZFP, NEOM public buildings and corporate offices for Jotun, HB Fuller and BMW at Cosmos, and coastal and residential developments for SODIC, Orascom, Misr Italia and Travco at Innovation. I lead inside large teams and carry projects myself when needed, from idea to Revit drawing set. I’m open to senior design roles and to selected commissions.</p>
+      <p class="bio">I design architecture and interiors that begin as an original idea and end as a built place. Concepts that surprise, details that work on site. Since 2019 I have worked freelance and across three studios, project by project: the SABIC and stc headquarters in Riyadh at ZFP, NEOM public buildings and corporate offices for Jotun, HB Fuller and BMW at Cosmos, and coastal and residential developments for SODIC, Orascom, Misr Italia and Travco at Innovation. I lead inside large teams and carry projects myself when needed, from idea to Revit drawing set.</p>
       <div class="tl">{timeline.map(([y, r, o, d]) => <div><span class="y">{y}</span><span><b>{r}</b> · {o}<br /><span class="mut">{d}</span></span></div>)}</div>
     </div>
     <div class="nums">
@@ -276,7 +276,7 @@ const year = new Date().getFullYear();
                 <div><dt>Sector</dt><dd>{it.p.sector}</dd></div>
                 <div class="w"><dt>Location</dt><dd>{place(it.p)}</dd></div>
                 <div class="w"><dt>Practice</dt><dd>{practice(it.p)}</dd></div>
-                {it.p.links && <div class="w"><dt>Links</dt><dd class="lk">{it.p.links.map((l) => <a href={l.url}>{l.label} ↗</a>)}<a href={`https://ayahassan.com/work/${it.p.slug}/`}>ayahassan.com/work/{it.p.slug} ↗</a></dd></div>}
+                {it.p.links && <div class="w"><dt>Links</dt><dd class="lk">{it.p.links.map((l) => <a href={l.url}>{l.label}</a>)}<a href={`https://ayahassan.com/work/${it.p.slug}/`}>ayahassan.com/work/{it.p.slug}</a></dd></div>}
                 <div class="w"><dt>Scope</dt><dd><span class="disc">{it.disc.map((d) => <span>{d}</span>)}</span>{it.p.scopeNote && <span class="mut" style="display:block;margin-top:1.5mm;font-size:7.4pt">{it.p.scopeNote}</span>}</dd></div>
               </dl>
             </div>
@@ -305,7 +305,7 @@ const year = new Date().getFullYear();
   <img class="bg grade" src={backImg} alt="" />
   <div class="veil"></div>
   <div class="ct">
-    <h2 class="wide">Have a concept, or a role to fill?<br />Let’s make it <em>convincing.</em></h2>
+    <h2 class="wide">Every good project starts with a conversation.<br />Send me yours.<br /><em>I reply within 24 hours.</em></h2>
     <dl>
       <div><dt>Email</dt><dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd></div>
       <div><dt>Web</dt><dd><a href="https://ayahassan.com">ayahassan.com</a></dd></div>
