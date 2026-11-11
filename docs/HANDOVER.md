@@ -36,7 +36,7 @@
 - Project order + numbers: `ordered` / `projectNo` / `sectorGroups` in `src/data/projects.ts` (Architecture → Interiors; categories Masterplan first then by size; featured first, newest). Work page, project pages and portfolio all use it.
 - Composite grids / brand recolour of studies were made with Python (PIL) in the session — results are committed as images; no script kept. Recolour rule: bone paper #F3EDE3, ink lines, oxblood #5E1A24 key layer, taupe open space; photos keep colour.
 
-### Done earlier on 3 Nov (now live)
+### History — 3 Nov (live then; partly superseded by 6–11 Nov decisions: no hero hire buttons, no 24-hour line)
 - BRAND_VOICE items 5–10: "Ways to work with me" (Home + Services), contact Topic dropdown (pre-fills email subject), Studio support "Tight deadline?" callout, closing line "Have a concept, or a role to fill?", "About me" links, Arabic mirror checked.
 - DHIFAF (Sallan Creek) third render replaced (district aerial). Modern Residence drawing set (4 plans, one grid).
 - Bold project numbers on cards; distinct oxblood category headings on Work; portfolio uses same order + category headers in index.
@@ -57,7 +57,7 @@
 11. Homepage typology marquee ("Tech campus" bar) removed.
 12. CV + portfolio regenerated.
 13. (22:48 batch) Hero buttons blend: Start + Hiring = translucent bone glass, View the work = translucent oxblood. Contact: 'What is it about?' + hint 'Pick one — it becomes the subject of your email.' New `HireNotes` component (3 highlights + Tools line) on /cv/ and /contact/; 'I typically reply within 24 hours.' under email. Jotun film live on project (public/video/jotun-office.mp4, 5 MB). Numbers restart per section (Architecture 01–16, Interiors 01–12, BIM section 01–04 on work page); portfolio matches.
-**Next:** apply the new brand copy (§7 TO DO 00), then parked items below. Push-live recipe: `git push origin rebrand-on-update:main` (fast-forward) → confirm Vercel production READY.
+**Push-live recipe: `git push origin rebrand-on-update:main` (fast-forward) → confirm Vercel production READY.**
 
 ### Parked / next after that
 - BRAND_VOICE item 6 (My role / Team size) → one "Role" field = position · team size; code ready, hidden until filled; sheet `docs/ROLES_TODO.md`.
@@ -125,11 +125,11 @@ Status tags used throughout: **✅ DECIDED · ❓ NEEDS DECISION · ⏸ ON HOLD 
 - **About (final):** I design architecture and interiors that begin as an original idea and end as a built place. Concepts that surprise, details that work on site: homes on Egypt's coast, luxury residences inland, and corporate headquarters from Cairo to Riyadh.
 - **Two doors:** *Hire me* (studios/employers → CV) and *Work with me* (developers, private clients, studios → projects/support). Never mixed in one sentence. Freelance shown as "selected commissions". Studio support = "concept and design support for studios".
 - **Personality:** assured, precise, calm luxury, generous with credit. Reserved in public, warm one-to-one.
-- **Voice:** polished restraint, backed by precise fact. Art + precision: one sensory line, then one exact line. Headlines restrained; body copy natural and slightly soft; numbers kept ("24 hours"); no "I love"; no hedging (quite, a bit, super) in public. First person everywhere.
+- **Voice:** polished restraint, backed by precise fact. Art + precision: one sensory line, then one exact line. Headlines restrained; body copy natural and slightly soft; numbers kept; no "I love"; no hedging (quite, a bit, super) in public. First person everywhere.
 - **Convictions (all six ✅):** form and function in agreement · buildable is part of beautiful · the route to yes · honest images with atmosphere · luxury is everything agreeing · on the coast, the site writes the brief.
 - **Marketing words** (unique, stunning, luxury, reimagined…): developer-facing marketing only (Instagram captions, launch posts); never on site, CV, portfolio.
 - **Arabic:** simple modern Fusha for written materials (site, CV, portfolio, LinkedIn); light Egyptian touch OK on Instagram stories and WhatsApp.
-- **Closing CTA:** Every good project starts with a conversation. Send me yours. I reply within 24 hours. · كل مشروع جيد يبدأ بحديث. أرسل لي فكرتك، وأرد خلال 24 ساعة.
+- **Closing CTA:** Every good project starts with a conversation. Send me yours. · كل مشروع جيد يبدأ بحديث. أرسل لي فكرتك. (No reply-time promise — ✅ 11 Nov.)
 
 ### 2.1 Typography
 - **One typeface only: Archivo** (variable, with width axis) for Latin. Contrast comes from weight and width, never a second font.
@@ -148,7 +148,6 @@ Status tags used throughout: **✅ DECIDED · ❓ NEEDS DECISION · ⏸ ON HOLD 
 | Oxblood | `#5E1A24` | Primary accent |
 | Oxblood light | `#B8394A` | Small marks (logo dot) |
 | Sand | `#D6CBBE` | Accent on dark |
-| Stamp pink | `#D7A0A6` | The approval stamp on dark |
 No gold anywhere.
 
 ### 2.3 Identity elements
@@ -174,7 +173,7 @@ No gold anywhere.
 - **Coloured diagrams/studies (✅ 3 Nov):** recoloured to brand — bone paper, ink lines, oxblood key layer, taupe open space (Staff Housing studies). Photos/renders keep colour. Several related sheets are combined into one labelled grid (Archivo labels) instead of many full pages.
 - **Old/dated renders:** regrade (muted water, olive greens, haze, S-curve, vignette) — done for Sallan Creek.
 - **Exclusions:** STC and SABIC folders contain photos of the real towers — never on the site.
-- **Juba renders look dated (⏸):** fix without re-rendering — AI upscale at low creativity (Magnific / Krea Enhance / Topaz), Photoshop sky + foliage + people replacement, then house grade. 21 more 2021 Juba renders exist in `G:\Portfolio\pot\Juba Render`.
+- **STC + Tech Park (✅ 11 Nov):** regraded from the pre-edit originals (git `efc315b^`): burnt corners lifted, highlights held, neutral colour, slightly less saturation. Juba removed from the site.
 
 ---
 
@@ -206,7 +205,7 @@ No gold anywhere.
 | About/timeline | `src/pages/about.astro` |
 
 ### 4.3 Site structure (✅ DECIDED)
-- **Home:** intro → hero → **client logo strip** → intro statement → numbers → selected work → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): two scrollable rows directly under the hero, drifting in opposite directions ("Trusted by"): official full-colour logos (`public/clients/<id>.png`, cut from Aya's logo sheet 3 Nov), always drifting (keeps moving on hover; pauses ~2.5 s only after a manual scroll), drag/wheel/swipe/arrow keys to scroll, each links to its project. NOATUM and Suits have no logo yet → typed names. Confidential and private clients excluded.
+- **Home:** intro → hero → **client logo strip** → intro statement → numbers → selected work → services → contact. Client wall (✅ 3 Nov, reverses the earlier 'no client names on homepage' rule): two scrollable rows directly under the hero, drifting in opposite directions ("Trusted by"): official full-colour logos (`public/clients/<id>.png`, cut from Aya's logo sheet 3 Nov), always drifting (keeps moving on hover; pauses ~2.5 s only after a manual scroll), drag/wheel/swipe/arrow keys to scroll, each links to its project. Suits has no logo yet → typed name (NOATUM logo added 11 Nov). Confidential and private clients excluded.
 - **Work:** Masterplan group always first (Sallan Creek, Staff Housing); project numbers also start with masterplans. Opens on **three disciplines** — *Architectural design*, *Interior design*, *BIM & technical*. Choosing one shows its projects grouped by type (Residential, Workplace, Commercial…), numbered 01.01, 01.02…
 - **Project page:** big project number (01–28, same as the PDF portfolio; order = Architecture then Interiors, featured first, newest first — `ordered`/`projectNo` in projects.ts) above the title; title block with Location · Discipline · Practice · **Client (with logo)** · **Year** · Scope (+ optional scope note) → renders → drawing sheets → client links.
 - **About:** timeline (section 1), bio, tools.
@@ -253,7 +252,6 @@ No gold anywhere.
 | linah-farms | Linah Farms | Arch/BIM | Cosmos | Linah Farms | 2025 | Keep even though not in folder; renders need upscale |
 | mazeej | Mazeej Hotel & Housing | Arch | Cosmos | Guira Developments | 2025 | |
 | dry-port | Dry Port Buildings | Arch/BIM | Cosmos | Egyptian Government | 2021 | |
-| juba-resort | Juba Resort Complex | Arch | Cosmos | Confidential | 2023 | 4 best renders from the 2021 set; walkthrough video live |
 | tech-park | Tech Park Office Building | Interior | Cosmos | Confidential | 2023 | Renders regraded 11 Nov |
 | jotun-office | Jotun Office Building | Interior | Cosmos | Jotun | 2023 | Animation live on project page |
 | hb-fuller | HB Fuller Office | Interior | Cosmos | H.B. Fuller | 2022 | |
@@ -261,12 +259,9 @@ No gold anywhere.
 | conference-room | Formal Conference Room | Interior | Cosmos | Confidential | 2022 | |
 | bmw-showroom | BMW Showroom | Interior | Cosmos | BMW Egypt | 2022 | |
 | suits-workspaces | Suits Workspaces | Interior | Freelance | Suits Workspaces | 2025 | |
-| arches-restaurant | Arches Restaurant | Interior | Freelance | Private client | 2022 | Location: Saudi Arabia |
-| minimal-villa | Minimal Villa | Arch | Freelance | Private client | 2026 | NEW · 2 renders; full scope (design, modelling, rendering) |
 | modern-residence-new-cairo | Modern Residence | Interior | Freelance | Private client | 2025 | |
-| zayed-residence | Zayed Residence | Interior | Freelance | Private client | 2024 | |
 
-**Removed (✅):** Mediterranean House (3 Nov), Blue Villa (3 Nov), Classic House (folder deleted 2 Nov), Modern Villa, Apartment Building, Concept Sketches, Jeddah Residence (+ earlier: Studio K, HK Inc, Commercial Mall, Modern Villa I, Majlis, Jubail, Sea Residence, Neo-Classical Residence, Modern Residence II).
+**Removed (✅):** Juba Resort, Minimal Villa, Arches Restaurant, Zayed Residence (11 Nov), Mediterranean House (3 Nov), Blue Villa (3 Nov), Classic House (folder deleted 2 Nov), Modern Villa, Apartment Building, Concept Sketches, Jeddah Residence (+ earlier: Studio K, HK Inc, Commercial Mall, Modern Villa I, Majlis, Jubail, Sea Residence, Neo-Classical Residence, Modern Residence II).
 
 ---
 
@@ -323,10 +318,9 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - Work page = 3 disciplines → grouped by type.
 - Every project shows Client + Year.
 - Based in Cairo, Egypt. Career timeline per section 1.
-- Removed projects per section 5. Arches Restaurant location = KSA.
+- Removed projects per section 5.
 - STC/SABIC real-tower photos never on site.
 - Modern Villa 02 (KSA) stays off the site even though its folder remains on G:.
-- Minimal Villa: 2026, full scope.
 - Max 5 renders per project (best picks; first = cover). Drawings/plans not counted. Travco = 6 (exception).
 - No approval stamp anywhere (11 Nov).
 - Title Mid-senior everywhere; no reply-time promise anywhere; no "open to / available" lines.
@@ -343,8 +337,6 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 4. **Sphinx Airport & City Club animations:** add as new projects, attach to existing Sphinx page, or keep off site?
 5. **"Render 01.mp4":** what project is it?
 6. **Jotun animation:** use original or 2022 update?
-7. **Arches client label:** "Private client" (current) or "Freelance"?
-8. **Juba:** upscale existing 3 renders, swap in some of the 21 older renders, or both?
 9. **Project page client links:** add official Instagram/Facebook for all clients (partly done in v2).
 9b. **Ogami plan source** — the supplied export is a flat colour fill with no walls/furniture; Aya to send the original plan (PDF/CAD/hi-res).
 10. **Missing views:** export more renders for Orascom O West (2), Misr Italia (4), SODIC East Vale (3)?
@@ -352,7 +344,6 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 ### ⏸ ON HOLD
 - **Video editing** — blocked until videos are reachable (PC on & awake, or uploaded to Google Drive + connector, or Claude Code run locally on the PC).
 - **Copying videos into `_Videos`** — Aya to run the PowerShell above.
-- **Juba render upgrade** — needs AI upscaler (outside Claude) or Aya's Photoshop pass.
 - **Linah Farms re-render / upscale.**
 
 ### 🔧 TO DO (next actions, in order)
