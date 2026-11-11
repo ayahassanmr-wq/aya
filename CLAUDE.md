@@ -7,8 +7,8 @@ Read `docs/HANDOVER.md` (copy of G:\Portfolio\Portfolio Projects\Aya_Hassan_Hand
 - Deployed on Vercel from GitHub ayahassanmr-wq/aya. Work branch: `rebrand-on-update`. `main` = live.
 
 ## Rules
-- Follow BRAND_VOICE.md for all copy and site-content changes.
-- Brand: One Hand (see handover §2). One typeface only. No new fonts, no gold, no blue.
+- Brand: "Built as designed" (see handover §2) — motto "Bold on paper. Solid on ground." Visual identity unchanged: one typeface only, no new fonts, no gold, no blue.
+- Copy: follow BRAND_VOICE.md (being rewritten from the Brand Strategy doc — until then handover §2 wins). First person, EN + AR in sync, never invent facts.
 - Images: renders get the house grade (global.css); drawings get the drawing-sheet style ([slug].astro). Never add STC/SABIC real-tower photos.
 - Project data lives in src/data/projects.ts (+ projects-ar.ts). Every project needs client + year.
 - Images ≤2400 px wide JPG in src/assets/projects/<slug>/ (01 = cover, dNN = drawings).
@@ -21,4 +21,4 @@ Read `docs/HANDOVER.md` (copy of G:\Portfolio\Portfolio Projects\Aya_Hassan_Hand
 Update docs/HANDOVER.md (Status board, Decisions log, Changelog) and tell Aya to copy it back to G:\Portfolio\Portfolio Projects\ (or write it there directly if running on her PC).
 
 ## Open tasks
-See handover §7 TO DO.
+See handover RESUME HERE and §7 TO DO.

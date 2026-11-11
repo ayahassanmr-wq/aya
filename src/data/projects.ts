@@ -275,6 +275,6 @@ const logoBySlug: Record<string, string> = {
   'sodic-ogami': 'sodic', 'sodic-east-vale': 'sodic', 'orascom-o-west': 'orascom', 'misr-italia-hilltop': 'misr-italia',
   'travco-west-island': 'travco', 'neom-oxagon': 'neom', 'stc-hq': 'stc', 'sabic-hq': 'sabic', 'jotun-office': 'jotun',
   'bmw-showroom': 'bmw', 'chery-showroom': 'chery', 'hb-fuller': 'hb-fuller', 'fifth-square': 'al-marasem',
-  'mazeej': 'guira', 'linah-farms': 'linah',
+  'mazeej': 'guira', 'linah-farms': 'linah', 'noatum-terminal': 'noatum',
 };
 export const clientLogo = (slug: string) => (logoBySlug[slug] ? `/clients/${logoBySlug[slug]}.png` : undefined);
