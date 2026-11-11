@@ -49,16 +49,23 @@ const sections = [
   { n: '03', name: 'BIM delivery', slugs: bimSlugs },
 ];
 
+// projects with more than one building: each part gets its own render page, render grid and plans
+const partsDef: Record<string, { name: string; imgs: number[]; plans: number[] }[]> = {
+  'travco-west-island': [{ name: 'Chalet', imgs: [0, 1, 2], plans: [1, 2] }, { name: 'Townhome', imgs: [3, 4, 5], plans: [3] }],
+};
 const build = async (slug: string, k: number) => {
   const p = P(slug), imgs = imagesFor(slug), sh = sheetsFor(slug), st = studyNos[slug] ?? [];
   const steps = think[slug] ? await Promise.all(think[slug].map(async ([t, f]) => ({ t, d: f.startsWith('d') || f.startsWith('x:'), src: await jpg(img(slug, f), W.step) }))) : [];
   const sheet = async (x: { no: number; m: any }) => ({ no: x.no, w: x.m.width, h: x.m.height, src: await jpg(x.m, W.sheet) });
-  const rest = await Promise.all(imgs.slice(2, 5).map((x) => jpg(x, W.half)));
+  const pd = partsDef[slug];
+  const rest = pd ? [] : await Promise.all(imgs.slice(2, 5).map((x) => jpg(x, W.half)));
+  const sheetAll = async (xs: { no: number; m: any }[]) => Promise.all(xs.map(async (x) => ({ no: x.no, w: x.m.width, h: x.m.height, src: await jpg(x.m, W.sheet) })));
+  const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: await jpg(imgs[d.imgs[0]], W.bleed), rest: await Promise.all(d.imgs.slice(1).map((i) => jpg(imgs[i], W.half))), plans: pack(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
   return {
     p, code: full ? projectNo(slug) : String(k + 1).padStart(2, '0'), logo: clientLogo(slug), disc: [...disciplinesFor(p)],
     cover: await jpg(imgs[0], W.bleed), hero: await jpg(imgs[1] ?? imgs[0], W.bleed), steps,
     studies: await Promise.all(sh.filter((x) => st.includes(x.no)).map(sheet)),
-    plans: pack(await Promise.all(sh.filter((x) => !st.includes(x.no)).map(sheet))),
+    plans: pd ? [] : pack(await Promise.all(sh.filter((x) => !st.includes(x.no)).map(sheet))), parts,
     rest,
   };
 };
@@ -66,7 +73,7 @@ const secs = await Promise.all(sections.map(async (s) => ({ ...s, items: await P
 
 // ---- page numbers (front: cover, about, clients, [index], contents)
 const front = full ? 5 : 4;
-const pagesOf = (it: any) => 2 + it.studies.length + it.plans.length + (it.rest.length ? 1 : 0);
+const pagesOf = (it: any) => 2 + it.studies.length + it.plans.length + (it.rest.length ? 1 : 0) + it.parts.reduce((a: number, q: any) => a + 1 + (q.rest.length ? 1 : 0) + q.plans.length, 0);
 let pg = front; const startOf: Record<string, number> = {};
 for (const s of secs) { pg += 1; for (const it of s.items) { startOf[it.p.slug] = pg + 1; pg += pagesOf(it); } }
 pg += 1; // delivery card
@@ -335,6 +342,34 @@ const restClass = (n: number) => `r${n}`;
               ))}</div>
               <div class="cap"><b>{it.code}</b><span>{p.title} · <span class="k">Plans &amp; drawings</span></span><span></span><span class="mut">{N()} / {T}</span></div>
             </section>
+          ))}
+          {it.parts.map((q: any) => (
+            <>
+              <section class="pg">
+                <img class="bleed grade" src={q.hero} alt="" />
+                <div class="shade"></div>
+                <div class="foot on"><span class="lab"><b>{it.code}</b> · {p.title} · <b>{q.name}</b></span><span class="lab">{N()} / {T}</span></div>
+              </section>
+              {q.rest.length > 0 && (
+                <section class:list={['pg rg', restClass(q.rest.length)]}>
+                  {q.rest.map((r: string) => <img class="grade" src={r} alt="" />)}
+                  <div class="foot on" style="bottom:6mm"><span class="lab"><b>{it.code}</b> · {p.title} · {q.name}</span><span class="lab">{N()} / {T}</span></div>
+                </section>
+              )}
+              {q.plans.map((pg: any) => (
+                <section class="pg sht">
+                  <div class="pk">{pg.rows.map((r: any[]) => (
+                    <div class="pr">{r.map((x: any) => (
+                      <figure style={`width:${(x.w * pg.s).toFixed(1)}mm`}>
+                        <img src={x.src} alt="" style={`width:${(x.w * pg.s).toFixed(1)}mm;height:${(x.h * pg.s).toFixed(1)}mm`} />
+                        <figcaption><span>{p.captions?.[x.no - 1] ?? `Drawing ${String(x.no).padStart(2, '0')}`}</span><span class="k">{nextSheet()}</span></figcaption>
+                      </figure>
+                    ))}</div>
+                  ))}</div>
+                  <div class="cap"><b>{it.code}</b><span>{p.title} · <span class="k">{q.name} · Plans</span></span><span></span><span class="mut">{N()} / {T}</span></div>
+                </section>
+              ))}
+            </>
           ))}
           {it.rest.length > 0 && (
             <section class:list={['pg rg', restClass(it.rest.length)]}>
