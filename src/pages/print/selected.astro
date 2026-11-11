@@ -6,6 +6,8 @@ import '@fontsource-variable/archivo/wdth-italic.css';
 import { getImage } from 'astro:assets';
 import { projects, imagesFor, drawingsFor, fileFor, disciplinesFor, countries, contact, projectNo, clientLogo, type Project } from '../../data/projects';
 
+const diag = import.meta.glob<{ default: any }>('../../assets/diagrams/*.jpg', { eager: true });
+const img = (slug: string, f: string) => f.startsWith('x:') ? diag[`../../assets/diagrams/${f.slice(2)}.jpg`]?.default : fileFor(slug, f);
 const jpg = async (src: any, w = 1100) => (src ? (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: 66 })).src : '');
 const practice = (p: Project) => p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent';
 const place = (p: Project) => p.location === p.country || p.location.includes(p.country) ? p.location : `${p.location}, ${p.country}`;
@@ -15,9 +17,9 @@ const think: Record<string, [string, string][]> = {
   'travco-west-island': [['Brief: premier coastal destination — max sea views, hospitality-level living, respect for landscape', '05'], ['Idea: orient for wind and water', 'd04'], ['Plan: empty plot to four units', 'd03'], ['Approved; under construction', '01']],
   'misr-italia-hilltop': [['Brief: luxury coastal living around the lagoon', '01'], ['Problem: the concept draft showed a building, not a lifestyle', '04'], ['My enhancements: materials, details, façade', '02'], ['Approved; under construction', '03']],
   'staff-housing': [['Tension: density vs quality of life vs budget', 'd03'], ['Courtyard clusters on a town-wide pedestrian network', 'd02'], ['Two repeatable prototypes for cost and speed', 'd05'], ['Nubian arches, shade, earth', 'd01']],
-  'sodic-east-vale': [['Brief: private sanctuaries, daylight, ventilation, views', '03'], ['Decision I argued for: private quarters apart from reception', 'd02'], ['High ceilings, fluid inside–outside', '02'], ['Under construction', '01']],
+  'sodic-east-vale': [['Brief: private sanctuaries, daylight, ventilation, views', '03'], ['Decision I argued for: private quarters apart from reception (oxblood = private, sand = reception)', 'x:east-vale-zones'], ['High ceilings, fluid inside–outside', '02'], ['Under construction', '01']],
   'sabic-hq': [['Brief: turn an outdated HQ into a dynamic, collaborative, brand-led one', '04'], ['Constraint: existing slab protrusion', '01'], ['Decision: make it the feature — the atrium planters', '02'], ['Under construction', '03']],
-  'stc-hq': [['Brief: futuristic, recognisable, minimal', '01'], ['Site: the tower’s huge curves', 'd01'], ['Decision: curves become destinations', '03'], ['My concept became the team’s base', '05']],
+  'stc-hq': [['Brief: futuristic, recognisable, minimal', '01'], ['Site: the tower’s huge curves (oxblood = curve zones)', 'x:stc-curves'], ['Decision: curves become destinations', '03'], ['My concept became the team’s base', '05']],
 };
 type Item = { kind: 'div'; n: string; name: string; sub?: boolean } | { kind: 'proj'; slug: string; featured: boolean } | { kind: 'card' };
 const plan: Item[] = [
@@ -38,7 +40,7 @@ for (const it of plan) { if (it.kind === 'div' && !it.sub) seq = 0; if (it.kind 
 const items = await Promise.all(plan.map(async (it) => {
   if (it.kind !== 'proj') return it;
   const p = P(it.slug), imgs = imagesFor(p.slug), dr = drawingsFor(p.slug);
-  const steps = it.featured && think[p.slug] ? await Promise.all(think[p.slug].map(async ([t, f]) => ({ t, d: f.startsWith('d'), src: await jpg(fileFor(p.slug, f), 1100) }))) : [];
+  const steps = it.featured && think[p.slug] ? await Promise.all(think[p.slug].map(async ([t, f]) => { const m = img(p.slug, f); return { t, d: f.startsWith('d') || f.startsWith('x:'), w: !!m && m.width / m.height > 2, src: await jpg(m, 1100) }; })) : [];
   return { ...it, p, code: codes[p.slug], logo: clientLogo(p.slug), disc: [...disciplinesFor(p)], steps,
     cover: await jpg(imgs[0], 1500),
     rest: it.featured ? await Promise.all(imgs.slice(1, 4).map((x) => jpg(x, 1100))) : [],
@@ -200,8 +202,8 @@ const shown = (items as any[]).filter((i) => i.kind === 'proj').length;
   .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6mm; align-items: start; }
   .steps > div { display: grid; gap: 3mm; }
   .steps .n { font-size: 30pt; font-weight: 800; font-stretch: 125%; color: var(--ox); line-height: 1; border-bottom: .5pt solid var(--ink); padding-bottom: 2mm; }
-  .steps p { margin: 0; font-size: 11.5pt; line-height: 1.35; min-height: 20mm; font-weight: 500; }
-  .steps figure, .steps .ph { margin: 0; height: 122mm; background: #E9E1D4; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .steps p { margin: 0; font-size: 11.5pt; line-height: 1.35; min-height: 25mm; font-weight: 500; }
+  .steps figure, .steps .ph { margin: 0; height: 110mm; background: #E9E1D4; display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .steps .ph img { width: 100%; height: 100%; object-fit: cover; }
   .steps figure img { max-width: 100%; max-height: 100%; object-fit: contain; }
   .card { padding: 22mm 24mm; display: grid; grid-template-columns: 1fr 1.2fr; gap: 16mm; align-content: center; }
@@ -305,7 +307,7 @@ const shown = (items as any[]).filter((i) => i.kind === 'proj').length;
       {it.steps.length > 0 && (
         <section class="pg think">
           <div class="hd"><b>{it.code}</b><h2 class="wide">{p.title}</h2><span class="lab ox">How it was decided</span></div>
-          <div class="steps">{it.steps.map((s: any, k: number) => <div><span class="n">{String(k + 1).padStart(2, '0')}</span><p>{s.t}</p>{s.d ? <figure><img src={s.src} alt="" /></figure> : <div class="ph"><img class="grade" src={s.src} alt="" /></div>}</div>)}</div>
+          <div class="steps" style={`grid-template-columns: ${it.steps.map((s: any) => (s.w ? '2fr' : '1fr')).join(' ')}`}>{it.steps.map((s: any, k: number) => <div><span class="n">{String(k + 1).padStart(2, '0')}</span><p>{s.t}</p>{s.d ? <figure><img src={s.src} alt="" /></figure> : <div class="ph"><img class="grade" src={s.src} alt="" /></div>}</div>)}</div>
           <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {p.title} · Thinking</span><span class="lab mut">{N()} / {T}</span></div>
         </section>
       )}
