@@ -331,6 +331,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 7. **Arches client label:** "Private client" (current) or "Freelance"?
 8. **Juba:** upscale existing 3 renders, swap in some of the 21 older renders, or both?
 9. **Project page client links:** add official Instagram/Facebook for all clients (partly done in v2).
+9b. **Ogami plan source** — the supplied export is a flat colour fill with no walls/furniture; Aya to send the original plan (PDF/CAD/hi-res).
 10. **Missing views:** export more renders for Orascom O West (2), Misr Italia (4), SODIC East Vale (3)?
 
 ### ⏸ ON HOLD
@@ -428,6 +429,8 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-11 | Selected Works: studies on their own large pages; plans trimmed and laid out at one scale per project; renders as a mosaic on each opener (no separate renders pages); no Masterplans divider; STC step 03 = curved-window render; '24 hours' removed from PDF back covers | Aya feedback |
 | 2026-11-11 | No reply-time promise anywhere: '24 hours' removed from site CTA, Contact, CV page, Services (resolves ❓00) | Aya |
 | 2026-11-11 | Full portfolio uses the Selected Works layout (studies pages, shared-scale plans, render mosaics, thinking spreads for the 6 featured) + index + timeline | Aya |
+| 2026-11-11 | PDFs redesigned (one shared layout, `src/components/PrintBook.astro`): minimal cover (wordmark, tagline, date, contact); calmer About (no timeline); Contents page; per project: cover (full-bleed render + title-block overlay) → full-screen render → how it was decided (2×2, featured only) → each study full page → each plan full page → remaining renders grid | Aya feedback |
+| 2026-11-11 | Travco client logo = new Travco Properties wordmark; client name 'Travco Properties' | Aya supplied logo |
 | 2026-11-05 | Identity kit = Design System (for tools) + Brand Book deck (for people); dark-theme oxblood lifted to #D9768A for contrast; square corners except buttons | Aya: “give me everything for my identity” — chose both |
 | 2026-11-05 | CV rewritten to the new brand; set in Archivo with hairline title-block layout; phone shown; some marketing words allowed sparingly | Aya approved preview |
 
@@ -521,6 +524,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-11 | Claude Code | PDFs rebuilt on shared PrintBook layout: Selected Works 107 pp ≈10.6 MB, Portfolio 129 pp 43 MB. Travco Properties logo. Ogami plan flagged (source lacks detail). Not live. |
 | 2026-11-11 | Claude Code | 24-hour promise removed from site. Full portfolio regenerated on the new layout (`portfolio.astro` now mirrors `selected.astro`): 64 pp, 28 MB, index with page numbers. Not live. |
 | 2026-11-11 | Claude Code | Selected Works rebuilt: 55 pp, 9.9 MB. New `scripts/trim-drawings.py` → `src/assets/print/<slug>/dNN.jpg` (+ .scale) — rerun after adding drawings. Study list per project = `studyNos` in selected.astro. Back-cover CTA without 24 h in both PDFs. |
 | 2026-11-11 | Claude Code | Drawings before renders on site + both PDFs; all drawings shown (Mazeej 8, Chery 6, NOATUM 7, Staff Housing 5); supporting projects in Selected Works now get drawings pages; Mazeej renders 02–05 deleted. Portfolio 70 pp / 27 MB; Selected Works 57 pp / 9.9 MB (lighter JPEGs for that file only). Not live. |

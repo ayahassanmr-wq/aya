@@ -121,7 +121,7 @@ export const projects: Project[] = [
     summary: 'Three apartment-building prototypes for a North Coast community, set around lagoons and beach-front pools.' },
   { slug: 'sodic-ogami', client: 'SODIC', year: '2026', title: 'SODIC Ogami', location: 'Ras El Hekma', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'A twin villa and a town home for a coastal community, in warm terracotta render with deep, shaded terraces.' },
-  { slug: 'travco-west-island', client: 'Travco · Almaza Bay', year: '2026', title: 'Travco West Island', location: 'Almaza Bay', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
+  { slug: 'travco-west-island', client: 'Travco Properties', year: '2026', title: 'Travco West Island', location: 'Almaza Bay', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'A coastal chalet and a coastal town home on the lagoon at Almaza Bay.' },
   { slug: 'sodic-east-vale', studies: [1], client: 'SODIC', year: '2026', title: 'SODIC East Vale · Premium Home', location: 'MADA City, New Cairo', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     captions: ['Form generation · area program, zoning mass, conceptual form', 'Ground floor · lower unit, 202.6 m²', 'First floor · upper unit, 194.3 m²', 'Roof terrace · 184 m²'],
