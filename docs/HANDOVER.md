@@ -560,3 +560,4 @@ End of every session: produce the updated sections of the handover (Status board
 - 11 Nov — PDFs: all study boards recoloured to the house palette (ink on bone, accents oxblood). Board text unchanged; text-free exports from Aya would allow Archivo labels.
 - 11 Nov — PDFs: project opener is now a full-bleed cover image under a strong faded overlay, with title bottom-left and brief overlaid on the right.
 - 11 Nov — PDFs: BIM projects numbered on their own (01–04); study recolour reverted; BMW cover = hanging-unit render (site too); Mazeej plans paired before-above-redesign; Selected Works: DHIFAF after O West.
+- 11 Nov — STC + Tech Park renders re-exposed (highlights pulled down; Tech Park desaturated, warmer) — site + PDFs. Staff Housing plans on one sheet. Opener: client line + scope larger.

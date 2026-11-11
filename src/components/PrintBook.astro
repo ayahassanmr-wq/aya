@@ -36,6 +36,8 @@ const unit = (slug: string, no: number) => (corr[slug]?.[no] ?? 1) / Number(scl[
 const sheetOrder: Record<string, number[]> = {};
 // fixed groups: each inner list is one page, drawings stacked top to bottom (Mazeej: before above redesign)
 const stackDef: Record<string, number[][]> = { mazeej: [[2, 1], [4, 3], [6, 5], [8, 7]] };
+// fixed groups placed side by side on one page
+const rowDef: Record<string, number[][]> = { 'staff-housing': [[4, 5]] };
 const sheetsFor = (slug: string) => { const xs = Object.keys(trimmed).filter((k) => k.includes(`/print/${slug}/`)).sort().map((k) => ({ no: Number(k.match(/d(\d+)\.jpg$/)![1]), m: trimmed[k].default })); const o = sheetOrder[slug]; return o ? o.map((n) => xs.find((x) => x.no === n)!).filter(Boolean) : xs; };
 // pack plans: as many per page as keep each plan big (page body 281 × 180 mm)
 const AW = 281, AH = 176, G = 5, C = 6;
@@ -48,6 +50,7 @@ const stack = (xs: S[], groups: number[][]) => {
 };
 const pack = (xs: S[], slug = '') => {
   if (stackDef[slug]) return stack(xs, stackDef[slug]);
+  if (rowDef[slug]) { const pg = rowDef[slug].map((g) => g.map((n) => xs.find((x) => x.no === n)!).filter(Boolean)); const sc = Math.min(...pg.map((g) => Math.min((AW - G * (g.length - 1)) / g.reduce((a, x) => a + x.w, 0), (AH - C) / Math.max(...g.map((x) => x.h))))); return pg.map((g) => ({ rows: [g], s: sc })); }
   if (!xs.length) return [];
   const sc = Math.min(...xs.map((x) => Math.min(AW / x.w, (AH - C) / x.h)));
   const pages: { rows: S[][]; s: number }[] = []; let rows: S[][] = [], row: S[] = [];
@@ -241,9 +244,9 @@ const restClass = (n: number) => `r${n}`;
   .pb .nr b { font-size: 64pt; line-height: .8; }
   .pb .rt { font-weight: 700; }
   .pb h2 { font-size: 30pt; margin-bottom: 4mm; }
-  .pb .meta { display: flex; flex-wrap: wrap; gap: 2mm 6mm; padding-top: 3mm; border-top: .5pt solid rgba(243,237,227,.45); }
+  .pb .meta { font-size: 8.4pt; letter-spacing: .12em; font-weight: 600; display: flex; flex-wrap: wrap; gap: 2.5mm 7mm; padding-top: 3mm; border-top: .5pt solid rgba(243,237,227,.45); }
   .pb .meta span { display: inline-flex; align-items: center; gap: 2mm; }
-  .pb .meta img { height: 4.2mm; max-width: 18mm; object-fit: contain; filter: brightness(0) invert(1); }
+  .pb .meta img { height: 5.5mm; max-width: 18mm; object-fit: contain; filter: brightness(0) invert(1); }
   .pb .tx { position: absolute; top: 16mm; right: 16mm; bottom: 20mm; width: 92mm; display: flex; flex-direction: column; gap: 4.5mm; }
   .pb .tx .ox { color: var(--sand); }
   .pb .role { font-size: 11.5pt; line-height: 1.35; font-weight: 700; }
@@ -252,7 +255,7 @@ const restClass = (n: number) => `r${n}`;
   .pb .dec li { display: grid; grid-template-columns: 8mm 1fr; padding: 2.2mm 0; border-bottom: .5pt solid rgba(243,237,227,.22); font-size: 8.6pt; line-height: 1.36; }
   .pb .dec b { color: var(--sand); font-weight: 800; font-stretch: 125%; }
   .pb .kv { margin-top: 1mm; } .pb .kv div { padding: 2mm 0; border-top: .5pt solid rgba(243,237,227,.3); }
-  .pb dt { font-size: 6pt; letter-spacing: .2em; text-transform: uppercase; color: var(--sand); } .pb dd { font-size: 8.2pt; margin-top: 1mm; }
+  .pb dt { font-size: 7.4pt; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--sand); } .pb dd { font-size: 10.5pt; font-weight: 500; margin-top: 1.2mm; }
 
   /* delivery card + back */
   .card { padding: 26mm 24mm; display: grid; grid-template-columns: 1fr 1.2fr; gap: 18mm; align-content: center; }
