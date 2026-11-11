@@ -58,7 +58,7 @@ export const projectsAr: Record<string, ArText> = {
 };
 
 export const placeAr: Record<string, string> = { 'Oman': 'عُمان', 
-  'Riyadh': 'الرياض', 'Saudi Arabia': 'السعودية', 'Egypt': 'مصر', 'India': 'الهند', 'Lebanon': 'لبنان', 'South Sudan': 'جنوب السودان',
+  'Riyadh': 'الرياض', 'Saudi Arabia': 'السعودية', 'Egypt': 'مصر', 'India': 'الهند', 'Iraq': 'العراق', 'Lebanon': 'لبنان', 'South Sudan': 'جنوب السودان',
   'Confidential client': 'عميل سري', '6th of October': 'السادس من أكتوبر', 'Giza': 'الجيزة', 'New Capital': 'العاصمة الإدارية',
   'Oxagon, NEOM': 'أوكساجون، نيوم', 'New Cairo': 'القاهرة الجديدة', 'Ain Sokhna': 'العين السخنة', 'Juba': 'جوبا',
   'Ras El Hekma': 'رأس الحكمة', 'Almaza Bay': 'ألماظة باي', 'Sheikh Zayed, Giza': 'الشيخ زايد، الجيزة', 'Cairo–Alex Road': 'طريق القاهرة الإسكندرية',

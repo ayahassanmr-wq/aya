@@ -10,7 +10,7 @@ Brand idea: Built as designed. Motto: *Bold on paper. Solid on ground.* · جر�
 
 Retired (never use): "One Hand", "From concept to conviction", "concept-stage". Closing CTA: Every good project starts with a conversation. Send me yours. I reply within 24 hours. Full rules: the Brand Strategy doc (handover §2 wins until this file is fully rewritten).
 
-Proof points to draw from: NEOM, SABIC HQ, STC HQ, SODIC, Orascom, Misr Italia, BMW · 24 selected projects · 4 countries (Egypt, Saudi Arabia, Oman, India) · 3 studios · since 2019 (freelance), 7 years · Revit to IFC.
+Proof points to draw from: NEOM, SABIC HQ, STC HQ, SODIC, Orascom, Misr Italia, BMW · 24 selected projects · 5 countries across all work (Egypt, Saudi Arabia, Oman, India, Iraq) · 3 studios · since 2019 (freelance), 7 years · Revit to IFC.
 
 ## Audiences — every page must serve all three
 

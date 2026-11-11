@@ -241,7 +241,8 @@ export const disciplinesFor = (p: Project) => {
 };
 /* a project image by file name (e.g. 'd02', '01') */
 export const fileFor = (slug: string, name: string) => { const k = Object.keys(files).find((f) => f.endsWith(`/projects/${slug}/${name}.jpg`)); return k ? files[k].default : undefined; };
-export const countries = [...new Set(projects.map((p) => p.country).filter((c) => c !== '—'))];
+/** Countries across all my work on the CV, not only the projects on this site (Aya, 11 Nov): Iraq = Um Qasr Logistic City. */
+export const countries = ['Egypt', 'Saudi Arabia', 'Oman', 'India', 'Iraq'];
 
 export const contact = {
   email: 'ayahassanm@outlook.com',
