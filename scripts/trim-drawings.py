@@ -21,4 +21,19 @@ for f in sorted(glob.glob('src/assets/projects/*/d*.jpg')):
     # keep the scale factor in the name-independent sidecar so layouts can undo the resize
     im.save(f'src/assets/print/{slug}/{name}', quality=88)
     open(f'src/assets/print/{slug}/{name[:-4]}.scale', 'w').write(str(s))
+# study boards: one house palette — ink linework on bone paper, colour accents in oxblood
+STUDIES = {'travco-west-island': [4], 'staff-housing': [1, 2, 3], 'sallan-creek': [1, 2], 'sodic-east-vale': [1], 'sodic-ogami': [1], 'fifth-square': [1], 'neom-oxagon': [1], 'chery-showroom': [1], 'linah-farms': [1], 'dry-port': [3]}
+ink, bone, ox = np.array([43, 40, 38.]), np.array([243, 237, 227.]), np.array([94, 26, 36.])
+for slug, nos in STUDIES.items():
+    for n in nos:
+        f = f'src/assets/print/{slug}/d{n:02d}.jpg'
+        if not os.path.exists(f): continue
+        a = np.asarray(Image.open(f).convert('RGB')).astype(float) / 255
+        L = (a @ [.299, .587, .114])[..., None]
+        L = np.clip((L - .08) / .86, 0, 1) ** 1.1
+        S = (a.max(2) - a.min(2))[..., None]
+        base = ink + (bone - ink) * L
+        w = np.clip((S - .18) * 2.2, 0, .75) * (1 - L * .6)
+        out = base * (1 - w) + ox * w
+        Image.fromarray(out.clip(0, 255).astype('uint8')).save(f, quality=90)
 print('trimmed')
