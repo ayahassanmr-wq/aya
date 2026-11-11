@@ -33,13 +33,21 @@ const scl = import.meta.glob<string>('../assets/print/*/d*.scale', { query: '?ra
 // drawings exported at a different scale from the rest of their project: factor that brings them in line
 const corr: Record<string, Record<number, number>> = { 'chery-showroom': { 6: 0.33 } };
 const unit = (slug: string, no: number) => (corr[slug]?.[no] ?? 1) / Number(scl[`../assets/print/${slug}/d${String(no).padStart(2, '0')}.scale`] ?? 1);
-const sheetOrder: Record<string, number[]> = { mazeej: [2, 4, 6, 8, 1, 3, 5, 7] };
+const sheetOrder: Record<string, number[]> = {};
+// fixed groups: each inner list is one page, drawings stacked top to bottom (Mazeej: before above redesign)
+const stackDef: Record<string, number[][]> = { mazeej: [[2, 1], [4, 3], [6, 5], [8, 7]] };
 const sheetsFor = (slug: string) => { const xs = Object.keys(trimmed).filter((k) => k.includes(`/print/${slug}/`)).sort().map((k) => ({ no: Number(k.match(/d(\d+)\.jpg$/)![1]), m: trimmed[k].default })); const o = sheetOrder[slug]; return o ? o.map((n) => xs.find((x) => x.no === n)!).filter(Boolean) : xs; };
 // pack plans: as many per page as keep each plan big (page body 281 × 180 mm)
 const AW = 281, AH = 176, G = 5, C = 6;
 type S = { no: number; w: number; h: number; src: string };
 // one scale per project: the largest at which every drawing still fits a page on its own; then shelf-pack
-const pack = (xs: S[]) => {
+const stack = (xs: S[], groups: number[][]) => {
+  const pg = groups.map((g) => g.map((n) => xs.find((x) => x.no === n)!).filter(Boolean)).filter((g) => g.length);
+  const sc = Math.min(...pg.map((g) => Math.min(AW / Math.max(...g.map((x) => x.w)), (AH - C * g.length - G * (g.length - 1)) / g.reduce((a, x) => a + x.h, 0))));
+  return pg.map((g) => ({ rows: g.map((x) => [x]), s: sc }));
+};
+const pack = (xs: S[], slug = '') => {
+  if (stackDef[slug]) return stack(xs, stackDef[slug]);
   if (!xs.length) return [];
   const sc = Math.min(...xs.map((x) => Math.min(AW / x.w, (AH - C) / x.h)));
   const pages: { rows: S[][]; s: number }[] = []; let rows: S[][] = [], row: S[] = [];
@@ -56,7 +64,7 @@ const pack = (xs: S[]) => {
 };
 
 // ---- what goes in
-const selArch = ['travco-west-island', 'misr-italia-hilltop', 'staff-housing', 'sallan-creek', 'sodic-east-vale', 'sodic-ogami', 'orascom-o-west', 'fifth-square', 'mazeej', 'neom-oxagon'];
+const selArch = ['travco-west-island', 'misr-italia-hilltop', 'staff-housing', 'sodic-east-vale', 'sodic-ogami', 'orascom-o-west', 'sallan-creek', 'fifth-square', 'mazeej', 'neom-oxagon'];
 const bimSlugs = ['noatum-terminal', 'linah-farms', 'chery-showroom', 'dry-port'];
 const selInt = ['sabic-hq', 'stc-hq', 'suits-workspaces', 'modern-residence-new-cairo', 'hb-fuller', 'sphinx', 'jotun-office', 'tech-park', 'conference-room', 'bmw-showroom'];
 const ord = (c: Project['category']) => sectorGroups(projects.filter((p) => p.category === c && !bimSlugs.includes(p.slug))).flatMap((g) => g.list).map((p) => p.slug);
@@ -79,10 +87,10 @@ const build = async (slug: string, k: number) => {
   const sheetAll = async (xs: { no: number; m: any }[]) => Promise.all(xs.map(async (x) => ({ no: x.no, w: x.m.width * unit(slug, x.no), h: x.m.height * unit(slug, x.no), src: await jpg(x.m, W.sheet) })));
   const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: await jpg(imgs[d.imgs.filter((i) => i)[0]], W.bleed), rest: await Promise.all(d.imgs.filter((i) => i).slice(1).map((i) => jpg(imgs[i], W.half))), plans: pack(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
   return {
-    p, code: full ? projectNo(slug) : String(k + 1).padStart(2, '0'), logo: clientLogo(slug), disc: [...disciplinesFor(p)],
+    p, code: full && !bimSlugs.includes(slug) ? projectNo(slug) : String(k + 1).padStart(2, '0'), logo: clientLogo(slug), disc: [...disciplinesFor(p)],
     cover: await jpg(imgs[0], W.bleed), steps,
     studies: await Promise.all(sh.filter((x) => st.includes(x.no)).map(sheet)),
-    plans: pd ? [] : pack(await Promise.all(sh.filter((x) => !st.includes(x.no)).map(sheet))), parts,
+    plans: pd ? [] : pack(await Promise.all(sh.filter((x) => !st.includes(x.no)).map(sheet)), slug), parts,
     rest,
   };
 };
