@@ -67,7 +67,7 @@ const pack = (xs: S[], slug = '') => {
 };
 
 // ---- what goes in
-const selArch = ['travco-west-island', 'misr-italia-hilltop', 'staff-housing', 'sodic-east-vale', 'sodic-ogami', 'orascom-o-west', 'sallan-creek', 'fifth-square', 'mazeej', 'neom-oxagon'];
+const selArch = ['misr-italia-hilltop', 'staff-housing', 'travco-west-island', 'sodic-east-vale', 'sodic-ogami', 'orascom-o-west', 'sallan-creek', 'fifth-square', 'mazeej', 'neom-oxagon'];
 const bimSlugs = ['noatum-terminal', 'linah-farms', 'chery-showroom', 'dry-port'];
 const selInt = ['sabic-hq', 'stc-hq', 'suits-workspaces', 'modern-residence-new-cairo', 'hb-fuller', 'sphinx', 'jotun-office', 'tech-park', 'conference-room', 'bmw-showroom'];
 const ord = (c: Project['category']) => sectorGroups(projects.filter((p) => p.category === c && !bimSlugs.includes(p.slug))).flatMap((g) => g.list).map((p) => p.slug);
