@@ -79,7 +79,7 @@ const sections = [
 
 // projects with more than one building: each part gets its own render page, render grid and plans
 const partsDef: Record<string, { name: string; imgs: number[]; plans: number[] }[]> = {
-  'travco-west-island': [{ name: 'Chalet', imgs: [0, 1, 2], plans: [1, 2] }, { name: 'Townhome', imgs: [3, 4, 5], plans: [3] }],
+  'travco-west-island': [{ name: 'Chalet', imgs: [0, 1], plans: [1, 2] }, { name: 'Townhome', imgs: [2, 3, 4], plans: [3] }],
 };
 // renders without cropping: justified rows (shared row height, full aspect), best partition, centred on the page
 const RW = 273, RH = 182, RG = 3;
@@ -106,7 +106,7 @@ const build = async (slug: string, k: number) => {
   const ri = async (x: any) => ({ src: await jpg(x, W.half), a: x.width / x.height });
   const rest = pd ? null : jr(await Promise.all(imgs.slice(1, 5).map(ri)));
   const sheetAll = async (xs: { no: number; m: any }[]) => Promise.all(xs.map(async (x) => ({ no: x.no, w: x.m.width * unit(slug, x.no), h: x.m.height * unit(slug, x.no), src: await jpg(x.m, W.sheet) })));
-  const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: await jpg(imgs[d.imgs.filter((i) => i)[0]], W.bleed), rest: jr(await Promise.all(d.imgs.filter((i) => i).slice(1).map((i) => ri(imgs[i])))), plans: pack(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
+  const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: await jpg(imgs[d.imgs[0]], W.bleed), rest: jr(await Promise.all(d.imgs.slice(1).map((i) => ri(imgs[i])))), plans: pack(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
   return {
     p, code: String(k + 1).padStart(2, '0'), logo: clientLogo(slug), disc: [...disciplinesFor(p)],
     cover: await jpg(imgs[0], W.bleed), steps,

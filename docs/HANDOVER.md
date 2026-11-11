@@ -1,6 +1,6 @@
 # Aya Hassan — Master Handover (v3)
 
-**Last updated:** 11 Nov 2026 (23:10) · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
+**Last updated:** 12 Nov 2026 (01:50) · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
 **Lives at:** `G:\Portfolio\Portfolio Projects\Aya_Hassan_Handover_v3.md`
 
 > **Rule for everyone (people, Claude chat, Claude Code):** read this file first. When you finish a session, update the sections you touched — Status board, Decisions log, Changelog — and bump the date. Never keep project knowledge only in a chat. One file, one truth.
@@ -29,7 +29,7 @@
 - Study boards: text inside them can't be retyped in Archivo without text-free exports (her source files). A recolour to house palette was tried and **reverted** at her request — keep originals.
 - Missing logo: Suits Workspaces only (name shows instead). NOATUM logo added 11 Nov.
 - Arabic copy/role lines need a native check. BIM sheets reminder 16 Nov. Design System preview branch `preview-design-system` undecided. Built-projects list (for "built" claims). Which Vercel project to keep.
-- ✅ Closed 11 Nov 23:00: Travco keeps 6 renders; STC + Tech Park regraded from the git originals (burn/over-exposure fixed); no approval stamp anywhere.
+- ✅ Closed 11 Nov 23:00: Travco back to its 5 original uncropped renders (12 Nov); STC + Tech Park regraded from the git originals (burn/over-exposure fixed); no approval stamp anywhere.
 
 ### Tools/scripts in the repo
 - PDFs: `npx astro build && python3 scripts/grade-print.py && (npx astro preview --port 4321 &) && node scripts/make-pdfs.mjs` → writes `public/Aya_Hassan_CV.pdf` + `public/Aya_Hassan_Portfolio.pdf` (from hidden pages `/print/cv/`, `/print/portfolio/`). Needs Chrome (`/usr/bin/google-chrome` or env CHROME) and `puppeteer-core` (devDependency).
@@ -225,7 +225,7 @@ No gold anywhere.
 ### 4.4 Content rules
 - Every project must have **client** and **year** (no "—").
 - Fifth Square scope note: *"Design: the canopy. Modelling and rendering: the whole building."*
-- Max **5 renders** per project, best first (cover). Drawings/plans/BIM sheets are extra. Exception: Travco West Island = 6 (Chalet 3 + Townhome 3, ✅ 11 Nov).
+- Max **5 renders** per project, best first (cover). Drawings/plans/BIM sheets are extra. Travco = 5 original renders, uncropped (Chalet 01–02, Townhome 03–05).
 - Images on site are capped at 2400 px (displayed ≤2000 px); larger originals are not needed.
 - Videos must be compressed (≈10–25 MB, 1080p) or embedded from YouTube/Vimeo.
 - Project text: tell the decision (art + precision), e.g. "The land falls toward the sea, so we let the villas fall with it. Each one steps down eleven metres, and every terrace keeps the horizon." Never invent facts.
@@ -239,7 +239,7 @@ No gold anywhere.
 | misr-italia-hilltop | Misr Italia Hilltop | Arch | Innovation | Misr Italia Properties | 2026 | Featured, hero slide 1 |
 | sodic-ogami | SODIC Ogami | Arch | Innovation | SODIC | 2026 | + ground floor plan |
 | sodic-east-vale | SODIC East Vale · Premium Home | Arch | Innovation | SODIC | 2026 | Aya designed the premium home only (two stacked units). MADA City, New Cairo. 3 renders + form generation + GF 202.6 / FF 194.3 / roof 184 m² plans |
-| travco-west-island | Travco West Island | Arch | Innovation | Travco Properties | 2026 | Chalet + Townhome; 6 renders (exception) |
+| travco-west-island | Travco West Island | Arch | Innovation | Travco Properties | 2026 | Chalet + Townhome; 5 original renders (uncropped) |
 | sallan-creek | Sallan Creek (DHIFAF) | Arch / Masterplan | Cosmos | North Al Batinah Governor’s Office | 2025 | Oman; Aya: masterplan refinement, 3D model, renders, presentation; 4 regraded aerials + masterplan strip + look & feel grid |
 | staff-housing | Staff Housing Community | Arch / Masterplan | Innovation | Confidential developer | 2026 | From the Orascom Workers Housing (El Gouna) proposal — client & location anonymised (shown as Egypt); featured (No. 02); Option 01 only; 3 renders + 11 sheets |
 | orascom-o-west | Orascom O West Midyard | Arch | Innovation | Orascom Development | 2026 | 2 images only |
@@ -250,7 +250,7 @@ No gold anywhere.
 | chery-showroom | Chery Showroom & Admin | Arch/BIM | Cosmos | Chery Egypt | 2025 | |
 | noatum-terminal | NOATUM Automotive Terminal | Arch/BIM | Cosmos | NOATUM | 2025 | Logo added 11 Nov |
 | linah-farms | Linah Farms | Arch/BIM | Cosmos | Linah Farms | 2025 | Keep even though not in folder; renders need upscale |
-| mazeej | Mazeej Hotel & Housing | Arch | Cosmos | Guira Developments | 2025 | |
+| mazeej | Mazeej Hotel & Housing | Arch | Cosmos | Guira Developments | 2025 | 5 original renders restored (12 Nov) |
 | dry-port | Dry Port Buildings | Arch/BIM | Cosmos | Egyptian Government | 2021 | |
 | tech-park | Tech Park Office Building | Interior | Cosmos | Confidential | 2023 | Renders regraded 11 Nov |
 | jotun-office | Jotun Office Building | Interior | Cosmos | Jotun | 2023 | Animation live on project page |
@@ -321,7 +321,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - Removed projects per section 5.
 - STC/SABIC real-tower photos never on site.
 - Modern Villa 02 (KSA) stays off the site even though its folder remains on G:.
-- Max 5 renders per project (best picks; first = cover). Drawings/plans not counted. Travco = 6 (exception).
+- Max 5 renders per project (best picks; first = cover). Drawings/plans not counted. Never crop or delete renders without Aya's OK (12 Nov).
 - No approval stamp anywhere (11 Nov).
 - Title Mid-senior everywhere; no reply-time promise anywhere; no "open to / available" lines.
 - Hero: no stamp, no table lines.
@@ -443,6 +443,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-11 | Travco client logo = new Travco Properties wordmark; client name 'Travco Properties' | Aya supplied logo |
 | 2026-11-11 | PDFs: no 'How it was decided' page (its points sit on a Brief page next to a render); minimal project covers (soft gradient, big number); cover = 'Portfolio · month year' + Architect · Interior designer + full contact row; plans packed several per page; Mazeej before → after redesign; Linah + NOATUM moved to 03 BIM delivery; Ogami townhouse plans (GF/FF) + 2 renders replace old flat plan | Aya feedback |
 | 2026-11-11 | Travco keeps 6 renders (exception to max 5); no approval stamp anywhere; STC + Tech Park regraded from originals (no burn, no extra exposure); NOATUM official logo added; Project instructions = handover §12 | Aya |
+| 2026-11-12 | Cropped/removed renders reverted: Mazeej back to its 5 original renders (DRAFT crop undone, 02–05 restored); Travco back to the 5 live originals uncropped (the cropped slices removed). Rule: never crop or delete renders without Aya's OK. Supersedes the 11 Nov Mazeej crop/keep-only-01 and Travco-6 rows | Aya |
 | 2026-11-05 | Identity kit = Design System (for tools) + Brand Book deck (for people); dark-theme oxblood lifted to #D9768A for contrast; square corners except buttons | Aya: “give me everything for my identity” — chose both |
 | 2026-11-05 | CV rewritten to the new brand; set in Archivo with hairline title-block layout; phone shown; some marketing words allowed sparingly | Aya approved preview |
 
@@ -536,6 +537,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-12 | Claude (chat + repo) | Reverted cropped/removed renders: Mazeej 01–05 and Travco 01–05 restored from live `main`; fixed PrintBook bug that hid Travco render 01; PDFs regenerated. STC/Tech Park were only regraded, not cropped. Not live. |
 | 2026-11-11 | Claude (chat + repo) | 23:10: NOATUM logo (site wall + PDF clients page); STC + Tech Park renders regraded from pre-edit originals (`efc315b^`) — burnt corners lifted, highlights held, neutral colour; Travco 6 renders kept; stamp retired; handover cleaned (stale TO DOs, branches, stamp, timestamps). All three PDFs regenerated. On `rebrand-on-update`, not live. |
 | 2026-11-11 | Claude Code | PDF round 3 (evening): Travco chalet/townhome split; opener page (cover + brief, overlay, info right, logo-only client); one drawing scale per project; Chery + Dry Port to BIM, BIM numbered separately; Mazeej/Staff Housing plan pairing; BMW hanging unit first; STC + Tech Park re-exposed (site too); new Selected Works order + index; uncropped render rows; sharper images (Selected Works ~14 MB); About employment list; no Instagram; CV Travco/links updated. All on `rebrand-on-update`, not live. |
 | 2026-11-11 | Claude Code | PDF revamp round 2 (see decision). Selected Works 108 pp 8.7 MB; Portfolio 113 pp 39 MB. Open: Travco chalet vs townhome split (needs Aya); study-board text can't be re-typeset without source files. Not live. |
