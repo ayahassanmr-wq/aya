@@ -72,7 +72,7 @@ const bimSlugs = ['noatum-terminal', 'linah-farms', 'chery-showroom', 'dry-port'
 const selInt = ['sabic-hq', 'stc-hq', 'suits-workspaces', 'modern-residence-new-cairo', 'hb-fuller', 'sphinx', 'jotun-office', 'tech-park', 'conference-room', 'bmw-showroom'];
 const ord = (c: Project['category']) => sectorGroups(projects.filter((p) => p.category === c && !bimSlugs.includes(p.slug))).flatMap((g) => g.list).map((p) => p.slug);
 const sections = [
-  { n: '01', name: 'Architecture', slugs: full ? ord('architecture') : selArch },
+  { n: '01', name: 'Architecture', slugs: full ? [...selArch, ...ord('architecture').filter((x) => !selArch.includes(x))] : selArch },
   { n: '02', name: 'Interiors', slugs: full ? ord('interiors') : selInt },
   { n: '03', name: 'BIM delivery', slugs: bimSlugs },
 ];
@@ -318,8 +318,8 @@ const restClass = (n: number) => `r${n}`;
     <div class="ix">
       {secs.map((s) => (
         <div>
-          <h3>{s.n} · {s.name}</h3>
-          <ol>{s.items.map((it, k) => <>{(k === 0 || s.items[k - 1].p.sector !== it.p.sector) && <li style="border:0;padding:3mm 0 1mm" class="lab mut">{it.p.sector}</li>}<li><span class="c">{it.code}</span><a href={`#p-${it.p.slug}`}>{it.p.title}</a><span class="m">{it.p.location} · {it.p.year}</span><span class="n">{String(startOf[it.p.slug]).padStart(2, '0')}</span></li></>)}</ol>
+          <h3 style="margin:2mm 0 1mm">{s.n} · {s.name}</h3>
+          <ol>{s.items.map((it, k) => <><li><span class="c">{it.code}</span><a href={`#p-${it.p.slug}`}>{it.p.title}</a><span class="m">{it.p.sector} · {it.p.location} · {it.p.year}</span><span class="n">{String(startOf[it.p.slug]).padStart(2, '0')}</span></li></>)}</ol>
         </div>
       ))}
     </div>
