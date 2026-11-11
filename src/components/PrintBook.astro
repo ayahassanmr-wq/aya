@@ -120,6 +120,7 @@ const shown = secs.reduce((a, s) => a + s.items.length, 0);
 const label = full ? 'Portfolio' : 'Selected Works';
 const fitBox = (w: number, h: number, bw: number, bh: number) => { const s = Math.min(bw / w, bh / h); return `width:${(w * s).toFixed(1)}mm;height:${(h * s).toFixed(1)}mm`; };
 const restClass = (n: number) => `r${n}`;
+const trial = (slug: string) => slug === 'travco-west-island';
 ---
 <!doctype html>
 <html lang="en">
@@ -250,6 +251,11 @@ const restClass = (n: number) => `r${n}`;
   .pb .meta img { height: 5.5mm; max-width: 18mm; object-fit: contain; filter: brightness(0) invert(1); }
   .pb .tx { position: absolute; top: 16mm; right: 16mm; bottom: 20mm; width: 92mm; display: flex; flex-direction: column; gap: 4.5mm; }
   .pb .tx .ox { color: var(--sand); }
+  .pb .tm { display: flex; flex-direction: column; gap: 3mm; padding-bottom: 4mm; border-bottom: .5pt solid rgba(243,237,227,.6); }
+  .pb .tm .cl { display: flex; align-items: center; gap: 3mm; font-size: 12pt; font-weight: 700; font-stretch: 112%; }
+  .pb .tm .cl img { height: 7mm; max-width: 26mm; object-fit: contain; filter: brightness(0) invert(1); }
+  .pb .fx { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm 5mm; margin: 0; }
+  .pb .fx dd { margin-left: 0; }
   .pb .role { font-size: 11.5pt; line-height: 1.35; font-weight: 700; }
   .pb .sum { font-size: 9.2pt; line-height: 1.52; opacity: .92; }
   .pb .dec { list-style: none; padding: 0; margin: 0; border-top: .5pt solid rgba(243,237,227,.6); }
@@ -353,14 +359,19 @@ const restClass = (n: number) => `r${n}`;
               <img class="bleed grade" src={it.cover} alt="" />
               <div class="veil"></div>
               <div class="info">
-                <div class="nr"><b class="wide">{it.code}</b><span class="lab">{s.name} · {p.sector}{p.roleTag && <> · <span class="rt">{p.roleTag}</span></>}</span></div>
+                <div class="nr"><b class="wide">{it.code}</b>{!trial(p.slug) && <span class="lab">{s.name} · {p.sector}{p.roleTag && <> · <span class="rt">{p.roleTag}</span></>}</span>}</div>
                 <h2 class="wide"><a href={`https://ayahassan.com/work/${p.slug}/`}>{p.title}</a></h2>
-                <div class="meta lab">
+                {!trial(p.slug) && <div class="meta lab">
                   <span>{it.logo && <img src={it.logo} alt="" />}{p.client}</span><span>{place(p)}</span><span>{p.year}</span>{p.status && <span>{p.status}</span>}<span>{practice(p)}</span>
-                </div>
+                </div>}
               </div>
             </div>
             <div class="tx">
+              {trial(p.slug) && <div class="tm">
+                <span class="lab ox">{s.name} · {p.sector}{p.roleTag && <> · <b>{p.roleTag}</b></>}</span>
+                <div class="cl">{it.logo && <img src={it.logo} alt="" />}<span>{p.client}</span></div>
+                <dl class="fx"><div><dt>Location</dt><dd>{place(p)}</dd></div><div><dt>Year</dt><dd>{p.year}</dd></div>{p.status && <div><dt>Status</dt><dd>{p.status}</dd></div>}<div><dt>Practice</dt><dd>{practice(p)}</dd></div></dl>
+              </div>}
               <span class="lab ox">{it.code} · Brief</span>
               {p.role && <p class="role">{p.role}</p>}
               {p.summary && <p class="sum">{p.summary}</p>}
