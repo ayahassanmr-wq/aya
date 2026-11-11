@@ -10,8 +10,8 @@ import { projects, imagesFor, fileFor, disciplinesFor, countries, contact, proje
 
 interface Props { full: boolean }
 const { full } = Astro.props;
-const Q = full ? 80 : 60;
-const W = { bleed: full ? 2200 : 1000, half: full ? 1400 : 640, sheet: full ? 2200 : 1100, step: full ? 1200 : 560 };
+const Q = full ? 85 : 80;
+const W = { bleed: full ? 2400 : 1400, half: full ? 1600 : 950, sheet: full ? 2200 : 1400, step: full ? 1200 : 560 };
 const jpg = async (src: any, w: number) => (src ? (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: Q })).src : '');
 const practice = (p: Project) => p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent practice';
 const place = (p: Project) => p.location === p.country || p.location.includes(p.country) ? p.location : `${p.location}, ${p.country}`;
@@ -81,14 +81,32 @@ const sections = [
 const partsDef: Record<string, { name: string; imgs: number[]; plans: number[] }[]> = {
   'travco-west-island': [{ name: 'Chalet', imgs: [0, 1, 2], plans: [1, 2] }, { name: 'Townhome', imgs: [3, 4, 5], plans: [3] }],
 };
+// renders without cropping: justified rows (shared row height, full aspect), best partition, centred on the page
+const RW = 273, RH = 182, RG = 3;
+const jr = (xs: { src: string; a: number }[]) => {
+  if (!xs.length) return null;
+  const parts: number[][] = []; const n = xs.length;
+  for (let m = 0; m < 1 << (n - 1); m++) { const cut: number[] = []; for (let i = 0; i < n - 1; i++) if (m & (1 << i)) cut.push(i + 1); parts.push(cut); }
+  let best: any = null;
+  for (const cut of parts) {
+    const b = [0, ...cut, n]; const rows = b.slice(0, -1).map((v, i) => xs.slice(v, b[i + 1]));
+    let hs = rows.map((r) => (RW - RG * (r.length - 1)) / r.reduce((t, x) => t + x.a, 0));
+    const tot = hs.reduce((t, h) => t + h, 0) + RG * (rows.length - 1); const f = Math.min(1, RH / tot); hs = hs.map((h) => h * f);
+    const area = rows.reduce((t, r, i) => t + r.reduce((u, x) => u + x.a * hs[i] * hs[i], 0), 0);
+    const sc = area * (1 - 0.12 * (rows.length - 1));
+    if (!best || sc > best.sc) best = { sc, area, rows: rows.map((r, i) => ({ h: hs[i], items: r.map((x) => ({ ...x, w: x.a * hs[i] })) })) };
+  }
+  return best.rows;
+};
 const build = async (slug: string, k: number) => {
   const p = P(slug), imgs = imagesFor(slug), sh = sheetsFor(slug), st = studyNos[slug] ?? [];
   const steps = think[slug] ? await Promise.all(think[slug].map(async ([t, f]) => ({ t, d: f.startsWith('d') || f.startsWith('x:'), src: await jpg(img(slug, f), W.step) }))) : [];
   const sheet = async (x: { no: number; m: any }) => ({ no: x.no, w: x.m.width * unit(slug, x.no), h: x.m.height * unit(slug, x.no), src: await jpg(x.m, W.sheet) });
   const pd = partsDef[slug];
-  const rest = pd ? [] : await Promise.all(imgs.slice(1, 5).map((x) => jpg(x, W.half)));
+  const ri = async (x: any) => ({ src: await jpg(x, W.half), a: x.width / x.height });
+  const rest = pd ? null : jr(await Promise.all(imgs.slice(1, 5).map(ri)));
   const sheetAll = async (xs: { no: number; m: any }[]) => Promise.all(xs.map(async (x) => ({ no: x.no, w: x.m.width * unit(slug, x.no), h: x.m.height * unit(slug, x.no), src: await jpg(x.m, W.sheet) })));
-  const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: await jpg(imgs[d.imgs.filter((i) => i)[0]], W.bleed), rest: await Promise.all(d.imgs.filter((i) => i).slice(1).map((i) => jpg(imgs[i], W.half))), plans: pack(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
+  const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: await jpg(imgs[d.imgs.filter((i) => i)[0]], W.bleed), rest: jr(await Promise.all(d.imgs.filter((i) => i).slice(1).map((i) => ri(imgs[i])))), plans: pack(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
   return {
     p, code: String(k + 1).padStart(2, '0'), logo: clientLogo(slug), disc: [...disciplinesFor(p)],
     cover: await jpg(imgs[0], W.bleed), steps,
@@ -101,7 +119,7 @@ const secs = await Promise.all(sections.map(async (s) => ({ ...s, items: await P
 
 // ---- page numbers (front: cover, about, clients, [index], contents)
 const front = 5;
-const pagesOf = (it: any) => 1 + it.studies.length + it.plans.length + (it.rest.length ? 1 : 0) + it.parts.reduce((a: number, q: any) => a + 1 + (q.rest.length ? 1 : 0) + q.plans.length, 0);
+const pagesOf = (it: any) => 1 + it.studies.length + it.plans.length + (it.rest ? 1 : 0) + it.parts.reduce((a: number, q: any) => a + 1 + (q.rest ? 1 : 0) + q.plans.length, 0);
 let pg = front; const startOf: Record<string, number> = {};
 for (const s of secs) { pg += 1; for (const it of s.items) { startOf[it.p.slug] = pg + 1; pg += pagesOf(it); } }
 pg += 1; // delivery card
@@ -164,8 +182,11 @@ const trial = (_: string) => true;
   .about { display: grid; grid-template-columns: 112mm 1fr; }
   .about .ph { position: relative; }
   .about .tx { padding: 22mm 22mm 24mm 20mm; display: flex; flex-direction: column; }
-  .about h2 { font-size: 24pt; margin: 6mm 0 9mm; max-width: 140mm; }
-  .about .bio { font-size: 10.6pt; line-height: 1.62; max-width: 138mm; }
+  .about h2 { font-size: 22pt; margin: 5mm 0 6mm; max-width: 140mm; }
+  .about .bio { font-size: 10pt; line-height: 1.55; max-width: 138mm; }
+  .about .emp { margin-top: 7mm; border-top: .5pt solid var(--ink); }
+  .about .emp div { display: grid; grid-template-columns: 20mm 1fr auto; gap: 4mm; padding: 1.8mm 0; border-bottom: .5pt solid var(--rule); font-size: 8.4pt; align-items: baseline; }
+  .about .emp span { color: var(--ox); font-weight: 700; font-stretch: 112%; } .about .emp b { font-weight: 600; } .about .emp i { font-style: normal; color: var(--mut); font-size: 7.8pt; }
   .about .nums { margin-top: auto; display: grid; grid-template-columns: repeat(3, 1fr); border-top: .5pt solid var(--ink); }
   .about .nums div { padding: 4mm 4mm 0 0; }
   .about .nums b { display: block; font-size: 32pt; font-weight: 800; font-stretch: 125%; color: var(--ox); line-height: 1; margin-bottom: 2mm; }
@@ -176,7 +197,7 @@ const trial = (_: string) => true;
   .head h2 { font-size: 26pt; }
   .lg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: .5pt solid var(--rule); border-left: .5pt solid var(--rule); }
   .lg div { height: 30mm; display: flex; align-items: center; justify-content: center; border-right: .5pt solid var(--rule); border-bottom: .5pt solid var(--rule); }
-  .lg img { max-width: 34mm; max-height: 13mm; object-fit: contain; }
+  .lg img { max-width: 42mm; max-height: 17mm; object-fit: contain; }
   .lg span { font-weight: 700; font-stretch: 112%; font-size: 10pt; }
   .ix { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14mm; }
   .ix > div:nth-child(1) { grid-row: 1 / span 2; } .ix > div:nth-child(3) { grid-column: 2; margin-top: 4mm; }
@@ -234,6 +255,8 @@ const trial = (_: string) => true;
   .rg.r1 { grid-template-columns: 1fr; }
   .rg.r2 { grid-template-columns: 1fr 1fr; }
   .rg.r3 { grid-template-columns: 1.6fr 1fr; grid-template-rows: 1fr 1fr; } .rg.r3 img:first-child { grid-row: 1 / -1; }
+  .jg .jw { position: absolute; left: 12mm; right: 12mm; top: 10mm; bottom: 18mm; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3mm; }
+  .jg .jrow { display: flex; gap: 3mm; } .jg img { display: block; object-fit: cover; }
   .rg.r4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
   /* project opener: cover image (veiled) + brief */
   .pb { color: var(--bone); }
@@ -254,7 +277,7 @@ const trial = (_: string) => true;
   .pb .tm { display: flex; flex-direction: column; gap: 3mm; padding-bottom: 4mm; border-bottom: .5pt solid rgba(243,237,227,.6); }
   .pb .tm .cl { display: flex; align-items: center; gap: 3mm; font-size: 12pt; font-weight: 700; font-stretch: 112%; }
   .pb .tm .cs .cl { margin-top: 1.2mm; }
-  .pb .tm .cl img { height: 6mm; width: auto; max-width: 34mm; object-fit: contain; filter: brightness(0) invert(1); }
+  .pb .tm .cl img { height: 9mm; width: auto; max-width: 48mm; object-fit: contain; filter: brightness(0) invert(1); }
   .pb .fx { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm 5mm; margin: 0; }
   .pb .fx dd { margin-left: 0; }
   .pb .role { font-size: 11.5pt; line-height: 1.35; font-weight: 700; }
@@ -274,7 +297,7 @@ const trial = (_: string) => true;
   .back .ct { position: absolute; left: 18mm; right: 18mm; bottom: 24mm; color: var(--bone); }
   .back h2 { font-size: 34pt; margin-bottom: 12mm; }
   .back h2 em { font-style: italic; font-weight: 200; font-stretch: 100%; }
-  .back dl { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6mm; border-top: .5pt solid rgba(243,237,227,.5); padding-top: 4mm; }
+  .back dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; border-top: .5pt solid rgba(243,237,227,.5); padding-top: 4mm; }
   .back dt { font-size: 6.4pt; letter-spacing: .2em; text-transform: uppercase; opacity: .7; margin-bottom: 1.5mm; }
   .back dd { font-size: 9pt; }
 </style>
@@ -288,7 +311,7 @@ const trial = (_: string) => true;
   <div class="top"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab">{label} · {month} {year}</span></div>
   <div class="tagw"><span class="lab">Architect · Interior designer</span><h1 class="tag wide">Bold on paper.<em>Solid on ground.</em></h1></div>
   <div class="bot lab">
-    <a href={`mailto:${contact.email}`}>{contact.email}</a><a href="https://ayahassan.com">ayahassan.com</a><a href={contact.linkedin}>{contact.linkedinLabel}</a><a href={contact.instagram}>@ayahassanmr</a>
+    <a href={`mailto:${contact.email}`}>{contact.email}</a><a href="https://ayahassan.com">ayahassan.com</a><a href={contact.linkedin}>{contact.linkedinLabel}</a>
   </div>
   {(() => { N(); return null; })()}
 </section>
@@ -300,6 +323,13 @@ const trial = (_: string) => true;
     <span class="lab ox">About · Architect &amp; interior designer · Cairo</span>
     <h2 class="wide">An idea only counts once it stands on real ground.</h2>
     <p class="bio">I design architecture and interiors that begin as an original idea and end as a built place. Concepts that surprise, details that work on site: homes on Egypt’s coast, luxury residences inland, and corporate headquarters from Cairo to Riyadh. Since 2019 I have worked across three studios and my own selected commissions. I have led teams of up to five, and every project in these pages names my role.</p>
+    <div class="emp">
+      <div><span>2026 —</span><b>Mid-senior Design Architect</b><i>Innovation Design Studio, Cairo</i></div>
+      <div><span>2025</span><b>Mid-senior Design Architect &amp; Interior Designer</b><i>Cosmos Studio, Cairo</i></div>
+      <div><span>2024</span><b>Design Architect &amp; Interior Designer</b><i>ZFP · Zuhair Fayez Partnership, Riyadh</i></div>
+      <div><span>2020 — 23</span><b>Design Architect &amp; Interior Designer</b><i>Cosmos Studio, Cairo</i></div>
+      <div><span>2019 —</span><b>Independent practice</b><i>Selected commissions</i></div>
+    </div>
     <div class="nums">
       <div><b>{full ? projects.length : shown}</b><span class="lab mut">{full ? 'Selected projects' : 'Projects in this selection'}</span></div>
       <div><b>{countries.length}</b><span class="lab mut">Countries</span></div>
@@ -411,10 +441,10 @@ const trial = (_: string) => true;
                 <div class="shade"></div>
                 <div class="foot on"><span class="lab"><b>{it.code}</b> · {p.title} · <b>{q.name}</b></span><span class="lab">{N()} / {T}</span></div>
               </section>
-              {q.rest.length > 0 && (
-                <section class:list={['pg rg', restClass(q.rest.length)]}>
-                  {q.rest.map((r: string) => <img class="grade" src={r} alt="" />)}
-                  <div class="foot on" style="bottom:6mm"><span class="lab"><b>{it.code}</b> · {p.title} · {q.name}</span><span class="lab">{N()} / {T}</span></div>
+              {q.rest && (
+                <section class="pg jg">
+                  <div class="jw">{q.rest.map((r: any) => <div class="jrow">{r.items.map((x: any) => <img class="grade" src={x.src} alt="" style={`width:${x.w.toFixed(1)}mm;height:${r.h.toFixed(1)}mm`} />)}</div>)}</div>
+                  <div class="foot"><span class="lab"><b class="ox">{it.code}</b> · {p.title} · {q.name}</span><span class="lab mut">{N()} / {T}</span></div>
                 </section>
               )}
               {q.plans.map((pg: any) => (
@@ -432,10 +462,10 @@ const trial = (_: string) => true;
               ))}
             </>
           ))}
-          {it.rest.length > 0 && (
-            <section class:list={['pg rg', restClass(it.rest.length)]}>
-              {it.rest.map((r: string) => <img class="grade" src={r} alt="" />)}
-              <div class="foot on" style="bottom:6mm"><span class="lab"><b>{it.code}</b> · {p.title}</span><span class="lab">{N()} / {T}</span></div>
+          {it.rest && (
+            <section class="pg jg">
+              <div class="jw">{it.rest.map((r: any) => <div class="jrow">{r.items.map((x: any) => <img class="grade" src={x.src} alt="" style={`width:${x.w.toFixed(1)}mm;height:${r.h.toFixed(1)}mm`} />)}</div>)}</div>
+              <div class="foot"><span class="lab"><b class="ox">{it.code}</b> · {p.title}</span><span class="lab mut">{N()} / {T}</span></div>
             </section>
           )}
         </>
@@ -467,7 +497,6 @@ const trial = (_: string) => true;
       <div><dt>Email</dt><dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd></div>
       <div><dt>Web</dt><dd><a href="https://ayahassan.com">ayahassan.com</a></dd></div>
       <div><dt>LinkedIn</dt><dd><a href={contact.linkedin}>{contact.linkedinLabel}</a></dd></div>
-      <div><dt>Instagram</dt><dd><a href={contact.instagram}>@ayahassanmr</a></dd></div>
     </dl>
   </div>
   <div class="foot on"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab">{N()} / {T}</span></div>

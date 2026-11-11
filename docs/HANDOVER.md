@@ -566,3 +566,4 @@ End of every session: produce the updated sections of the handover (Status board
 - 11 Nov — Index lists projects in the chosen order (sector shown per line); full Portfolio uses the same architecture order and numbers 01→ per section.
 - 11 Nov — All project covers: number + title left, all info right; client shown as logo only (labelled Client). Book cover: Travco beach chalet under heavy overlay, larger "Architect · Interior designer".
 - 11 Nov — CV: Travco = chalet + townhome; client "Travco Properties"; portfolio bar links the Selected Works PDF (+ case studies online). Site/PDF Travco role line updated (EN+AR).
+- 11 Nov — PDFs: Instagram removed; About page gets employment list; client logos larger; render pages now uncropped (justified rows, full aspect); image resolution/quality raised (Selected Works now ~14 MB, was 9).
