@@ -90,7 +90,7 @@ const build = async (slug: string, k: number) => {
   const sheetAll = async (xs: { no: number; m: any }[]) => Promise.all(xs.map(async (x) => ({ no: x.no, w: x.m.width * unit(slug, x.no), h: x.m.height * unit(slug, x.no), src: await jpg(x.m, W.sheet) })));
   const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: await jpg(imgs[d.imgs.filter((i) => i)[0]], W.bleed), rest: await Promise.all(d.imgs.filter((i) => i).slice(1).map((i) => jpg(imgs[i], W.half))), plans: pack(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
   return {
-    p, code: full && !bimSlugs.includes(slug) ? projectNo(slug) : String(k + 1).padStart(2, '0'), logo: clientLogo(slug), disc: [...disciplinesFor(p)],
+    p, code: String(k + 1).padStart(2, '0'), logo: clientLogo(slug), disc: [...disciplinesFor(p)],
     cover: await jpg(imgs[0], W.bleed), steps,
     studies: await Promise.all(sh.filter((x) => st.includes(x.no)).map(sheet)),
     plans: pd ? [] : pack(await Promise.all(sh.filter((x) => !st.includes(x.no)).map(sheet)), slug), parts,

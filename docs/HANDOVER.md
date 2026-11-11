@@ -563,3 +563,4 @@ End of every session: produce the updated sections of the handover (Status board
 - 11 Nov — STC + Tech Park renders re-exposed (highlights pulled down; Tech Park desaturated, warmer) — site + PDFs. Staff Housing plans on one sheet. Opener: client line + scope larger.
 - 11 Nov — Selected Works order: Travco, East Vale, Ogami, Staff Housing, DHIFAF, Misr Italia, O West, Fifth Square, Mazeej, Oxagon.
 - 11 Nov — Selected Works now has the project index page (after Clients).
+- 11 Nov — Index lists projects in the chosen order (sector shown per line); full Portfolio uses the same architecture order and numbers 01→ per section.
