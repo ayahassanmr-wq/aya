@@ -100,7 +100,7 @@ const build = async (slug: string, k: number) => {
 const secs = await Promise.all(sections.map(async (s) => ({ ...s, items: await Promise.all(s.slugs.map(build)) })));
 
 // ---- page numbers (front: cover, about, clients, [index], contents)
-const front = full ? 5 : 4;
+const front = 5;
 const pagesOf = (it: any) => 1 + it.studies.length + it.plans.length + (it.rest.length ? 1 : 0) + it.parts.reduce((a: number, q: any) => a + 1 + (q.rest.length ? 1 : 0) + q.plans.length, 0);
 let pg = front; const startOf: Record<string, number> = {};
 for (const s of secs) { pg += 1; for (const it of s.items) { startOf[it.p.slug] = pg + 1; pg += pagesOf(it); } }
@@ -311,7 +311,7 @@ const restClass = (n: number) => `r${n}`;
   <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{N()} / {T}</span></div>
 </section>
 
-{full && (
+{(
   <section class="pg index">
     <div class="head"><h2 class="wide">Index</h2><span class="lab ox">{shown} projects · 2019 — {year}</span></div>
     <div class="ix">
