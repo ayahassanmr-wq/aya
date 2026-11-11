@@ -39,7 +39,7 @@ const docs = [
 
   <section class="wrap reach">
     <div class="sheet-head"><h2 class="label">{t('Get in touch', 'تواصل معي')}</h2></div>
-    <div class="row"><span class="label muted">{t('Email', 'البريد')}</span><a href={`mailto:${contact.email}?subject=${encodeURIComponent(t('Job opportunity', 'فرصة عمل') + ' · ayahassan.com')}`} class="v link">{contact.email.split("@")[0]}<wbr />@{contact.email.split("@")[1]}</a><span class="label muted reply">{t('I typically reply within 24 hours.', 'أردّ عادةً خلال 24 ساعة.')}</span></div>
+    <div class="row"><span class="label muted">{t('Email', 'البريد')}</span><a href={`mailto:${contact.email}?subject=${encodeURIComponent(t('Job opportunity', 'فرصة عمل') + ' · ayahassan.com')}`} class="v link">{contact.email.split("@")[0]}<wbr />@{contact.email.split("@")[1]}</a></div>
     <div class="row"><span class="label muted">{t('WhatsApp · LinkedIn · Instagram', 'واتساب · لينكدإن · إنستغرام')}</span><Social size="l" /></div>
   </section>
 </Base>

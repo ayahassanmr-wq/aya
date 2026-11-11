@@ -7,7 +7,7 @@ const L = i18n(Astro.url);
 <footer class="dark" data-footer data-sp>
   <div class="wrap">
     <div class="cta">
-      <h2 class="big lines"><span class="ln"><span>{L.t('Every good project starts with a conversation.', 'كل مشروع جيد يبدأ بحديث.')}</span></span><span class="ln"><span>{L.t('Send me yours.', 'أرسل لي فكرتك،')}</span></span><span class="ln"><span><em>{L.t('I reply within 24 hours.', 'وأرد خلال 24 ساعة.')}</em></span></span></h2>
+      <h2 class="big lines"><span class="ln"><span>{L.t('Every good project starts with a conversation.', 'كل مشروع جيد يبدأ بحديث.')}</span></span><span class="ln"><span><em>{L.t('Send me yours.', 'أرسل لي فكرتك.')}</em></span></span></h2>
       <div class="actions">
         <a href={L.u('/contact/')} class="btn solid magnet">{L.t('Get in touch', 'تواصل معي')} <span class="arr">{L.next}</span></a>
         <a href={`mailto:${contact.email}`} class="mail link" dir="ltr" style="font-family: 'Archivo Variable', sans-serif">{contact.email.split("@")[0]}<wbr />@{contact.email.split("@")[1]}</a>

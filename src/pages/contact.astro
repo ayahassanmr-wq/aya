@@ -24,7 +24,7 @@ const { t } = L;
         <option value="project" selected>{t('Project', 'مشروع')}</option>
         <option value="studio">{t('Studio support', 'دعم للاستوديوهات')}</option>
       </select><span class="arr" aria-hidden="true">↓</span></div>
-    <div class="row"><span class="label muted">{t('Email', 'البريد')}</span><a href={`mailto:${contact.email}`} class="v link" id="em" dir="ltr">{contact.email.split("@")[0]}<wbr />@{contact.email.split("@")[1]}</a><span class="reply label muted">{t('I typically reply within 24 hours.', 'أردّ عادةً خلال 24 ساعة.')}</span><button type="button" class="btn copy" data-copy="em" data-done={t('Copied', 'تم النسخ')}>{t('Copy', 'انسخ')}</button></div>
+    <div class="row"><span class="label muted">{t('Email', 'البريد')}</span><a href={`mailto:${contact.email}`} class="v link" id="em" dir="ltr">{contact.email.split("@")[0]}<wbr />@{contact.email.split("@")[1]}</a><button type="button" class="btn copy" data-copy="em" data-done={t('Copied', 'تم النسخ')}>{t('Copy', 'انسخ')}</button></div>
     <div class="row"><span class="label muted">{t('Social', 'التواصل')}</span><Social size="l" /><span></span></div>
     <div class="row"><span class="label muted">CV</span><a href={L.u('/cv/#cv')} class="v link">{t('View or download', 'اعرض أو حمّل')}</a><span class="arr">{L.next}</span></div>
     <div class="row"><span class="label muted">{t('Portfolio', 'ملف الأعمال')}</span><a href={L.u('/cv/#portfolio')} class="v link">{t('View or download', 'اعرض أو حمّل')}</a><span class="arr">{L.next}</span></div>

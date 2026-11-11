@@ -1,44 +1,91 @@
 ---
-/* Print-only portfolio, A4 landscape. Rendered to /Aya_Hassan_Portfolio.pdf with headless Chrome
-   (see docs/HANDOVER.md §4 "PDFs"). Built from the same data and images as the site, so it never drifts. */
+/* Full portfolio, A4 landscape → /Aya_Hassan_Portfolio.pdf. Same layout as Selected Works (selected.astro), every project, higher image quality.
+   Featured projects: opener + thinking spread + renders + drawings. Supporting: opener only. */
 import '@fontsource-variable/archivo/wdth.css';
 import '@fontsource-variable/archivo/wdth-italic.css';
 import { getImage } from 'astro:assets';
-import { projects, imagesFor, drawingsFor, disciplinesFor, countries, contact, projectNo, clientLogo, sectorGroups, type Project } from '../../data/projects';
+import { projects, imagesFor, drawingsFor, fileFor, disciplinesFor, countries, contact, projectNo, clientLogo, sectorGroups, type Project } from '../../data/projects';
 
-const jpg = async (src: any, w = 1800) => (src ? (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: 74 })).src : '');
+const diag = import.meta.glob<{ default: any }>('../../assets/diagrams/*.jpg', { eager: true });
+const img = (slug: string, f: string) => f.startsWith('x:') ? diag[`../../assets/diagrams/${f.slice(2)}.jpg`]?.default : fileFor(slug, f);
+const jpg = async (src: any, w = 1400) => (src ? (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: 78 })).src : '');
 const practice = (p: Project) => p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent';
 const place = (p: Project) => p.location === p.country || p.location.includes(p.country) ? p.location : `${p.location}, ${p.country}`;
+const P = (s: string) => projects.find((p) => p.slug === s)!;
 
-// same order and numbers as the website: discipline → category → project
-const groups: [string, string, Project[]][] = [
-  ['01', 'Architecture', sectorGroups(projects.filter((p) => p.category === 'architecture')).flatMap((g) => g.list)],
-  ['02', 'Interiors', sectorGroups(projects.filter((p) => p.category === 'interiors')).flatMap((g) => g.list)],
+const think: Record<string, [string, string][]> = {
+  'travco-west-island': [['Brief: premier coastal destination — max sea views, hospitality-level living, respect for landscape', '05'], ['Idea: orient for wind and water', 'd04'], ['Plan: empty plot to four units', 'd03'], ['Approved; under construction', '01']],
+  'misr-italia-hilltop': [['Brief: luxury coastal living around the lagoon', '01'], ['Problem: the concept draft showed a building, not a lifestyle', '04'], ['My enhancements: materials, details, façade', '02'], ['Approved; under construction', '03']],
+  'staff-housing': [['Tension: density vs quality of life vs budget', 'd03'], ['Courtyard clusters on a town-wide pedestrian network', 'd02'], ['Two repeatable prototypes for cost and speed', 'd05'], ['Nubian arches, shade, earth', 'd01']],
+  'sodic-east-vale': [['Brief: private sanctuaries, daylight, ventilation, views', '03'], ['Decision I argued for: private quarters apart from reception (oxblood = private, sand = reception)', 'x:east-vale-zones'], ['High ceilings, fluid inside–outside', '02'], ['Under construction', '01']],
+  'sabic-hq': [['Brief: turn an outdated HQ into a dynamic, collaborative, brand-led one', '04'], ['Constraint: existing slab protrusion', '01'], ['Decision: make it the feature — the atrium planters', '02'], ['Under construction', '03']],
+  'stc-hq': [['Brief: futuristic, recognisable, minimal', '01'], ['Site: the tower’s huge curves (oxblood = curve zones)', 'x:stc-curves'], ['Decision: curves become destinations', '02'], ['My concept became the team’s base', '05']],
+};
+type Item = { kind: 'div'; n: string; name: string; sub?: boolean } | { kind: 'proj'; slug: string; featured: boolean } | { kind: 'card' };
+const ord = (c: Project['category']) => sectorGroups(projects.filter((p) => p.category === c)).flatMap((g) => g.list).map((p) => ({ kind: 'proj', slug: p.slug, featured: !!think[p.slug] }) as Item);
+const plan: Item[] = [
+  { kind: 'div', n: '01', name: 'Architecture' }, ...ord('architecture'),
+  { kind: 'div', n: '02', name: 'Interiors' }, ...ord('interiors'),
+  { kind: 'div', n: '03', name: 'Delivery: BIM packages' }, { kind: 'card' },
 ];
 
-let page = 4; // cover, about, clients, index come first
-let sheet = 0;
-const sections = await Promise.all(groups.map(async ([n, name, list]) => ({
-  n, name,
-  items: await Promise.all(list.map(async (p, i) => {
-    const imgs = imagesFor(p.slug), dr = drawingsFor(p.slug);
-    return {
-      p, code: projectNo(p.slug), logo: clientLogo(p.slug),
-      cover: await jpg(imgs[0], 2000),
-      rest: await Promise.all(imgs.slice(1, 5).map((x) => jpg(x, 1400))),
-      draw: await Promise.all(dr.map((x) => jpg(x, 1400))),
-      disc: [...disciplinesFor(p)],
-    };
-  })),
-})));
-// page numbers for the index
-for (const s of sections) { (s as any).start = page + 1; page += 1; for (const it of s.items) { (it as any).page = page + 1; page += 1 + (it.rest.length ? 1 : 0) + Math.ceil(it.draw.length / 4); } }
-const total = page + 1;
-const next = () => `A-${String(++sheet).padStart(3, '0')}`;
+// Studies vs plans (drawing numbers). Studies get their own large pages; plans share one scale per project.
+const studyNos: Record<string, number[]> = { 'travco-west-island': [4], 'staff-housing': [1, 2, 3], 'sallan-creek': [1, 2], 'sodic-east-vale': [1], 'sodic-ogami': [1], 'fifth-square': [1], 'neom-oxagon': [1], 'chery-showroom': [1] };
+const trimmed = import.meta.glob<{ default: any }>('../../assets/print/*/d*.jpg', { eager: true });
+const scales = import.meta.glob<string>('../../assets/print/*/d*.scale', { eager: true, query: '?raw', import: 'default' });
+const sheetsFor = (slug: string) => Object.keys(trimmed).filter((k) => k.includes(`/print/${slug}/`)).sort().map((k) => {
+  const no = Number(k.match(/d(\d+)\.jpg$/)![1]); const m = trimmed[k].default; const sc = Number(scales[k.replace('.jpg', '.scale')] ?? 1);
+  return { no, m, w: m.width / sc, h: m.height / sc };
+});
+const AW = 269, AH = 150, GAP = 7, CAP = 7;
+type S = { no: number; m: any; w: number; h: number };
+const fit = (row: S[][]) => {
+  const hs = row.map((r) => Math.max(...r.map((x) => x.h)));
+  const byW = Math.min(...row.map((r) => (AW - GAP * (r.length - 1)) / r.reduce((a, x) => a + x.w, 0)));
+  const byH = (AH - CAP * row.length - GAP * (row.length - 1)) / hs.reduce((a, b) => a + b, 0);
+  return Math.min(byW, byH);
+};
+const arrange = (xs: S[]) => {
+  let best = { rows: [xs], s: fit([xs]) };
+  for (let k = 1; k < xs.length; k++) { const r = [xs.slice(0, k), xs.slice(k)]; const v = fit(r); if (v > best.s) best = { rows: r, s: v }; }
+  return best;
+};
+const pack = (xs: S[], common: boolean) => {
+  const pages: S[][] = []; let cur: S[] = [];
+  for (const x of xs) {
+    const next = [...cur, x];
+    const alone = Math.min(...next.map((y) => arrange([y]).s));
+    if (cur.length && (next.length > 4 || arrange(next).s < 0.5 * alone)) { pages.push(cur); cur = [x]; } else cur = next;
+  }
+  if (cur.length) pages.push(cur);
+  const laid = pages.map((pg) => arrange(pg));
+  const s0 = common ? Math.min(...laid.map((l) => l.s)) : 0;
+  return laid.map((l) => ({ rows: l.rows, s: common ? s0 : l.s }));
+};
+const sheetPages = (xs: S[], common: boolean) => Promise.all(pack(xs, common).map(async (pg) => ({ s: pg.s, rows: await Promise.all(pg.rows.map((r) => Promise.all(r.map(async (x) => ({ ...x, src: await jpg(x.m, 2000) }))))) })));
+
+let seq = 0;
+const codes: Record<string, string> = {};
+for (const it of plan) { if (it.kind === 'div' && !it.sub) seq = 0; if (it.kind === 'proj') codes[it.slug] = String(++seq).padStart(2, '0'); }
+const items = await Promise.all(plan.map(async (it) => {
+  if (it.kind !== 'proj') return it;
+  const p = P(it.slug), imgs = imagesFor(p.slug), dr = drawingsFor(p.slug);
+  const steps = it.featured && think[p.slug] ? await Promise.all(think[p.slug].map(async ([t, f]) => { const m = img(p.slug, f); return { t, d: f.startsWith('d') || f.startsWith('x:'), w: !!m && m.width / m.height > 2, src: await jpg(m, 1200) }; })) : [];
+  return { ...it, p, code: projectNo(p.slug), logo: clientLogo(p.slug), disc: [...disciplinesFor(p)], steps,
+    cover: await jpg(imgs[0], 1800),
+    rest: [] as string[],
+    mosaic: await Promise.all(imgs.slice(1, 4).map((x) => jpg(x, 1000))),
+    studyPages: await sheetPages(sheetsFor(p.slug).filter((x) => (studyNos[p.slug] ?? []).includes(x.no)), false),
+    planPages: await sheetPages(sheetsFor(p.slug).filter((x) => !(studyNos[p.slug] ?? []).includes(x.no)), true) };
+}));
+let total = 4 + 1;
+for (const it of items as any[]) total += it.kind === 'proj' ? 1 + (it.steps.length ? 1 : 0) + (it.rest.length ? 1 : 0) + it.studyPages.length + it.planPages.length : 1;
+let pn = 4; const N = () => String(++pn).padStart(2, '0'); const T = String(total).padStart(2, '0');
+let sheet = 0; const next = () => `A-${String(++sheet).padStart(3, '0')}`;
 
 const coverImg = await jpg(imagesFor('misr-italia-hilltop')[0], 2400);
-const aboutImg = await jpg(imagesFor('sabic-hq')[1], 1400);
-const backImg = await jpg(imagesFor('neom-oxagon')[0], 2400);
+const aboutImg = await jpg(imagesFor('sabic-hq')[1], 1100);
+const backImg = await jpg(imagesFor('misr-italia-hilltop')[0], 1800);
 const clients = ['sodic', 'orascom', 'misr-italia', 'travco', 'neom', 'stc', 'sabic', 'jotun', 'bmw', 'chery', 'hb-fuller', 'al-marasem', 'guira', 'linah'];
 const typed = ['NOATUM', 'Suits Workspaces'];
 const timeline = [
@@ -50,6 +97,9 @@ const timeline = [
   ['2014 — 2019', 'B.Sc. Architectural Engineering', 'Future University in Egypt', 'Graduation project grade A−.'],
 ];
 const year = new Date().getFullYear();
+let pg = 4; const pageOf: Record<string, number> = {};
+for (const it of items as any[]) { pg += 1; if (it.kind === 'proj') { pageOf[it.p.slug] = pg; pg += (it.steps.length ? 1 : 0) + it.studyPages.length + it.planPages.length; } }
+const shown = (items as any[]).filter((i) => i.kind === 'proj').length;
 ---
 <!doctype html>
 <html lang="en">
@@ -184,11 +234,42 @@ const year = new Date().getFullYear();
   .back dl { display: grid; grid-template-columns: repeat(4, auto); justify-content: start; gap: 12mm; margin: 0; }
   .back dt { font-size: 6.5pt; letter-spacing: .22em; text-transform: uppercase; opacity: .7; margin-bottom: 1.5mm; }
   .back dd { margin: 0; font-size: 10.5pt; font-weight: 500; }
+
+  /* Selected Works additions */
+  .think { padding: 13mm 14mm 22mm; display: grid; grid-template-rows: auto 1fr; gap: 8mm; }
+  .think .hd { display: flex; align-items: baseline; gap: 5mm; border-bottom: .5pt solid var(--ox); padding-bottom: 3mm; }
+  .think .hd b { font-size: 20pt; font-weight: 800; font-stretch: 125%; color: var(--ox); letter-spacing: -.02em; }
+  .think .hd h2 { margin: 0; font-size: 15pt; font-stretch: 112%; }
+  .think .hd .lab { margin-left: auto; }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6mm; align-items: start; }
+  .steps > div { display: grid; gap: 3mm; }
+  .steps .n { font-size: 30pt; font-weight: 800; font-stretch: 125%; color: var(--ox); line-height: 1; border-bottom: .5pt solid var(--ink); padding-bottom: 2mm; }
+  .steps p { margin: 0; font-size: 11.5pt; line-height: 1.35; min-height: 25mm; font-weight: 500; }
+  .steps figure, .steps .ph { margin: 0; height: 110mm; background: #E9E1D4; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .steps .ph img { width: 100%; height: 100%; object-fit: cover; }
+  .steps figure img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .card { padding: 22mm 24mm; display: grid; grid-template-columns: 1fr 1.2fr; gap: 16mm; align-content: center; }
+  .card h2 { margin: 3mm 0 0; font-size: 30pt; line-height: 1; font-stretch: 125%; }
+  .card p { font-size: 12pt; line-height: 1.55; margin: 0; }
+  .card .tg { display: inline-block; margin-top: 6mm; padding: 1mm 2.5mm; border: .5pt solid var(--ox); color: var(--ox); font-size: 8pt; letter-spacing: .12em; font-weight: 600; }
+  .sheets { padding: 12mm 14mm 0; }
+  .sh-hd { display: flex; align-items: baseline; gap: 5mm; border-bottom: .5pt solid var(--ox); padding-bottom: 3mm; margin-bottom: 6mm; }
+  .sh-hd b { font-size: 16pt; font-weight: 800; font-stretch: 125%; color: var(--ox); }
+  .sh-hd h2 { margin: 0; font-size: 13pt; font-stretch: 112%; }
+  .sh-hd .lab { margin-left: auto; }
+  .sh-body { height: 158mm; display: flex; flex-direction: column; justify-content: center; gap: 7mm; }
+  .sh-row { display: flex; justify-content: center; align-items: flex-end; gap: 7mm; }
+  .sh-row figure { margin: 0; }
+  .sh-row img { display: block; object-fit: contain; }
+  .sh-row figcaption { display: flex; justify-content: space-between; gap: 4mm; margin-top: 2mm; padding-top: 1.5mm; border-top: .5pt solid var(--ox); font-size: 6.6pt; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+  .sh-row figcaption span:last-child { color: var(--ox); font-weight: 700; }
+  .op .mos { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5mm; background: var(--bone); }
+  .op .mos img { width: 100%; height: 100%; object-fit: cover; min-height: 0; }
+  .op .mos .big { grid-row: 1 / -1; }
+  .op .mos.m1 { grid-template-rows: 1fr; } .op .mos.m2 { grid-template-rows: 1fr 1fr; } .op .mos.m3 { grid-template-rows: 1fr 1fr 1fr; }
 </style>
 </head>
 <body>
-
-<!-- cover -->
 <section class="pg cover dark on-img">
   <img class="bg grade" src={coverImg} alt="" />
   <div class="veil"></div>
@@ -210,101 +291,121 @@ const year = new Date().getFullYear();
   </nav>
 </section>
 
-<!-- about -->
 <section class="pg about">
   <div class="ph"><img class="grade" src={aboutImg} alt="" /></div>
   <div class="tx">
     <div class="lab ox">About</div>
-    <div>
-      <p class="stmt">An idea only counts once it stands on real ground.</p>
-    </div>
+    <div><p class="stmt">An idea only counts once it stands on real ground.</p></div>
     <div style="display:grid;gap:6mm;align-content:start">
       <p class="bio">I design architecture and interiors that begin as an original idea and end as a built place. Concepts that surprise, details that work on site. Since 2019 I have worked freelance and across three studios, project by project: the SABIC and STC headquarters in Riyadh at ZFP, NEOM public buildings and corporate offices for Jotun, HB Fuller and BMW at Cosmos, and coastal and residential developments for SODIC, Orascom, Misr Italia and Travco at Innovation. I lead inside large teams and carry projects myself when needed, from idea to Revit drawing set.</p>
       <div class="tl">{timeline.map(([y, r, o, d]) => <div><span class="y">{y}</span><span><b>{r}</b> · {o}<br /><span class="mut">{d}</span></span></div>)}</div>
     </div>
     <div class="nums">
-      <div><b>{projects.length}</b><span class="lab mut">Selected projects</span></div>
+      <div><b>{shown}</b><span class="lab mut">Selected projects</span></div>
       <div><b>{countries.length}</b><span class="lab mut">Countries</span></div>
       <div><b>{year - 2019}</b><span class="lab mut">Years in practice</span></div>
     </div>
   </div>
-  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">02 / {total}</span></div>
+  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">02 / {T}</span></div>
 </section>
 
-<!-- clients -->
 <section class="pg clients">
   <div class="head"><h2 class="wide">Clients</h2><span class="lab ox">Trusted by · 2019 —</span></div>
   <div class="lg">
     {clients.map((c) => <div><img src={`/clients/${c}.png`} alt={c} /></div>)}
     {typed.map((c) => <div><span>{c}</span></div>)}
   </div>
-  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">03 / {total}</span></div>
+  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">03 / {T}</span></div>
 </section>
 
-<!-- index -->
+
 <section class="pg index">
-  <div class="head"><h2 class="wide">Index</h2><span class="lab ox">{projects.length} projects · 2019 — {year}</span></div>
+  <div class="head"><h2 class="wide">Index</h2><span class="lab ox">{shown} projects · 2019 — {year}</span></div>
   <div class="ix">
-    {sections.map((s) => (
+    {[['01 · Architecture', 'architecture'], ['02 · Interiors', 'interiors']].map(([h, c]) => (
       <div>
-        <h3>{s.n} · {s.name}</h3>
-        <ol>{s.items.map((it, k) => <>{(k === 0 || s.items[k - 1].p.sector !== it.p.sector) && <li class="sh">{it.p.sector}</li>}<li><span class="c">{it.code}</span><a href={`#p${it.code}`}>{it.p.title}</a><span class="m">{it.p.location} · {it.p.year}</span><span class="n">{String((it as any).page).padStart(2, '0')}</span></li></>)}</ol>
+        <h3>{h}</h3>
+        <ol>{(items as any[]).filter((i) => i.kind === 'proj' && i.p.category === c).map((it, k, arr) => <>{(k === 0 || arr[k - 1].p.sector !== it.p.sector) && <li class="sh">{it.p.sector}</li>}<li><span class="c">{it.code}</span><a href={`#p${it.p.slug}`}>{it.p.title}</a><span class="m">{it.p.location} · {it.p.year}</span><span class="n">{String(pageOf[it.p.slug]).padStart(2, '0')}</span></li></>)}</ol>
       </div>
     ))}
   </div>
-  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">04 / {total}</span></div>
+  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">04 / {T}</span></div>
 </section>
 
-{sections.map((s) => (
-  <>
-    <section class="pg dark divider">
-      <span class="big wide">{s.n}</span>
-      <h2 class="wide">{s.name}</h2>
-      <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{String((s as any).start).padStart(2, '0')} / {total}</span></div>
+{(items as any[]).map((it) => {
+  if (it.kind === 'div') return (
+    <section class:list={['pg dark divider', it.sub && 'sub']}>
+      <span class="big wide">{it.n}</span>
+      <h2 class="wide">{it.name}</h2>
+      <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{N()} / {T}</span></div>
     </section>
-    {s.items.map((it) => {
-      const pg0 = (it as any).page;
-      return (
-        <>
-          <section class="pg op" id={`p${it.code}`}>
-            <div class="im"><img class="grade" src={it.cover} alt="" /></div>
-            <div class="side">
-              <span class="pno"><span class="lab ox" style="font-weight:700">{it.p.sector}{it.p.roleTag && <span class="rtag">{it.p.roleTag}</span>}</span><span class="big">{it.code}<small>/{String(projects.filter((x) => x.category === it.p.category).length).padStart(2, '0')}</small></span></span>
-              <h2 class="wide"><a href={`https://ayahassan.com/work/${it.p.slug}/`}>{it.p.title}</a></h2>
-              {it.p.concept && <span class="tag">Concept exploration</span>}
-              {it.p.role && <p class="role">{it.p.role}</p>}
-              {it.p.summary && <p class="sum">{it.p.summary}</p>}
-              <dl class="blk">
-                <div class="w"><dt>Client</dt><dd class="cl">{it.logo && <img src={it.logo} alt="" />}<span>{it.p.client}</span></dd></div>
-                <div><dt>Year</dt><dd>{it.p.year}</dd></div>
-                <div><dt>{it.p.status ? 'Status' : 'Sector'}</dt><dd>{it.p.status ?? it.p.sector}</dd></div>
-                <div class="w"><dt>Location</dt><dd>{place(it.p)}</dd></div>
-                <div class="w"><dt>Practice</dt><dd>{practice(it.p)}</dd></div>
-                {it.p.links && <div class="w"><dt>Links</dt><dd class="lk">{it.p.links.map((l) => <a href={l.url}>{l.label}</a>)}<a href={`https://ayahassan.com/work/${it.p.slug}/`}>ayahassan.com/work/{it.p.slug}</a></dd></div>}
-                <div class="w"><dt>Scope</dt><dd><span class="disc">{it.disc.map((d) => <span>{d}</span>)}</span>{it.p.scopeNote && <span class="mut" style="display:block;margin-top:1.5mm;font-size:7.4pt">{it.p.scopeNote}</span>}</dd></div>
-              </dl>
-            </div>
-            <div class="foot" style="left:auto;width:70mm;right:11mm"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{String(pg0).padStart(2, '0')} / {total}</span></div>
-          </section>
-          {Array.from({ length: Math.ceil(it.draw.length / 4) }, (_, c) => it.draw.slice(c * 4, c * 4 + 4)).map((pg, c) => (
-            <section class="pg dark">
-              <div class:list={['drw', `n${pg.length}`]}>{pg.map((d, j) => { const k = c * 4 + j; return <figure><img src={d} alt="" /><figcaption><span>{it.p.captions?.[k] ?? `Drawing ${String(k + 1).padStart(2, '0')}`}</span><span>{next()}</span></figcaption></figure>; })}</div>
-              <div class="foot"><span class="lab"><span style="color:var(--sand);font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {it.p.title} · Drawings</span><span class="lab mut">{String(pg0 + 1 + c).padStart(2, '0')} / {total}</span></div>
-            </section>
-          ))}
-          {it.rest.length > 0 && (
-            <section class="pg">
-              <div class:list={['gal', `n${it.rest.length}`]}>{it.rest.map((r) => <img class="grade" src={r} alt="" />)}</div>
-              <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {it.p.title}</span><span class="lab mut">{String(pg0 + 1 + Math.ceil(it.draw.length / 4)).padStart(2, '0')} / {total}</span></div>
-            </section>
-          )}
-        </>
-      );
-    })}
-  </>
-))}
+  );
+  if (it.kind === 'card') return (
+    <section class="pg card">
+      <div>
+        <div class="lab ox">Delivery · BIM package</div>
+        <h2 class="wide">NEOM, Misk Schools</h2>
+        <span class="tg">LEAD</span>
+      </div>
+      <div>
+        <p>Led a team of five delivering the complete architectural BIM package (LOD 300) for two schools; consultant coordination with structure, MEP, the client and NEOM standards; code-compliance review. Delivered to deadline.</p>
+        <p class="mut" style="margin-top:6mm;font-size:9pt">Drawings are confidential and not shown.</p>
+      </div>
+      <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{N()} / {T}</span></div>
+    </section>
+  );
+  const p = it.p;
+  return (
+    <>
+      <section class="pg op" id={`p${p.slug}`}>
+        {it.mosaic.length ? <div class:list={['im mos', `m${it.mosaic.length}`]}><img class="grade big" src={it.cover} alt="" />{it.mosaic.map((m: string) => <img class="grade" src={m} alt="" />)}</div> : <div class="im"><img class="grade" src={it.cover} alt="" /></div>}
+        <div class="side">
+          <span class="pno"><span class="lab ox" style="font-weight:700">{p.sector}{p.roleTag && <span class="rtag">{p.roleTag}</span>}</span><span class="big">{it.code}</span></span>
+          <h2 class="wide"><a href={`https://ayahassan.com/work/${p.slug}/`}>{p.title}</a></h2>
+          {p.role && <p class="role">{p.role}</p>}
+          {p.summary && <p class="sum">{p.summary}</p>}
+          <dl class="blk">
+            <div class="w"><dt>Client</dt><dd class="cl">{it.logo && <img src={it.logo} alt="" />}<span>{p.client}</span></dd></div>
+            <div><dt>Year</dt><dd>{p.year}</dd></div>
+            <div><dt>{p.status ? 'Status' : 'Sector'}</dt><dd>{p.status ?? p.sector}</dd></div>
+            <div class="w"><dt>Location</dt><dd>{place(p)}</dd></div>
+            <div class="w"><dt>Practice</dt><dd>{practice(p)}</dd></div>
+            <div class="w"><dt>Scope</dt><dd><span class="disc">{it.disc.map((d: string) => <span>{d}</span>)}</span>{p.scopeNote && <span class="mut" style="display:block;margin-top:1.5mm;font-size:7.4pt">{p.scopeNote}</span>}</dd></div>
+          </dl>
+        </div>
+        <div class="foot" style="left:auto;width:70mm;right:11mm"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{N()} / {T}</span></div>
+      </section>
+      {it.steps.length > 0 && (
+        <section class="pg think">
+          <div class="hd"><b>{it.code}</b><h2 class="wide">{p.title}</h2><span class="lab ox">How it was decided</span></div>
+          <div class="steps" style={`grid-template-columns: ${it.steps.map((s: any) => (s.w ? '2fr' : '1fr')).join(' ')}`}>{it.steps.map((s: any, k: number) => <div><span class="n">{String(k + 1).padStart(2, '0')}</span><p>{s.t}</p>{s.d ? <figure><img src={s.src} alt="" /></figure> : <div class="ph"><img class="grade" src={s.src} alt="" /></div>}</div>)}</div>
+          <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {p.title} · Thinking</span><span class="lab mut">{N()} / {T}</span></div>
+        </section>
+      )}
+      {[['Studies', it.studyPages], ['Plans & drawings', it.planPages]].flatMap(([lbl, pgs]: any) => pgs.map((pg: any) => (
+        <section class="pg sheets">
+          <div class="sh-hd"><b>{it.code}</b><h2 class="wide">{p.title}</h2><span class="lab ox">{lbl}</span></div>
+          <div class="sh-body">{pg.rows.map((r: any[]) => (
+            <div class="sh-row">{r.map((x: any) => (
+              <figure style={`width:${(x.w * pg.s).toFixed(1)}mm`}>
+                <img src={x.src} alt="" style={`width:${(x.w * pg.s).toFixed(1)}mm;height:${(x.h * pg.s).toFixed(1)}mm`} />
+                <figcaption><span>{p.captions?.[x.no - 1] ?? `Drawing ${String(x.no).padStart(2, '0')}`}</span><span>{next()}</span></figcaption>
+              </figure>
+            ))}</div>
+          ))}</div>
+          <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {p.title} · {lbl}</span><span class="lab mut">{N()} / {T}</span></div>
+        </section>
+      )))}
+      {it.rest.length > 0 && (
+        <section class="pg">
+          <div class:list={['gal', `n${it.rest.length}`]}>{it.rest.map((r: string) => <img class="grade" src={r} alt="" />)}</div>
+          <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {p.title}</span><span class="lab mut">{N()} / {T}</span></div>
+        </section>
+      )}
+    </>
+  );
+})}
 
-<!-- back -->
 <section class="pg back dark on-img">
   <img class="bg grade" src={backImg} alt="" />
   <div class="veil"></div>
@@ -317,7 +418,7 @@ const year = new Date().getFullYear();
       <div><dt>Instagram</dt><dd><a href={contact.instagram}>@ayahassanmr</a></dd></div>
     </dl>
   </div>
-  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{total} / {total}</span></div>
+  <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{T} / {T}</span></div>
 </section>
 </body>
 </html>

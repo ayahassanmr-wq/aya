@@ -8,7 +8,7 @@ Instructions for anyone (human or AI) editing this website. Follow these rules f
 
 Brand idea: Built as designed. Motto: *Bold on paper. Solid on ground.* · جريئة على الورق، راسخة على الأرض. Short line: *Designed to be built.* · صُمّم ليُبنى.
 
-Retired (never use): "One Hand", "From concept to conviction", "concept-stage". Closing CTA: Every good project starts with a conversation. Send me yours. I reply within 24 hours. Full rules: the Brand Strategy doc (handover §2 wins until this file is fully rewritten).
+Retired (never use): "One Hand", "From concept to conviction", "concept-stage". Closing CTA: Every good project starts with a conversation. Send me yours. (No reply-time promise — removed 11 Nov.) Full rules: the Brand Strategy doc (handover §2 wins until this file is fully rewritten).
 
 Proof points to draw from: NEOM, SABIC HQ, STC HQ, SODIC, Orascom, Misr Italia, BMW · 24 selected projects · 5 countries across all work (Egypt, Saudi Arabia, Oman, India, Iraq) · 3 studios · since 2019 (freelance), 7 years · Revit to IFC.
 

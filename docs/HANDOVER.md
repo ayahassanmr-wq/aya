@@ -318,7 +318,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - Project Scope strip shows only the disciplines actually done (no greyed-out ones).
 
 ### ❓ NEEDS DECISION (Aya)
-00. **24-hour reply promise** is now in the CTA site-wide — confirm it's realistic alongside the full-time job.
+00. ✅ 24-hour promise removed everywhere (11 Nov).
 00b. **Approval stamp:** bring back as a small signature in PDFs/footer to support the brand? (Currently removed.)
 00c. **Built projects list:** which projects are built / under construction (for accurate "built" claims in case studies)?
 0. **Missing logos:** NOATUM and Suits Workspaces (send files). STC/SABIC/NEOM logos are shown — Aya supplied them, treated as approved.
@@ -426,6 +426,8 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-11 | Countries stat = all work on the CV, not just site projects: Egypt, Saudi Arabia, Oman, India, Iraq (Um Qasr) = 5; fixed list in `countries` (projects.ts) | Aya request |
 | 2026-11-11 | Plans and studies come before renders everywhere (project pages, portfolio, Selected Works); every drawing shown in both PDFs (4 per page, no cap); Mazeej keeps only render 01 | Aya: managers care most about plans and studies |
 | 2026-11-11 | Selected Works: studies on their own large pages; plans trimmed and laid out at one scale per project; renders as a mosaic on each opener (no separate renders pages); no Masterplans divider; STC step 03 = curved-window render; '24 hours' removed from PDF back covers | Aya feedback |
+| 2026-11-11 | No reply-time promise anywhere: '24 hours' removed from site CTA, Contact, CV page, Services (resolves ❓00) | Aya |
+| 2026-11-11 | Full portfolio uses the Selected Works layout (studies pages, shared-scale plans, render mosaics, thinking spreads for the 6 featured) + index + timeline | Aya |
 | 2026-11-05 | Identity kit = Design System (for tools) + Brand Book deck (for people); dark-theme oxblood lifted to #D9768A for contrast; square corners except buttons | Aya: “give me everything for my identity” — chose both |
 | 2026-11-05 | CV rewritten to the new brand; set in Archivo with hairline title-block layout; phone shown; some marketing words allowed sparingly | Aya approved preview |
 
@@ -519,6 +521,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-11 | Claude Code | 24-hour promise removed from site. Full portfolio regenerated on the new layout (`portfolio.astro` now mirrors `selected.astro`): 64 pp, 28 MB, index with page numbers. Not live. |
 | 2026-11-11 | Claude Code | Selected Works rebuilt: 55 pp, 9.9 MB. New `scripts/trim-drawings.py` → `src/assets/print/<slug>/dNN.jpg` (+ .scale) — rerun after adding drawings. Study list per project = `studyNos` in selected.astro. Back-cover CTA without 24 h in both PDFs. |
 | 2026-11-11 | Claude Code | Drawings before renders on site + both PDFs; all drawings shown (Mazeej 8, Chery 6, NOATUM 7, Staff Housing 5); supporting projects in Selected Works now get drawings pages; Mazeej renders 02–05 deleted. Portfolio 70 pp / 27 MB; Selected Works 57 pp / 9.9 MB (lighter JPEGs for that file only). Not live. |
 | 2026-11-11 | Claude Code | Selected Works: diagram overlays drawn for East Vale (public sand / private oxblood on the GF plan, from its room labels) and STC (curve zones on the published plan); wide drawings span two columns; 48 pp, 9.5 MB. Travco wind/view arrows wait on Aya (north + lagoon direction). |
