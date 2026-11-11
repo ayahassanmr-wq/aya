@@ -7,14 +7,30 @@
 
 ---
 
-## ▶ RESUME HERE — state at 5 Nov 2026, 15:10 (for a new Claude account / new session)
+## ▶ RESUME HERE — state at 11 Nov 2026, 19:45 (new session starts here)
 
-**5 Nov brand strategy session (chat, no code):** brand idea **"Built as designed"** (first "Approved", evolved same day) replaces "One Hand"; new positioning, audiences, personality, voice, convictions and messaging. Full detail in the Claude Doc **"Aya Hassan — Brand Strategy"** (claude.ai artifact 5ZuYxwFrEbuDuPnyStw8RS). Identity kit (5 Nov): **"Aya Hassan — Design System"** (tokens, type, voice, wordmark, imagery rules — artifact FNYH5xwMfQMJjhQ3LZF6Wv; tools and Claude Code read this) and **"Aya Hassan — Brand Book"** (16-slide deck, exports to PDF/PPTX — artifact NzbYTbnJhv6Fr2mVm8y5FP; for people). Until BRAND_VOICE.md is rewritten, the Brand Strategy doc wins on copy. Site copy is NOT yet changed — see §7 TO DO 00.
+**Repo:** GitHub `ayahassanmr-wq/aya` (Astro 7). **Live:** ayahassan.com = Vercel project `aya-hassan` (team `aya-d9cd`), builds from `main`.
+**Branches:** `main` = live at **07659d5** (8 Nov). `rebrand-on-update` = everything since (10 Nov brief Parts 1–3, 24-project cleanup, all PDF work below) — **NOT live**. Push live only when Aya says so: check fast-forward, `git push origin rebrand-on-update:main`, confirm Vercel production READY. On push live also **add a Selected Works download link** on the site (/cv/ + About + Contact; CV PDF already links to `ayahassan.com/Aya_Hassan_Selected_Works.pdf`).
+**Rules:** `CLAUDE.md` + `BRAND_VOICE.md` + this file. Brand = "Built as designed", motto "Bold on paper. Solid on ground." First person. Mid-senior everywhere. No 24-hour promise, nothing eager ("open to", hire buttons). STC in capitals. Never invent facts. No real-tower STC/SABIC photos. Misk Schools drawings confidential (text card). Phone only on CV.
+**How Aya works:** one round of changes → rebuild → previews (screenshots) + PDFs → she replies. Keep replies short.
 
-**Repo:** GitHub `ayahassanmr-wq/aya` (Astro 7). **Live site:** ayahassan.com = Vercel project `aya-hassan` (team "aya-d9cd"), builds from `main`.
-**Branches:** `main` = live (8 Nov 13:51 = 07659d5: Built-as-designed copy, calmer homepage, no About timeline, footer 'Get in touch'). `rebrand-on-update` = preview/work branch, same as main right now. Never push to `main` without Aya's OK; she reviews screenshots/preview first.
-**Rules:** read `CLAUDE.md` + `BRAND_VOICE.md` (copy rules, FIRST PERSON everywhere, EN + AR in sync) + this file.
-**How Aya works:** one change at a time → build → screenshots (EN + AR) → she says "next" / "push live". Keep replies short (usage limits).
+**Current deliverables (branch, `public/`):** `Aya_Hassan_Selected_Works.pdf` (97 pp, ~14 MB), `Aya_Hassan_Portfolio.pdf` (~46 MB), `Aya_Hassan_CV.pdf` (2 pp).
+
+**PDF layout (all in `src/components/PrintBook.astro`, prop `full`):**
+- Front: cover (Travco beach chalet render under heavy dark overlay; AYA | HASSAN; "{Selected Works|Portfolio} · month year"; big "Architect · Interior designer"; tagline; email · web · LinkedIn — no Instagram) → About (bio + employment list + 3 numbers) → Clients (logos) → Index (both PDFs; chosen order, sector per line) → Contents → section dividers.
+- Sections: 01 Architecture, 02 Interiors, 03 BIM delivery (`bimSlugs` = NOATUM, Linah, Chery, Dry Port). Numbers restart 01→ in each section, in page order (no longer the site's projectNo).
+- Selected Works architecture order (`selArch`): Travco, East Vale, Ogami, Staff Housing, DHIFAF, Misr Italia, O West, Fifth Square, Mazeej, Oxagon. Full Portfolio = same order, then the other architecture projects.
+- Per project: **opener** (full-bleed cover render, strong faded overlay; big number + title bottom-left; right column: section · sector · role tag, Client = logo only, Location/Year/Status/Practice, Brief role line + summary + numbered points (`think` map), Scope) → each **study** full page (`studyNos`) → **plans** (`pack`: ONE scale per project, shelf-packed; `stackDef` Mazeej before-above-redesign pairs; `rowDef` Staff Housing d04+d05 side by side; `corr` fixes drawings exported at another scale — Chery d06 ×0.33) → remaining **renders** uncropped in justified rows (`jr`).
+- Multi-building projects (`partsDef`): Travco = Chalet (renders 01–03, plans d01 GF, d02 upper) + Townhome (renders 04–06, plan d03), each with its own full render page, render rows and plans.
+- Image quality: Selected Works widths bleed 1400 / half 950 / sheet 1400, JPEG q55 in `grade-print.py`; full Portfolio larger. Raise only if Aya accepts a bigger file.
+
+**Open / waiting on Aya:**
+- Push live (and Selected Works download link).
+- Study boards: text inside them can't be retyped in Archivo without text-free exports (her source files). A recolour to house palette was tried and **reverted** at her request — keep originals.
+- STC + Tech Park renders were re-exposed in place (originals backed up only in the old session's /tmp — gone). If she dislikes them, re-export from G:.
+- Missing logos: NOATUM, Suits Workspaces (names show instead).
+- Site Travco page has 6 renders (rule says max 5) — ask which to drop.
+- Arabic copy/role lines need a native check. BIM sheets reminder 16 Nov. Design System preview branch `preview-design-system` undecided.
 
 ### Tools/scripts in the repo
 - PDFs: `npx astro build && python3 scripts/grade-print.py && (npx astro preview --port 4321 &) && node scripts/make-pdfs.mjs` → writes `public/Aya_Hassan_CV.pdf` + `public/Aya_Hassan_Portfolio.pdf` (from hidden pages `/print/cv/`, `/print/portfolio/`). Needs Chrome (`/usr/bin/google-chrome` or env CHROME) and `puppeteer-core` (devDependency).
@@ -197,7 +213,7 @@ No gold anywhere.
 - **About:** timeline (section 1), bio, tools.
 - Client names: allowed on project pages (Client row + links) and in the homepage client wall.
 
-### 4.3b PDFs (✅ 3 Nov)
+### 4.3b PDFs (✅ 3 Nov; superseded 11 Nov — see RESUME HERE for the current layout)
 - **Portfolio** `public/Aya_Hassan_Portfolio.pdf` — A4 landscape, ~71 pages, ~28 MB: cover (title block), about + timeline + numbers, client logos, index with page numbers, Architecture / Interiors dividers, per project: opener (cover + title block), renders page, drawings page; contact back cover.
 - **CV** `public/Aya_Hassan_CV.pdf` — A4 portrait, 2 pages. ✅ 5 Nov: new copy + Archivo layout approved (preview `cv-reference.html`); brief `CLAUDE_CODE_BRIEF_CV.md` to rebuild `/print/cv/`. Phone/WhatsApp IS shown on the CV (overrides rule below).
 - Both are generated from hidden pages `/print/portfolio/` and `/print/cv/` (noindex) using the site data, so they update with the site. Rebuild: `npx astro build && python3 scripts/grade-print.py && (npx astro preview --port 4321 &) && node scripts/make-pdfs.mjs`, then commit the PDFs.
@@ -341,7 +357,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - **Linah Farms re-render / upscale.**
 
 ### 🔧 TO DO (next actions, in order)
-000. 🟡 (11 Nov, Parts 1–3 + full-portfolio fixes done on `rebrand-on-update`, awaiting push live; Part 4 Selected Works next) **Claude Code: apply `CLAUDE_CODE_BRIEF_NOV10.md`** (brand copy EN+AR, role/tag/status fields, CV rebuild per `cv-reference.html`, portfolio fixes, new Selected Works PDF). Supersedes 00, 02, 0c and 6a below.
+000. 🟡 (11 Nov: Parts 1–4 done on `rebrand-on-update` incl. Selected Works; awaiting Aya's 'push live') **Claude Code: apply `CLAUDE_CODE_BRIEF_NOV10.md`** (brand copy EN+AR, role/tag/status fields, CV rebuild per `cv-reference.html`, portfolio fixes, new Selected Works PDF). Supersedes 00, 02, 0c and 6a below.
 00. **Apply the "Built as designed" brand to the site (Claude Code, EN + AR):** motto, hero line → positioning line, About bio → final About / 100-word bio, Services "Studio support" → "Concept and design support for studios", closing CTA → new CTA, Arabic bio year 2020 → 2019, hero info row "Practice: 2019 —". Source: Brand Strategy doc §6–7.
 01. **Rewrite BRAND_VOICE.md** from the Brand Strategy doc (strategy chat), then copy into the repo.
 02. **CV:** Claude Code applies `CLAUDE_CODE_BRIEF_CV.md` (copy + Archivo, approved 5 Nov) → regenerate PDF. **Portfolio:** update cover motto/About after site copy.
@@ -422,6 +438,13 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-06 | Homepage: no availability line, no 'Start a project' / 'Hiring?' buttons, no 'Ways to work with me' (Services only) | Aya: don't look eager for work |
 | 2026-11-07 | About: no Experience & education section, no Education in header; homepage cards unnumbered; footer button 'Get in touch'; footer line 'Architect & Interior Designer · Cairo'; no 'open to / available' lines anywhere | Aya: confident, not desperate |
 | 2026-11-11 | Title Mid-senior everywhere (site, portfolio, CV) — reverses 8 Nov 'Senior on site' | Aya, answering the 10 Nov brief |
+| 2026-11-11 | Project opener = one page: full-bleed cover under strong overlay; number + title left, all info right; client shown by logo only | Aya |
+| 2026-11-11 | Drawings: one scale per project; plans combined where they fit; Chery 3 elevations one sheet; Mazeej before above redesign; Staff Housing plans side by side | Aya |
+| 2026-11-11 | 03 BIM delivery = NOATUM, Linah, Chery, Dry Port, numbered 01–04 on its own; Misk Schools text card follows | Aya |
+| 2026-11-11 | Travco = Chalet + Townhome (Aya designed both); CV + role line updated; client 'Travco Properties' | Aya |
+| 2026-11-11 | Renders in PDFs never cropped (justified rows); BMW led by the hanging-unit render (site cover too) | Aya |
+| 2026-11-11 | Study boards keep original colours (house-palette recolour rejected) | Aya |
+| 2026-11-11 | No Instagram in PDFs; employment list back on About; index in both PDFs; Selected Works may be ~14 MB for sharper images | Aya |
 | 2026-11-11 | Mazeej: all 5 renders cropped to remove 'DRAFT'; Vanilla centre watermark kept as credit; role line names Vanilla Studio | All five carried DRAFT, not one |
 | 2026-11-11 | Removed Juba Resort, Minimal Villa, Arches Restaurant, Zayed Residence (site, portfolio, images, Juba film) → 24 projects | Aya request |
 | 2026-11-11 | Countries stat = all work on the CV, not just site projects: Egypt, Saudi Arabia, Oman, India, Iraq (Um Qasr) = 5; fixed list in `countries` (projects.ts) | Aya request |
@@ -525,6 +548,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-11 | Claude Code | PDF round 3 (evening): Travco chalet/townhome split; opener page (cover + brief, overlay, info right, logo-only client); one drawing scale per project; Chery + Dry Port to BIM, BIM numbered separately; Mazeej/Staff Housing plan pairing; BMW hanging unit first; STC + Tech Park re-exposed (site too); new Selected Works order + index; uncropped render rows; sharper images (Selected Works ~14 MB); About employment list; no Instagram; CV Travco/links updated. All on `rebrand-on-update`, not live. |
 | 2026-11-11 | Claude Code | PDF revamp round 2 (see decision). Selected Works 108 pp 8.7 MB; Portfolio 113 pp 39 MB. Open: Travco chalet vs townhome split (needs Aya); study-board text can't be re-typeset without source files. Not live. |
 | 2026-11-11 | Claude Code | PDFs rebuilt on shared PrintBook layout: Selected Works 107 pp ≈10.6 MB, Portfolio 129 pp 43 MB. Travco Properties logo. Ogami plan flagged (source lacks detail). Not live. |
 | 2026-11-11 | Claude Code | 24-hour promise removed from site. Full portfolio regenerated on the new layout (`portfolio.astro` now mirrors `selected.astro`): 64 pp, 28 MB, index with page numbers. Not live. |
@@ -554,16 +578,3 @@ End of every session: produce the updated sections of the handover (Status board
 | 2026-11-03 | Claude (chat) | Curated every project to its best 4 renders (15 projects trimmed); drawings unchanged. |
 | 2026-11-02 | Claude (chat) | Synced site to folder: + Minimal Villa, − Classic House, Juba → 14 renders (2021 set), East Vale + 3 plans, Ogami + ground plan. Video web versions done in `_Videos\Web` (Jotun 71 MB, Juba 74 MB, Render 01 132 MB, Sphinx 4K ~470–480 MB each). |
 | 2026-11-02 | Claude (chat) | Brand concepts → One Hand chosen; site rebranded on `rebrand-on-update` (Archivo, title-block hero, intro, nav logo, house grade, drawing sheets, 3-discipline work page, client/year everywhere, removed 4 projects, Arches→KSA, Fifth Square note, timeline fix, East Vale +1 image). Video inventory done; `_Videos` folder created (empty). Handover v3 written. |
-
-- 11 Nov — Portfolio PDFs: Travco split into Chalet (renders 01–03, plans d01–d02) and Townhome (renders 04–06, plan d03). Plan assignment awaiting Aya confirmation. Branch only.
-- 11 Nov — PDFs: cover+brief merged into one opener page (veiled cover image); one drawing scale per project (Chery front elevation corrected ×0.33); Chery 3 elevations on one sheet; Chery + Dry Port moved to BIM; Travco chalet upper plan re-cropped. Branch only.
-- 11 Nov — PDFs: all study boards recoloured to the house palette (ink on bone, accents oxblood). Board text unchanged; text-free exports from Aya would allow Archivo labels.
-- 11 Nov — PDFs: project opener is now a full-bleed cover image under a strong faded overlay, with title bottom-left and brief overlaid on the right.
-- 11 Nov — PDFs: BIM projects numbered on their own (01–04); study recolour reverted; BMW cover = hanging-unit render (site too); Mazeej plans paired before-above-redesign; Selected Works: DHIFAF after O West.
-- 11 Nov — STC + Tech Park renders re-exposed (highlights pulled down; Tech Park desaturated, warmer) — site + PDFs. Staff Housing plans on one sheet. Opener: client line + scope larger.
-- 11 Nov — Selected Works order: Travco, East Vale, Ogami, Staff Housing, DHIFAF, Misr Italia, O West, Fifth Square, Mazeej, Oxagon.
-- 11 Nov — Selected Works now has the project index page (after Clients).
-- 11 Nov — Index lists projects in the chosen order (sector shown per line); full Portfolio uses the same architecture order and numbers 01→ per section.
-- 11 Nov — All project covers: number + title left, all info right; client shown as logo only (labelled Client). Book cover: Travco beach chalet under heavy overlay, larger "Architect · Interior designer".
-- 11 Nov — CV: Travco = chalet + townhome; client "Travco Properties"; portfolio bar links the Selected Works PDF (+ case studies online). Site/PDF Travco role line updated (EN+AR).
-- 11 Nov — PDFs: Instagram removed; About page gets employment list; client logos larger; render pages now uncropped (justified rows, full aspect); image resolution/quality raised (Selected Works now ~14 MB, was 9).
