@@ -76,33 +76,6 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
       </div>
     </section>
 
-    <!-- 04 visuals -->
-    {rest.length > 0 && (
-      <section class="wrap gal">
-        <div class="sheet-head"><h2 class="label">{t('Visuals', 'الصور')}</h2></div>
-        {hero && <button type="button" class="cover lb" data-lb={0} data-cursor={t('Open', 'افتح')} aria-label={t('Open cover image', 'افتح صورة الغلاف')}><Image src={hero} alt={`${p.title}, ${t('cover view', 'المنظور الرئيسي')}`} widths={[900, 1600, 2400]} sizes="100vw" /></button>}
-        {studies.length > 0 && (
-          <div class="studies dgrid">
-            {studies.map(({ d, k }) => (
-              <figure class:list={['reveal', { wide: d.width / d.height > 1.45 || p.fullSheets?.includes(k + 1), full: p.fullSheets?.includes(k + 1) }]}>
-                <button type="button" class="paper lb" data-lb={rest.length + 1 + k} data-cursor={t('Open', 'افتح')} aria-label={`${t('Open drawing', 'افتح الرسم')} ${k + 1}`}><Image src={d} alt={`${p.title}, ${p.captions?.[k] ?? ''}`} widths={[900, 1600, 2400]} sizes="100vw" /></button>
-                {p.captions?.[k] && <figcaption class="label muted">{p.captions[k]}</figcaption>}
-              </figure>
-            ))}
-          </div>
-        )}
-        <div class="grid">
-          {rest.map((img, k) => (
-            <figure class:list={[layout(k, rest.length)]}>
-              <button type="button" class="para zoom lb wipe" data-lb={k + 1} data-cursor={t('Open', 'افتح')} aria-label={`${t('Open image', 'افتح الصورة')} ${k + 2}`}>
-                <Image src={img} alt={`${p.title}, ${t('view', 'منظور')} ${k + 2}`} widths={[700, 1200, 1800]} sizes={layout(k, rest.length) === 'full' ? '100vw' : '(min-width: 760px) 50vw, 100vw'} data-parallax="0.07" data-scale="1.1" />
-              </button>
-            </figure>
-          ))}
-        </div>
-      </section>
-    )}
-
     <!-- 05 drawings -->
     {drawings.length > 0 && (
       <section class="dark draw sheet" data-sp>
@@ -126,6 +99,33 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
               </figure>
             ); })}
           </div>
+        </div>
+      </section>
+    )}
+
+    <!-- 04 visuals -->
+    {rest.length > 0 && (
+      <section class="wrap gal">
+        <div class="sheet-head"><h2 class="label">{t('Visuals', 'الصور')}</h2></div>
+        {hero && <button type="button" class="cover lb" data-lb={0} data-cursor={t('Open', 'افتح')} aria-label={t('Open cover image', 'افتح صورة الغلاف')}><Image src={hero} alt={`${p.title}, ${t('cover view', 'المنظور الرئيسي')}`} widths={[900, 1600, 2400]} sizes="100vw" /></button>}
+        {studies.length > 0 && (
+          <div class="studies dgrid">
+            {studies.map(({ d, k }) => (
+              <figure class:list={['reveal', { wide: d.width / d.height > 1.45 || p.fullSheets?.includes(k + 1), full: p.fullSheets?.includes(k + 1) }]}>
+                <button type="button" class="paper lb" data-lb={rest.length + 1 + k} data-cursor={t('Open', 'افتح')} aria-label={`${t('Open drawing', 'افتح الرسم')} ${k + 1}`}><Image src={d} alt={`${p.title}, ${p.captions?.[k] ?? ''}`} widths={[900, 1600, 2400]} sizes="100vw" /></button>
+                {p.captions?.[k] && <figcaption class="label muted">{p.captions[k]}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        )}
+        <div class="grid">
+          {rest.map((img, k) => (
+            <figure class:list={[layout(k, rest.length)]}>
+              <button type="button" class="para zoom lb wipe" data-lb={k + 1} data-cursor={t('Open', 'افتح')} aria-label={`${t('Open image', 'افتح الصورة')} ${k + 2}`}>
+                <Image src={img} alt={`${p.title}, ${t('view', 'منظور')} ${k + 2}`} widths={[700, 1200, 1800]} sizes={layout(k, rest.length) === 'full' ? '100vw' : '(min-width: 760px) 50vw, 100vw'} data-parallax="0.07" data-scale="1.1" />
+              </button>
+            </figure>
+          ))}
         </div>
       </section>
     )}

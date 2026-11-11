@@ -26,13 +26,13 @@ const sections = await Promise.all(groups.map(async ([n, name, list]) => ({
       p, code: projectNo(p.slug), logo: clientLogo(p.slug),
       cover: await jpg(imgs[0], 2000),
       rest: await Promise.all(imgs.slice(1, 5).map((x) => jpg(x, 1400))),
-      draw: await Promise.all(dr.slice(0, 4).map((x) => jpg(x, 1400))),
+      draw: await Promise.all(dr.map((x) => jpg(x, 1400))),
       disc: [...disciplinesFor(p)],
     };
   })),
 })));
 // page numbers for the index
-for (const s of sections) { (s as any).start = page + 1; page += 1; for (const it of s.items) { (it as any).page = page + 1; page += 1 + (it.rest.length ? 1 : 0) + (it.draw.length ? 1 : 0); } }
+for (const s of sections) { (s as any).start = page + 1; page += 1; for (const it of s.items) { (it as any).page = page + 1; page += 1 + (it.rest.length ? 1 : 0) + Math.ceil(it.draw.length / 4); } }
 const total = page + 1;
 const next = () => `A-${String(++sheet).padStart(3, '0')}`;
 
@@ -286,16 +286,16 @@ const year = new Date().getFullYear();
             </div>
             <div class="foot" style="left:auto;width:70mm;right:11mm"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{String(pg0).padStart(2, '0')} / {total}</span></div>
           </section>
+          {Array.from({ length: Math.ceil(it.draw.length / 4) }, (_, c) => it.draw.slice(c * 4, c * 4 + 4)).map((pg, c) => (
+            <section class="pg dark">
+              <div class:list={['drw', `n${pg.length}`]}>{pg.map((d, j) => { const k = c * 4 + j; return <figure><img src={d} alt="" /><figcaption><span>{it.p.captions?.[k] ?? `Drawing ${String(k + 1).padStart(2, '0')}`}</span><span>{next()}</span></figcaption></figure>; })}</div>
+              <div class="foot"><span class="lab"><span style="color:var(--sand);font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {it.p.title} · Drawings</span><span class="lab mut">{String(pg0 + 1 + c).padStart(2, '0')} / {total}</span></div>
+            </section>
+          ))}
           {it.rest.length > 0 && (
             <section class="pg">
               <div class:list={['gal', `n${it.rest.length}`]}>{it.rest.map((r) => <img class="grade" src={r} alt="" />)}</div>
-              <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {it.p.title}</span><span class="lab mut">{String(pg0 + 1).padStart(2, '0')} / {total}</span></div>
-            </section>
-          )}
-          {it.draw.length > 0 && (
-            <section class="pg dark">
-              <div class:list={['drw', `n${it.draw.length}`]}>{it.draw.map((d, k) => <figure><img src={d} alt="" /><figcaption><span>{it.p.captions?.[k] ?? `Drawing ${String(k + 1).padStart(2, '0')}`}</span><span>{next()}</span></figcaption></figure>)}</div>
-              <div class="foot"><span class="lab"><span style="color:var(--sand);font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {it.p.title} · Drawings</span><span class="lab mut">{String(pg0 + 1 + (it.rest.length ? 1 : 0)).padStart(2, '0')} / {total}</span></div>
+              <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {it.p.title}</span><span class="lab mut">{String(pg0 + 1 + Math.ceil(it.draw.length / 4)).padStart(2, '0')} / {total}</span></div>
             </section>
           )}
         </>

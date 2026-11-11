@@ -42,12 +42,12 @@ const items = await Promise.all(plan.map(async (it) => {
   const p = P(it.slug), imgs = imagesFor(p.slug), dr = drawingsFor(p.slug);
   const steps = it.featured && think[p.slug] ? await Promise.all(think[p.slug].map(async ([t, f]) => { const m = img(p.slug, f); return { t, d: f.startsWith('d') || f.startsWith('x:'), w: !!m && m.width / m.height > 2, src: await jpg(m, 1100) }; })) : [];
   return { ...it, p, code: codes[p.slug], logo: clientLogo(p.slug), disc: [...disciplinesFor(p)], steps,
-    cover: await jpg(imgs[0], 1500),
+    cover: await jpg(imgs[0], 1300),
     rest: it.featured ? await Promise.all(imgs.slice(1, 4).map((x) => jpg(x, 1100))) : [],
-    draw: it.featured ? await Promise.all(dr.slice(0, 4).map((x) => jpg(x, 1100))) : [] };
+    draw: await Promise.all(dr.map((x) => jpg(x, 1000))) };
 }));
 let total = 3 + 1;
-for (const it of items as any[]) total += it.kind === 'proj' ? 1 + (it.steps.length ? 1 : 0) + (it.rest.length ? 1 : 0) + (it.draw.length ? 1 : 0) : 1;
+for (const it of items as any[]) total += it.kind === 'proj' ? 1 + (it.steps.length ? 1 : 0) + (it.rest.length ? 1 : 0) + Math.ceil(it.draw.length / 4) : 1;
 let pn = 3; const N = () => String(++pn).padStart(2, '0'); const T = String(total).padStart(2, '0');
 let sheet = 0; const next = () => `A-${String(++sheet).padStart(3, '0')}`;
 
@@ -311,16 +311,16 @@ const shown = (items as any[]).filter((i) => i.kind === 'proj').length;
           <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {p.title} · Thinking</span><span class="lab mut">{N()} / {T}</span></div>
         </section>
       )}
+      {Array.from({ length: Math.ceil(it.draw.length / 4) }, (_, c) => it.draw.slice(c * 4, c * 4 + 4)).map((pg: string[], c: number) => (
+        <section class="pg dark">
+          <div class:list={['drw', `n${pg.length}`]}>{pg.map((d: string, j: number) => { const k = c * 4 + j; return <figure><img src={d} alt="" /><figcaption><span>{p.captions?.[k] ?? `Drawing ${String(k + 1).padStart(2, '0')}`}</span><span>{next()}</span></figcaption></figure>; })}</div>
+          <div class="foot"><span class="lab"><span style="color:var(--sand);font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {p.title} · Drawings</span><span class="lab mut">{N()} / {T}</span></div>
+        </section>
+      ))}
       {it.rest.length > 0 && (
         <section class="pg">
           <div class:list={['gal', `n${it.rest.length}`]}>{it.rest.map((r: string) => <img class="grade" src={r} alt="" />)}</div>
           <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {p.title}</span><span class="lab mut">{N()} / {T}</span></div>
-        </section>
-      )}
-      {it.draw.length > 0 && (
-        <section class="pg dark">
-          <div class:list={['drw', `n${it.draw.length}`]}>{it.draw.map((d: string, k: number) => <figure><img src={d} alt="" /><figcaption><span>{p.captions?.[k] ?? `Drawing ${String(k + 1).padStart(2, '0')}`}</span><span>{next()}</span></figcaption></figure>)}</div>
-          <div class="foot"><span class="lab"><span style="color:var(--sand);font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {p.title} · Drawings</span><span class="lab mut">{N()} / {T}</span></div>
         </section>
       )}
     </>

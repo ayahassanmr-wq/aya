@@ -14,5 +14,8 @@ M = SAT @ S
 for u in used - draw:
     p = 'dist' + u; a = np.asarray(Image.open(p).convert('RGB'), float) / 255
     a = ((a @ M.T) - .5) * 1.05 + .5; a *= 1.01
-    Image.fromarray((a.clip(0, 1) * 255).astype(np.uint8)).save(p, quality=(64 if u in sel else 76), optimize=True, progressive=True)
+    Image.fromarray((a.clip(0, 1) * 255).astype(np.uint8)).save(p, quality=(56 if u in sel else 76), optimize=True, progressive=True)
 print('graded', len(used - draw))
+# Selected Works must stay under 10 MB: re-save its drawings lighter too (no grade on drawings).
+for u in sel & draw:
+    p = 'dist' + u; Image.open(p).convert('RGB').save(p, quality=60, optimize=True, progressive=True)
