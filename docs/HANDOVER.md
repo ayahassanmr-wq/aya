@@ -556,3 +556,4 @@ End of every session: produce the updated sections of the handover (Status board
 | 2026-11-02 | Claude (chat) | Brand concepts → One Hand chosen; site rebranded on `rebrand-on-update` (Archivo, title-block hero, intro, nav logo, house grade, drawing sheets, 3-discipline work page, client/year everywhere, removed 4 projects, Arches→KSA, Fifth Square note, timeline fix, East Vale +1 image). Video inventory done; `_Videos` folder created (empty). Handover v3 written. |
 
 - 11 Nov — Portfolio PDFs: Travco split into Chalet (renders 01–03, plans d01–d02) and Townhome (renders 04–06, plan d03). Plan assignment awaiting Aya confirmation. Branch only.
+- 11 Nov — PDFs: cover+brief merged into one opener page (veiled cover image); one drawing scale per project (Chery front elevation corrected ×0.33); Chery 3 elevations on one sheet; Chery + Dry Port moved to BIM; Travco chalet upper plan re-cropped. Branch only.
