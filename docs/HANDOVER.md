@@ -431,6 +431,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-11 | Full portfolio uses the Selected Works layout (studies pages, shared-scale plans, render mosaics, thinking spreads for the 6 featured) + index + timeline | Aya |
 | 2026-11-11 | PDFs redesigned (one shared layout, `src/components/PrintBook.astro`): minimal cover (wordmark, tagline, date, contact); calmer About (no timeline); Contents page; per project: cover (full-bleed render + title-block overlay) → full-screen render → how it was decided (2×2, featured only) → each study full page → each plan full page → remaining renders grid | Aya feedback |
 | 2026-11-11 | Travco client logo = new Travco Properties wordmark; client name 'Travco Properties' | Aya supplied logo |
+| 2026-11-11 | PDFs: no 'How it was decided' page (its points sit on a Brief page next to a render); minimal project covers (soft gradient, big number); cover = 'Portfolio · month year' + Architect · Interior designer + full contact row; plans packed several per page; Mazeej before → after redesign; Linah + NOATUM moved to 03 BIM delivery; Ogami townhouse plans (GF/FF) + 2 renders replace old flat plan | Aya feedback |
 | 2026-11-05 | Identity kit = Design System (for tools) + Brand Book deck (for people); dark-theme oxblood lifted to #D9768A for contrast; square corners except buttons | Aya: “give me everything for my identity” — chose both |
 | 2026-11-05 | CV rewritten to the new brand; set in Archivo with hairline title-block layout; phone shown; some marketing words allowed sparingly | Aya approved preview |
 
@@ -524,6 +525,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-11 | Claude Code | PDF revamp round 2 (see decision). Selected Works 108 pp 8.7 MB; Portfolio 113 pp 39 MB. Open: Travco chalet vs townhome split (needs Aya); study-board text can't be re-typeset without source files. Not live. |
 | 2026-11-11 | Claude Code | PDFs rebuilt on shared PrintBook layout: Selected Works 107 pp ≈10.6 MB, Portfolio 129 pp 43 MB. Travco Properties logo. Ogami plan flagged (source lacks detail). Not live. |
 | 2026-11-11 | Claude Code | 24-hour promise removed from site. Full portfolio regenerated on the new layout (`portfolio.astro` now mirrors `selected.astro`): 64 pp, 28 MB, index with page numbers. Not live. |
 | 2026-11-11 | Claude Code | Selected Works rebuilt: 55 pp, 9.9 MB. New `scripts/trim-drawings.py` → `src/assets/print/<slug>/dNN.jpg` (+ .scale) — rerun after adding drawings. Study list per project = `studyNos` in selected.astro. Back-cover CTA without 24 h in both PDFs. |

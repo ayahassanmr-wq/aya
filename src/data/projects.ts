@@ -111,7 +111,7 @@ export const projects: Project[] = [
     ],
     captions: ['Concept: solid mass, carved slots, palm-leaf framework', 'Revit model', 'Revit elevation, main facade', 'Site and ground-floor plan, phase 1'],
     process: [['Concept', 'd01'], ['Revit model', 'd02'], ['Render', '01']] },
-  { slug: 'mazeej', client: 'Guira Developments', year: '2025', title: 'Mazeej Hotel & Housing Complex', location: 'Giza', country: 'Egypt', category: 'architecture', sector: 'Hospitality', scope: ['Design review', 'Redesign to code'], practice: 'Cosmos Studio',
+  { slug: 'mazeej', captions: ['Plan 1 · redesign', 'Plan 1 · before redesign', 'Plan 2 · redesign', 'Plan 2 · before redesign', 'Plan 3 · redesign', 'Plan 3 · before redesign', 'Plan 4 · redesign', 'Plan 4 · before redesign'], client: 'Guira Developments', year: '2025', title: 'Mazeej Hotel & Housing Complex', location: 'Giza', country: 'Egypt', category: 'architecture', sector: 'Hospitality', scope: ['Design review', 'Redesign to code'], practice: 'Cosmos Studio',
     summary: 'Design review and redesign of a hotel and housing complex to code and architectural standards.' },
   { slug: 'dry-port', client: 'Egyptian Government', year: '2021', title: 'Dry Port Buildings', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, B], practice: 'Cosmos Studio',
     summary: 'A Revit (BIM) sample: plans and 3D for a dry port’s buildings.' },
@@ -119,7 +119,7 @@ export const projects: Project[] = [
   // ---------- Residential developments (Innovation Design Studio)
   { slug: 'misr-italia-hilltop', client: 'Misr Italia Properties', year: '2026', title: 'Misr Italia Hilltop', location: 'Ras El Hekma', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: [M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
     summary: 'Three apartment-building prototypes for a North Coast community, set around lagoons and beach-front pools.' },
-  { slug: 'sodic-ogami', client: 'SODIC', year: '2026', title: 'SODIC Ogami', location: 'Ras El Hekma', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
+  { slug: 'sodic-ogami', captions: ['Concept board', 'Townhouse · ground floor', 'Townhouse · first floor'], client: 'SODIC', year: '2026', title: 'SODIC Ogami', location: 'Ras El Hekma', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'A twin villa and a town home for a coastal community, in warm terracotta render with deep, shaded terraces.' },
   { slug: 'travco-west-island', client: 'Travco Properties', year: '2026', title: 'Travco West Island', location: 'Almaza Bay', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'A coastal chalet and a coastal town home on the lagoon at Almaza Bay.' },
