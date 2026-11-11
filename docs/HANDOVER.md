@@ -554,3 +554,5 @@ End of every session: produce the updated sections of the handover (Status board
 | 2026-11-03 | Claude (chat) | Curated every project to its best 4 renders (15 projects trimmed); drawings unchanged. |
 | 2026-11-02 | Claude (chat) | Synced site to folder: + Minimal Villa, − Classic House, Juba → 14 renders (2021 set), East Vale + 3 plans, Ogami + ground plan. Video web versions done in `_Videos\Web` (Jotun 71 MB, Juba 74 MB, Render 01 132 MB, Sphinx 4K ~470–480 MB each). |
 | 2026-11-02 | Claude (chat) | Brand concepts → One Hand chosen; site rebranded on `rebrand-on-update` (Archivo, title-block hero, intro, nav logo, house grade, drawing sheets, 3-discipline work page, client/year everywhere, removed 4 projects, Arches→KSA, Fifth Square note, timeline fix, East Vale +1 image). Video inventory done; `_Videos` folder created (empty). Handover v3 written. |
+
+- 11 Nov — Portfolio PDFs: Travco split into Chalet (renders 01–03, plans d01–d02) and Townhome (renders 04–06, plan d03). Plan assignment awaiting Aya confirmation. Branch only.
