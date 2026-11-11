@@ -422,6 +422,7 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-07 | About: no Experience & education section, no Education in header; homepage cards unnumbered; footer button 'Get in touch'; footer line 'Architect & Interior Designer · Cairo'; no 'open to / available' lines anywhere | Aya: confident, not desperate |
 | 2026-11-11 | Title Mid-senior everywhere (site, portfolio, CV) — reverses 8 Nov 'Senior on site' | Aya, answering the 10 Nov brief |
 | 2026-11-11 | Mazeej: all 5 renders cropped to remove 'DRAFT'; Vanilla centre watermark kept as credit; role line names Vanilla Studio | All five carried DRAFT, not one |
+| 2026-11-11 | Removed Juba Resort, Minimal Villa, Arches Restaurant, Zayed Residence (site, portfolio, images, Juba film) → 24 projects, 4 countries (South Sudan gone) | Aya request |
 | 2026-11-05 | Identity kit = Design System (for tools) + Brand Book deck (for people); dark-theme oxblood lifted to #D9768A for contrast; square corners except buttons | Aya: “give me everything for my identity” — chose both |
 | 2026-11-05 | CV rewritten to the new brand; set in Archivo with hairline title-block layout; phone shown; some marketing words allowed sparingly | Aya approved preview |
 
@@ -515,6 +516,7 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
+| 2026-11-11 | Claude Code | Juba, Minimal Villa, Arches, Zayed removed everywhere (data, images, Juba video, page reels); now 24 projects / 4 countries; portfolio 67 pp, 26 MB. Not live. |
 | 2026-11-11 | Claude Code | 10 Nov brief Parts 1–3 on `rebrand-on-update`: role tag + bold role line + status on every project page and portfolio opener (EN + AR; Arabic role lines by Claude, need native check); STC in capitals; Services 'Concept and design support for studios' copy; BRAND_VOICE header; Mid-senior everywhere; portfolio timeline 'Rejoined' + 2019 independent practice row; Mazeej DRAFT cropped; CV rebuilt to 10 Nov reference (2 pp, Archivo only, ATS labels). Full portfolio + CV regenerated. Not live. |
 | 2026-11-05 | Claude (chat) | Brand strategy session (no code): "Approved" replaces "One Hand"; positioning (luxury homes, coast-led, corporate HQs; Egypt + Gulf; built as designed), two doors, personality, voice calibrated from Q&A + real emails, public softness rule, six convictions, About + bios + pitches + CTA (EN + AR). Brand Strategy Claude Doc created; handover §1, §2, §7, §8, §9, §11, §12 updated. CV rewritten + Archivo preview approved; Claude Code brief written. Design System + 16-slide Brand Book created. Brand idea evolved to "Built as designed" across all files; motto set to "Bold on paper. Solid on ground." |
 | 2026-11-10 | Claude (chat) | CV + portfolio reviewed as recruiter/design manager (CV 7/6.5, portfolio 7.5/6). Project Stories doc created; CV corrected (roles, Misk Schools, leadership line, rejoined Cosmos, Juba out, ATS-safe labels); Selected Works plan set. |

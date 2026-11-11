@@ -17,7 +17,7 @@ const disciplines = await Promise.all([
 ].map(async (d) => ({ ...d, groups: groupBy(d.list), src: (await getImage({ src: cover(d.img)!, width: 1600, format: 'webp' })).src })));
 ---
 <Base title={t('Selected work', 'أعمال مختارة')} description={L.ar ? `أعمال مختارة لآية حسن: ${projects.length} مشروعًا في العمارة والتصميم الداخلي وBIM، في الخليج ومصر وخارجهما.` : `Selected work by Aya Hassan: ${projects.length} projects across architecture, interior design and BIM, in the Gulf, Egypt and beyond.`}>
-  <PageHero images={['misr-italia-hilltop', 'sabic-hq', 'neom-oxagon', 'zayed-residence'].map((x) => cover(x)!)} alt={t('Selected projects by Aya Hassan', 'مشاريع مختارة لآية حسن')} meta={[[t('Selected', 'مختارة'), String(projects.length)], ...disciplines.map((d) => [d.name, String(d.list.length)] as [string, string]), [t('Countries', 'دول'), String(countries.length)]]}>
+  <PageHero images={['misr-italia-hilltop', 'sabic-hq', 'neom-oxagon', 'stc-hq'].map((x) => cover(x)!)} alt={t('Selected projects by Aya Hassan', 'مشاريع مختارة لآية حسن')} meta={[[t('Selected', 'مختارة'), String(projects.length)], ...disciplines.map((d) => [d.name, String(d.list.length)] as [string, string]), [t('Countries', 'دول'), String(countries.length)]]}>
     <h1 class="display-xl lines"><span class="ln"><span>{t('Selected', 'أعمال')}</span></span><span class="ln"><span><em>{t('work.', 'مختارة.')}</em></span></span></h1>
   </PageHero>
 

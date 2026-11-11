@@ -18,7 +18,7 @@ const slides = await Promise.all(slideSlugs.map(async (slug) => {
 }));
 const place = (p: typeof projects[number]) => placeOf(loc(p));
 const years = new Date().getFullYear() - 2019; // freelance practice since 2019
-const reelRows = [['neom-oxagon', 'jotun-office', 'fifth-square', 'zayed-residence', 'chery-showroom', 'arches-restaurant', 'noatum-terminal'], ['stc-hq', 'sodic-ogami', 'bmw-showroom', 'linah-farms', 'tech-park', 'sallan-creek', 'staff-housing']];
+const reelRows = [['neom-oxagon', 'jotun-office', 'fifth-square', 'sodic-east-vale', 'chery-showroom', 'travco-west-island', 'noatum-terminal'], ['stc-hq', 'sodic-ogami', 'bmw-showroom', 'linah-farms', 'tech-park', 'sallan-creek', 'staff-housing']];
 const thumb = async (slug: string) => (await getImage({ src: cover(slug)!, width: 480, height: 360, fit: 'cover', format: 'webp', quality: 62 })).src;
 const stats = [
   { n: projects.length, l: t('Selected projects', 'مشروعًا مختارًا'), d: t('A selection of architecture and interiors, from first concept to drawing set.', 'مختارات من العمارة والتصميم الداخلي، من الفكرة الأولى حتى مجموعة الرسومات.'), img: await thumb('neom-oxagon') },

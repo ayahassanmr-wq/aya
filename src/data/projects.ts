@@ -115,8 +115,6 @@ export const projects: Project[] = [
     summary: 'Design review and redesign of a hotel and housing complex to code and architectural standards.' },
   { slug: 'dry-port', client: 'Egyptian Government', year: '2021', title: 'Dry Port Buildings', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, B], practice: 'Cosmos Studio',
     summary: 'A Revit (BIM) sample: plans and 3D for a dry port’s buildings.' },
-  { slug: 'juba-resort', year: '2023', client: 'Confidential', title: 'Juba Resort Complex', location: 'Juba', country: 'South Sudan', category: 'architecture', sector: 'Hospitality', scope: [M, R], practice: 'Cosmos Studio',
-    summary: 'A resort complex arranged around a landscaped pool garden.' },
 
   // ---------- Residential developments (Innovation Design Studio)
   { slug: 'misr-italia-hilltop', client: 'Misr Italia Properties', year: '2026', title: 'Misr Italia Hilltop', location: 'Ras El Hekma', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: [M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
@@ -149,15 +147,9 @@ export const projects: Project[] = [
     captions: ['Inspiration, approach and elements', 'Masterplan studies · masterplan, solid & void, open spaces, accessibility, concept', 'L-shaped prototype · design strategy', 'L-shaped prototype · ground floor plan', 'Linear prototype · ground floor plan'] },
 
   // ---------- Residential architecture (concept exploration)
-  { slug: 'minimal-villa', year: '2026', client: 'Private client', title: 'Minimal Villa', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: [D, M, R, P],
-    summary: 'A two-storey villa in pale stone and dark glazing: one carved volume, a deep garden terrace and a quiet street face.' },
   // ---------- Interiors · Residential & hospitality
   { slug: 'modern-residence-new-cairo', fullSheets: [1], captions: ['Drawing set · architectural, furniture, ceiling and power plans'], year: '2025', client: 'Private client', title: 'Modern Residence', location: 'New Cairo', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
     summary: 'A full residence in warm timber, stone and soft neutrals: living, dining, bedrooms and baths.' },
-  { slug: 'zayed-residence', year: '2024', client: 'Private client', title: 'Zayed Residence', location: 'Sheikh Zayed, Giza', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
-    summary: 'A bold residence of dark timber, marble and sculptural lighting.' },
-  { slug: 'arches-restaurant', client: 'Private client', year: '2022', title: 'Arches Restaurant', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'interiors', sector: 'Hospitality', scope: [D, M, R, P],
-    summary: 'A restaurant of timber arches, hanging greenery and halo lights.' },
   { slug: 'bmw-showroom', year: '2022', client: 'BMW Egypt', title: 'BMW Showroom', location: 'Cairo–Alex Road', country: 'Egypt', category: 'interiors', sector: 'Retail', scope: [D, M, R, P], practice: 'Cosmos Studio',
     summary: 'A brand showroom with a textured feature wall and bright display bays.' },
 ];
@@ -189,7 +181,6 @@ const links: Record<string, Project['links']> = {
 /* ---------- films: drop a compressed mp4 in /public/video/<slug>.mp4, or add a YouTube/Vimeo id */
 const films: Record<string, Project['video']> = {
   'jotun-office': { file: '/video/jotun-office.mp4', poster: '/video/jotun-office.jpg', title: 'Office film · 0:51' },
-  'juba-resort': { file: '/video/juba-resort.mp4', poster: '/video/juba-resort.jpg', title: 'Walkthrough animation · 1:55' },
 };
 for (const p of projects) { p.links ??= links[p.slug]; p.video ??= films[p.slug]; }
 
