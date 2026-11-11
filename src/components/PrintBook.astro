@@ -223,25 +223,28 @@ const restClass = (n: number) => `r${n}`;
   .rg.r3 { grid-template-columns: 1.6fr 1fr; grid-template-rows: 1fr 1fr; } .rg.r3 img:first-child { grid-row: 1 / -1; }
   .rg.r4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
   /* project opener: cover image (veiled) + brief */
-  .pb { display: grid; grid-template-columns: 1.55fr 1fr; }
-  .pb .ph { position: relative; }
-  .pb .ph .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(32,28,27,.38) 0%, rgba(32,28,27,.3) 45%, rgba(32,28,27,.85) 100%); }
-  .pb .info { position: absolute; left: 14mm; right: 12mm; bottom: 18mm; color: var(--bone); }
+  .pb { color: var(--bone); }
+  .pb .ph { position: absolute; inset: 0; }
+  .pb .ph .veil { position: absolute; inset: 0; background:
+    linear-gradient(90deg, rgba(32,28,27,.35) 0%, rgba(32,28,27,.45) 45%, rgba(32,28,27,.86) 66%, rgba(32,28,27,.92) 100%),
+    linear-gradient(180deg, rgba(32,28,27,0) 40%, rgba(32,28,27,.7) 100%); }
+  .pb .info { position: absolute; left: 16mm; width: 160mm; bottom: 20mm; }
   .pb .nr { display: flex; align-items: baseline; gap: 4mm; margin-bottom: 2mm; }
-  .pb .nr b { font-size: 58pt; line-height: .8; }
+  .pb .nr b { font-size: 64pt; line-height: .8; }
   .pb .rt { font-weight: 700; }
-  .pb h2 { font-size: 26pt; margin-bottom: 4mm; }
+  .pb h2 { font-size: 30pt; margin-bottom: 4mm; }
   .pb .meta { display: flex; flex-wrap: wrap; gap: 2mm 6mm; padding-top: 3mm; border-top: .5pt solid rgba(243,237,227,.45); }
   .pb .meta span { display: inline-flex; align-items: center; gap: 2mm; }
   .pb .meta img { height: 4.2mm; max-width: 18mm; object-fit: contain; filter: brightness(0) invert(1); }
-  .pb .tx { padding: 14mm 13mm 20mm 11mm; display: flex; flex-direction: column; gap: 4.5mm; }
+  .pb .tx { position: absolute; top: 16mm; right: 16mm; bottom: 20mm; width: 92mm; display: flex; flex-direction: column; gap: 4.5mm; }
+  .pb .tx .ox { color: var(--sand); }
   .pb .role { font-size: 11.5pt; line-height: 1.35; font-weight: 700; }
-  .pb .sum { font-size: 9.2pt; line-height: 1.52; }
-  .pb .dec { list-style: none; padding: 0; margin: 0; border-top: .5pt solid var(--ink); }
-  .pb .dec li { display: grid; grid-template-columns: 8mm 1fr; padding: 2.2mm 0; border-bottom: .5pt solid var(--rule); font-size: 8.6pt; line-height: 1.36; }
-  .pb .dec b { color: var(--ox); font-weight: 800; font-stretch: 125%; }
-  .pb .kv { margin-top: auto; } .pb .kv div { padding: 2mm 0; border-top: .5pt solid var(--rule); }
-  .pb dt { font-size: 6pt; letter-spacing: .2em; text-transform: uppercase; color: var(--mut); } .pb dd { font-size: 8.2pt; margin-top: 1mm; }
+  .pb .sum { font-size: 9.2pt; line-height: 1.52; opacity: .92; }
+  .pb .dec { list-style: none; padding: 0; margin: 0; border-top: .5pt solid rgba(243,237,227,.6); }
+  .pb .dec li { display: grid; grid-template-columns: 8mm 1fr; padding: 2.2mm 0; border-bottom: .5pt solid rgba(243,237,227,.22); font-size: 8.6pt; line-height: 1.36; }
+  .pb .dec b { color: var(--sand); font-weight: 800; font-stretch: 125%; }
+  .pb .kv { margin-top: auto; } .pb .kv div { padding: 2mm 0; border-top: .5pt solid rgba(243,237,227,.3); }
+  .pb dt { font-size: 6pt; letter-spacing: .2em; text-transform: uppercase; color: var(--sand); } .pb dd { font-size: 8.2pt; margin-top: 1mm; }
 
   /* delivery card + back */
   .card { padding: 26mm 24mm; display: grid; grid-template-columns: 1fr 1.2fr; gap: 18mm; align-content: center; }
@@ -355,7 +358,7 @@ const restClass = (n: number) => `r${n}`;
                 {p.scopeNote && <div><dt>Note</dt><dd>{p.scopeNote}</dd></div>}
               </dl>
             </div>
-            <div class="foot"><span class="lab on"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a></span><span class="lab mut">{N()} / {T}</span></div>
+            <div class="foot on"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab">{N()} / {T}</span></div>
           </section>
 
           {it.studies.map((x: any) => (
