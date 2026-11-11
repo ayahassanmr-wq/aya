@@ -19,13 +19,12 @@ const think: Record<string, [string, string][]> = {
   'staff-housing': [['Tension: density vs quality of life vs budget', 'd03'], ['Courtyard clusters on a town-wide pedestrian network', 'd02'], ['Two repeatable prototypes for cost and speed', 'd05'], ['Nubian arches, shade, earth', 'd01']],
   'sodic-east-vale': [['Brief: private sanctuaries, daylight, ventilation, views', '03'], ['Decision I argued for: private quarters apart from reception (oxblood = private, sand = reception)', 'x:east-vale-zones'], ['High ceilings, fluid inside–outside', '02'], ['Under construction', '01']],
   'sabic-hq': [['Brief: turn an outdated HQ into a dynamic, collaborative, brand-led one', '04'], ['Constraint: existing slab protrusion', '01'], ['Decision: make it the feature — the atrium planters', '02'], ['Under construction', '03']],
-  'stc-hq': [['Brief: futuristic, recognisable, minimal', '01'], ['Site: the tower’s huge curves (oxblood = curve zones)', 'x:stc-curves'], ['Decision: curves become destinations', '03'], ['My concept became the team’s base', '05']],
+  'stc-hq': [['Brief: futuristic, recognisable, minimal', '01'], ['Site: the tower’s huge curves (oxblood = curve zones)', 'x:stc-curves'], ['Decision: curves become destinations', '02'], ['My concept became the team’s base', '05']],
 };
 type Item = { kind: 'div'; n: string; name: string; sub?: boolean } | { kind: 'proj'; slug: string; featured: boolean } | { kind: 'card' };
 const plan: Item[] = [
   { kind: 'div', n: '01', name: 'Architecture' },
   { kind: 'proj', slug: 'travco-west-island', featured: true }, { kind: 'proj', slug: 'misr-italia-hilltop', featured: true },
-  { kind: 'div', n: '01.1', name: 'Masterplans', sub: true },
   { kind: 'proj', slug: 'staff-housing', featured: true }, { kind: 'proj', slug: 'sallan-creek', featured: true }, { kind: 'proj', slug: 'sodic-east-vale', featured: true },
   ...['sodic-ogami', 'orascom-o-west', 'chery-showroom', 'fifth-square', 'mazeej', 'neom-oxagon'].map((slug) => ({ kind: 'proj', slug, featured: false }) as Item),
   { kind: 'div', n: '02', name: 'Interiors' },
@@ -34,20 +33,58 @@ const plan: Item[] = [
   { kind: 'div', n: '03', name: 'Delivery: BIM packages' },
   { kind: 'card' },
 ];
+
+// Studies vs plans (drawing numbers). Studies get their own large pages; plans share one scale per project.
+const studyNos: Record<string, number[]> = { 'travco-west-island': [4], 'staff-housing': [1, 2, 3], 'sallan-creek': [1, 2], 'sodic-east-vale': [1], 'sodic-ogami': [1], 'fifth-square': [1], 'neom-oxagon': [1], 'chery-showroom': [1] };
+const trimmed = import.meta.glob<{ default: any }>('../../assets/print/*/d*.jpg', { eager: true });
+const scales = import.meta.glob<string>('../../assets/print/*/d*.scale', { eager: true, query: '?raw', import: 'default' });
+const sheetsFor = (slug: string) => Object.keys(trimmed).filter((k) => k.includes(`/print/${slug}/`)).sort().map((k) => {
+  const no = Number(k.match(/d(\d+)\.jpg$/)![1]); const m = trimmed[k].default; const sc = Number(scales[k.replace('.jpg', '.scale')] ?? 1);
+  return { no, m, w: m.width / sc, h: m.height / sc };
+});
+const AW = 269, AH = 150, GAP = 7, CAP = 7;
+type S = { no: number; m: any; w: number; h: number };
+const fit = (row: S[][]) => {
+  const hs = row.map((r) => Math.max(...r.map((x) => x.h)));
+  const byW = Math.min(...row.map((r) => (AW - GAP * (r.length - 1)) / r.reduce((a, x) => a + x.w, 0)));
+  const byH = (AH - CAP * row.length - GAP * (row.length - 1)) / hs.reduce((a, b) => a + b, 0);
+  return Math.min(byW, byH);
+};
+const arrange = (xs: S[]) => {
+  let best = { rows: [xs], s: fit([xs]) };
+  for (let k = 1; k < xs.length; k++) { const r = [xs.slice(0, k), xs.slice(k)]; const v = fit(r); if (v > best.s) best = { rows: r, s: v }; }
+  return best;
+};
+const pack = (xs: S[], common: boolean) => {
+  const pages: S[][] = []; let cur: S[] = [];
+  for (const x of xs) {
+    const next = [...cur, x];
+    const alone = Math.min(...next.map((y) => arrange([y]).s));
+    if (cur.length && (next.length > 4 || arrange(next).s < 0.5 * alone)) { pages.push(cur); cur = [x]; } else cur = next;
+  }
+  if (cur.length) pages.push(cur);
+  const laid = pages.map((pg) => arrange(pg));
+  const s0 = common ? Math.min(...laid.map((l) => l.s)) : 0;
+  return laid.map((l) => ({ rows: l.rows, s: common ? s0 : l.s }));
+};
+const sheetPages = (xs: S[], common: boolean) => Promise.all(pack(xs, common).map(async (pg) => ({ s: pg.s, rows: await Promise.all(pg.rows.map((r) => Promise.all(r.map(async (x) => ({ ...x, src: await jpg(x.m, 1200) }))))) })));
+
 let seq = 0;
 const codes: Record<string, string> = {};
 for (const it of plan) { if (it.kind === 'div' && !it.sub) seq = 0; if (it.kind === 'proj') codes[it.slug] = String(++seq).padStart(2, '0'); }
 const items = await Promise.all(plan.map(async (it) => {
   if (it.kind !== 'proj') return it;
   const p = P(it.slug), imgs = imagesFor(p.slug), dr = drawingsFor(p.slug);
-  const steps = it.featured && think[p.slug] ? await Promise.all(think[p.slug].map(async ([t, f]) => { const m = img(p.slug, f); return { t, d: f.startsWith('d') || f.startsWith('x:'), w: !!m && m.width / m.height > 2, src: await jpg(m, 1100) }; })) : [];
+  const steps = it.featured && think[p.slug] ? await Promise.all(think[p.slug].map(async ([t, f]) => { const m = img(p.slug, f); return { t, d: f.startsWith('d') || f.startsWith('x:'), w: !!m && m.width / m.height > 2, src: await jpg(m, 900) }; })) : [];
   return { ...it, p, code: codes[p.slug], logo: clientLogo(p.slug), disc: [...disciplinesFor(p)], steps,
-    cover: await jpg(imgs[0], 1300),
-    rest: it.featured ? await Promise.all(imgs.slice(1, 4).map((x) => jpg(x, 1100))) : [],
-    draw: await Promise.all(dr.map((x) => jpg(x, 1000))) };
+    cover: await jpg(imgs[0], 1150),
+    rest: [] as string[],
+    mosaic: await Promise.all(imgs.slice(1, 4).map((x) => jpg(x, 650))),
+    studyPages: await sheetPages(sheetsFor(p.slug).filter((x) => (studyNos[p.slug] ?? []).includes(x.no)), false),
+    planPages: await sheetPages(sheetsFor(p.slug).filter((x) => !(studyNos[p.slug] ?? []).includes(x.no)), true) };
 }));
 let total = 3 + 1;
-for (const it of items as any[]) total += it.kind === 'proj' ? 1 + (it.steps.length ? 1 : 0) + (it.rest.length ? 1 : 0) + Math.ceil(it.draw.length / 4) : 1;
+for (const it of items as any[]) total += it.kind === 'proj' ? 1 + (it.steps.length ? 1 : 0) + (it.rest.length ? 1 : 0) + it.studyPages.length + it.planPages.length : 1;
 let pn = 3; const N = () => String(++pn).padStart(2, '0'); const T = String(total).padStart(2, '0');
 let sheet = 0; const next = () => `A-${String(++sheet).padStart(3, '0')}`;
 
@@ -210,7 +247,21 @@ const shown = (items as any[]).filter((i) => i.kind === 'proj').length;
   .card h2 { margin: 3mm 0 0; font-size: 30pt; line-height: 1; font-stretch: 125%; }
   .card p { font-size: 12pt; line-height: 1.55; margin: 0; }
   .card .tg { display: inline-block; margin-top: 6mm; padding: 1mm 2.5mm; border: .5pt solid var(--ox); color: var(--ox); font-size: 8pt; letter-spacing: .12em; font-weight: 600; }
-  .divider.sub .big { font-size: 60pt; }
+  .sheets { padding: 12mm 14mm 0; }
+  .sh-hd { display: flex; align-items: baseline; gap: 5mm; border-bottom: .5pt solid var(--ox); padding-bottom: 3mm; margin-bottom: 6mm; }
+  .sh-hd b { font-size: 16pt; font-weight: 800; font-stretch: 125%; color: var(--ox); }
+  .sh-hd h2 { margin: 0; font-size: 13pt; font-stretch: 112%; }
+  .sh-hd .lab { margin-left: auto; }
+  .sh-body { height: 158mm; display: flex; flex-direction: column; justify-content: center; gap: 7mm; }
+  .sh-row { display: flex; justify-content: center; align-items: flex-end; gap: 7mm; }
+  .sh-row figure { margin: 0; }
+  .sh-row img { display: block; object-fit: contain; }
+  .sh-row figcaption { display: flex; justify-content: space-between; gap: 4mm; margin-top: 2mm; padding-top: 1.5mm; border-top: .5pt solid var(--ox); font-size: 6.6pt; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+  .sh-row figcaption span:last-child { color: var(--ox); font-weight: 700; }
+  .op .mos { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5mm; background: var(--bone); }
+  .op .mos img { width: 100%; height: 100%; object-fit: cover; min-height: 0; }
+  .op .mos .big { grid-row: 1 / -1; }
+  .op .mos.m1 { grid-template-rows: 1fr; } .op .mos.m2 { grid-template-rows: 1fr 1fr; } .op .mos.m3 { grid-template-rows: 1fr 1fr 1fr; }
 </style>
 </head>
 <body>
@@ -287,7 +338,7 @@ const shown = (items as any[]).filter((i) => i.kind === 'proj').length;
   return (
     <>
       <section class="pg op" id={`p${p.slug}`}>
-        <div class="im"><img class="grade" src={it.cover} alt="" /></div>
+        {it.mosaic.length ? <div class:list={['im mos', `m${it.mosaic.length}`]}><img class="grade big" src={it.cover} alt="" />{it.mosaic.map((m: string) => <img class="grade" src={m} alt="" />)}</div> : <div class="im"><img class="grade" src={it.cover} alt="" /></div>}
         <div class="side">
           <span class="pno"><span class="lab ox" style="font-weight:700">{p.sector}{p.roleTag && <span class="rtag">{p.roleTag}</span>}</span><span class="big">{it.code}</span></span>
           <h2 class="wide"><a href={`https://ayahassan.com/work/${p.slug}/`}>{p.title}</a></h2>
@@ -311,12 +362,20 @@ const shown = (items as any[]).filter((i) => i.kind === 'proj').length;
           <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {p.title} · Thinking</span><span class="lab mut">{N()} / {T}</span></div>
         </section>
       )}
-      {Array.from({ length: Math.ceil(it.draw.length / 4) }, (_, c) => it.draw.slice(c * 4, c * 4 + 4)).map((pg: string[], c: number) => (
-        <section class="pg dark">
-          <div class:list={['drw', `n${pg.length}`]}>{pg.map((d: string, j: number) => { const k = c * 4 + j; return <figure><img src={d} alt="" /><figcaption><span>{p.captions?.[k] ?? `Drawing ${String(k + 1).padStart(2, '0')}`}</span><span>{next()}</span></figcaption></figure>; })}</div>
-          <div class="foot"><span class="lab"><span style="color:var(--sand);font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {p.title} · Drawings</span><span class="lab mut">{N()} / {T}</span></div>
+      {[['Studies', it.studyPages], ['Plans & drawings', it.planPages]].flatMap(([lbl, pgs]: any) => pgs.map((pg: any) => (
+        <section class="pg sheets">
+          <div class="sh-hd"><b>{it.code}</b><h2 class="wide">{p.title}</h2><span class="lab ox">{lbl}</span></div>
+          <div class="sh-body">{pg.rows.map((r: any[]) => (
+            <div class="sh-row">{r.map((x: any) => (
+              <figure style={`width:${(x.w * pg.s).toFixed(1)}mm`}>
+                <img src={x.src} alt="" style={`width:${(x.w * pg.s).toFixed(1)}mm;height:${(x.h * pg.s).toFixed(1)}mm`} />
+                <figcaption><span>{p.captions?.[x.no - 1] ?? `Drawing ${String(x.no).padStart(2, '0')}`}</span><span>{next()}</span></figcaption>
+              </figure>
+            ))}</div>
+          ))}</div>
+          <div class="foot"><span class="lab"><span class="ox" style="font-size:11pt;font-weight:800;font-stretch:125%;letter-spacing:0">{it.code}</span> · {p.title} · {lbl}</span><span class="lab mut">{N()} / {T}</span></div>
         </section>
-      ))}
+      )))}
       {it.rest.length > 0 && (
         <section class="pg">
           <div class:list={['gal', `n${it.rest.length}`]}>{it.rest.map((r: string) => <img class="grade" src={r} alt="" />)}</div>
@@ -331,7 +390,7 @@ const shown = (items as any[]).filter((i) => i.kind === 'proj').length;
   <img class="bg grade" src={backImg} alt="" />
   <div class="veil"></div>
   <div class="ct">
-    <h2 class="wide">Every good project starts with a conversation.<br />Send me yours.<br /><em>I reply within 24 hours.</em></h2>
+    <h2 class="wide">Every good project starts with a conversation.<br /><em>Send me yours.</em></h2>
     <dl>
       <div><dt>Email</dt><dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd></div>
       <div><dt>Web</dt><dd><a href="https://ayahassan.com">ayahassan.com</a></dd></div>
