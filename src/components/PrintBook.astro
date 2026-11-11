@@ -109,7 +109,7 @@ const total = pg + 1;
 let pn = 0; const N = () => String(++pn).padStart(2, '0'); const T = String(total).padStart(2, '0');
 let sheetNo = 0; const nextSheet = () => `A-${String(++sheetNo).padStart(3, '0')}`;
 
-const coverImg = await jpg(imagesFor(full ? 'misr-italia-hilltop' : 'travco-west-island')[0], W.bleed);
+const coverImg = await jpg(imagesFor('travco-west-island')[0], W.bleed);
 const aboutImg = await jpg(imagesFor('sabic-hq')[1], W.half);
 const backImg = await jpg(imagesFor(full ? 'travco-west-island' : 'misr-italia-hilltop')[0], W.bleed);
 const clients = ['sodic', 'orascom', 'misr-italia', 'travco', 'neom', 'stc', 'sabic', 'jotun', 'bmw', 'chery', 'hb-fuller', 'al-marasem', 'guira', 'linah'];
@@ -120,7 +120,7 @@ const shown = secs.reduce((a, s) => a + s.items.length, 0);
 const label = full ? 'Portfolio' : 'Selected Works';
 const fitBox = (w: number, h: number, bw: number, bh: number) => { const s = Math.min(bw / w, bh / h); return `width:${(w * s).toFixed(1)}mm;height:${(h * s).toFixed(1)}mm`; };
 const restClass = (n: number) => `r${n}`;
-const trial = (slug: string) => slug === 'travco-west-island';
+const trial = (_: string) => true;
 ---
 <!doctype html>
 <html lang="en">
@@ -150,11 +150,11 @@ const trial = (slug: string) => slug === 'travco-west-island';
   .shade { position: absolute; inset: auto 0 0 0; height: 30mm; background: linear-gradient(transparent, rgba(32,28,27,.6)); }
 
   /* cover */
-  .cover .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(32,28,27,.55) 0%, rgba(32,28,27,.05) 30%, rgba(32,28,27,.15) 55%, rgba(32,28,27,.82) 100%); }
+  .cover .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(32,28,27,.86) 0%, rgba(32,28,27,.8) 50%, rgba(32,28,27,.92) 100%); }
   .cover .top { position: absolute; top: 14mm; left: 16mm; right: 16mm; display: flex; justify-content: space-between; align-items: baseline; color: var(--bone); }
   .cover .top .wm { font-size: 20pt; }
   .cover .tagw { position: absolute; left: 16mm; bottom: 32mm; color: var(--bone); }
-  .cover .tagw .lab { display: block; margin-bottom: 5mm; opacity: .9; }
+  .cover .tagw .lab { display: block; margin-bottom: 6mm; font-size: 15pt; letter-spacing: .14em; font-weight: 600; color: var(--sand); }
   .cover .tag { font-size: 52pt; }
   .cover .tag em { display: block; font-style: italic; font-weight: 200; font-stretch: 100%; letter-spacing: -.02em; margin-top: 2mm; }
   .cover .bot { position: absolute; left: 16mm; right: 16mm; bottom: 13mm; padding-top: 4mm; border-top: .5pt solid rgba(243,237,227,.5); display: flex; justify-content: space-between; color: var(--bone); }
@@ -254,7 +254,7 @@ const trial = (slug: string) => slug === 'travco-west-island';
   .pb .tm { display: flex; flex-direction: column; gap: 3mm; padding-bottom: 4mm; border-bottom: .5pt solid rgba(243,237,227,.6); }
   .pb .tm .cl { display: flex; align-items: center; gap: 3mm; font-size: 12pt; font-weight: 700; font-stretch: 112%; }
   .pb .tm .cs .cl { margin-top: 1.2mm; }
-  .pb .tm .cl img { height: 3.6mm; width: auto; max-width: 22mm; object-fit: contain; filter: brightness(0) invert(1); }
+  .pb .tm .cl img { height: 6mm; width: auto; max-width: 34mm; object-fit: contain; filter: brightness(0) invert(1); }
   .pb .fx { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm 5mm; margin: 0; }
   .pb .fx dd { margin-left: 0; }
   .pb .role { font-size: 11.5pt; line-height: 1.35; font-weight: 700; }
@@ -370,7 +370,7 @@ const trial = (slug: string) => slug === 'travco-west-island';
             <div class="tx">
               {trial(p.slug) && <div class="tm">
                 <span class="lab ox">{s.name} · {p.sector}{p.roleTag && <> · <b>{p.roleTag}</b></>}</span>
-                <div class="cs"><dt>Client</dt><div class="cl">{it.logo && <img src={it.logo} alt="" />}<span>{p.client}</span></div></div>
+                <div class="cs"><dt>Client</dt><div class="cl">{it.logo ? <img src={it.logo} alt={p.client} /> : <span>{p.client}</span>}</div></div>
                 <dl class="fx"><div><dt>Location</dt><dd>{place(p)}</dd></div><div><dt>Year</dt><dd>{p.year}</dd></div>{p.status && <div><dt>Status</dt><dd>{p.status}</dd></div>}<div><dt>Practice</dt><dd>{practice(p)}</dd></div></dl>
               </div>}
               <span class="lab ox">{it.code} · Brief</span>
