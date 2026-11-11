@@ -42,10 +42,11 @@ const backImg = await jpg(imagesFor('neom-oxagon')[0], 2400);
 const clients = ['sodic', 'orascom', 'misr-italia', 'travco', 'neom', 'stc', 'sabic', 'jotun', 'bmw', 'chery', 'hb-fuller', 'al-marasem', 'guira', 'linah'];
 const typed = ['NOATUM', 'Suits Workspaces'];
 const timeline = [
-  ['2026 — now', 'Senior Design Architect', 'Innovation Design Studio', 'Concepts, 3D models and visuals for residential developments by SODIC, Orascom, Misr Italia and Travco.'],
-  ['2025', 'Senior Design Architect & Interior Designer', 'Cosmos Studio', 'Fifth Square, Chery, NOATUM, Linah Farms and Mazeej, through to Revit (BIM) packages.'],
+  ['2026 — now', 'Mid-senior Design Architect', 'Innovation Design Studio', 'Concepts, 3D models and visuals for residential developments by SODIC, Orascom, Misr Italia and Travco.'],
+  ['2025', 'Mid-senior Design Architect & Interior Designer', 'Cosmos Studio · Rejoined', 'Fifth Square, Chery, NOATUM, Linah Farms and Mazeej, through to Revit (BIM) packages.'],
   ['2024', 'Design Architect & Interior Designer', 'ZFP · Zuhair Fayez Partnership', 'Headquarters interiors for SABIC and STC in Riyadh, materials and FF&E sourcing.'],
   ['2020 — 2023', 'Design Architect & Interior Designer', 'Cosmos Studio', 'BIM for NEOM public service buildings; interiors for Sphinx, HB Fuller, Jotun and Tech Park.'],
+  ['2019 — now', 'Independent practice', 'Selected commissions', 'Residential interiors, villas and boutique workplaces for private clients in Egypt, Saudi Arabia and India.'],
   ['2014 — 2019', 'B.Sc. Architectural Engineering', 'Future University in Egypt', 'Graduation project grade A−.'],
 ];
 const year = new Date().getFullYear();
@@ -143,6 +144,8 @@ const year = new Date().getFullYear();
   .blk .cl { display: flex; align-items: center; gap: 3mm; } .blk .cl img { height: 9mm; width: auto; max-width: 30mm; object-fit: contain; }
   .code { font-size: 9pt; font-weight: 600; letter-spacing: .12em; color: var(--ox); }
   .op h2 { margin: 0; font-size: 22pt; line-height: .98; font-stretch: 112%; }
+  .op .role { margin: 0; font-size: 10pt; line-height: 1.4; font-weight: 700; }
+  .rtag { margin-left: 2.5mm; padding: .5mm 1.6mm; border: .5pt solid var(--ox); font-size: 6.4pt; letter-spacing: .1em; }
   .op .sum { font-size: 9.2pt; line-height: 1.5; margin: 0; }
   .blk { margin: auto 0 0; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule); }
   .blk div { padding: 2.6mm 0; border-bottom: 1px solid var(--rule); }
@@ -216,7 +219,7 @@ const year = new Date().getFullYear();
       <p class="stmt">An idea only counts once it stands on real ground.</p>
     </div>
     <div style="display:grid;gap:6mm;align-content:start">
-      <p class="bio">I design architecture and interiors that begin as an original idea and end as a built place. Concepts that surprise, details that work on site. Since 2019 I have worked freelance and across three studios, project by project: the SABIC and stc headquarters in Riyadh at ZFP, NEOM public buildings and corporate offices for Jotun, HB Fuller and BMW at Cosmos, and coastal and residential developments for SODIC, Orascom, Misr Italia and Travco at Innovation. I lead inside large teams and carry projects myself when needed, from idea to Revit drawing set.</p>
+      <p class="bio">I design architecture and interiors that begin as an original idea and end as a built place. Concepts that surprise, details that work on site. Since 2019 I have worked freelance and across three studios, project by project: the SABIC and STC headquarters in Riyadh at ZFP, NEOM public buildings and corporate offices for Jotun, HB Fuller and BMW at Cosmos, and coastal and residential developments for SODIC, Orascom, Misr Italia and Travco at Innovation. I lead inside large teams and carry projects myself when needed, from idea to Revit drawing set.</p>
       <div class="tl">{timeline.map(([y, r, o, d]) => <div><span class="y">{y}</span><span><b>{r}</b> · {o}<br /><span class="mut">{d}</span></span></div>)}</div>
     </div>
     <div class="nums">
@@ -266,14 +269,15 @@ const year = new Date().getFullYear();
           <section class="pg op" id={`p${it.code}`}>
             <div class="im"><img class="grade" src={it.cover} alt="" /></div>
             <div class="side">
-              <span class="pno"><span class="lab ox" style="font-weight:700">{it.p.sector}</span><span class="big">{it.code}<small>/{String(projects.filter((x) => x.category === it.p.category).length).padStart(2, '0')}</small></span></span>
+              <span class="pno"><span class="lab ox" style="font-weight:700">{it.p.sector}{it.p.roleTag && <span class="rtag">{it.p.roleTag}</span>}</span><span class="big">{it.code}<small>/{String(projects.filter((x) => x.category === it.p.category).length).padStart(2, '0')}</small></span></span>
               <h2 class="wide"><a href={`https://ayahassan.com/work/${it.p.slug}/`}>{it.p.title}</a></h2>
               {it.p.concept && <span class="tag">Concept exploration</span>}
+              {it.p.role && <p class="role">{it.p.role}</p>}
               {it.p.summary && <p class="sum">{it.p.summary}</p>}
               <dl class="blk">
                 <div class="w"><dt>Client</dt><dd class="cl">{it.logo && <img src={it.logo} alt="" />}<span>{it.p.client}</span></dd></div>
                 <div><dt>Year</dt><dd>{it.p.year}</dd></div>
-                <div><dt>Sector</dt><dd>{it.p.sector}</dd></div>
+                <div><dt>{it.p.status ? 'Status' : 'Sector'}</dt><dd>{it.p.status ?? it.p.sector}</dd></div>
                 <div class="w"><dt>Location</dt><dd>{place(it.p)}</dd></div>
                 <div class="w"><dt>Practice</dt><dd>{practice(it.p)}</dd></div>
                 {it.p.links && <div class="w"><dt>Links</dt><dd class="lk">{it.p.links.map((l) => <a href={l.url}>{l.label}</a>)}<a href={`https://ayahassan.com/work/${it.p.slug}/`}>ayahassan.com/work/{it.p.slug}</a></dd></div>}

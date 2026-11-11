@@ -37,6 +37,10 @@ export interface Project {
   roleAr?: string;
   /** Team size, e.g. '4' or '6–8' (TODO: Aya to fill per project). */
   team?: string;
+  /** Role tag shown next to the project number (10 Nov brief). */
+  roleTag?: 'DESIGN' | 'CO-DESIGN' | 'LEAD' | 'VISUALISATION' | 'REVIEW' | 'BIM';
+  /** Project status, omitted when unknown. */
+  status?: 'Built' | 'Under construction' | 'Approved' | 'Concept' | 'Proposal';
   /** Drawing numbers (1-based) that are studies/inspiration: shown right after the cover render, before the other renders. */
   studies?: number[];
   /** Drawing numbers (1-based) shown full width at natural height, e.g. composite grids. */
@@ -49,7 +53,7 @@ const D = 'Design', M = '3D modelling', R = 'Rendering', P = 'Post-production', 
 
 export const projects: Project[] = [
   // ---------- Interiors · Workplace
-  { slug: 'stc-hq', client: 'stc · Saudi Telecom Company', year: '2024', title: 'STC HQ Office Tower', location: 'Riyadh', country: 'Saudi Arabia', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P, 'FF&E selection'], practice: 'ZFP', nda: true, featured: true,
+  { slug: 'stc-hq', client: 'STC · Saudi Telecom Company', year: '2024', title: 'STC HQ Office Tower', location: 'Riyadh', country: 'Saudi Arabia', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P, 'FF&E selection'], practice: 'ZFP', nda: true, featured: true,
     summary: 'Headquarters workplace interiors for Saudi Telecom: executive floors, open offices and focus rooms in a calm palette of stone, oak and the brand violet.' },
   { slug: 'sabic-hq', client: 'SABIC', year: '2024', title: 'SABIC HQ Office Tower Renovation', location: 'Riyadh', country: 'Saudi Arabia', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P, 'Material & FF&E sourcing'], practice: 'ZFP', nda: true, featured: true,
     summary: 'Renovation of SABIC’s headquarters tower: a planted atrium lobby, collaborative floors and training rooms built around the corporate yellow and blue.' },
@@ -164,7 +168,7 @@ export const projects: Project[] = [
 const ig = (url: string) => ({ label: 'Instagram', url });
 const fb = (url: string) => ({ label: 'Facebook', url });
 const links: Record<string, Project['links']> = {
-  'stc-hq': [{ label: 'stc', url: 'https://www.stc.com.sa' }, ig('https://www.instagram.com/stc_ksa'), fb('https://www.facebook.com/stc.ksa')],
+  'stc-hq': [{ label: 'STC', url: 'https://www.stc.com.sa' }, ig('https://www.instagram.com/stc_ksa'), fb('https://www.facebook.com/stc.ksa')],
   'sabic-hq': [{ label: 'SABIC', url: 'https://www.sabic.com' }, ig('https://www.instagram.com/sabic/'), fb('https://www.facebook.com/sabiccorp')],
   'neom-oxagon': [{ label: 'NEOM · Oxagon', url: 'https://www.neom.com/en-us/regions/oxagon' }, ig('https://www.instagram.com/neom/'), fb('https://www.facebook.com/NEOM')],
   'jotun-office': [{ label: 'Jotun Egypt', url: 'https://www.jotun.com/eg-en' }, fb('https://www.facebook.com/JotunGroup/')],
@@ -193,6 +197,38 @@ for (const p of projects) { p.links ??= links[p.slug]; p.video ??= films[p.slug]
 const files = import.meta.glob<{ default: ImageMetadata }>('../assets/projects/*/*.jpg', { eager: true });
 const pick = (slug: string, drawing: boolean) => Object.keys(files)
   .filter((p) => p.includes(`/projects/${slug}/`) && /\/d\d+\.jpg$/.test(p) === drawing).sort().map((p) => files[p].default);
+
+// Roles, tags and status per project (10 Nov brief, Project Stories doc). Never claim more than this.
+const roles: Record<string, [Project['roleTag'], string, string, Project['status'] | null]> = {
+  "travco-west-island": ["DESIGN", "Sole designer of the chalet prototype, from an empty plot to approval · 4 units", "المصممة الوحيدة لنموذج الشاليه، من أرض فارغة حتى الاعتماد · 4 وحدات", "Under construction"],
+  "misr-italia-hilltop": ["VISUALISATION", "Sole visualiser and design development — refined materials, details and façade · 3 prototypes", "المسؤولة الوحيدة عن الإظهار وتطوير التصميم — تحسين المواد والتفاصيل والواجهة · 3 نماذج", "Under construction"],
+  "staff-housing": ["DESIGN", "Project lead, team of 3 · masterplan for ~7,000 residents", "قائدة المشروع، فريق من 3 · مخطط عام لنحو 7,000 ساكن", "Proposal"],
+  "sallan-creek": ["VISUALISATION", "Turned a hand-sketched masterplan into an accurate 19-zone plan, then modelled and rendered the district", "حوّلت مخططًا عامًا مرسومًا باليد إلى مخطط دقيق من 19 منطقة، ثم نمذجت الحي وأظهرته", null],
+  "sodic-east-vale": ["DESIGN", "Sole designer of the premium-home prototype · 2 stacked units", "المصممة الوحيدة لنموذج المنزل المميّز · وحدتان متراكبتان", "Under construction"],
+  "sodic-ogami": ["CO-DESIGN", "Massing and façade of a new prototype, within the scheme's established language", "الكتلة والواجهة لنموذج جديد ضمن اللغة المعمارية المعتمدة للمشروع", "Under construction"],
+  "orascom-o-west": ["CO-DESIGN", "Massing and façade of a new prototype, within the scheme's established language", "الكتلة والواجهة لنموذج جديد ضمن اللغة المعمارية المعتمدة للمشروع", null],
+  "neom-oxagon": ["VISUALISATION", "Modelling, rendering, design review and code corrections", "النمذجة والإظهار ومراجعة التصميم وتصحيحات الكود", null],
+  "chery-showroom": ["BIM", "Concept through design development; coordinated Revit BIM package", "من الفكرة حتى تطوير التصميم؛ حزمة Revit BIM منسّقة", null],
+  "linah-farms": ["BIM", "Concept through design development; coordinated Revit BIM package", "من الفكرة حتى تطوير التصميم؛ حزمة Revit BIM منسّقة", null],
+  "noatum-terminal": ["BIM", "With the design team: design development, BIM package, visuals and animation", "ضمن فريق التصميم: تطوير التصميم وحزمة BIM والإظهار والأنيميشن", null],
+  "dry-port": ["BIM", "Revit model and design-development drawing set", "نموذج Revit ومجموعة رسومات تطوير التصميم", null],
+  "fifth-square": ["DESIGN", "Canopy design; modelling and rendering of the whole complex", "تصميم المظلة؛ نمذجة وإظهار المجمع بالكامل", null],
+  "mazeej": ["REVIEW", "Design review and redesign for code compliance · renders by Vanilla Studio", "مراجعة التصميم وإعادة التصميم للامتثال للكود · الإظهار من Vanilla Studio", null],
+  "sabic-hq": ["DESIGN", "Led the interior concept — lobby, corridors, training rooms, amenities", "قدت الفكرة التصميمية الداخلية — الردهة والممرات وقاعات التدريب والمرافق", "Under construction"],
+  "stc-hq": ["DESIGN", "Originated the executive-floor concept that set the design for the tower", "صاحبة فكرة الطابق التنفيذي التي حدّدت تصميم البرج", "Concept"],
+  "suits-workspaces": ["DESIGN", "Sole designer · full design and schematic package", "المصممة الوحيدة · حزمة التصميم والحزمة التخطيطية كاملة", null],
+  "modern-residence-new-cairo": ["DESIGN", "Sole designer · full design and schematic package", "المصممة الوحيدة · حزمة التصميم والحزمة التخطيطية كاملة", null],
+  "conference-room": ["DESIGN", "Design", "التصميم", null],
+  "hb-fuller": ["CO-DESIGN", "With the team, concept to design development · direct client contact; selected materials and fixtures with the client; site visits", "مع الفريق، من الفكرة حتى تطوير التصميم · تواصل مباشر مع العميل؛ اختيار المواد والتجهيزات معه؛ زيارات موقع", "Built"],
+  "sphinx": ["CO-DESIGN", "With the team, concept to design development · led material selection; animation film; site visits", "مع الفريق، من الفكرة حتى تطوير التصميم · قدت اختيار المواد؛ فيلم أنيميشن؛ زيارات موقع", "Built"],
+  "jotun-office": ["CO-DESIGN", "With the team, concept to design development · animation film; site visits", "مع الفريق، من الفكرة حتى تطوير التصميم · فيلم أنيميشن؛ زيارات موقع", "Built"],
+  "tech-park": ["CO-DESIGN", "With the team, concept to design development", "مع الفريق، من الفكرة حتى تطوير التصميم", null],
+  "bmw-showroom": ["CO-DESIGN", "With the team, design and rendering", "مع الفريق، التصميم والإظهار", null]
+};
+for (const p of projects) { const r = roles[p.slug]; if (r) { p.roleTag = r[0]; p.role = r[1]; p.roleAr = r[2]; if (r[3]) p.status = r[3]; } }
+export const tagAr: Record<string, string> = { DESIGN: 'تصميم', 'CO-DESIGN': 'تصميم مشترك', LEAD: 'قيادة', VISUALISATION: 'إظهار', REVIEW: 'مراجعة', BIM: 'BIM' };
+export const statusAr: Record<string, string> = { Built: 'مُنفَّذ', 'Under construction': 'قيد الإنشاء', Approved: 'معتمد', Concept: 'تصميم مبدئي', Proposal: 'مقترح' };
+
 export const imagesFor = (slug: string) => pick(slug, false);
 export const drawingsFor = (slug: string) => pick(slug, true);
 export const cover = (slug: string) => imagesFor(slug)[0];

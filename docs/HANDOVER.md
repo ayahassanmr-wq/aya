@@ -1,6 +1,6 @@
 # Aya Hassan — Master Handover (v3)
 
-**Last updated:** 7 Nov 2026 (18:45) · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
+**Last updated:** 11 Nov 2026 (15:30) · **Supersedes:** Handover v1 (brand) and v2 (website). Where they disagree, this file wins.
 **Lives at:** `G:\Portfolio\Portfolio Projects\Aya_Hassan_Handover_v3.md`
 
 > **Rule for everyone (people, Claude chat, Claude Code):** read this file first. When you finish a session, update the sections you touched — Status board, Decisions log, Changelog — and bump the date. Never keep project knowledge only in a chat. One file, one truth.
@@ -9,10 +9,10 @@
 
 ## ▶ RESUME HERE — state at 5 Nov 2026, 15:10 (for a new Claude account / new session)
 
-**5 Nov brand strategy session (chat, no code):** brand idea **"Built as designed"** (first "Approved", evolved same day) replaces "One Hand"; new positioning, audiences, personality, voice, convictions and messaging. Full detail in the Claude Doc **"Aya Hassan — Brand Strategy"** (claude.ai artifact 5ZuYxwFrEbuDuPnyStw8RS). Identity kit (5 Nov): **"Aya Hassan — Design System"** (tokens, type, voice, wordmark, imagery rules — artifact FNYH5xwMfQMJjhQ3LZF6Wv; tools and Claude Code read this) and **"Aya Hassan — Brand Book"** (16-slide deck, exports to PDF/PPTX — artifact NzbYTbnJhv6Fr2mVm8y5FP; for people). Until BRAND_VOICE.md is rewritten, the Brand Strategy doc wins on copy. Site copy updated 5 Nov 18:00 on `rebrand-on-update` (not live yet) — see §7 TO DO 00.
+**5 Nov brand strategy session (chat, no code):** brand idea **"Built as designed"** (first "Approved", evolved same day) replaces "One Hand"; new positioning, audiences, personality, voice, convictions and messaging. Full detail in the Claude Doc **"Aya Hassan — Brand Strategy"** (claude.ai artifact 5ZuYxwFrEbuDuPnyStw8RS). Identity kit (5 Nov): **"Aya Hassan — Design System"** (tokens, type, voice, wordmark, imagery rules — artifact FNYH5xwMfQMJjhQ3LZF6Wv; tools and Claude Code read this) and **"Aya Hassan — Brand Book"** (16-slide deck, exports to PDF/PPTX — artifact NzbYTbnJhv6Fr2mVm8y5FP; for people). Until BRAND_VOICE.md is rewritten, the Brand Strategy doc wins on copy. Site copy is NOT yet changed — see §7 TO DO 00.
 
 **Repo:** GitHub `ayahassanmr-wq/aya` (Astro 7). **Live site:** ayahassan.com = Vercel project `aya-hassan` (team "aya-d9cd"), builds from `main`.
-**Branches:** `main` = live (3 Nov 23:10, everything below is live). `rebrand-on-update` = preview/work branch, same as main right now. Never push to `main` without Aya's OK; she reviews screenshots/preview first.
+**Branches:** `main` = live (8 Nov 13:51 = 07659d5: Built-as-designed copy, calmer homepage, no About timeline, footer 'Get in touch'). `rebrand-on-update` = preview/work branch, same as main right now. Never push to `main` without Aya's OK; she reviews screenshots/preview first.
 **Rules:** read `CLAUDE.md` + `BRAND_VOICE.md` (copy rules, FIRST PERSON everywhere, EN + AR in sync) + this file.
 **How Aya works:** one change at a time → build → screenshots (EN + AR) → she says "next" / "push live". Keep replies short (usage limits).
 
@@ -206,7 +206,7 @@ No gold anywhere.
 - All links clickable in both PDFs (contacts, website, project pages, client links; portfolio index jumps to each project).
 - CV-only project scopes are assumed from the old CV — ❓ confirm: Um Qasr (Modelling, Animation), Zamalek Club (✅ Modelling, Rendering, Animation), Sharm El Sheikh Tower Hotel (Design, Modelling, Rendering), Estadat / SIAC / One 90 / NEOM PSB interiors (BIM), Misk Schools (Review).
 - Phone/WhatsApp: shown on the CV (Aya, 5 Nov); not printed on the portfolio.
-- Portfolio project openers: big project number + client logo. CV: experience grouped by employer, in a senior/leadership voice (led, authored, delivered, coordinated) naming each project and Aya's role — ❓ confirm 'Introduced AI-assisted post-production into the studio’s workflow' (Innovation) is accurate (project names link to the site; no tables or scope chips), incl. CV-only projects from the old CV: Zamalek Club, Sharm El Sheikh Tower Hotel, Um Qasr Logistic City, Estadat City Club Complexes, SIAC Office Building, One 90 Retail, Misk Schools (NEOM) — Cosmos 2020–23. Freelance start year ✅ 2019 (5 Nov).
+- Portfolio project openers: big project number + client logo. CV: experience grouped by employer, in a senior/leadership voice (led, authored, delivered, coordinated) naming each project and Aya's role — ✅ 'Introduced AI-assisted post-production' confirmed (10 Nov) (project names link to the site; no tables or scope chips), incl. CV-only projects from the old CV: Zamalek Club, Sharm El Sheikh Tower Hotel, Um Qasr Logistic City, Estadat City Club Complexes, SIAC Office Building, One 90 Retail, Misk Schools (NEOM) — Cosmos 2020–23. Freelance start year ✅ 2019 (5 Nov).
 
 ### 4.4 Content rules
 - Every project must have **client** and **year** (no "—").
@@ -229,7 +229,7 @@ No gold anywhere.
 | sallan-creek | Sallan Creek (DHIFAF) | Arch / Masterplan | Cosmos | North Al Batinah Governor’s Office | 2025 | Oman; Aya: masterplan refinement, 3D model, renders, presentation; 4 regraded aerials + masterplan strip + look & feel grid |
 | staff-housing | Staff Housing Community | Arch / Masterplan | Innovation | Confidential developer | 2026 | From the Orascom Workers Housing (El Gouna) proposal — client & location anonymised (shown as Egypt); featured (No. 02); Option 01 only; 3 renders + 11 sheets |
 | orascom-o-west | Orascom O West Midyard | Arch | Innovation | Orascom Development | 2026 | 2 images only |
-| stc-hq | STC HQ Office Tower | Interior | ZFP | stc | 2024 | NDA; no real-tower photos |
+| STC-hq | STC HQ Office Tower | Interior | ZFP | STC | 2024 | NDA; no real-tower photos |
 | sabic-hq | SABIC HQ Renovation | Interior | ZFP | SABIC | 2024 | NDA; no real-tower photos |
 | neom-oxagon | NEOM Oxagon Public Service | Arch | Cosmos | NEOM | 2023 | |
 | fifth-square | Fifth Square Commercial Complex | Arch | Cosmos | Al Marasem | 2025 | Canopy-design note |
@@ -318,7 +318,6 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - Project Scope strip shows only the disciplines actually done (no greyed-out ones).
 
 ### ❓ NEEDS DECISION (Aya)
-0z. **Design System styling on site** — square corners (buttons keep soft) + oxblood #D9768A on dark. Preview branch `preview-design-system` (https://aya-hassan-jmvburdqb-aya-d9cd.vercel.app). Reply both / corners only / neither.
 00. **24-hour reply promise** is now in the CTA site-wide — confirm it's realistic alongside the full-time job.
 00b. **Approval stamp:** bring back as a small signature in PDFs/footer to support the brand? (Currently removed.)
 00c. **Built projects list:** which projects are built / under construction (for accurate "built" claims in case studies)?
@@ -341,9 +340,10 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 - **Linah Farms re-render / upscale.**
 
 ### 🔧 TO DO (next actions, in order)
-00. ✅ (5 Nov, on branch, awaiting push live) **Apply the "Built as designed" brand to the site (Claude Code, EN + AR):** motto, hero line → positioning line, About bio → final About / 100-word bio, Services "Studio support" → "Concept and design support for studios", closing CTA → new CTA, Arabic bio year 2020 → 2019, hero info row "Practice: 2019 —". Source: Brand Strategy doc §6–7.
+000. 🟡 (11 Nov, Parts 1–3 + full-portfolio fixes done on `rebrand-on-update`, awaiting push live; Part 4 Selected Works next) **Claude Code: apply `CLAUDE_CODE_BRIEF_NOV10.md`** (brand copy EN+AR, role/tag/status fields, CV rebuild per `cv-reference.html`, portfolio fixes, new Selected Works PDF). Supersedes 00, 02, 0c and 6a below.
+00. **Apply the "Built as designed" brand to the site (Claude Code, EN + AR):** motto, hero line → positioning line, About bio → final About / 100-word bio, Services "Studio support" → "Concept and design support for studios", closing CTA → new CTA, Arabic bio year 2020 → 2019, hero info row "Practice: 2019 —". Source: Brand Strategy doc §6–7.
 01. **Rewrite BRAND_VOICE.md** from the Brand Strategy doc (strategy chat), then copy into the repo.
-02. ✅ (5 Nov, on branch) CV rebuilt to the reference in Archivo with the new motto; portfolio cover motto + About bio (100-word) updated; both PDFs regenerated.
+02. **CV:** Claude Code applies `CLAUDE_CODE_BRIEF_CV.md` (copy + Archivo, approved 5 Nov) → regenerate PDF. **Portfolio:** update cover motto/About after site copy.
 03. **Instagram / LinkedIn bios** → short and 25-word versions from the doc.
 0e. **Two portfolio PDFs** — one for freelance/collaboration (Door B) and one for full-time studio jobs (Door A). Scope to agree with Aya.
 0d. **Contact form** — add a real form (e.g. Formspree free tier) using the existing Topic dropdown (Job opportunity / Project / Studio support).
@@ -353,6 +353,8 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 2. Aya: run PowerShell to fill `_Videos`; keep PC awake or upload to Drive.
 4. Claude Code: delete two duplicate Vercel projects (after decision #2).
 5. Strategy chat: service menu & pricing, launch plan (section 9). Brand strategy, design system and brand book ✅ done 5 Nov.
+6a. **Selected Works PDF (15–18 pp, <10 MB):** order and role lines in Claude Doc "Aya Hassan — Project Stories" (artifact UFQVqgmKTLjMnXA2hmBLDr). Fix portfolio About titles to Mid-senior (currently says Senior). Remove Juba. Mazeej: credit "Renders: Vanilla Studio", replace DRAFT image. Role line under every project title + role tag. Thinking spreads for Travco, Misr Italia, Staff Housing, East Vale, SABIC, STC. Delivery spread = BIM sheets (Dry Port, Chery, Linah) + Misk Schools text card (drawings can't be shared). Reminder 16 Nov: collect BIM sheets.
+6b. Aya: check ZFP contract for SABIC/STC NDA limits.
 6. Aya: review the Brand Book; export a PDF for collaborators/printers; Arabic slide needs a native-reader check.
 7. Social profiles (Instagram/LinkedIn) re-skin to the brand.
 
@@ -414,12 +416,13 @@ foreach ($f in $files.Keys) { Copy-Item -LiteralPath $f -Destination (Join-Path 
 | 2026-11-05 | Freelance practice since 2019 | Fact confirmed |
 | 2026-11-05 | Brand idea evolved: "Approved" → "Built as designed"; motto "Bold on paper. Solid on ground."; short line "Designed to be built." Updated in strategy doc, design system, brand book, CV | Aya: built is the stronger story; approval is only a step |
 | 2026-11-05 | Motto → "Bold on paper. Solid on ground." · «جريئة على الورق، راسخة على الأرض» (brand idea "Built as designed" and short line "Designed to be built." stay) | Aya: more creative and catchy; art + precision in one line |
-| 2026-11-05 | Identity kit = Design System (for tools) + Brand Book deck (for people); dark-theme oxblood lifted to #D9768A for contrast; square corners except buttons | Aya: “give me everything for my identity” — chose both |
-| 2026-11-08 | Title on website + portfolio = 'Senior Design Architect' (AR «معمارية تصميم أولى»); CV keeps 'Mid-senior' | Aya request |
-| 2026-11-07 | Footer button 'Start a project' → 'Get in touch' / «تواصل معي» (works for roles and commissions); footer line 'Architect & Interior Designer · Cairo'; About header drops Education | Aya request |
-| 2026-11-07 | About: 'Experience & education' timeline section removed; homepage project cards show no numbers | Aya request |
+| 2026-11-10 | Project roles corrected and recorded (Project Stories doc): Misk Schools = led team of 5 (BIM LOD 300); Oxagon PSB = modelling/renders/code review (CV had wrongly credited PSB BIM lead); Misr Italia & Sallan Creek = visualisation (+ design development / masterplan refinement); Travco, East Vale sole designer; Staff Housing lead, team of 3; SABIC led concept; STC originated concept. Title = Mid-senior. Juba removed. Cosmos 2025 = rejoined. No Gulf requirements on CV for now | Recruiter/design-manager review, Aya's answers |
+| 2026-11-10 | CV final pass: HB Fuller, Sphinx, Jotun = BUILT (site visits, construction support); Skills line replaces Key focus areas (design development, BIM LOD 300, code compliance, consultant coordination, site visits…); 2020–23 tightened; AI post-production confirmed; STC in capitals | Aya answers |
 | 2026-11-06 | Homepage: no availability line, no 'Start a project' / 'Hiring?' buttons, no 'Ways to work with me' (Services only) | Aya: don't look eager for work |
-| 2026-11-07 | Tone softened site-wide: About bio drops 'open to…' line; CV page shows Based/Practice (no 'Available'); Contact drops 'Open to'; Services deadline note is a normal-size line | Aya: confident, not desperate |
+| 2026-11-07 | About: no Experience & education section, no Education in header; homepage cards unnumbered; footer button 'Get in touch'; footer line 'Architect & Interior Designer · Cairo'; no 'open to / available' lines anywhere | Aya: confident, not desperate |
+| 2026-11-11 | Title Mid-senior everywhere (site, portfolio, CV) — reverses 8 Nov 'Senior on site' | Aya, answering the 10 Nov brief |
+| 2026-11-11 | Mazeej: all 5 renders cropped to remove 'DRAFT'; Vanilla centre watermark kept as credit; role line names Vanilla Studio | All five carried DRAFT, not one |
+| 2026-11-05 | Identity kit = Design System (for tools) + Brand Book deck (for people); dark-theme oxblood lifted to #D9768A for contrast; square corners except buttons | Aya: “give me everything for my identity” — chose both |
 | 2026-11-05 | CV rewritten to the new brand; set in Archivo with hairline title-block layout; phone shown; some marketing words allowed sparingly | Aya approved preview |
 
 ---
@@ -512,11 +515,9 @@ End of every session: produce the updated sections of the handover (Status board
 
 | Date | Who | Change |
 |---|---|---|
-| 2026-11-08 | Claude Code | 'Mid-senior' → 'Senior' on website (About header, meta description) and portfolio PDF timeline; CV unchanged. Portfolio regenerated. On rebrand-on-update. |
-| 2026-11-07 | Claude Code | Footer button → 'Get in touch'; footer line → 'Architect & Interior Designer · Cairo'; About header Education item removed. About timeline (Experience & education) removed; homepage Selected work cards no longer show project numbers (Work page, project pages and PDF keep them). On rebrand-on-update. |
-| 2026-11-07 | Claude Code | LIVE: calmer homepage (no availability line, single 'View the work' button, Ways section removed); eager wording removed from About, CV page, Contact; Services deadline note toned down. Portfolio PDF: About headline + back-cover CTA updated to the new brand, ↗ removed (Archivo only). CV + portfolio PDFs regenerated (CV 2 pp; portfolio 75 pp, ~30 MB). |
-| 2026-11-05 | Claude Code | On `rebrand-on-update`, not live: site fixes (2019 labels, title descenders, country wrap, phone email); full UI/UX audit; CV rebuilt (Archivo only, phone shown); "Built as designed" copy EN + AR — motto "Bold on paper. Solid on ground." (hero, intro, CV, portfolio cover), home statement = final About (official Arabic), About = 100-word bio, Services lede "Designed to be built.", studio support wording, new CTA, meta, Rehired removed, senior title. Arabic 2nd About paragraph + Arabic closing line on About written by Claude (no 100-word Arabic in strategy doc) — needs native check. |
+| 2026-11-11 | Claude Code | 10 Nov brief Parts 1–3 on `rebrand-on-update`: role tag + bold role line + status on every project page and portfolio opener (EN + AR; Arabic role lines by Claude, need native check); STC in capitals; Services 'Concept and design support for studios' copy; BRAND_VOICE header; Mid-senior everywhere; portfolio timeline 'Rejoined' + 2019 independent practice row; Mazeej DRAFT cropped; CV rebuilt to 10 Nov reference (2 pp, Archivo only, ATS labels). Full portfolio + CV regenerated. Not live. |
 | 2026-11-05 | Claude (chat) | Brand strategy session (no code): "Approved" replaces "One Hand"; positioning (luxury homes, coast-led, corporate HQs; Egypt + Gulf; built as designed), two doors, personality, voice calibrated from Q&A + real emails, public softness rule, six convictions, About + bios + pitches + CTA (EN + AR). Brand Strategy Claude Doc created; handover §1, §2, §7, §8, §9, §11, §12 updated. CV rewritten + Archivo preview approved; Claude Code brief written. Design System + 16-slide Brand Book created. Brand idea evolved to "Built as designed" across all files; motto set to "Bold on paper. Solid on ground." |
+| 2026-11-10 | Claude (chat) | CV + portfolio reviewed as recruiter/design manager (CV 7/6.5, portfolio 7.5/6). Project Stories doc created; CV corrected (roles, Misk Schools, leadership line, rejoined Cosmos, Juba out, ATS-safe labels); Selected Works plan set. |
 | 2026-11-03 | Claude | Live: BRAND_VOICE items 1–4 (availability line, Hiring? See CV button, 5 countries, new About bio), About timeline edits, first person on About + portfolio; CV + portfolio regenerated. Remaining checklist items 5–10 pending. |
 | 2026-11-03 | Claude | Sallan Creek live; Staff Housing condensed + brand-recoloured studies; masterplans first; Sphinx not BIM; Mediterranean removed; CV + portfolio regenerated. |
 | 2026-11-03 | Claude | Staff Housing added; East Vale rebuilt around the premium home; CV + portfolio regenerated. Live. |

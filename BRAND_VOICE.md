@@ -4,11 +4,13 @@ Instructions for anyone (human or AI) editing this website. Follow these rules f
 
 ## Positioning (use verbatim where a summary line is needed)
 
-**Concept-stage architect and interior designer for Gulf-scale projects. I take an idea to an approved, buildable design.**
+**Architect and interior designer for luxury homes, coastal developments and corporate headquarters across Egypt and the Gulf. Original ideas, built as designed.**
 
-Motto (keep): From concept to conviction.
+Brand idea: Built as designed. Motto: *Bold on paper. Solid on ground.* · جريئة على الورق، راسخة على الأرض. Short line: *Designed to be built.* · صُمّم ليُبنى.
 
-Proof points to draw from: NEOM, SABIC HQ, stc HQ, SODIC, Orascom, Misr Italia, BMW · 28 selected projects · 5 countries (Saudi Arabia, Egypt, India, South Sudan, Oman) · 3 studios · since 2019 (freelance), 7 years · Revit to IFC.
+Retired (never use): "One Hand", "From concept to conviction", "concept-stage". Closing CTA: Every good project starts with a conversation. Send me yours. I reply within 24 hours. Full rules: the Brand Strategy doc (handover §2 wins until this file is fully rewritten).
+
+Proof points to draw from: NEOM, SABIC HQ, STC HQ, SODIC, Orascom, Misr Italia, BMW · 28 selected projects · 5 countries (Saudi Arabia, Egypt, India, South Sudan, Oman) · 3 studios · since 2019 (freelance), 7 years · Revit to IFC.
 
 ## Audiences — every page must serve all three
 

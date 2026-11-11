@@ -1,42 +1,7 @@
 ---
-/* Print-only CV, A4 portrait, two pages. Rendered to /Aya_Hassan_CV.pdf with headless Chrome.
-   Copy and layout match the approved reference (cv-reference.html, 5 Nov 2026). */
+/* Print-only CV, A4 portrait, two pages → /Aya_Hassan_CV.pdf. Copy and layout = cv-reference.html (10 Nov). */
 import '@fontsource-variable/archivo/wdth.css';
 import '@fontsource-variable/archivo/wdth-italic.css';
-
-const site = 'https://ayahassan.com';
-// [[slug|Name]] becomes a link to that project on the website.
-const link = (t: string) => t.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, `<a href="${site}/work/$1/">$2</a>`);
-
-type Job = [string, string, string, string[]];
-const page1: Job[] = [
-  ['2026 — now', 'Mid-senior Design Architect', 'Innovation Design Studio, Cairo', [
-    '<b>[[sodic-ogami|SODIC Ogami]], [[sodic-east-vale|SODIC East Vale]], [[travco-west-island|Travco West Island]] &amp; [[orascom-o-west|Orascom O West]]:</b> concept design from first massing to approval, developed through 3D models and visualisation.',
-    '<b>[[staff-housing|Staff Housing Community]]:</b> masterplan for ~7,000 residents — cluster planning, zoning, accessibility studies, two repeatable residential prototypes and a Nubian-inspired architectural language.',
-    '<b>[[misr-italia-hilltop|Misr Italia Hilltop]], Ras El Hekma:</b> full modelling and rendering packages for three apartment prototypes.',
-    'Introduced AI-assisted post-production into the studio’s visualisation workflow.']],
-  ['2025', 'Mid-senior Design Architect &amp; Interior Designer', 'Cosmos Studio, Cairo', [
-    '<b>[[sallan-creek|Sallan Creek (DHIFAF)]], Oman:</b> refined the masterplan of a 19-zone waterfront district; district-wide 3D model, aerial renders and client presentation.',
-    '<b>[[chery-showroom|Chery Showroom]] &amp; [[linah-farms|Linah Farms]]:</b> concept design and coordinated Revit BIM packages with the engineering disciplines.',
-    '<b>[[noatum-terminal|NOATUM Automotive Terminal]]:</b> conceptual studies, 3D models, visuals and animation, as part of the design team.',
-    '<b>[[fifth-square|Fifth Square]]:</b> canopy design; modelling and rendering of the whole complex.',
-    '<b>[[mazeej|Mazeej Hotel &amp; Housing Complex]]:</b> design review and redesign for building-code compliance.']],
-];
-const page2: Job[] = [
-  ['2024', 'Design Architect &amp; Interior Designer', 'ZFP – Zuhair Fayez Partnership, Riyadh', [
-    '<b>[[sabic-hq|SABIC HQ]] &amp; [[stc-hq|stc HQ]]:</b> interior concepts for lobbies, executive floors and workplaces at two of Riyadh’s landmark headquarters.',
-    'Material and FF&amp;E strategy, site visits, vendor coordination and worldwide furniture sourcing.']],
-  ['2020 — 2023', 'Design Architect &amp; Interior Designer', 'Cosmos Studio, Concept Design Dept.', [
-    '<b>NEOM Public Service Buildings:</b> led the complete BIM development of the architectural and interior packages, coordinating all disciplines.',
-    '<b>[[neom-oxagon|NEOM Oxagon]]:</b> 3D models for the public service buildings.',
-    '<b>[[juba-resort|Juba Hotel &amp; Resort]], Sharm El Sheikh Tower Hotel &amp; Zamalek Club:</b> design, modelling, rendering and animation.',
-    '<b>[[sphinx|Sphinx]], [[hb-fuller|H.B. Fuller]], [[jotun-office|Jotun]], [[tech-park|Tech Park]] &amp; [[bmw-showroom|BMW Showroom]]:</b> workplace and retail interiors, from concept to schematic packages.',
-    '<b>[[dry-port|Dry Port]], Estadat City Club, SIAC &amp; One 90:</b> Revit models and drawing sets.',
-    '<b>Um Qasr Logistic City:</b> 3D models and animated films for client and promotional campaigns.',
-    '<b>Misk Schools &amp; NEOM:</b> design reviews and client communication.']],
-  ['2019 — now', 'Independent Practice', 'Selected commissions', [
-    'High-end residential interiors, luxury villas and boutique workplaces for private clients across Egypt, Saudi Arabia and India.']],
-];
 ---
 <!doctype html>
 <html lang="en">
@@ -45,89 +10,100 @@ const page2: Job[] = [
 <meta name="robots" content="noindex" />
 <title>Aya Hassan CV</title>
 <style is:global>
-  @page { size: A4; margin: 0; }
-  :root { --bone: #F3EDE3; --ink: #2B2826; --ox: #5E1A24; --sand: #D6CBBE; --mute: #6f6862; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--bone); }
-  body { font-family: "Archivo Variable", sans-serif; font-stretch: 100%; color: var(--ink); font-size: 8.6pt; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  a { color: inherit; text-decoration: none; }
-  .page { width: 210mm; height: 297mm; padding: 15mm 16mm 13mm; position: relative; page-break-after: always; break-after: page; overflow: hidden; }
-  .eyebrow, .lab, h2 { font-weight: 500; text-transform: uppercase; letter-spacing: .2em; font-size: 7pt; color: var(--ox); }
-  h1 { font-weight: 850; font-stretch: 125%; font-size: 34pt; letter-spacing: -.03em; line-height: 1; margin: 2mm 0 1.5mm; }
-  .motto { font-weight: 250; font-style: italic; font-size: 12pt; color: var(--ox); }
-  .block { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm 5mm; margin-top: 6mm; padding: 4mm 0; border-top: .5pt solid var(--ink); border-bottom: .5pt solid var(--ink); }
-  .block div span { display: block; margin-top: .6mm; }
-  .wide { grid-column: span 2; }
-  h2 { margin: 7mm 0 2.5mm; padding-bottom: 1.6mm; border-bottom: .5pt solid var(--ox); }
-  .profile { font-size: 10pt; line-height: 1.5; font-weight: 350; }
-  .str { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; }
-  .str div { border-left: 1.6pt solid var(--ox); padding-left: 3mm; }
-  .str b { display: block; font-weight: 700; font-stretch: 112%; font-size: 8.6pt; margin-bottom: 1mm; }
-  .job { display: grid; grid-template-columns: 52mm 1fr; gap: 5mm; margin-bottom: 4.5mm; }
-  .yr { font-weight: 800; font-stretch: 112%; color: var(--ox); }
-  .role { font-weight: 700; } .firm { color: var(--mute); }
-  ul { list-style: none; } li { position: relative; padding-left: 3.5mm; margin-bottom: 1.3mm; }
-  li::before { content: ""; position: absolute; left: 0; top: 2.1mm; width: 1.6mm; height: .5pt; background: var(--ox); }
-  li b { font-weight: 700; }
-  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
-  .two p { margin-bottom: 2mm; }
-  .clients { font-weight: 600; font-stretch: 112%; line-height: 1.7; }
-  .port { display: flex; justify-content: space-between; background: var(--ox); color: var(--bone); padding: 3.5mm 4mm; font-weight: 500; }
-  .foot { position: absolute; left: 16mm; right: 16mm; bottom: 9mm; display: flex; justify-content: space-between; border-top: .5pt solid var(--sand); padding-top: 2mm; font-size: 6.8pt; letter-spacing: .2em; text-transform: uppercase; color: var(--ox); font-weight: 600; }
-</style>
+
+
+@page{size:A4;margin:0}
+:root{--bone:#F3EDE3;--ink:#2B2826;--ox:#5E1A24;--sand:#D6CBBE;--mute:#6f6862}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bone)}
+body{font-family:"Archivo Variable",sans-serif;color:var(--ink);font-size:8.4pt;line-height:1.4;font-stretch:100%}
+.page{width:210mm;height:297mm;padding:15mm 16mm 13mm;position:relative;page-break-after:always;overflow:hidden}
+.eyebrow,.lab,h2{font-weight:500;text-transform:uppercase;letter-spacing:.06em;font-size:7pt;color:var(--ox)}
+h1{font-weight:850;font-stretch:125%;font-size:34pt;letter-spacing:-.03em;line-height:1;margin:2mm 0 1.5mm}
+.motto{font-weight:250;font-style:italic;font-size:12pt;color:var(--ox)}
+.block{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm 5mm;margin-top:6mm;padding:4mm 0;border-top:.5pt solid var(--ink);border-bottom:.5pt solid var(--ink)}
+.block div span{display:block;margin-top:.6mm}
+.wide{grid-column:span 2}
+h2{margin:7mm 0 2.5mm;padding-bottom:1.6mm;border-bottom:.5pt solid var(--ox)}
+.profile{font-size:10pt;line-height:1.5;font-weight:350}
+.str{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm}
+.str div{border-left:1.6pt solid var(--ox);padding-left:3mm}
+.str b{display:block;font-weight:700;font-stretch:112%;font-size:8.6pt;margin-bottom:1mm}
+.job{display:grid;grid-template-columns:52mm 1fr;gap:5mm;margin-bottom:4.5mm}
+.yr{font-weight:800;font-stretch:112%;color:var(--ox)}
+.role{font-weight:700}.firm{color:var(--mute)}
+ul{list-style:none}li{position:relative;padding-left:3.5mm;margin-bottom:1.3mm}
+li:before{content:"";position:absolute;left:0;top:2.1mm;width:1.6mm;height:.5pt;background:var(--ox)}
+li b{font-weight:700}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8mm}
+.two p{margin-bottom:2mm}
+.clients{font-weight:600;font-stretch:112%;line-height:1.7}
+.port{display:flex;justify-content:space-between;background:var(--ox);color:var(--bone);padding:3.5mm 4mm;font-weight:500}
+.foot{position:absolute;left:16mm;right:16mm;bottom:9mm;display:flex;justify-content:space-between;border-top:.5pt solid var(--sand);padding-top:2mm;font-size:6.8pt;letter-spacing:.06em;text-transform:uppercase;color:var(--ox);font-weight:600}
+a{color:inherit;text-decoration:none}body{-webkit-print-color-adjust:exact;print-color-adjust:exact}</style>
 </head>
 <body>
 <section class="page">
-  <div class="eyebrow">Architect · Interior designer</div>
-  <h1>AYA | HASSAN</h1>
-  <div class="motto">Bold on paper. Solid on ground.</div>
-  <div class="block">
-    <div><div class="lab">Based</div><span>Cairo, Egypt</span></div>
-    <div><div class="lab">Practice</div><span>2019 — Present</span></div>
-    <div><div class="lab">Email</div><span><a href="mailto:ayahassanm@outlook.com">ayahassanm@outlook.com</a></span></div>
-    <div><div class="lab">LinkedIn</div><span><a href="https://www.linkedin.com/in/ayahassanm">linkedin.com/in/ayahassanm</a></span></div>
-    <div><div class="lab">Phone / WhatsApp</div><span><a href="https://wa.me/201115318509">+20 111 531 8509</a></span></div>
-    <div><div class="lab">Web</div><span><a href={site}>ayahassan.com</a></span></div>
-    <div class="wide"><div class="lab">Education</div><span>B.Sc. Architectural Engineering, FUE (2014–2019)</span></div>
-  </div>
-  <h2>Profile</h2>
-  <p class="profile">Architect and interior designer with seven years across Egypt and the Gulf. I design luxury homes, coastal developments and corporate headquarters, and resolve them so they are approved and built as designed. Selected work for NEOM, SABIC, stc, SODIC, Orascom and Misr Italia.</p>
-  <h2>Core strengths</h2>
-  <div class="str">
-    <div><b>Coastal &amp; Luxury Residential</b>Ras El Hekma, Almaza Bay, El Gouna; SODIC, Orascom, Misr Italia.</div>
-    <div><b>Masterplans &amp; Communities</b>A community for ~7,000 residents; a 19-zone waterfront district in Oman.</div>
-    <div><b>Corporate HQs &amp; Interiors</b>SABIC, stc, Jotun, H.B. Fuller, BMW; material, FF&amp;E and sourcing.</div>
-    <div><b>Design to Construction</b>Revit BIM packages, code review and consultant coordination.</div>
-  </div>
-  <h2>Professional experience</h2>
-  {page1.map(([yr, role, firm, items]) => (
-    <div class="job"><div><div class="yr">{yr}</div><div class="role" set:html={role} /><div class="firm">{firm}</div></div>
-    <ul>{items.map((i) => <li set:html={link(i)} />)}</ul></div>
-  ))}
-  <div class="foot"><span>Aya Hassan — Curriculum vitae</span><span>01 / 02</span></div>
+<div class="eyebrow">Architect · Interior designer</div>
+<h1>AYA | HASSAN</h1>
+<div class="motto">Bold on paper. Solid on ground.</div>
+<div class="block">
+<div><div class="lab">Based</div><span>Cairo, Egypt</span></div>
+<div><div class="lab">Practice</div><span>2019 — Present</span></div>
+<div><div class="lab">Email</div><span><a href="mailto:ayahassanm@outlook.com">ayahassanm@outlook.com</a></span></div>
+<div><div class="lab">LinkedIn</div><span><a href="https://www.linkedin.com/in/ayahassanm">linkedin.com/in/ayahassanm</a></span></div>
+<div><div class="lab">Phone / WhatsApp</div><span><a href="https://wa.me/201115318509">+20 111 531 8509</a></span></div>
+<div><div class="lab">Web</div><span><a href="https://ayahassan.com">ayahassan.com</a></span></div>
+<div class="wide"><div class="lab">Education</div><span>B.Sc. Architectural Engineering, FUE (2014–2019)</span></div>
+</div>
+<h2>Profile</h2>
+<p class="profile">Architect and interior designer with seven years across Egypt and the Gulf. I design luxury homes, coastal developments and corporate headquarters, and carry them through approval to site; most are built or under construction. I have led teams of up to five, including the architectural BIM package for NEOM’s Misk Schools. Selected work for NEOM, SABIC, STC, SODIC, Orascom and Misr Italia.</p>
+<h2>Core strengths</h2>
+<div class="str">
+<div><b>Coastal &amp; Luxury Residential</b>Ras El Hekma, Almaza Bay, El Gouna; SODIC, Orascom, Misr Italia.</div>
+<div><b>Masterplans &amp; Communities</b>A community for ~7,000 residents; a 19-zone waterfront district in Oman.</div>
+<div><b>Corporate HQs &amp; Interiors</b>SABIC, STC, Jotun, H.B. Fuller, BMW; three office interiors built.</div>
+<div><b>Design to Construction</b>Led a team of five on a NEOM BIM package (LOD 300); code review and consultant coordination.</div>
+</div>
+<h2>Professional experience</h2>
+<div class="job"><div><div class="yr">2026 — now</div><div class="role">Mid-senior Design Architect</div><div class="firm">Innovation Design Studio, Cairo</div></div>
+<ul><li><b><a href="https://ayahassan.com/work/travco-west-island/">Travco West Island, Almaza Bay</a>:</b> sole designer of a four-unit chalet prototype, from an empty plot to client approval — plans, elevations and 3D, oriented to the north wind and lagoon views. Under construction.</li>
+<li><b><a href="https://ayahassan.com/work/sodic-east-vale/">SODIC East Vale, MADA City</a>:</b> designed the premium-home prototype of two stacked units, separating private quarters from reception and living. Under construction.</li>
+<li><b><a href="https://ayahassan.com/work/staff-housing/">Staff Housing Community</a>:</b> led a team of three on a masterplan proposal for ~7,000 residents — clustered courtyards, a town-wide pedestrian network and two repeatable prototypes in a Nubian-inspired language.</li>
+<li><b>SODIC Ogami &amp; Orascom O West:</b> massing and façade of new prototypes within each scheme’s established language; client presentations. Ogami under construction.</li>
+<li><b><a href="https://ayahassan.com/work/misr-italia-hilltop/">Misr Italia Hilltop, Ras El Hekma</a>:</b> sole visualiser for three apartment prototypes; refined materials, details and façade along the way. Approved; under construction.</li>
+<li>Introduced AI-assisted post-production into the studio’s visualisation workflow.</li></ul></div>
+<div class="job"><div><div class="yr">2025</div><div class="role">Mid-senior Design Architect &amp; Interior Designer</div><div class="firm">Cosmos Studio, Cairo · rejoined</div></div>
+<ul><li><b><a href="https://ayahassan.com/work/sallan-creek/">Sallan Creek (DHIFAF), Oman</a>:</b> turned a hand-sketched masterplan into an accurate 19-zone waterfront plan; district-wide 3D model, aerial renders and client presentation.</li>
+<li><b>Chery Showroom, Linah Farms &amp; NOATUM Terminal:</b> concept through design development, with coordinated Revit BIM packages across the engineering disciplines; visuals, animation and client presentations.</li>
+<li><b><a href="https://ayahassan.com/work/fifth-square/">Fifth Square</a>:</b> canopy design; modelling and rendering of the whole complex.</li>
+<li><b><a href="https://ayahassan.com/work/mazeej/">Mazeej Hotel &amp; Housing Complex</a>:</b> design review and redesign for building-code compliance.</li></ul></div>
+<div class="foot"><span>Aya Hassan — CV</span><span>01 / 02</span></div>
 </section>
 <section class="page">
-  {page2.map(([yr, role, firm, items]) => (
-    <div class="job"><div><div class="yr">{yr}</div><div class="role" set:html={role} /><div class="firm">{firm}</div></div>
-    <ul>{items.map((i) => <li set:html={link(i)} />)}</ul></div>
-  ))}
-  <h2>Software &amp; languages</h2>
-  <div class="two">
-    <div>
-      <p><span class="lab">Design &amp; BIM</span><br />AutoCAD, Revit, Navisworks, BIM 360, Rhino, Grasshopper, SketchUp</p>
-      <p><span class="lab">Visualisation</span><br />3ds Max, V-Ray, Corona, Lumion, AI concept tools</p>
-      <p><span class="lab">Presentation</span><br />Photoshop, InDesign, Premiere, After Effects</p>
-    </div>
-    <div>
-      <p><span class="lab">Languages</span><br />Arabic — native · English — fluent</p>
-      <p><span class="lab">Key focus areas</span><br />Architecture, Interior Architecture, Masterplanning, FF&amp;E Sourcing, Client Presentation, Team Leadership</p>
-    </div>
-  </div>
-  <h2>Clients &amp; developers</h2>
-  <p class="clients">SODIC · Orascom Development · Misr Italia Properties · Travco · NEOM · stc · SABIC · Jotun · BMW Egypt · Chery Egypt · NOATUM · H.B. Fuller · Al Marasem · Guira Developments · Linah Farms · Suits Workspaces · North Al Batinah Governor’s Office, Oman</p>
-  <h2>Portfolio</h2>
-  <a class="port" href={`${site}/work/`}><span>Selected work &amp; case studies</span><span>ayahassan.com/work</span></a>
-  <div class="foot"><span>Aya Hassan — Curriculum vitae</span><span>02 / 02</span></div>
-</section>
-</body>
+<div class="job"><div><div class="yr">2024</div><div class="role">Design Architect &amp; Interior Designer</div><div class="firm">ZFP – Zuhair Fayez Partnership, Riyadh</div></div>
+<ul><li><b><a href="https://ayahassan.com/work/stc-hq/">STC HQ Office Tower</a>:</b> originated and modelled the executive-floor concept that became the base for the tower’s interior design, turning its curved outline into places and points of interest. Concept stage.</li>
+<li><b><a href="https://ayahassan.com/work/sabic-hq/">SABIC HQ Renovation</a>:</b> led the interior concept for the lobby, corridors, training rooms and amenities, turning an existing slab protrusion into the atrium’s signature planters. Under construction.</li>
+<li>Material and FF&amp;E strategy, site visits, vendor coordination and worldwide furniture sourcing.</li></ul></div>
+<div class="job"><div><div class="yr">2020 — 2023</div><div class="role">Design Architect &amp; Interior Designer</div><div class="firm">Cosmos Studio, Concept Design Dept.</div></div>
+<ul><li><b>NEOM, Misk Schools:</b> led a team of five delivering the complete architectural BIM package (LOD 300) for two schools; consultant coordination with structure, MEP, the client and NEOM standards; code-compliance review. Delivered to deadline.</li>
+<li><b><a href="https://ayahassan.com/work/neom-oxagon/">NEOM Oxagon, Public Service Buildings</a>:</b> 3D models, renders and client presentations; design review, code-compliance corrections and consultant coordination.</li>
+<li><b>Sharm El Sheikh Tower Hotel &amp; Zamalek Club:</b> design, modelling, rendering and animation.</li>
+<li><b>H.B. Fuller, Sphinx &amp; Jotun offices — built:</b> interiors with the team from concept through design development; site visits and construction-stage support to completion. On H.B. Fuller I was the client’s direct contact, coordinated consultants and selected materials and fixtures with the client; on Sphinx I led material selection. Animation films for Jotun and Sphinx.</li>
+<li><b>Tech Park &amp; BMW Showroom:</b> workplace and retail interiors with the team, from concept through design development.</li>
+<li><b>BIM delivery — Dry Port, Estadat City Club, SIAC &amp; One 90:</b> Revit models and design-development drawing sets.</li>
+<li><b>Um Qasr Logistic City:</b> 3D models and animated films for client and promotional campaigns.</li>
+</ul></div>
+<div class="job"><div><div class="yr">2019 — now</div><div class="role">Independent Practice</div><div class="firm">Selected commissions</div></div>
+<ul><li><b>Suits Workspaces &amp; Modern Residence:</b> sole designer, from concept to full schematic package; site visits and consultant coordination.</li>
+<li>High-end residential interiors, luxury villas and boutique workplaces for private clients across Egypt, Saudi Arabia and India — design, client presentations and site visits.</li></ul></div>
+<h2>Software &amp; languages</h2>
+<div class="two"><div><p><span class="lab">Design &amp; BIM</span><br />AutoCAD, Revit, Navisworks, BIM 360, Rhino, Grasshopper, SketchUp</p><p><span class="lab">Visualisation</span><br />3ds Max, V-Ray, Corona, Lumion, AI concept tools</p><p><span class="lab">Presentation</span><br />Photoshop, InDesign, Premiere, After Effects</p></div>
+<div><p><span class="lab">Languages</span><br />Arabic — native · English — fluent</p><p><span class="lab">Skills</span><br />Concept design · Design development · Schematic and BIM packages (LOD 300) · Masterplanning · Code compliance review · Consultant coordination · Client presentations · Site visits · Material, FF&amp;E selection and sourcing · Team leadership</p></div></div>
+<h2>Clients &amp; developers</h2>
+<p class="clients">SODIC · Orascom Development · Misr Italia Properties · Travco · NEOM · STC · SABIC · Jotun · BMW Egypt · Chery Egypt · NOATUM · H.B. Fuller · Al Marasem · Guira Developments · Linah Farms · Suits Workspaces · North Al Batinah Governor’s Office, Oman</p>
+<h2>Portfolio</h2>
+<a class="port" href="https://ayahassan.com/work/"><span>Selected work &amp; case studies</span><span>ayahassan.com/work</span></a>
+<div class="foot"><span>Aya Hassan — CV</span><span>02 / 02</span></div>
+</section></body>
 </html>
