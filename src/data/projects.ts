@@ -191,7 +191,7 @@ const pick = (slug: string, drawing: boolean) => Object.keys(files)
 
 // Roles, tags and status per project (10 Nov brief, Project Stories doc). Never claim more than this.
 const roles: Record<string, [Project['roleTag'], string, string, Project['status'] | null]> = {
-  "travco-west-island": ["DESIGN", "Sole designer of the chalet prototype, from an empty plot to approval · 4 units", "المصممة الوحيدة لنموذج الشاليه، من أرض فارغة حتى الاعتماد · 4 وحدات", "Under construction"],
+  "travco-west-island": ["DESIGN", "Sole designer of the chalet and townhome prototypes, from an empty plot to approval", "المصممة الوحيدة لنموذجي الشاليه والتاون هاوس، من أرض فارغة حتى الاعتماد", "Under construction"],
   "misr-italia-hilltop": ["VISUALISATION", "Sole visualiser and design development — refined materials, details and façade · 3 prototypes", "المسؤولة الوحيدة عن الإظهار وتطوير التصميم — تحسين المواد والتفاصيل والواجهة · 3 نماذج", "Under construction"],
   "staff-housing": ["DESIGN", "Project lead, team of 3 · masterplan for ~7,000 residents", "قائدة المشروع، فريق من 3 · مخطط عام لنحو 7,000 ساكن", "Proposal"],
   "sallan-creek": ["VISUALISATION", "Turned a hand-sketched masterplan into an accurate 19-zone plan, then modelled and rendered the district", "حوّلت مخططًا عامًا مرسومًا باليد إلى مخطط دقيق من 19 منطقة، ثم نمذجت الحي وأظهرته", null],
