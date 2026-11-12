@@ -1,0 +1,386 @@
+{
+"bmw-showroom/01": [
+1.7773,
+0.0
+],
+"bmw-showroom/02": [
+1.7773,
+0.0
+],
+"bmw-showroom/03": [
+1.7773,
+0.0
+],
+"chery-showroom/01": [
+1.7778,
+0.2143
+],
+"chery-showroom/02": [
+1.7778,
+0.0
+],
+"chery-showroom/03": [
+1.7778,
+0.0
+],
+"chery-showroom/04": [
+1.7778,
+0.0
+],
+"chery-showroom/05": [
+1.7778,
+0.0
+],
+"conference-room/01": [
+1.3333,
+0.0
+],
+"dry-port/01": [
+1.3086,
+0.0
+],
+"fifth-square/01": [
+1.4536,
+0.0949
+],
+"fifth-square/02": [
+1.7778,
+0.0
+],
+"fifth-square/03": [
+1.7778,
+0.0
+],
+"fifth-square/04": [
+1.7778,
+0.0
+],
+"fifth-square/05": [
+1.7778,
+0.0
+],
+"hb-fuller/01": [
+1.3477,
+0.0
+],
+"hb-fuller/02": [
+1.3333,
+0.0
+],
+"hb-fuller/03": [
+1.3333,
+0.0
+],
+"hb-fuller/04": [
+1.3333,
+0.0
+],
+"hb-fuller/05": [
+1.3333,
+0.0
+],
+"jotun-office/01": [
+1.3333,
+0.0
+],
+"jotun-office/02": [
+1.3333,
+0.0
+],
+"jotun-office/03": [
+1.3333,
+0.0
+],
+"jotun-office/04": [
+1.3333,
+0.0
+],
+"jotun-office/05": [
+1.3333,
+0.0
+],
+"linah-farms/01": [
+1.7778,
+0.1875
+],
+"linah-farms/02": [
+1.4632,
+0.2059
+],
+"linah-farms/03": [
+1.7767,
+0.0
+],
+"linah-farms/04": [
+1.6247,
+0.3496
+],
+"linah-farms/05": [
+1.6247,
+0.3333
+],
+"mazeej/01": [
+1.7769,
+0.0
+],
+"misr-italia-hilltop/01": [
+1.791,
+0.1622
+],
+"misr-italia-hilltop/02": [
+1.791,
+0.0
+],
+"misr-italia-hilltop/03": [
+1.7778,
+0.0804
+],
+"misr-italia-hilltop/04": [
+1.7917,
+0.1802
+],
+"modern-residence-new-cairo/01": [
+1.7783,
+0.0
+],
+"modern-residence-new-cairo/02": [
+1.7783,
+0.0
+],
+"modern-residence-new-cairo/03": [
+1.7774,
+0.0
+],
+"modern-residence-new-cairo/04": [
+1.7783,
+0.0
+],
+"modern-residence-new-cairo/05": [
+1.7783,
+0.0
+],
+"neom-oxagon/01": [
+1.7778,
+0.0
+],
+"neom-oxagon/02": [
+1.7778,
+0.1339
+],
+"neom-oxagon/03": [
+1.7778,
+0.0
+],
+"neom-oxagon/04": [
+1.7778,
+0.0
+],
+"neom-oxagon/05": [
+1.7778,
+0.0625
+],
+"noatum-terminal/01": [
+1.7778,
+0.25
+],
+"noatum-terminal/02": [
+1.7778,
+0.2054
+],
+"noatum-terminal/03": [
+1.7778,
+0.1161
+],
+"noatum-terminal/04": [
+1.7778,
+0.3304
+],
+"noatum-terminal/05": [
+1.7778,
+0.1518
+],
+"orascom-o-west/01": [
+1.7765,
+0.2679
+],
+"orascom-o-west/02": [
+1.7765,
+0.2768
+],
+"sabic-hq/01": [
+1.7778,
+0.0
+],
+"sabic-hq/02": [
+1.7778,
+0.0
+],
+"sabic-hq/03": [
+1.7778,
+0.0
+],
+"sabic-hq/04": [
+1.7778,
+0.0
+],
+"sabic-hq/05": [
+1.7778,
+0.0
+],
+"sallan-creek/01": [
+1.7778,
+0.0
+],
+"sallan-creek/02": [
+1.7778,
+0.0
+],
+"sallan-creek/03": [
+1.7778,
+0.0
+],
+"sallan-creek/04": [
+1.7778,
+0.0
+],
+"sodic-east-vale/01": [
+1.5,
+0.1579
+],
+"sodic-east-vale/02": [
+1.5,
+0.0902
+],
+"sodic-east-vale/03": [
+0.7086,
+0.0
+],
+"sodic-ogami/01": [
+1.7768,
+0.1696
+],
+"sodic-ogami/02": [
+1.7768,
+0.0
+],
+"sodic-ogami/03": [
+1.7768,
+0.2768
+],
+"sodic-ogami/04": [
+1.7768,
+0.25
+],
+"sodic-ogami/05": [
+1.7768,
+0.2679
+],
+"sodic-ogami/06": [
+1.7768,
+0.25
+],
+"sphinx/01": [
+1.7789,
+0.0
+],
+"sphinx/02": [
+1.7769,
+0.0
+],
+"staff-housing/01": [
+1.7811,
+0.0
+],
+"staff-housing/02": [
+1.7811,
+0.2946
+],
+"staff-housing/03": [
+1.7811,
+0.0089
+],
+"stc-hq/01": [
+1.7778,
+0.0
+],
+"stc-hq/02": [
+1.7778,
+0.0
+],
+"stc-hq/03": [
+1.7778,
+0.0
+],
+"stc-hq/04": [
+1.7778,
+0.0
+],
+"stc-hq/05": [
+1.7778,
+0.0
+],
+"suits-workspaces/01": [
+1.7778,
+0.0
+],
+"suits-workspaces/02": [
+1.7778,
+0.0
+],
+"suits-workspaces/03": [
+1.7778,
+0.0
+],
+"suits-workspaces/04": [
+1.7778,
+0.0
+],
+"suits-workspaces/05": [
+0.7097,
+0.0
+],
+"tech-park/01": [
+1.9154,
+0.0
+],
+"tech-park/02": [
+1.7765,
+0.0
+],
+"tech-park/03": [
+1.7778,
+0.0
+],
+"tech-park/04": [
+1.7082,
+0.0
+],
+"tech-park/05": [
+1.5758,
+0.0
+],
+"travco-west-island/01": [
+1.3333,
+0.0
+],
+"travco-west-island/02": [
+1.3333,
+0.1333
+],
+"travco-west-island/03": [
+0.7468,
+0.1
+],
+"travco-west-island/04": [
+1.787,
+0.3964
+],
+"travco-west-island/05": [
+1.7738,
+0.1518
+],
+"travco-west-island/06": [
+1.3333,
+0.0
+]
+}

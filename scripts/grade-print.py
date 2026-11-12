@@ -1,6 +1,6 @@
 """Bake the house grade into render JPGs used by the print pages (Chrome would otherwise rasterise CSS filters
 into huge PDFs). Only <img> tags with class "grade" are graded; drawings, studies and logos are left as they are.
-Selected Works images are re-saved lighter (≈14 MB PDF). Run after `npx astro build`."""
+Selected Works images are re-saved lighter so that PDF stays under 10 MB. Run after `npx astro build`."""
 import re, numpy as np
 from PIL import Image
 graded, plain, sel = set(), set(), set()
@@ -18,7 +18,7 @@ M = SAT @ S
 for u in graded - plain:
     p = 'dist' + u; a = np.asarray(Image.open(p).convert('RGB'), float) / 255
     a = ((a @ M.T) - .5) * 1.05 + .5; a *= 1.01
-    Image.fromarray((a.clip(0, 1) * 255).astype(np.uint8)).save(p, quality=(55 if u in sel else 84), optimize=True, progressive=True)
+    Image.fromarray((a.clip(0, 1) * 255).astype(np.uint8)).save(p, quality=(42 if u in sel else 80), optimize=True, progressive=True)
 for u in (plain - graded) & sel:
-    p = 'dist' + u; Image.open(p).convert('RGB').save(p, quality=55, optimize=True, progressive=True)
+    p = 'dist' + u; Image.open(p).convert('RGB').save(p, quality=44, optimize=True, progressive=True)
 print('graded', len(graded - plain), 'plain', len(plain))
