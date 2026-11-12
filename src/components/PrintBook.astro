@@ -62,7 +62,6 @@ const packOne = (xs: S[]) => {
 // BIM: two drawings per page, side by side or stacked (whichever is bigger), each page at its own scale
 const packPairs = (xs: S[]) => { const out: any[] = []; for (let i = 0; i < xs.length; i += 2) out.push(...packOne(xs.slice(i, i + 2))); const m = Math.min(...out.map((o) => o.s)); out.forEach((o) => (o.s = m)); return out; };
 const pack = (xs: S[], slug = '') => {
-  if (bimSlugs.includes(slug) && slug !== 'chery-showroom') return packPairs(xs);
   if (stackDef[slug]) return stack(xs, stackDef[slug]);
   if (gridDef[slug]) {
     const pages = gridDef[slug].map((pg) => pg.map((r) => r.map((n) => xs.find((x) => x.no === n)!).filter(Boolean)));
@@ -83,12 +82,15 @@ const pack = (xs: S[], slug = '') => {
     return [{ cols: [sz(a, best.s1), sz(b, best.s2)], rows: [], s: 1 }];
   }
   if (freeDef[slug]) {
-    const rows = freeDef[slug].map((g) => g.map((n) => xs.find((x) => x.no === n)!).filter(Boolean)).filter((g) => g.length);
-    const fr = rows.map((r) => (AW - G * (r.length - 1)) / r.reduce((a, x) => a + x.w, 0));
-    const tot = rows.reduce((a, r, i) => a + Math.max(...r.map((x) => x.h)) * fr[i] + C, 0) + G * (rows.length - 1);
-    const k = Math.min(1, AH / tot);
-    return [{ rows: rows.map((r, i) => r.map((x) => ({ ...x, w: x.w * fr[i] * k, h: x.h * fr[i] * k }))), s: 1 }];
+    return freeDef[slug].map((pg) => {
+      const rows = pg.map((g) => g.map((n) => xs.find((x) => x.no === n)!).filter(Boolean)).filter((g) => g.length);
+      const fr = rows.map((r) => (AW - G * (r.length - 1)) / r.reduce((a, x) => a + x.w, 0));
+      const tot = rows.reduce((a, r, i) => a + Math.max(...r.map((x) => x.h)) * fr[i] + C, 0) + G * (rows.length - 1);
+      const k = Math.min(1, AH / tot);
+      return { rows: rows.map((r, i) => r.map((x) => ({ ...x, w: x.w * fr[i] * k, h: x.h * fr[i] * k }))), s: 1 };
+    });
   }
+  if (bimSlugs.includes(slug) && slug !== 'chery-showroom') return packPairs(xs);
   if (rowDef[slug]) { const pg = rowDef[slug].map((g) => g.map((n) => xs.find((x) => x.no === n)!).filter(Boolean)); const sc = Math.min(...pg.map((g) => Math.min((AW - G * (g.length - 1)) / g.reduce((a, x) => a + x.w, 0), (AH - C) / Math.max(...g.map((x) => x.h))))); return pg.map((g) => ({ rows: [g], s: sc })); }
   if (!xs.length) return [];
   const sc = Math.min(...xs.map((x) => Math.min(AW / x.w, (AH - C) / x.h)));
@@ -121,11 +123,11 @@ const sections = [
 // custom render pages: one index = full uncropped page; two = stacked pair cropped to fill the page
 const renderDef: Record<string, number[][]> = { 'sodic-east-vale': [[0], [2]], 'staff-housing': [[0, 1]] };
 // drawings laid out row by row (row = same scale, fitted to page width), e.g. massing study above the plans
-const freeDef: Record<string, number[][]> = { 'sodic-east-vale': [[1], [2, 3, 4]] };
+const freeDef: Record<string, number[][][]> = { 'sodic-east-vale': [[[1], [2, 3, 4]]], 'noatum-terminal': [[[2, 3], [1]], [[4], [5], [6], [7]]] };
 // two columns on one sheet, each column stacked at its own scale (study beside the plans)
 // zoom for full-page (uncropped) renders, as set by Aya in the artifact
 const fitZoom: Record<string, number> = { 'sodic-east-vale/01': 1.06, 'sodic-east-vale/03': 1.26 };
-const colDef: Record<string, number[][]> = { 'staff-housing': [[3], [4, 5]] };
+const colDef: Record<string, number[][]> = { 'staff-housing': [[3], [4, 5]], 'linah-farms': [[4], [2, 3]] };
 const topAlign = ['staff-housing'];
 const partsDef: Record<string, { name: string; imgs: number[]; plans: number[]; noHero?: boolean; restAll?: boolean; stack?: boolean }[]> = {
   'sodic-ogami': [{ name: 'Twin villa', imgs: [0, 1], plans: [] }, { name: 'Townhome', imgs: [2, 3], plans: [2, 3], noHero: true, restAll: true, stack: true }],
