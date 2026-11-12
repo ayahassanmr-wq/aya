@@ -125,6 +125,33 @@ export const projects: Project[] = [
     summary: 'A full residence in warm timber, stone and soft neutrals: living, dining, bedrooms and baths.' },
   { slug: 'bmw-showroom', year: '2022', client: 'BMW Egypt', title: 'BMW Showroom', location: 'Cairo–Alex Road', country: 'Egypt', category: 'interiors', sector: 'Retail', scope: [D, M, R, P], practice: 'Cosmos Studio',
     summary: 'A brand showroom with a textured feature wall and bright display bays.' },
+  { slug: 'orascom-o-west', client: 'Orascom Development', year: '2026', title: 'Orascom O West Midyard', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
+    summary: 'Mid-rise apartment blocks for the Midyard district of O West.' },
+
+  { slug: 'fifth-square', client: 'Al Marasem', year: '2025', title: 'Fifth Square Commercial Complex', location: 'New Cairo', country: 'Egypt', category: 'architecture', sector: 'Commercial', scope: ['Canopy design', M, R, P], scopeNote: 'Design: the canopy. Modelling and rendering: the whole building.', scopeNoteAr: 'التصميم: المظلة. النمذجة والإظهار: المبنى بالكامل.', practice: 'Cosmos Studio', featured: true,
+    summary: 'A terraced commercial complex whose canopy “trees” become the landmark at night.' },
+  { slug: 'conference-room', client: 'Confidential', year: '2022', title: 'Formal Conference Room', location: 'New Capital', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio',
+    summary: 'A formal boardroom in warm timber and soft light for the New Administrative Capital.' },
+
+  // ---------- Architecture
+  { slug: 'hb-fuller', year: '2022', client: 'H.B. Fuller', title: 'HB Fuller Office Building', location: '6th of October', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio',
+    summary: 'An energetic, budget-conscious HQ built from simple materials and the client’s brand colours.',
+    overview: [
+      'The interior design for the HB Fuller HQ admin building aimed to bring energy and vibrancy to the space on a budget. Simple materials, the client’s brand colours and creative paint techniques create a lively, engaging atmosphere.',
+    ],
+    deliverables: ['Conceptual design presentation', 'Detailed design plans', 'Material samples', 'Implementation guidelines'] },
+  { slug: 'dry-port', client: 'Egyptian Government', year: '2021', title: 'Dry Port Buildings', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, B], practice: 'Cosmos Studio',
+    summary: 'A Revit (BIM) sample: plans and 3D for a dry port’s buildings.' },
+
+  // ---------- Residential developments (Innovation Design Studio)
+  { slug: 'linah-farms', client: 'Linah Farms', year: '2025', title: 'Linah Farms Industrial & Admin Building', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, R, P, B], practice: 'Cosmos Studio',
+    summary: 'An industrial facade whose green framework is inspired by palm leaves.',
+    overview: [
+      'A long, solid industrial shed for a date producer, given a face. The mass is carved with vertical slots, and a green framework drawn from palm leaves runs across it, so the building carries the client’s product on its skin.',
+      'The design was taken from concept to a full Revit package: a coordinated 3D model, elevations and the phase 1 site and ground-floor plan.',
+    ],
+    captions: ['Concept: solid mass, carved slots, palm-leaf framework', 'Revit model', 'Revit elevation, main facade', 'Site and ground-floor plan, phase 1'],
+    process: [['Concept', 'd01'], ['Revit model', 'd02'], ['Render', '01']] },
 ];
 
 /* ---------- external links (official sites only) */

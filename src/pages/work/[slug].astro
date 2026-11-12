@@ -1,4 +1,5 @@
 ---
+import { think } from '../../data/decisions';
 import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import { projects, imagesFor, drawingsFor, fileFor, disciplinesFor, projectNo, sectionTotal, clientLogo, ordered, tagAr, statusAr, type Project } from '../../data/projects';
@@ -65,6 +66,7 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
       <h2 class="label muted reveal">{t('Brief', 'نبذة')}</h2>
       <div class="bt">
         {p.summary && <p class="statement reveal">{p.summary}</p>}
+        {!L.ar && think[p.slug] && <ol class="dec reveal">{think[p.slug].map(([d], k) => <li><b dir="ltr">{String(k + 1).padStart(2, '0')}</b><span>{d}</span></li>)}</ol>}
         {p.overview && <div class="ov reveal">{p.overview.map((x) => <p>{x}</p>)}</div>}
         {(p.deliverables || p.links) && (
           <div class="aside reveal">
@@ -201,6 +203,9 @@ const layout = (k: number, n: number) => { const m = k % 4; if (m === 0) return 
   [dir="rtl"] .hmeta { margin-top: 22px; }
 
   .rtag { align-self: flex-start; margin-top: 6px; padding: 4px 9px; border: 1px solid currentColor; font-size: 10px; letter-spacing: .14em; color: var(--sand); }
+  .dec { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--rule); max-width: 62ch; }
+  .dec li { display: grid; grid-template-columns: 44px 1fr; gap: 8px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .dec b { font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; color: var(--ox); }
   .roleline { margin-top: 14px; max-width: 46ch; font-family: "Archivo Variable", sans-serif; font-weight: 700; font-size: clamp(15px, 1.25vw, 19px); line-height: 1.4; color: var(--ow); }
   .pno { display: flex; flex-direction: column; gap: 6px; color: var(--sand); }
   .pno .big { font-family: "Archivo Variable", sans-serif; font-weight: 800; font-stretch: 125%; font-size: clamp(72px, 11vw, 190px); line-height: .8; letter-spacing: -.03em; color: var(--ow); }
