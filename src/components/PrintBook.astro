@@ -48,7 +48,17 @@ const stack = (xs: S[], groups: number[][]) => {
   const sc = Math.min(...pg.map((g) => Math.min(AW / Math.max(...g.map((x) => x.w)), (AH - C * g.length - G * (g.length - 1)) / g.reduce((a, x) => a + x.h, 0))));
   return pg.map((g) => ({ rows: g.map((x) => [x]), s: sc }));
 };
+// one building's plans on one page, same scale, as large as the page allows
+const packOne = (xs: S[]) => {
+  if (!xs.length) return [];
+  const sc = Math.min((AW - G * (xs.length - 1)) / xs.reduce((a, x) => a + x.w, 0), (AH - C) / Math.max(...xs.map((x) => x.h)));
+  const st = Math.min(AW / Math.max(...xs.map((x) => x.w)), (AH - C * xs.length - G * (xs.length - 1)) / xs.reduce((a, x) => a + x.h, 0));
+  return st > sc * 1.15 ? [{ rows: xs.map((x) => [x]), s: st }] : [{ rows: [xs], s: sc }];
+};
+// BIM: two drawings per page, side by side or stacked (whichever is bigger), each page at its own scale
+const packPairs = (xs: S[]) => { const out: any[] = []; for (let i = 0; i < xs.length; i += 2) out.push(...packOne(xs.slice(i, i + 2))); return out; };
 const pack = (xs: S[], slug = '') => {
+  if (bimSlugs.includes(slug) && slug !== 'chery-showroom') return packPairs(xs);
   if (stackDef[slug]) return stack(xs, stackDef[slug]);
   if (freeDef[slug]) {
     const rows = freeDef[slug].map((g) => g.map((n) => xs.find((x) => x.no === n)!).filter(Boolean)).filter((g) => g.length);
@@ -87,17 +97,18 @@ const sections = [
 // projects with more than one building: each part gets its own render page, render grid and plans
 // projects whose remaining renders each get a full page instead of a grid
 // custom render pages: one index = full uncropped page; two = stacked pair cropped to fill the page
-const renderDef: Record<string, number[][]> = { 'sodic-east-vale': [[1], [2]], 'staff-housing': [[2], [0, 1]] };
+const renderDef: Record<string, number[][]> = { 'sodic-east-vale': [[1], [2]], 'staff-housing': [[0, 1]] };
 // drawings laid out row by row (row = same scale, fitted to page width), e.g. massing study above the plans
 const freeDef: Record<string, number[][]> = { 'sodic-east-vale': [[1], [2, 3, 4]] };
 const topAlign = ['staff-housing'];
 const partsDef: Record<string, { name: string; imgs: number[]; plans: number[] }[]> = {
   'sodic-ogami': [{ name: 'Twin villa', imgs: [0, 1], plans: [] }, { name: 'Townhome', imgs: [2, 3], plans: [2, 3] }],
-  'travco-west-island': [{ name: 'Chalet', imgs: [0, 1, 2, 3], plans: [1, 2] }, { name: 'Townhome', imgs: [4, 5, 6, 7], plans: [3] }],
+  'travco-west-island': [{ name: 'Chalet', imgs: [0, 1, 2, 3], plans: [1, 2], noHero: true }, { name: 'Townhome', imgs: [4, 5, 6, 7], plans: [3], noHero: true }],
 };
 // line up building tops across side-by-side renders: place each render's skyline 20% down its cell
 import sky from '../data/skyline.json';
 const cells: Record<number, [number, number, number][]> = { 1: [[297, 210, 0]], 2: [[148.5, 210, 0], [148.5, 210, 0]], 3: [[182.8, 210, 0], [114.2, 105, 0], [114.2, 105, 105]], 4: [[148.5, 105, 0], [148.5, 105, 0], [148.5, 105, 105], [148.5, 105, 105]] };
+const xpos: Record<string, string> = { 'travco-west-island/02': '78%' };
 const rowsOf: Record<number, number[][]> = { 1: [], 2: [[0, 1]], 3: [[1], [2]], 4: [[0, 1], [2, 3]] };
 const styles = (rs: any[]) => {
   const n = rs.length; const out = rs.map(() => '');
@@ -111,6 +122,7 @@ const styles = (rs: any[]) => {
     const pick = Math.max(...lo.map((z) => z[0] as number)) <= Math.max(...hi.map((z) => z[0] as number)) ? lo : hi;
     row.forEach((i, k) => { const [z, o] = pick[k]; if ((z as number) > 1.004) out[i] = `transform: scale(${Math.min(z as number, 1.35).toFixed(3)}); transform-origin: 50% ${o === 'bottom' ? '100%' : '0%'}`; });
   }
+  rs.forEach((r, i) => { if (xpos[r.key]) out[i] = (out[i] ? out[i] + '; ' : '') + `object-position: ${xpos[r.key]} 50%`; });
   return out;
 };
 const keyOf = (x: any, slug: string) => { const m = String(x.src).match(/\/(\d{2})(?:\.[\w-]+)?\.jpg/); return m ? `${slug}/${m[1]}` : ''; };
@@ -121,7 +133,7 @@ const build = async (slug: string, k: number) => {
   const pd = partsDef[slug];
   const rest = pd || renderDef[slug] ? [] : await Promise.all(imgs.slice(1, 5).map(async (x) => ({ src: await jpg(x, W.half), key: keyOf(x, slug) })));
   const sheetAll = async (xs: { no: number; m: any }[]) => Promise.all(xs.map(async (x) => ({ no: x.no, w: x.m.width * unit(slug, x.no), h: x.m.height * unit(slug, x.no), src: await jpg(x.m, W.sheet) })));
-  const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: await jpg(imgs[d.imgs[0]], W.bleed), rest: await Promise.all(d.imgs.slice(1).map(async (i) => ({ src: await jpg(imgs[i], W.half), key: keyOf(imgs[i], slug) }))), plans: pack(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
+  const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: (d as any).noHero ? null : await jpg(imgs[d.imgs[0]], W.bleed), rest: await Promise.all(d.imgs.slice(1).map(async (i) => ({ src: await jpg(imgs[i], W.half), key: keyOf(imgs[i], slug) }))), plans: packOne(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
   return {
     p, code: String(k + 1).padStart(2, '0'), logo: clientLogo(slug), disc: [...disciplinesFor(p)],
     cover: await jpg(imgs[0], W.bleed), steps,
@@ -135,7 +147,7 @@ const secs = await Promise.all(sections.map(async (s) => ({ ...s, items: await P
 
 // ---- page numbers (front: cover, about, clients, [index], contents)
 const front = 5;
-const pagesOf = (it: any) => 1 + it.solos.length + it.studies.length + it.plans.length + (it.rest.length ? 1 : 0) + it.parts.reduce((a: number, q: any) => a + 1 + (q.rest.length ? 1 : 0) + q.plans.length, 0);
+const pagesOf = (it: any) => 1 + it.solos.length + it.studies.length + it.plans.length + (it.rest.length ? 1 : 0) + it.parts.reduce((a: number, q: any) => a + (q.hero ? 1 : 0) + (q.rest.length ? 1 : 0) + q.plans.length, 0);
 let pg = front; const startOf: Record<string, number> = {};
 for (const s of secs) { pg += 1; for (const it of s.items) { startOf[it.p.slug] = pg + 1; pg += pagesOf(it); } }
 pg += 1; // delivery card
@@ -456,10 +468,10 @@ const trial = (_: string) => true;
           ))}
           {it.parts.map((q: any) => (
             <>
-              <section class="pg fit">
+              {q.hero && <section class="pg fit">
                 <img class="grade" src={q.hero} alt="" />
                 <div class="foot on"><span class="lab"><b>{it.code}</b> · {p.title} · <b>{q.name}</b></span><span class="lab">{N()} / {T}</span></div>
-              </section>
+              </section>}
               {q.rest.length > 0 && (
                 <section class:list={['pg rg', restClass(q.rest.length)]}>
                   {(() => { const st = styles(q.rest); return q.rest.map((r: any, i: number) => <div class="c"><img class="grade" src={r.src} alt="" style={st[i]} /></div>); })()}
