@@ -97,7 +97,7 @@ const sections = [
 // projects with more than one building: each part gets its own render page, render grid and plans
 // projects whose remaining renders each get a full page instead of a grid
 // custom render pages: one index = full uncropped page; two = stacked pair cropped to fill the page
-const renderDef: Record<string, number[][]> = { 'sodic-east-vale': [[1], [2]], 'staff-housing': [[0, 1]] };
+const renderDef: Record<string, number[][]> = { 'sodic-east-vale': [[0], [2]], 'staff-housing': [[0, 1]] };
 // drawings laid out row by row (row = same scale, fitted to page width), e.g. massing study above the plans
 const freeDef: Record<string, number[][]> = { 'sodic-east-vale': [[1], [2, 3, 4]] };
 const topAlign = ['staff-housing'];
