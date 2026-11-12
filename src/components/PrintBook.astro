@@ -5,6 +5,8 @@
    `full` = every project, index and higher image quality (Portfolio); otherwise the curated Selected Works. */
 import '@fontsource-variable/archivo/wdth.css';
 import '@fontsource-variable/archivo/wdth-italic.css';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/inter/wght-italic.css';
 import { getImage } from 'astro:assets';
 import { projects, imagesFor, fileFor, disciplinesFor, countries, contact, projectNo, clientLogo, sectorGroups, type Project } from '../data/projects';
 
@@ -27,15 +29,17 @@ const think: Record<string, [string, string][]> = {
   'sabic-hq': [['Brief: turn an outdated HQ into a dynamic, collaborative, brand-led one', '04'], ['Constraint: an existing slab protrusion', '01'], ['Decision: make it the feature — the atrium planters', '02'], ['Under construction', '03']],
   'stc-hq': [['Brief: futuristic, recognisable, minimal', '01'], ['Site: the tower’s huge curves (oxblood = curve zones)', 'x:stc-curves'], ['Decision: curves become destinations', '02'], ['My concept became the team’s base', '05']],
 };
-const studyNos: Record<string, number[]> = { 'travco-west-island': [4], 'staff-housing': [1, 2, 3], 'sallan-creek': [1, 2], 'sodic-ogami': [1], 'fifth-square': [1], 'neom-oxagon': [1], 'chery-showroom': [1], 'linah-farms': [1], 'dry-port': [3] };
+const studyNos: Record<string, number[]> = { 'travco-west-island': [4], 'staff-housing': [1, 2], 'sallan-creek': [1, 2], 'sodic-ogami': [1], 'fifth-square': [1], 'neom-oxagon': [1], 'chery-showroom': [1], 'linah-farms': [1], 'dry-port': [3] };
 const trimmed = import.meta.glob<{ default: any }>('../assets/print/*/d*.jpg', { eager: true });
 const scl = import.meta.glob<string>('../assets/print/*/d*.scale', { query: '?raw', import: 'default', eager: true });
 // drawings exported at a different scale from the rest of their project: factor that brings them in line
-const corr: Record<string, Record<number, number>> = { 'chery-showroom': { 6: 0.33 }, 'sodic-east-vale': { 2: 1.09 } };
+const corr: Record<string, Record<number, number>> = { 'chery-showroom': { 6: 0.33 }, 'sodic-east-vale': { 2: 1.09, 3: 1.06 } };
 const unit = (slug: string, no: number) => (corr[slug]?.[no] ?? 1) / Number(scl[`../assets/print/${slug}/d${String(no).padStart(2, '0')}.scale`] ?? 1);
 const sheetOrder: Record<string, number[]> = {};
 // fixed groups: each inner list is one page, drawings stacked top to bottom (Mazeej: before above redesign)
-const stackDef: Record<string, number[][]> = { mazeej: [[2, 1], [4, 3], [6, 5], [8, 7]] };
+const stackDef: Record<string, number[][]> = {};
+// grids: each page = rows of drawings (before | redesign), one scale for the whole project
+const gridDef: Record<string, number[][][]> = { mazeej: [[[2, 1], [4, 3]], [[6, 5], [8, 7]]] };
 // fixed groups placed side by side on one page
 const rowDef: Record<string, number[][]> = { 'staff-housing': [[4, 5]] };
 const sheetsFor = (slug: string) => { const xs = Object.keys(trimmed).filter((k) => k.includes(`/print/${slug}/`)).sort().map((k) => ({ no: Number(k.match(/d(\d+)\.jpg$/)![1]), m: trimmed[k].default })); const o = sheetOrder[slug]; return o ? o.map((n) => xs.find((x) => x.no === n)!).filter(Boolean) : xs; };
@@ -60,6 +64,24 @@ const packPairs = (xs: S[]) => { const out: any[] = []; for (let i = 0; i < xs.l
 const pack = (xs: S[], slug = '') => {
   if (bimSlugs.includes(slug) && slug !== 'chery-showroom') return packPairs(xs);
   if (stackDef[slug]) return stack(xs, stackDef[slug]);
+  if (gridDef[slug]) {
+    const pages = gridDef[slug].map((pg) => pg.map((r) => r.map((n) => xs.find((x) => x.no === n)!).filter(Boolean)));
+    const sc = Math.min(...pages.map((rows) => Math.min(...rows.map((r) => (AW - G * (r.length - 1)) / r.reduce((t, x) => t + x.w, 0)), (AH - C * rows.length - G * (rows.length - 1)) / rows.reduce((t, r) => t + Math.max(...r.map((x) => x.h)), 0))));
+    return pages.map((rows) => ({ rows, s: sc }));
+  }
+  if (colDef[slug]) {
+    const [a, b] = colDef[slug].map((g) => g.map((n) => xs.find((x) => x.no === n)!).filter(Boolean));
+    let best: any = null;
+    for (let f = 0.35; f <= 0.75; f += 0.01) {
+      const W1 = (AW - G * 2) * f, W2 = AW - G * 2 - W1;
+      const s1 = Math.min(W1 / Math.max(...a.map((x) => x.w)), (AH - C * a.length - G * (a.length - 1)) / a.reduce((t, x) => t + x.h, 0));
+      const s2 = Math.min(W2 / Math.max(...b.map((x) => x.w)), (AH - C * b.length - G * (b.length - 1)) / b.reduce((t, x) => t + x.h, 0));
+      const area = a.reduce((t, x) => t + x.w * x.h * s1 * s1, 0) + 2.5 * b.reduce((t, x) => t + x.w * x.h * s2 * s2, 0);
+      if (!best || area > best.area) best = { area, s1, s2 };
+    }
+    const sz = (g: S[], k: number) => g.map((x) => ({ ...x, w: x.w * k, h: x.h * k }));
+    return [{ cols: [sz(a, best.s1), sz(b, best.s2)], rows: [], s: 1 }];
+  }
   if (freeDef[slug]) {
     const rows = freeDef[slug].map((g) => g.map((n) => xs.find((x) => x.no === n)!).filter(Boolean)).filter((g) => g.length);
     const fr = rows.map((r) => (AW - G * (r.length - 1)) / r.reduce((a, x) => a + x.w, 0));
@@ -100,10 +122,14 @@ const sections = [
 const renderDef: Record<string, number[][]> = { 'sodic-east-vale': [[0], [2]], 'staff-housing': [[0, 1]] };
 // drawings laid out row by row (row = same scale, fitted to page width), e.g. massing study above the plans
 const freeDef: Record<string, number[][]> = { 'sodic-east-vale': [[1], [2, 3, 4]] };
+// two columns on one sheet, each column stacked at its own scale (study beside the plans)
+// zoom for full-page (uncropped) renders, as set by Aya in the artifact
+const fitZoom: Record<string, number> = { 'sodic-east-vale/01': 1.06, 'sodic-east-vale/03': 1.26 };
+const colDef: Record<string, number[][]> = { 'staff-housing': [[3], [4, 5]] };
 const topAlign = ['staff-housing'];
-const partsDef: Record<string, { name: string; imgs: number[]; plans: number[] }[]> = {
-  'sodic-ogami': [{ name: 'Twin villa', imgs: [0, 1], plans: [] }, { name: 'Townhome', imgs: [2, 3], plans: [2, 3] }],
-  'travco-west-island': [{ name: 'Chalet', imgs: [0, 1, 2, 3], plans: [1, 2], noHero: true }, { name: 'Townhome', imgs: [4, 5, 6, 7], plans: [3], noHero: true }],
+const partsDef: Record<string, { name: string; imgs: number[]; plans: number[]; noHero?: boolean; restAll?: boolean; stack?: boolean }[]> = {
+  'sodic-ogami': [{ name: 'Twin villa', imgs: [0, 1], plans: [] }, { name: 'Townhome', imgs: [2, 3], plans: [2, 3], noHero: true, restAll: true, stack: true }],
+  'travco-west-island': [{ name: 'Chalet', imgs: [0, 1, 2, 3], plans: [1, 2], noHero: true }],
 };
 // line up building tops across side-by-side renders: place each render's skyline 20% down its cell
 import sky from '../data/skyline.json';
@@ -133,11 +159,12 @@ const build = async (slug: string, k: number) => {
   const pd = partsDef[slug];
   const rest = pd || renderDef[slug] ? [] : await Promise.all(imgs.slice(1, 5).map(async (x) => ({ src: await jpg(x, W.half), key: keyOf(x, slug) })));
   const sheetAll = async (xs: { no: number; m: any }[]) => Promise.all(xs.map(async (x) => ({ no: x.no, w: x.m.width * unit(slug, x.no), h: x.m.height * unit(slug, x.no), src: await jpg(x.m, W.sheet) })));
-  const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: (d as any).noHero ? null : await jpg(imgs[d.imgs[0]], W.bleed), rest: await Promise.all(d.imgs.slice(1).map(async (i) => ({ src: await jpg(imgs[i], W.half), key: keyOf(imgs[i], slug) }))), plans: packOne(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
+  const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: (d as any).noHero ? null : await jpg(imgs[d.imgs[0]], W.bleed), stack: !!d.stack, rest: await Promise.all((d.restAll ? d.imgs : d.imgs.slice(1)).map(async (i) => ({ src: await jpg(imgs[i], W.half), key: keyOf(imgs[i], slug) }))), plans: packOne(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
   return {
     p, code: String(k + 1).padStart(2, '0'), logo: clientLogo(slug), disc: [...disciplinesFor(p)],
     cover: await jpg(imgs[0], W.bleed), steps,
-    solos: renderDef[slug] ? await Promise.all(renderDef[slug].map(async (g) => Promise.all(g.map((i) => jpg(imgs[i], g.length > 1 ? W.bleed : W.bleed))))) : [],
+    solos: renderDef[slug] ? await Promise.all(renderDef[slug].map(async (g) => Promise.all(g.map((i) => jpg(imgs[i], W.bleed))))) : [],
+    solz: renderDef[slug] ? renderDef[slug].map((g) => g.map((i) => fitZoom[`${slug}/${String(i + 1).padStart(2, '0')}`] ?? 1)) : [],
     studies: await Promise.all(sh.filter((x) => st.includes(x.no)).map(sheet)),
     plans: pd ? [] : pack(await Promise.all(sh.filter((x) => !st.includes(x.no)).map(sheet)), slug), parts,
     rest,
@@ -179,13 +206,14 @@ const trial = (_: string) => true;
   :root { --bone: #F3EDE3; --ink: #2B2826; --night: #201C1B; --ox: #5E1A24; --sand: #D6CBBE; --mut: #8C857D; --rule: rgba(43,40,38,.2); }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: #777; }
-  body { font-family: "Archivo Variable", sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Inter Variable", "Inter", sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   a { color: inherit; text-decoration: none; }
   h1, h2, h3, p, dl, dd, figure { margin: 0; }
   .pg { width: 297mm; height: 210mm; position: relative; overflow: hidden; background: var(--bone); page-break-after: always; break-after: page; }
   .dark { background: var(--night); color: var(--bone); }
   .lab { font-size: 6.8pt; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; }
   .ox { color: var(--ox); } .mut { color: var(--mut); } .sand { color: var(--sand); }
+  .wide, .wm, h1, h2, .nr b, .big, .contents .row b, .about .nums b { font-family: "Archivo Variable", sans-serif; }
   .wide { font-weight: 800; font-stretch: 125%; letter-spacing: -.025em; line-height: .95; }
   .wm { font-weight: 800; font-stretch: 125%; letter-spacing: .02em; display: inline-flex; align-items: center; gap: 2.2mm; }
   .wm i { width: .5pt; height: 1em; background: currentColor; display: inline-block; }
@@ -266,7 +294,10 @@ const trial = (_: string) => true;
   .brief dt { font-size: 6pt; letter-spacing: .2em; text-transform: uppercase; color: var(--mut); } .brief dd { font-size: 8.4pt; margin-top: 1mm; }
   .sht .pk { position: absolute; left: 8mm; right: 8mm; top: 8mm; bottom: 18mm; display: flex; flex-direction: column; justify-content: center; gap: 5mm; }
   .sht .pr { display: flex; justify-content: center; align-items: flex-end; gap: 5mm; }
-  .sht .pr img { display: block; }
+  .sht .pr img, .sht .pcol img { display: block; }
+  .sht .pk.pc2 { flex-direction: row; align-items: center; justify-content: center; gap: 10mm; }
+  .sht .pcol { display: flex; flex-direction: column; gap: 5mm; }
+  .sht .pcol figcaption { display: flex; justify-content: space-between; margin-top: 1.5mm; font-size: 6.2pt; letter-spacing: .12em; text-transform: uppercase; }
   .sht .pr figcaption { display: flex; justify-content: space-between; gap: 3mm; margin-top: 1.5mm; font-size: 6.2pt; letter-spacing: .12em; text-transform: uppercase; }
   .sht .pr .k { color: var(--ox); font-weight: 700; }
   /* studies + plans: one sheet per page */
@@ -450,16 +481,24 @@ const trial = (_: string) => true;
           {it.studies.map((x: any) => (
             <section class="pg sht">
               <div class="box"><img src={x.src} alt="" style={fitBox(x.w, x.h, 281, 182)} /></div>
-              <div class="cap"><b>{it.code}</b><span>{p.title} · <span class="k">Study</span>{p.captions?.[x.no - 1] ? ` · ${p.captions[x.no - 1]}` : ''}</span><span class="k">{nextSheet()}</span><span class="mut">{N()} / {T}</span></div>
+              <div class="cap"><b>{it.code}</b><span>{p.title} · <span class="k">Study</span>{p.captions?.[x.no - 1] ? ` · ${p.captions[x.no - 1]}` : ''}</span><span class="mut">{N()} / {T}</span></div>
             </section>
           ))}
           {it.plans.map((pg: any) => (
             <section class:list={['pg sht', { top: topAlign.includes(p.slug) }]}>
+              {pg.cols && <div class="pk pc2">{pg.cols.map((c: any[]) => (
+                <div class="pcol">{c.map((x: any) => (
+                  <figure style={`width:${(x.w * pg.s).toFixed(1)}mm`}>
+                    <img src={x.src} alt="" style={`width:${(x.w * pg.s).toFixed(1)}mm;height:${(x.h * pg.s).toFixed(1)}mm`} />
+                    <figcaption><span>{p.captions?.[x.no - 1] ?? `Drawing ${String(x.no).padStart(2, '0')}`}</span></figcaption>
+                  </figure>
+                ))}</div>
+              ))}</div>}
               <div class="pk">{pg.rows.map((r: any[]) => (
                 <div class="pr">{r.map((x: any) => (
                   <figure style={`width:${(x.w * pg.s).toFixed(1)}mm`}>
                     <img src={x.src} alt="" style={`width:${(x.w * pg.s).toFixed(1)}mm;height:${(x.h * pg.s).toFixed(1)}mm`} />
-                    <figcaption><span>{p.captions?.[x.no - 1] ?? `Drawing ${String(x.no).padStart(2, '0')}`}</span><span class="k">{nextSheet()}</span></figcaption>
+                    <figcaption><span>{p.captions?.[x.no - 1] ?? `Drawing ${String(x.no).padStart(2, '0')}`}</span></figcaption>
                   </figure>
                 ))}</div>
               ))}</div>
@@ -473,18 +512,26 @@ const trial = (_: string) => true;
                 <div class="foot on"><span class="lab"><b>{it.code}</b> · {p.title} · <b>{q.name}</b></span><span class="lab">{N()} / {T}</span></div>
               </section>}
               {q.rest.length > 0 && (
-                <section class:list={['pg rg', restClass(q.rest.length)]}>
+                <section class:list={['pg rg', q.stack && q.rest.length === 2 ? 'r2v' : restClass(q.rest.length)]}>
                   {(() => { const st = styles(q.rest); return q.rest.map((r: any, i: number) => <div class="c"><img class="grade" src={r.src} alt="" style={st[i]} /></div>); })()}
                   <div class="foot on" style="bottom:6mm"><span class="lab"><b>{it.code}</b> · {p.title} · {q.name}</span><span class="lab">{N()} / {T}</span></div>
                 </section>
               )}
               {q.plans.map((pg: any) => (
                 <section class="pg sht">
-                  <div class="pk">{pg.rows.map((r: any[]) => (
+                  {pg.cols && <div class="pk pc2">{pg.cols.map((c: any[]) => (
+                <div class="pcol">{c.map((x: any) => (
+                  <figure style={`width:${(x.w * pg.s).toFixed(1)}mm`}>
+                    <img src={x.src} alt="" style={`width:${(x.w * pg.s).toFixed(1)}mm;height:${(x.h * pg.s).toFixed(1)}mm`} />
+                    <figcaption><span>{p.captions?.[x.no - 1] ?? `Drawing ${String(x.no).padStart(2, '0')}`}</span></figcaption>
+                  </figure>
+                ))}</div>
+              ))}</div>}
+              <div class="pk">{pg.rows.map((r: any[]) => (
                     <div class="pr">{r.map((x: any) => (
                       <figure style={`width:${(x.w * pg.s).toFixed(1)}mm`}>
                         <img src={x.src} alt="" style={`width:${(x.w * pg.s).toFixed(1)}mm;height:${(x.h * pg.s).toFixed(1)}mm`} />
-                        <figcaption><span>{p.captions?.[x.no - 1] ?? `Drawing ${String(x.no).padStart(2, '0')}`}</span><span class="k">{nextSheet()}</span></figcaption>
+                        <figcaption><span>{p.captions?.[x.no - 1] ?? `Drawing ${String(x.no).padStart(2, '0')}`}</span></figcaption>
                       </figure>
                     ))}</div>
                   ))}</div>
@@ -493,9 +540,9 @@ const trial = (_: string) => true;
               ))}
             </>
           ))}
-          {it.solos.map((g: string[]) => g.length === 1 ? (
+          {it.solos.map((g: string[], gi: number) => g.length === 1 ? (
             <section class="pg fit">
-              <img class="grade" src={g[0]} alt="" />
+              <img class="grade" src={g[0]} alt="" style={it.solz[gi][0] !== 1 ? `transform:scale(${it.solz[gi][0]});transform-origin:50% 45%` : ''} />
               <div class="foot on"><span class="lab"><b>{it.code}</b> · {p.title}</span><span class="lab">{N()} / {T}</span></div>
             </section>
           ) : (
