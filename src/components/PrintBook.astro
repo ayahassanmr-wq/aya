@@ -407,7 +407,7 @@ const trial = (_: string) => true;
             <div class="tx">
               {trial(p.slug) && <div class="tm">
                 <span class="lab ox">{s.name} · {p.sector}{p.roleTag && <> · <b>{p.roleTag}</b></>}</span>
-                <div class="cs"><dt>Client</dt><div class:list={['cl', { chip: /jotun|bmw/.test(String(it.logo)) }]}>{it.logo ? <img src={it.logo} alt={p.client} /> : <span>{p.client}</span>}</div></div>
+                <div class="cs"><dt>Client</dt><div class:list={['cl', { chip: !!it.logo }]}>{it.logo ? <img src={it.logo} alt={p.client} /> : <span>{p.client}</span>}</div></div>
                 <dl class="fx"><div><dt>Location</dt><dd>{place(p)}</dd></div><div><dt>Year</dt><dd>{p.year}</dd></div>{p.status && <div><dt>Status</dt><dd>{p.status}</dd></div>}<div><dt>Practice</dt><dd>{practice(p)}</dd></div></dl>
               </div>}
               <span class="lab ox">{it.code} · Brief</span>
