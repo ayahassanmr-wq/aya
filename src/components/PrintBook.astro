@@ -22,14 +22,14 @@ const diag = import.meta.glob<{ default: any }>('../assets/diagrams/*.jpg', { ea
 const img = (slug: string, f: string) => f.startsWith('x:') ? diag[`../assets/diagrams/${f.slice(2)}.jpg`]?.default : fileFor(slug, f);
 
 const think: Record<string, [string, string][]> = {
-  'travco-west-island': [['Brief: a premier coastal destination with maximum sea views, hospitality-level living and respect for the landscape', '05'], ['Idea: orient for wind and water', 'd04'], ['Plan: from an empty plot to four units', 'd03'], ['Approved; under construction', '01']],
+  'travco-west-island': [['Brief: a premier coastal destination with maximum sea views, hospitality-level living and respect for the landscape', '02'], ['Idea: orient for wind and water', 'd03'], ['Plan: from an empty plot to four units', 'd01'], ['Approved; under construction', '01']],
   'misr-italia-hilltop': [['Brief: luxury coastal living around the lagoon', '01'], ['Problem: the concept draft showed a building, not a lifestyle', '04'], ['My enhancements: materials, details, façade', '02'], ['Approved; under construction', '03']],
   'staff-housing': [['Tension: density vs quality of life vs budget', 'd03'], ['Courtyard clusters on a town-wide pedestrian network', 'd02'], ['Two repeatable prototypes for cost and speed', 'd05'], ['Nubian arches, shade, earth', 'd01']],
   'sodic-east-vale': [['Brief: private sanctuaries, daylight, ventilation, views', '03'], ['Decision I argued for: private quarters apart from reception (oxblood = private, sand = reception)', 'x:east-vale-zones'], ['High ceilings, fluid inside–outside', '02'], ['Under construction', '01']],
   'sabic-hq': [['Brief: turn an outdated HQ into a dynamic, collaborative, brand-led one', '04'], ['Constraint: an existing slab protrusion', '01'], ['Decision: make it the feature — the atrium planters', '02'], ['Under construction', '03']],
   'stc-hq': [['Brief: futuristic, recognisable, minimal', '01'], ['Site: the tower’s huge curves (oxblood = curve zones)', 'x:stc-curves'], ['Decision: curves become destinations', '02'], ['My concept became the team’s base', '05']],
 };
-const studyNos: Record<string, number[]> = { 'travco-west-island': [4], 'staff-housing': [1, 2], 'sallan-creek': [1, 2], 'sodic-ogami': [1], 'fifth-square': [1], 'neom-oxagon': [1], 'chery-showroom': [1], 'linah-farms': [1], 'dry-port': [3] };
+const studyNos: Record<string, number[]> = { 'travco-west-island': [3], 'staff-housing': [1, 2], 'sallan-creek': [1, 2], 'sodic-ogami': [1], 'fifth-square': [1], 'neom-oxagon': [1], 'chery-showroom': [1], 'linah-farms': [1], 'dry-port': [3] };
 const trimmed = import.meta.glob<{ default: any }>('../assets/print/*/d*.jpg', { eager: true });
 const scl = import.meta.glob<string>('../assets/print/*/d*.scale', { query: '?raw', import: 'default', eager: true });
 // drawings exported at a different scale from the rest of their project: factor that brings them in line

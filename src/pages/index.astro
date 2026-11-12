@@ -9,7 +9,7 @@ import { placeAr } from '../data/projects-ar';
 const L = i18n(Astro.url);
 const { t, u } = L;
 const loc = (p: typeof projects[number]) => localize(p, L.ar);
-const slideSlugs = ['misr-italia-hilltop', 'stc-hq', 'neom-oxagon', 'fifth-square'];
+const slideSlugs = ['misr-italia-hilltop', 'stc-hq', 'neom-oxagon', 'sodic-ogami'];
 const slides = await Promise.all(slideSlugs.map(async (slug) => {
   const p = projects.find((x) => x.slug === slug)!;
   const img = imagesFor(slug)[0];
@@ -18,12 +18,12 @@ const slides = await Promise.all(slideSlugs.map(async (slug) => {
 }));
 const place = (p: typeof projects[number]) => placeOf(loc(p));
 const years = new Date().getFullYear() - 2019; // freelance practice since 2019
-const reelRows = [['neom-oxagon', 'jotun-office', 'fifth-square', 'sodic-east-vale', 'chery-showroom', 'travco-west-island', 'noatum-terminal'], ['stc-hq', 'sodic-ogami', 'bmw-showroom', 'linah-farms', 'tech-park', 'sallan-creek', 'staff-housing']];
+const reelRows = [['neom-oxagon', 'jotun-office', 'misr-italia-hilltop', 'sodic-east-vale', 'chery-showroom', 'travco-west-island', 'noatum-terminal'], ['stc-hq', 'sodic-ogami', 'bmw-showroom', 'mazeej', 'tech-park', 'sallan-creek', 'staff-housing']];
 const thumb = async (slug: string) => (await getImage({ src: cover(slug)!, width: 480, height: 360, fit: 'cover', format: 'webp', quality: 62 })).src;
 const stats = [
   { n: projects.length, l: t('Selected projects', 'مشروعًا مختارًا'), d: t('A selection of architecture and interiors, from first concept to drawing set.', 'مختارات من العمارة والتصميم الداخلي، من الفكرة الأولى حتى مجموعة الرسومات.'), img: await thumb('neom-oxagon') },
   { n: countries.length, l: t('Countries', 'دول'), d: countries.map((c) => (L.ar ? placeAr[c] ?? c : c).replace(/ /g, '\u00a0')).join(' · '), img: await thumb('travco-west-island') },
-  { n: years, l: t('Years in practice', 'سنوات من الممارسة'), d: t('Concept design since 2019.', 'في التصميم المبدئي منذ 2019.'), img: await thumb('fifth-square') },
+  { n: years, l: t('Years in practice', 'سنوات من الممارسة'), d: t('Concept design since 2019.', 'في التصميم المبدئي منذ 2019.'), img: await thumb('sallan-creek') },
   { n: 3, l: t('Studios', 'استوديوهات'), d: t('ZFP (Zuhair Fayez Partnership), Cosmos Studio and Innovation Design Studio.', 'زهير فايز ومشاركوه (ZFP)، وكوزموس ستوديو، وإنوفيشن ديزاين ستوديو.'), img: await thumb('stc-hq') },
 ];
 const feats = await Promise.all(featured.slice(0, 6).map(async (p) => {
@@ -165,7 +165,7 @@ const strip = await Promise.all(stripSlugs.map(async ([n, slug]) => ({ n, src: (
         <ul class="cl-track">
           {[...row, ...row, ...row].map((c, k) => (
             <li aria-hidden={k >= row.length ? 'true' : undefined}>
-              <a href={u(`/work/${c.slug}/`)} class="cl" style={`--bc:${c.c}`} tabindex={k >= row.length ? -1 : undefined} draggable="false" data-cursor={t('Project', 'المشروع')}>
+              <a href={u(projects.some((x) => x.slug === c.slug) ? `/work/${c.slug}/` : '/work/')} class="cl" style={`--bc:${c.c}`} tabindex={k >= row.length ? -1 : undefined} draggable="false" data-cursor={t('Project', 'المشروع')}>
                 {c.logo
                   ? <img src={c.logo} alt={c.n} class="logo-img" loading="lazy" decoding="async" draggable="false" />
                   : <span class="wmk" dir="ltr" style={`font-stretch:${c.w ?? 100}%;font-weight:${c.wt ?? 700};letter-spacing:${c.tr ?? '-.01em'};${c.lc ? 'text-transform:lowercase;' : ''}${c.it ? 'font-style:italic;' : ''}`}>{c.n}</span>}

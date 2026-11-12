@@ -9,7 +9,7 @@ const L = i18n(Astro.url);
 const { t, u } = L;
 const servicesEn = [
   { t: 'Concept design', d: 'Architectural and interior concepts, from the first studies to a direction the client signs off. Massing, spatial strategy, colour and material language, set out in a clear presentation.', img: imagesFor('neom-oxagon')[3] ?? imagesFor('neom-oxagon')[0], items: ['Concept studies & diagrams', 'Spatial planning', 'Mood, colour & material direction', 'Concept presentations'] },
-  { t: 'Visualization & animation', d: 'Renders, walkthroughs and promotional films built to win approval, for clients, juries and marketing teams.', img: imagesFor('fifth-square')[0], items: ['Photoreal stills', 'Walkthrough animation', 'Promotional content', 'Post-production'] },
+  { t: 'Visualization & animation', d: 'Renders, walkthroughs and promotional films built to win approval, for clients, juries and marketing teams.', img: imagesFor('misr-italia-hilltop')[0], items: ['Photoreal stills', 'Walkthrough animation', 'Promotional content', 'Post-production'] },
   { t: 'BIM & design packages', d: 'Revit models and coordinated drawing sets, from schematic design to issued-for-construction packages.', img: imagesFor('noatum-terminal')[3] ?? imagesFor('noatum-terminal')[0], items: ['Revit modelling', 'Schematic & IFC drawing sets', 'Interdisciplinary coordination', 'Design review to code'] },
   { t: 'Materials & FF&E', d: 'Material boards, finishes and furniture selection, sourced from suppliers worldwide and checked on site.', img: imagesFor('stc-hq')[3], items: ['Material boards & samples', 'Furniture, fixtures & equipment', 'Vendor collaboration', 'Site visits'] },
 ];
@@ -43,7 +43,7 @@ const steps = L.ar ? [
 ] : stepsEn;
 ---
 <Base title={t('Services', 'الخدمات')} description={t('Concept design, visualization and animation, BIM and design packages, and materials and FF&E selection.', 'التصميم المبدئي، والإظهار والتحريك، وBIM وحزم التصميم، واختيار المواد والأثاث والتجهيزات.')}>
-  <PageHero images={[imagesFor('neom-oxagon')[0], imagesFor('fifth-square')[1], imagesFor('noatum-terminal')[0], imagesFor('stc-hq')[3]]} alt={t('Rendered public buildings at NEOM Oxagon', 'إظهار لمباني الخدمات العامة في أوكساجون، نيوم')}>
+  <PageHero images={[imagesFor('neom-oxagon')[0], imagesFor('misr-italia-hilltop')[1], imagesFor('noatum-terminal')[0], imagesFor('stc-hq')[3]]} alt={t('Rendered public buildings at NEOM Oxagon', 'إظهار لمباني الخدمات العامة في أوكساجون، نيوم')}>
     <h1 class="display-xl lines"><span class="ln"><span>{t('From concept', 'من الفكرة')}</span></span><span class="ln"><span>{L.ar ? <>إلى <em>الرسومات.</em></> : <>to <em>drawing set.</em></>}</span></span></h1>
     <p class="lede">{t('Concept design, visualization, BIM packages and material selection. Designed to be built.', 'التصميم المبدئي والإظهار وحزم BIM واختيار المواد. صُمّم ليُبنى.')}</p>
   </PageHero>
@@ -77,7 +77,7 @@ const steps = L.ar ? [
     ))}
   </section>
 
-  <Reel rows={[['fifth-square', 'stc-hq', 'jotun-office', 'neom-oxagon', 'travco-west-island', 'chery-showroom', 'sphinx'].map((s) => cover(s)!)]} />
+  <Reel rows={[['sodic-ogami', 'stc-hq', 'jotun-office', 'neom-oxagon', 'travco-west-island', 'chery-showroom', 'sphinx'].map((s) => cover(s)!)]} />
 
   <section class="process dark sheet" data-sp>
     <div class="wrap">

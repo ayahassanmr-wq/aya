@@ -71,24 +71,12 @@ export const projects: Project[] = [
       'Wooden strips add warmth and texture, ergonomic furniture reflects the brand’s commitment to comfort, and a carefully planned layout supports collaboration and future adaptability. Branding is integrated subtly from the entrance onward.',
     ],
     deliverables: ['Conceptual design presentation', 'Detailed design plans', 'Material samples', 'Implementation guidelines', 'Promotional animation'] },
-  { slug: 'hb-fuller', year: '2022', client: 'H.B. Fuller', title: 'HB Fuller Office Building', location: '6th of October', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio',
-    summary: 'An energetic, budget-conscious HQ built from simple materials and the client’s brand colours.',
-    overview: [
-      'The interior design for the HB Fuller HQ admin building aimed to bring energy and vibrancy to the space on a budget. Simple materials, the client’s brand colours and creative paint techniques create a lively, engaging atmosphere.',
-    ],
-    deliverables: ['Conceptual design presentation', 'Detailed design plans', 'Material samples', 'Implementation guidelines'] },
   { slug: 'suits-workspaces', year: '2025', client: 'Suits Workspaces', title: 'Suits Workspaces Office Building', location: 'India', country: 'India', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P],
     summary: 'Executive offices, meeting rooms and lounges for a flexible-workspace operator.' },
   { slug: 'sphinx', client: 'Confidential', title: 'Sphinx Business Building', location: 'Giza', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, 'Schematic & issued-for-construction drawing sets'], practice: 'Cosmos Studio', year: '2022',
     summary: 'Formal reception salons and executive suites, delivered through to issued-for-construction drawings.' },
-  { slug: 'conference-room', client: 'Confidential', year: '2022', title: 'Formal Conference Room', location: 'New Capital', country: 'Egypt', category: 'interiors', sector: 'Workplace', scope: [D, M, R, P], practice: 'Cosmos Studio',
-    summary: 'A formal boardroom in warm timber and soft light for the New Administrative Capital.' },
-
-  // ---------- Architecture
   { slug: 'neom-oxagon', year: '2023', client: 'NEOM', title: 'NEOM Oxagon Public Service Buildings', location: 'Oxagon, NEOM', country: 'Saudi Arabia', category: 'architecture', sector: 'Public', scope: [D, M, R, P], practice: 'Cosmos Studio', nda: true, featured: true,
     summary: 'Public service buildings for Oxagon, NEOM’s port city: brick volumes, shaded courtyards and planted roofs.' },
-  { slug: 'fifth-square', client: 'Al Marasem', year: '2025', title: 'Fifth Square Commercial Complex', location: 'New Cairo', country: 'Egypt', category: 'architecture', sector: 'Commercial', scope: ['Canopy design', M, R, P], scopeNote: 'Design: the canopy. Modelling and rendering: the whole building.', scopeNoteAr: 'التصميم: المظلة. النمذجة والإظهار: المبنى بالكامل.', practice: 'Cosmos Studio', featured: true,
-    summary: 'A terraced commercial complex whose canopy “trees” become the landmark at night.' },
   { slug: 'sallan-creek', studies: [2], fullSheets: [1, 2], client: 'North Al Batinah Governor’s Office', year: '2025', title: 'Sallan Creek (DHIFAF)', location: 'Oman', country: 'Oman', category: 'architecture', sector: 'Masterplan', scope: ['Masterplan refinement', M, R, P, 'Presentation'], practice: 'Cosmos Studio', featured: true,
     summary: 'A strategic masterplan for sustainable growth and heritage integration: a new waterway district of nineteen zones, from expo grounds and an education hub to agri-tourism, a marina and waterfront living.',
     overview: [
@@ -103,26 +91,14 @@ export const projects: Project[] = [
     summary: 'A brand showroom and admin building with a sculpted, illuminated entrance canopy.' },
   { slug: 'noatum-terminal', client: 'NOATUM', year: '2025', title: 'NOATUM Automotive Terminal', location: 'Ain Sokhna', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, R, P, B], practice: 'Cosmos Studio',
     summary: 'Terminal and admin buildings for a port operator, in crisp white and deep blue.' },
-  { slug: 'linah-farms', client: 'Linah Farms', year: '2025', title: 'Linah Farms Industrial & Admin Building', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, R, P, B], practice: 'Cosmos Studio',
-    summary: 'An industrial facade whose green framework is inspired by palm leaves.',
-    overview: [
-      'A long, solid industrial shed for a date producer, given a face. The mass is carved with vertical slots, and a green framework drawn from palm leaves runs across it, so the building carries the client’s product on its skin.',
-      'The design was taken from concept to a full Revit package: a coordinated 3D model, elevations and the phase 1 site and ground-floor plan.',
-    ],
-    captions: ['Concept: solid mass, carved slots, palm-leaf framework', 'Revit model', 'Revit elevation, main facade', 'Site and ground-floor plan, phase 1'],
-    process: [['Concept', 'd01'], ['Revit model', 'd02'], ['Render', '01']] },
   { slug: 'mazeej', captions: ['Plan 1 · redesign', 'Plan 1 · before redesign', 'Plan 2 · redesign', 'Plan 2 · before redesign', 'Plan 3 · redesign', 'Plan 3 · before redesign', 'Plan 4 · redesign', 'Plan 4 · before redesign'], client: 'Guira Developments', year: '2025', title: 'Mazeej Hotel & Housing Complex', location: 'Giza', country: 'Egypt', category: 'architecture', sector: 'Hospitality', scope: ['Design review', 'Redesign to code'], practice: 'Cosmos Studio',
     summary: 'Design review and redesign of a hotel and housing complex to code and architectural standards.' },
-  { slug: 'dry-port', client: 'Egyptian Government', year: '2021', title: 'Dry Port Buildings', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Industrial', scope: [D, M, B], practice: 'Cosmos Studio',
-    summary: 'A Revit (BIM) sample: plans and 3D for a dry port’s buildings.' },
-
-  // ---------- Residential developments (Innovation Design Studio)
   { slug: 'misr-italia-hilltop', client: 'Misr Italia Properties', year: '2026', title: 'Misr Italia Hilltop', location: 'Ras El Hekma', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: [M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
     summary: 'Three apartment-building prototypes for a North Coast community, set around lagoons and beach-front pools.' },
   { slug: 'sodic-ogami', captions: ['Concept board', 'Townhouse · ground floor', 'Townhouse · first floor'], client: 'SODIC', year: '2026', title: 'SODIC Ogami', location: 'Ras El Hekma', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     summary: 'A twin villa and a town home for a coastal community, in warm terracotta render with deep, shaded terraces.' },
-  { slug: 'travco-west-island', captions: ['Chalet · ground floor', 'Chalet · upper floor', 'Townhome · four-unit plan', 'Concept board · Coastal Harmony'], client: 'Travco Properties', year: '2026', title: 'Travco West Island', location: 'Almaza Bay', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
-    summary: 'A coastal chalet and a coastal town home on the lagoon at Almaza Bay.' },
+  { slug: 'travco-west-island', captions: ['Chalet · ground floor', 'Chalet · upper floor', 'Concept board · Coastal Harmony'], client: 'Travco Properties', year: '2026', title: 'Travco West Island', location: 'Almaza Bay', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
+    summary: 'A coastal chalet on the lagoon at Almaza Bay.' },
   { slug: 'sodic-east-vale', studies: [1], client: 'SODIC', year: '2026', title: 'SODIC East Vale · Premium Home', location: 'MADA City, New Cairo', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
     captions: ['Form generation · area program, zoning mass, conceptual form', 'Ground floor · lower unit, 202.6 m²', 'First floor · upper unit, 194.3 m²', 'Roof terrace · 184 m²'],
     summary: 'Two homes in one villa: a garden unit with its own pool below, and an upper unit crowned by a 184 m² roof terrace.',
@@ -132,9 +108,6 @@ export const projects: Project[] = [
       'The massing is generated from the area program: a solid ground-floor base, a lighter first-floor volume set back to form terraces and shade, and a pergola-crowned roof — warm stone tones, vertical fins and planted edges that soften the street.',
     ],
     deliverables: ['Form generation', 'Ground, first floor and roof plans', 'Facade design', '3D model and renders'] },
-  { slug: 'orascom-o-west', client: 'Orascom Development', year: '2026', title: 'Orascom O West Midyard', location: '6th of October', country: 'Egypt', category: 'architecture', sector: 'Residential', scope: ['Concept design', M, R, P, AI], practice: 'Innovation Design Studio',
-    summary: 'Mid-rise apartment blocks for the Midyard district of O West.' },
-
   { slug: 'staff-housing', studies: [1, 2], fullSheets: [1, 2], client: 'Confidential developer', year: '2026', title: 'Staff Housing Community', location: 'Egypt', country: 'Egypt', category: 'architecture', sector: 'Masterplan', scope: ['Masterplanning', 'Concept design', M, R, P, AI], practice: 'Innovation Design Studio', featured: true,
     summary: 'A walkable town for nearly 7,000 resort staff: clustered courtyards, two repeatable prototypes and a refined Nubian language of arches, shade and earth.',
     overview: [
@@ -191,7 +164,7 @@ const pick = (slug: string, drawing: boolean) => Object.keys(files)
 
 // Roles, tags and status per project (10 Nov brief, Project Stories doc). Never claim more than this.
 const roles: Record<string, [Project['roleTag'], string, string, Project['status'] | null]> = {
-  "travco-west-island": ["DESIGN", "Sole designer of the chalet and townhome prototypes, from an empty plot to approval", "المصممة الوحيدة لنموذجي الشاليه والتاون هاوس، من أرض فارغة حتى الاعتماد", "Under construction"],
+  "travco-west-island": ["DESIGN", "Sole designer of the chalet prototype, from an empty plot to approval", "المصممة الوحيدة لنموذج الشاليه، من أرض فارغة حتى الاعتماد", "Under construction"],
   "misr-italia-hilltop": ["VISUALISATION", "Sole visualiser and design development — refined materials, details and façade · 3 prototypes", "المسؤولة الوحيدة عن الإظهار وتطوير التصميم — تحسين المواد والتفاصيل والواجهة · 3 نماذج", "Under construction"],
   "staff-housing": ["DESIGN", "Project lead, team of 3 · masterplan for ~7,000 residents", "قائدة المشروع، فريق من 3 · مخطط عام لنحو 7,000 ساكن", "Proposal"],
   "sallan-creek": ["VISUALISATION", "Turned a hand-sketched masterplan into an accurate 19-zone plan, then modelled and rendered the district", "حوّلت مخططًا عامًا مرسومًا باليد إلى مخطط دقيق من 19 منطقة، ثم نمذجت الحي وأظهرته", null],

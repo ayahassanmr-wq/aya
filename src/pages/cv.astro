@@ -9,7 +9,8 @@ const L = i18n(Astro.url);
 const { t } = L;
 const docs = [
   { id: 'cv', file: '/Aya_Hassan_CV.pdf', t: t('CV', 'السيرة الذاتية'), d: t('Two pages: my roles, studios and the projects I carried at each.', 'صفحتان: أدواري والاستوديوهات التي عملت بها والمشاريع التي حملتها في كلٍّ منها.'), meta: 'PDF · 2 pp' },
-  { id: 'portfolio', file: '/Aya_Hassan_Portfolio.pdf', t: t('Portfolio', 'ملف الأعمال'), d: t('Every project, numbered as on this site, with renders and drawing sets.', 'كل المشاريع، مرقّمة كما في هذا الموقع، مع الصور ومجموعات الرسومات.'), meta: 'PDF · ~30 MB' },
+  { id: 'selected', file: '/Aya_Hassan_Selected_Works.pdf', t: t('Selected Works', 'أعمال مختارة'), d: t('Eighteen projects with studies, plans and renders, sized for email.', 'ثمانية عشر مشروعًا بالدراسات والمساقط والصور، بحجم مناسب للبريد.'), meta: 'PDF · ~7 MB' },
+  { id: 'portfolio', file: '/Aya_Hassan_Portfolio.pdf', t: t('Portfolio, print quality', 'ملف الأعمال بجودة الطباعة'), d: t('The same eighteen projects with full-resolution images, for print.', 'المشاريع الثمانية عشر نفسها بصور كاملة الدقة للطباعة.'), meta: 'PDF · ~29 MB' },
 ];
 ---
 <Base title={t('CV & portfolio', 'السيرة الذاتية وملف الأعمال')} description={t('Aya Hassan’s CV and portfolio: view them here or download the PDFs.', 'السيرة الذاتية وملف أعمال آية حسن: اعرضهما هنا أو حمّل ملفات PDF.')}>

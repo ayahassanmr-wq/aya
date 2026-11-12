@@ -13,7 +13,7 @@ const prev = Object.fromEntries(await Promise.all(projects.map(async (p) => [p.s
 const disciplines = await Promise.all([
   { id: 'architecture', n: '01', name: t('Architectural design', 'التصميم المعماري'), line: t('Buildings, from the first massing to the last render.', 'مبانٍ، من الكتلة الأولى حتى آخر صورة.'), img: 'neom-oxagon', list: projects.filter((p) => p.category === 'architecture') },
   { id: 'interiors', n: '02', name: t('Interior design', 'التصميم الداخلي'), line: t('Workplaces, homes and showrooms, down to the finish.', 'بيئات عمل ومساكن ومعارض، حتى آخر تشطيب.'), img: 'sabic-hq', list: projects.filter((p) => p.category === 'interiors') },
-  { id: 'bim', n: '03', name: t('BIM & technical', 'BIM والتقني'), line: t('Full Revit packages: modelled, coordinated, issued.', 'حزم Revit كاملة: نمذجة وتنسيق وإصدار.'), img: 'linah-farms', list: projects.filter(isBim) },
+  { id: 'bim', n: '03', name: t('BIM & technical', 'BIM والتقني'), line: t('Full Revit packages: modelled, coordinated, issued.', 'حزم Revit كاملة: نمذجة وتنسيق وإصدار.'), img: 'noatum-terminal', list: projects.filter(isBim) },
 ].map(async (d) => ({ ...d, groups: groupBy(d.list), src: (await getImage({ src: cover(d.img)!, width: 1600, format: 'webp' })).src })));
 ---
 <Base title={t('Selected work', 'أعمال مختارة')} description={L.ar ? `أعمال مختارة لآية حسن: ${projects.length} مشروعًا في العمارة والتصميم الداخلي وBIM، في الخليج ومصر وخارجهما.` : `Selected work by Aya Hassan: ${projects.length} projects across architecture, interior design and BIM, in the Gulf, Egypt and beyond.`}>
