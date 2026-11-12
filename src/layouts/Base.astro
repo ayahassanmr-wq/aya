@@ -6,7 +6,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Intro from '../components/Intro.astro';
 import { i18n } from '../i18n';
-interface Props { title?: string; description?: string; image?: string; overHero?: boolean; intro?: boolean; preloadImage?: { srcset: string; sizes: string } }
+interface Props { title?: string; description?: string; image?: string; overHero?: boolean; intro?: boolean; preloadImage?: { srcset: string; sizes: string }; noindex?: boolean }
 const {
   title,
   description = 'Aya Hassan is an architect and interior designer based in Cairo, for luxury homes, coastal developments and corporate headquarters across Egypt and the Gulf.',
@@ -28,6 +28,7 @@ const ogImage = new URL(image, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
+    {Astro.props.noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="alternate" hreflang="en" href={new URL(L.enPath, Astro.site)} />
     <link rel="alternate" hreflang="ar" href={new URL(L.arPath, Astro.site)} />
     <meta name="theme-color" content="#5E1A24" />
