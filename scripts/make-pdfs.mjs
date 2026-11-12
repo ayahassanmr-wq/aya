@@ -4,11 +4,11 @@
 import p from 'puppeteer-core';
 const b = await p.launch({ executablePath: process.env.CHROME || '/usr/bin/google-chrome', args: ['--no-sandbox'] });
 // CV: public/Aya_Hassan_CV.pdf is Aya's own file (12 Nov) — not regenerated here.
-for (const [u, f] of [['print/portfolio/', 'Aya_Hassan_Portfolio'], ['print/selected/', 'Aya_Hassan_Selected_Works']]) {
+for (const [u, f] of [['print/portfolio/', 'docs/pdf/Aya_Hassan_Portfolio'], ['print/selected/', 'public/portfolio']]) {
   const g = await b.newPage();
   await g.goto('http://localhost:4321/' + u, { waitUntil: 'networkidle0', timeout: 180000 });
   await g.evaluate(() => document.fonts.ready);
-  await g.pdf({ path: `public/${f}.pdf`, preferCSSPageSize: true, printBackground: true });
+  await g.pdf({ path: `${f}.pdf`, preferCSSPageSize: true, printBackground: true });
   console.log('wrote', f);
 }
 await b.close();

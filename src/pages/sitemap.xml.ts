@@ -13,7 +13,6 @@ export async function GET() {
     { loc: '/about/', pr: '0.8', freq: 'yearly' },
     { loc: '/services/', pr: '0.7', freq: 'yearly' },
     { loc: '/contact/', pr: '0.6', freq: 'yearly' },
-    { loc: '/cv/', pr: '0.7', freq: 'monthly' },
   ];
   for (const p of projects) {
     const imgs = await Promise.all(imagesFor(p.slug).map(async (src, i) => ({

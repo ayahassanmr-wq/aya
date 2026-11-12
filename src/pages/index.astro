@@ -32,7 +32,7 @@ const feats = await Promise.all(featured.slice(0, 6).map(async (p) => {
   return { p, srcset: set.join(', '), src: set[1].split(' ')[0], w: img.width, h: img.height };
 }));
 const services = [
-  { t: t('Full-time role', 'وظيفة بدوام كامل'), slug: 'stc-hq', href: u('/cv/') },
+  { t: t('Full-time role', 'وظيفة بدوام كامل'), slug: 'stc-hq', href: u('/contact/?type=job') },
   { t: t('Full project', 'مشروع كامل'), slug: 'misr-italia-hilltop', href: u('/contact/?type=project') },
   { t: t('Studio support', 'دعم للاستوديوهات'), slug: 'sallan-creek', href: u('/contact/?type=studio') },
 ];
