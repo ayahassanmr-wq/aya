@@ -27,7 +27,7 @@ const think: Record<string, [string, string][]> = {
   'sabic-hq': [['Brief: turn an outdated HQ into a dynamic, collaborative, brand-led one', '04'], ['Constraint: an existing slab protrusion', '01'], ['Decision: make it the feature — the atrium planters', '02'], ['Under construction', '03']],
   'stc-hq': [['Brief: futuristic, recognisable, minimal', '01'], ['Site: the tower’s huge curves (oxblood = curve zones)', 'x:stc-curves'], ['Decision: curves become destinations', '02'], ['My concept became the team’s base', '05']],
 };
-const studyNos: Record<string, number[]> = { 'travco-west-island': [4], 'staff-housing': [1, 2, 3], 'sallan-creek': [1, 2], 'sodic-east-vale': [1], 'sodic-ogami': [1], 'fifth-square': [1], 'neom-oxagon': [1], 'chery-showroom': [1], 'linah-farms': [1], 'dry-port': [3] };
+const studyNos: Record<string, number[]> = { 'travco-west-island': [4], 'staff-housing': [1, 2, 3], 'sallan-creek': [1, 2], 'sodic-ogami': [1], 'fifth-square': [1], 'neom-oxagon': [1], 'chery-showroom': [1], 'linah-farms': [1], 'dry-port': [3] };
 const trimmed = import.meta.glob<{ default: any }>('../assets/print/*/d*.jpg', { eager: true });
 const scl = import.meta.glob<string>('../assets/print/*/d*.scale', { query: '?raw', import: 'default', eager: true });
 // drawings exported at a different scale from the rest of their project: factor that brings them in line
@@ -50,6 +50,13 @@ const stack = (xs: S[], groups: number[][]) => {
 };
 const pack = (xs: S[], slug = '') => {
   if (stackDef[slug]) return stack(xs, stackDef[slug]);
+  if (freeDef[slug]) {
+    const rows = freeDef[slug].map((g) => g.map((n) => xs.find((x) => x.no === n)!).filter(Boolean)).filter((g) => g.length);
+    const fr = rows.map((r) => (AW - G * (r.length - 1)) / r.reduce((a, x) => a + x.w, 0));
+    const tot = rows.reduce((a, r, i) => a + Math.max(...r.map((x) => x.h)) * fr[i] + C, 0) + G * (rows.length - 1);
+    const k = Math.min(1, AH / tot);
+    return [{ rows: rows.map((r, i) => r.map((x) => ({ ...x, w: x.w * fr[i] * k, h: x.h * fr[i] * k }))), s: 1 }];
+  }
   if (rowDef[slug]) { const pg = rowDef[slug].map((g) => g.map((n) => xs.find((x) => x.no === n)!).filter(Boolean)); const sc = Math.min(...pg.map((g) => Math.min((AW - G * (g.length - 1)) / g.reduce((a, x) => a + x.w, 0), (AH - C) / Math.max(...g.map((x) => x.h))))); return pg.map((g) => ({ rows: [g], s: sc })); }
   if (!xs.length) return [];
   const sc = Math.min(...xs.map((x) => Math.min(AW / x.w, (AH - C) / x.h)));
@@ -79,10 +86,14 @@ const sections = [
 
 // projects with more than one building: each part gets its own render page, render grid and plans
 // projects whose remaining renders each get a full page instead of a grid
-const solo = ['sodic-east-vale'];
+// custom render pages: one index = full uncropped page; two = stacked pair cropped to fill the page
+const renderDef: Record<string, number[][]> = { 'sodic-east-vale': [[1], [2]], 'staff-housing': [[2], [0, 1]] };
+// drawings laid out row by row (row = same scale, fitted to page width), e.g. massing study above the plans
+const freeDef: Record<string, number[][]> = { 'sodic-east-vale': [[1], [2, 3, 4]] };
+const topAlign = ['staff-housing'];
 const partsDef: Record<string, { name: string; imgs: number[]; plans: number[] }[]> = {
   'sodic-ogami': [{ name: 'Twin villa', imgs: [0, 1], plans: [] }, { name: 'Townhome', imgs: [2, 3], plans: [2, 3] }],
-  'travco-west-island': [{ name: 'Chalet', imgs: [0, 1, 2], plans: [1, 2] }, { name: 'Townhome', imgs: [3, 4, 5], plans: [3] }],
+  'travco-west-island': [{ name: 'Chalet', imgs: [0, 1, 2, 3], plans: [1, 2] }, { name: 'Townhome', imgs: [4, 5, 6, 7], plans: [3] }],
 };
 // line up building tops across side-by-side renders: place each render's skyline 20% down its cell
 import sky from '../data/skyline.json';
@@ -108,13 +119,13 @@ const build = async (slug: string, k: number) => {
   const steps = think[slug] ? await Promise.all(think[slug].map(async ([t, f]) => ({ t, d: f.startsWith('d') || f.startsWith('x:'), src: await jpg(img(slug, f), W.step) }))) : [];
   const sheet = async (x: { no: number; m: any }) => ({ no: x.no, w: x.m.width * unit(slug, x.no), h: x.m.height * unit(slug, x.no), src: await jpg(x.m, W.sheet) });
   const pd = partsDef[slug];
-  const rest = pd || solo.includes(slug) ? [] : await Promise.all(imgs.slice(1, 5).map(async (x) => ({ src: await jpg(x, W.half), key: keyOf(x, slug) })));
+  const rest = pd || renderDef[slug] ? [] : await Promise.all(imgs.slice(1, 5).map(async (x) => ({ src: await jpg(x, W.half), key: keyOf(x, slug) })));
   const sheetAll = async (xs: { no: number; m: any }[]) => Promise.all(xs.map(async (x) => ({ no: x.no, w: x.m.width * unit(slug, x.no), h: x.m.height * unit(slug, x.no), src: await jpg(x.m, W.sheet) })));
   const parts = pd ? await Promise.all(pd.map(async (d) => ({ name: d.name, hero: await jpg(imgs[d.imgs[0]], W.bleed), rest: await Promise.all(d.imgs.slice(1).map(async (i) => ({ src: await jpg(imgs[i], W.half), key: keyOf(imgs[i], slug) }))), plans: pack(await sheetAll(sh.filter((x) => d.plans.includes(x.no)))) }))) : [];
   return {
     p, code: String(k + 1).padStart(2, '0'), logo: clientLogo(slug), disc: [...disciplinesFor(p)],
     cover: await jpg(imgs[0], W.bleed), steps,
-    solos: solo.includes(slug) ? await Promise.all(imgs.slice(1, 5).map((x) => jpg(x, W.bleed))) : [],
+    solos: renderDef[slug] ? await Promise.all(renderDef[slug].map(async (g) => Promise.all(g.map((i) => jpg(imgs[i], g.length > 1 ? W.bleed : W.bleed))))) : [],
     studies: await Promise.all(sh.filter((x) => st.includes(x.no)).map(sheet)),
     plans: pd ? [] : pack(await Promise.all(sh.filter((x) => !st.includes(x.no)).map(sheet)), slug), parts,
     rest,
@@ -256,6 +267,8 @@ const trial = (_: string) => true;
 
   /* remaining renders */
   .fit { background: var(--night); }
+  .rg.r2v { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .sht.top .pr { align-items: flex-start; gap: 10mm; }
   .fit > img { position: absolute; left: 0; top: 0; width: 100%; height: calc(100% - 14mm); object-fit: contain; }
   .rg { display: grid; gap: 0; padding: 0; background: var(--bone); }
   .rg img { width: 100%; height: 100%; object-fit: cover; min-height: 0; display: block; }
@@ -429,7 +442,7 @@ const trial = (_: string) => true;
             </section>
           ))}
           {it.plans.map((pg: any) => (
-            <section class="pg sht">
+            <section class:list={['pg sht', { top: topAlign.includes(p.slug) }]}>
               <div class="pk">{pg.rows.map((r: any[]) => (
                 <div class="pr">{r.map((x: any) => (
                   <figure style={`width:${(x.w * pg.s).toFixed(1)}mm`}>
@@ -468,9 +481,14 @@ const trial = (_: string) => true;
               ))}
             </>
           ))}
-          {it.solos.map((r: string) => (
+          {it.solos.map((g: string[]) => g.length === 1 ? (
             <section class="pg fit">
-              <img class="grade" src={r} alt="" />
+              <img class="grade" src={g[0]} alt="" />
+              <div class="foot on"><span class="lab"><b>{it.code}</b> · {p.title}</span><span class="lab">{N()} / {T}</span></div>
+            </section>
+          ) : (
+            <section class="pg rg r2v">
+              {g.map((r) => <div class="c"><img class="grade" src={r} alt="" /></div>)}
               <div class="foot on"><span class="lab"><b>{it.code}</b> · {p.title}</span><span class="lab">{N()} / {T}</span></div>
             </section>
           ))}

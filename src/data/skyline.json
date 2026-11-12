@@ -244,15 +244,15 @@
 0.0
 ],
 "sodic-east-vale/01": [
-1.5,
-0.1579
+1.7778,
+0.125
 ],
 "sodic-east-vale/02": [
-1.5,
-0.0902
+1.7778,
+0.0
 ],
 "sodic-east-vale/03": [
-0.7086,
+1.2324,
 0.0
 ],
 "sodic-ogami/01": [
@@ -357,22 +357,30 @@
 ],
 "travco-west-island/02": [
 1.3333,
-0.1333
+0.32
 ],
 "travco-west-island/03": [
-0.7468,
+1.6179,
 0.1
 ],
 "travco-west-island/04": [
-1.787,
-0.3964
+0.7468,
+0.0
 ],
 "travco-west-island/05": [
+1.7857,
+0.4018
+],
+"travco-west-island/06": [
 1.7738,
 0.1518
 ],
-"travco-west-island/06": [
+"travco-west-island/07": [
 1.3333,
 0.0
+],
+"travco-west-island/08": [
+1.3333,
+0.1933
 ]
 }
