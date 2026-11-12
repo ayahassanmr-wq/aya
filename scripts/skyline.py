@@ -13,7 +13,7 @@ for f in sorted(glob.glob('src/assets/projects/*/[0-9][0-9].jpg')):
         rows = np.where(frac < .85)[0]; top = float(rows[0] / len(frac)) if len(rows) else 0.0
     k = re.search(r'projects/([^/]+)/(\d+)\.jpg', f); out[f'{k[1]}/{k[2]}'] = [round(w / h, 4), round(top, 4)]
 # hand-set where the sky test is fooled by trees at the top edge
-for k, v in {'travco-west-island/03': .1}.items():
+for k, v in {'travco-west-island/03': .1, 'staff-housing/03': .27, 'staff-housing/02': .29}.items():
     if k in out: out[k][1] = v
 json.dump(out, open('src/data/skyline.json', 'w'), indent=0)
 print(len(out), 'renders,', sum(1 for v in out.values() if v[1] > 0), 'with sky')
