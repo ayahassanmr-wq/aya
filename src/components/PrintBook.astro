@@ -172,7 +172,9 @@ const build = async (slug: string, k: number) => {
     rest,
   };
 };
-const secs = await Promise.all(sections.map(async (s) => ({ ...s, items: await Promise.all(s.slugs.map(build)) })));
+// left out of both PDFs (still on the website)
+const dropped = ['orascom-o-west', 'fifth-square', 'conference-room', 'hb-fuller', 'dry-port', 'linah-farms'];
+const secs = await Promise.all(sections.map(async (s) => ({ ...s, items: await Promise.all(s.slugs.filter((x) => !dropped.includes(x)).map(build)) })));
 
 // ---- page numbers (front: cover, about, clients, [index], contents)
 const front = 5;
