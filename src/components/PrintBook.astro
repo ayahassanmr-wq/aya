@@ -181,7 +181,7 @@ let sheetNo = 0; const nextSheet = () => `A-${String(++sheetNo).padStart(3, '0')
 
 const coverImg = await jpg(only ? imagesFor('sabic-hq')[0] : imagesFor('travco-west-island')[0], W.bleed);
 const aboutImg = await jpg(imagesFor('sabic-hq')[1], W.half);
-const backImg = await jpg(imagesFor(full ? 'travco-west-island' : 'misr-italia-hilltop')[0], W.bleed);
+const backImg = await jpg(only ? imagesFor('stc-hq')[0] : imagesFor(full ? 'travco-west-island' : 'misr-italia-hilltop')[0], W.bleed);
 const clients = ['sodic', 'orascom', 'misr-italia', 'travco', 'neom', 'stc', 'sabic', 'jotun', 'bmw', 'chery', 'hb-fuller', 'al-marasem', 'guira', 'linah', 'noatum'];
 const typed = ['Suits Workspaces'];
 const now = new Date(); const year = now.getFullYear();
