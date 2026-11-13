@@ -220,6 +220,14 @@ for (const p of projects) { const r = roles[p.slug]; if (r) { p.roleTag = r[0]; 
 export const tagAr: Record<string, string> = { DESIGN: 'تصميم', 'CO-DESIGN': 'تصميم مشترك', LEAD: 'قيادة', VISUALISATION: 'إظهار', REVIEW: 'مراجعة', BIM: 'BIM' };
 export const statusAr: Record<string, string> = { Built: 'مُنفَّذ', 'Under construction': 'قيد الإنشاء', Approved: 'معتمد', Concept: 'تصميم مبدئي', Proposal: 'مقترح' };
 
+/** Interior projects kept off the website, shown only in the interiors-only portfolio PDF. */
+export const pdfOnlyProjects: Project[] = [
+  { slug: 'zayed-residence', year: '2024', client: 'Private client', title: 'Zayed Residence', location: 'Sheikh Zayed, Giza', country: 'Egypt', category: 'interiors', sector: 'Residential', scope: [D, M, R, P],
+    summary: 'A bold residence of dark timber, marble and sculptural lighting.' },
+  { slug: 'arches-restaurant', client: 'Private client', year: '2022', title: 'Arches Restaurant', location: 'Saudi Arabia', country: 'Saudi Arabia', category: 'interiors', sector: 'Hospitality', scope: [D, M, R, P],
+    summary: 'A restaurant of timber arches, hanging greenery and halo lights.' },
+];
+
 export const imagesFor = (slug: string) => pick(slug, false);
 export const drawingsFor = (slug: string) => pick(slug, true);
 export const cover = (slug: string) => imagesFor(slug)[0];

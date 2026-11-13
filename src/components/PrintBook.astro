@@ -8,7 +8,7 @@ import '@fontsource-variable/archivo/wdth-italic.css';
 import '@fontsource-variable/inter';
 import '@fontsource-variable/inter/wght-italic.css';
 import { getImage } from 'astro:assets';
-import { projects, imagesFor, fileFor, disciplinesFor, countries, contact, projectNo, clientLogo, sectorGroups, type Project } from '../data/projects';
+import { projects, imagesFor, fileFor, disciplinesFor, countries, contact, projectNo, clientLogo, sectorGroups, type Project, pdfOnlyProjects } from '../data/projects';
 
 interface Props { full: boolean; only?: 'interiors' }
 const { full, only } = Astro.props;
@@ -17,7 +17,7 @@ const W = { bleed: full ? 2200 : 1000, half: full ? 1400 : 640, sheet: full ? 22
 const jpg = async (src: any, w: number) => (src ? (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: Q })).src : '');
 const practice = (p: Project) => p.practice === 'ZFP' ? 'ZFP · Zuhair Fayez Partnership' : p.practice ?? 'Independent practice';
 const place = (p: Project) => p.location === p.country || p.location.includes(p.country) ? p.location : `${p.location}, ${p.country}`;
-const P = (s: string) => projects.find((p) => p.slug === s)!;
+const P = (s: string) => [...projects, ...pdfOnlyProjects].find((p) => p.slug === s)!;
 const diag = import.meta.glob<{ default: any }>('../assets/diagrams/*.jpg', { eager: true });
 const img = (slug: string, f: string) => f.startsWith('x:') ? diag[`../assets/diagrams/${f.slice(2)}.jpg`]?.default : fileFor(slug, f);
 
@@ -105,7 +105,7 @@ const selArch = ['travco-west-island', 'sodic-east-vale', 'sodic-ogami', 'staff-
 const bimSlugs = ['noatum-terminal', 'linah-farms', 'chery-showroom', 'dry-port'];
 const selInt = ['sabic-hq', 'stc-hq', 'suits-workspaces', 'modern-residence-new-cairo', 'hb-fuller', 'sphinx', 'jotun-office', 'tech-park', 'conference-room', 'bmw-showroom'];
 const ord = (c: Project['category']) => sectorGroups(projects.filter((p) => p.category === c && !bimSlugs.includes(p.slug))).flatMap((g) => g.list).map((p) => p.slug);
-const sections = only === 'interiors' ? [{ n: '01', name: 'Interiors', slugs: selInt }] : [
+const sections = only === 'interiors' ? [{ n: '01', name: 'Interiors', slugs: [...selInt, 'zayed-residence', 'arches-restaurant'] }] : [
   { n: '01', name: 'Architecture', slugs: full ? [...selArch, ...ord('architecture').filter((x) => !selArch.includes(x))] : selArch },
   { n: '02', name: 'Interiors', slugs: full ? ord('interiors') : selInt },
   { n: '03', name: 'BIM delivery', slugs: bimSlugs },
