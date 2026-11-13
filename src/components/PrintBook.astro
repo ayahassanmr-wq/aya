@@ -10,8 +10,8 @@ import '@fontsource-variable/inter/wght-italic.css';
 import { getImage } from 'astro:assets';
 import { projects, imagesFor, fileFor, disciplinesFor, countries, contact, projectNo, clientLogo, sectorGroups, type Project } from '../data/projects';
 
-interface Props { full: boolean }
-const { full } = Astro.props;
+interface Props { full: boolean; only?: 'interiors' }
+const { full, only } = Astro.props;
 const Q = full ? 80 : 60;
 const W = { bleed: full ? 2200 : 1000, half: full ? 1400 : 640, sheet: full ? 2200 : 1100, step: full ? 1200 : 560 };
 const jpg = async (src: any, w: number) => (src ? (await getImage({ src, width: Math.min(w, src.width), format: 'jpg', quality: Q })).src : '');
@@ -105,7 +105,7 @@ const selArch = ['travco-west-island', 'sodic-east-vale', 'sodic-ogami', 'staff-
 const bimSlugs = ['noatum-terminal', 'linah-farms', 'chery-showroom', 'dry-port'];
 const selInt = ['sabic-hq', 'stc-hq', 'suits-workspaces', 'modern-residence-new-cairo', 'hb-fuller', 'sphinx', 'jotun-office', 'tech-park', 'conference-room', 'bmw-showroom'];
 const ord = (c: Project['category']) => sectorGroups(projects.filter((p) => p.category === c && !bimSlugs.includes(p.slug))).flatMap((g) => g.list).map((p) => p.slug);
-const sections = [
+const sections = only === 'interiors' ? [{ n: '01', name: 'Interiors', slugs: selInt }] : [
   { n: '01', name: 'Architecture', slugs: full ? [...selArch, ...ord('architecture').filter((x) => !selArch.includes(x))] : selArch },
   { n: '02', name: 'Interiors', slugs: full ? ord('interiors') : selInt },
   { n: '03', name: 'BIM delivery', slugs: bimSlugs },
@@ -167,19 +167,19 @@ const build = async (slug: string, k: number) => {
 };
 // left out of both PDFs (still on the website)
 const dropped = ['orascom-o-west', 'fifth-square', 'conference-room', 'hb-fuller', 'dry-port', 'linah-farms'];
-const secs = await Promise.all(sections.map(async (s) => ({ ...s, items: await Promise.all(s.slugs.filter((x) => !dropped.includes(x)).map(build)) })));
+const secs = await Promise.all(sections.map(async (s) => ({ ...s, items: await Promise.all(s.slugs.filter((x) => only || !dropped.includes(x)).map(build)) })));
 
 // ---- page numbers (front: cover, about, clients, [index], contents)
 const front = 5;
 const pagesOf = (it: any) => 1 + it.solos.length + it.studies.length + it.plans.length + (it.rest.length ? 1 : 0) + it.parts.reduce((a: number, q: any) => a + (q.hero ? 1 : 0) + (q.rest.length ? 1 : 0) + q.plans.length, 0);
 let pg = front; const startOf: Record<string, number> = {};
 for (const s of secs) { pg += 1; for (const it of s.items) { startOf[it.p.slug] = pg + 1; pg += pagesOf(it); } }
-pg += 1; // delivery card
+if (!only) pg += 1; // delivery card
 const total = pg + 1;
 let pn = 0; const N = () => String(++pn).padStart(2, '0'); const T = String(total).padStart(2, '0');
 let sheetNo = 0; const nextSheet = () => `A-${String(++sheetNo).padStart(3, '0')}`;
 
-const coverImg = await jpg(imagesFor('travco-west-island')[0], W.bleed);
+const coverImg = await jpg(only ? imagesFor('sabic-hq')[0] : imagesFor('travco-west-island')[0], W.bleed);
 const aboutImg = await jpg(imagesFor('sabic-hq')[1], W.half);
 const backImg = await jpg(imagesFor(full ? 'travco-west-island' : 'misr-italia-hilltop')[0], W.bleed);
 const clients = ['sodic', 'orascom', 'misr-italia', 'travco', 'neom', 'stc', 'sabic', 'jotun', 'bmw', 'chery', 'hb-fuller', 'al-marasem', 'guira', 'linah', 'noatum'];
@@ -187,7 +187,7 @@ const typed = ['Suits Workspaces'];
 const now = new Date(); const year = now.getFullYear();
 const month = now.toLocaleString('en-GB', { month: 'long' });
 const shown = secs.reduce((a, s) => a + s.items.length, 0);
-const label = full ? 'Portfolio' : 'Selected Works';
+const label = only ? 'Interiors' : full ? 'Portfolio' : 'Selected Works';
 const fitBox = (w: number, h: number, bw: number, bh: number) => { const s = Math.min(bw / w, bh / h); return `width:${(w * s).toFixed(1)}mm;height:${(h * s).toFixed(1)}mm`; };
 const restClass = (n: number) => `r${n}`;
 const trial = (_: string) => true;
@@ -560,7 +560,7 @@ const trial = (_: string) => true;
   </>
 ))}
 
-<section class="pg card">
+{!only && <section class="pg card">
   <div>
     <span class="lab ox">Delivery · BIM package</span>
     <h2 class="wide">NEOM, Misk Schools</h2>
@@ -571,7 +571,7 @@ const trial = (_: string) => true;
     <p class="mut" style="margin-top:6mm;font-size:9pt">Drawings are confidential and not shown.</p>
   </div>
   <div class="foot"><a class="wm" href="https://ayahassan.com">AYA<i></i>HASSAN</a><span class="lab mut">{N()} / {T}</span></div>
-</section>
+</section>}
 
 <!-- back -->
 <section class="pg back dark">
