@@ -1,30 +1,58 @@
 ---
-/* Unlisted portfolio page (linked only from Aya's CV): view the PDF here or download it. Not in nav or sitemap. */
+/* Unlisted page (linked only from Aya's CV): view or download the portfolio and the CV. Not in nav or sitemap. */
 import Base from '../layouts/Base.astro';
 import { i18n } from '../i18n';
 const L = i18n(Astro.url);
 const { t } = L;
-const file = '/portfolio.pdf';
+const docs = [
+  { id: 'portfolio', file: '/portfolio.pdf', name: 'Aya_Hassan_Portfolio.pdf', tab: t('Portfolio', 'ملف الأعمال'), meta: t('Selected Works · 18 projects · PDF', 'أعمال مختارة · 18 مشروعًا · PDF') },
+  { id: 'cv', file: '/cv.pdf', name: 'Aya_Hassan_CV.pdf', tab: t('CV', 'السيرة الذاتية'), meta: t('Curriculum vitae · 2 pages · PDF', 'السيرة الذاتية · صفحتان · PDF') },
+];
 ---
-<Base title={t('Portfolio', 'ملف الأعمال')} description={t('Aya Hassan · Selected Works portfolio (PDF).', 'آية حسن · ملف الأعمال المختارة (PDF).')} noindex>
+<Base title={t('Portfolio & CV', 'ملف الأعمال والسيرة الذاتية')} description={t('Aya Hassan · portfolio and CV (PDF).', 'آية حسن · ملف الأعمال والسيرة الذاتية (PDF).')} noindex>
   <section class="wrap pf">
-    <div class="ph">
-      <div>
-        <span class="label muted">{t('Selected Works · 18 projects · PDF', 'أعمال مختارة · 18 مشروعًا · PDF')}</span>
-        <h1 class="display-l">{t('Portfolio', 'ملف الأعمال')}</h1>
-      </div>
-      <div class="da">
-        <a href={file} class="btn solid" download="Aya_Hassan_Portfolio.pdf">{t('Download PDF', 'تحميل PDF')} <span class="arr">↓</span></a>
-        <a href={file} class="btn ghost" target="_blank" rel="noopener">{t('Open full screen', 'افتح بملء الشاشة')} <span class="arr">↗</span></a>
-      </div>
+    <div class="tabs" role="tablist">
+      {docs.map((d, i) => <a href={`#${d.id}`} role="tab" class="tab" data-id={d.id} aria-selected={i === 0 ? 'true' : 'false'}>{d.tab}</a>)}
     </div>
-    <div class="viewer"><iframe title={t('Aya Hassan portfolio', 'ملف أعمال آية حسن')} src={`${file}#view=FitH`}></iframe></div>
+    {docs.map((d, i) => (
+      <div class="doc" data-doc={d.id} hidden={i !== 0}>
+        <div class="ph">
+          <div>
+            <span class="label muted">{d.meta}</span>
+            <h1 class="display-l">{d.tab}</h1>
+          </div>
+          <div class="da">
+            <a href={d.file} class="btn solid" download={d.name}>{t('Download PDF', 'تحميل PDF')} <span class="arr">↓</span></a>
+            <a href={d.file} class="btn ghost" target="_blank" rel="noopener">{t('Open full screen', 'افتح بملء الشاشة')} <span class="arr">↗</span></a>
+          </div>
+        </div>
+        <div class="viewer"><iframe title={d.tab} loading={i === 0 ? 'eager' : 'lazy'} data-src={`${d.file}#view=FitH`} src={i === 0 ? `${d.file}#view=FitH` : undefined}></iframe></div>
+      </div>
+    ))}
     <p class="label muted note">{t('If the preview does not show on your device, use Open full screen or Download.', 'إذا لم تظهر المعاينة على جهازك، استخدم «افتح بملء الشاشة» أو «تحميل».')}</p>
   </section>
 </Base>
 
+<script>
+  const show = (id: string) => {
+    document.querySelectorAll<HTMLElement>('[data-doc]').forEach((el) => {
+      const on = el.dataset.doc === id;
+      el.hidden = !on;
+      const f = el.querySelector('iframe');
+      if (on && f && !f.getAttribute('src')) f.setAttribute('src', f.dataset.src || '');
+    });
+    document.querySelectorAll<HTMLElement>('.tab').forEach((a) => a.setAttribute('aria-selected', String(a.dataset.id === id)));
+  };
+  document.querySelectorAll<HTMLElement>('.tab').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); show(a.dataset.id!); history.replaceState(null, '', `#${a.dataset.id}`); }));
+  const h = location.hash.slice(1);
+  if (h === 'cv' || h === 'portfolio') show(h);
+</script>
+
 <style>
   .pf { padding-block: clamp(120px, 12vw, 170px) clamp(64px, 8vw, 120px); }
+  .tabs { display: flex; gap: 28px; border-bottom: 1px solid var(--rule); margin-bottom: clamp(24px, 3vw, 40px); }
+  .tab { padding: 10px 0; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .2em; color: inherit; opacity: .5; text-decoration: none; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tab[aria-selected='true'] { opacity: 1; border-bottom-color: var(--ox); }
   .ph { display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: flex-end; justify-content: space-between; padding-bottom: clamp(20px, 2.4vw, 32px); border-bottom: 1px solid var(--rule); margin-bottom: clamp(20px, 2.4vw, 32px); }
   .ph h1 { margin-top: 10px; }
   .da { display: flex; flex-wrap: wrap; gap: 12px; }

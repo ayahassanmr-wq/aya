@@ -14,6 +14,19 @@
       ]
     },
     {
+      "source": "/cv.pdf",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "inline; filename=\"Aya_Hassan_CV.pdf\""
+        }
+      ]
+    },
+    {
       "source": "/fonts/(.*)",
       "headers": [
         {
