@@ -115,8 +115,8 @@ const sections = only === 'residential' ? [{ n: '01', name: 'Architecture', slug
 // projects with more than one building: each part gets its own render page, render grid and plans
 // projects whose remaining renders each get a full page instead of a grid
 // custom render pages: one index = full uncropped page; two = stacked pair cropped to fill the page
-const renderDef: Record<string, number[][]> = { 'sodic-east-vale': [[0], [2]], 'staff-housing': [[0, 1]], 'zayed-residence': [[0]] };
-const keepRest = ['zayed-residence']; // full-page render added before the usual render grid
+const renderDef: Record<string, number[][]> = { 'sodic-east-vale': [[0], [2]], 'staff-housing': [[0, 1]], 'zayed-residence': [[0], [1], [2]], 'modern-residence-new-cairo': [[0], [1], [2], [3], [4]] };
+const keepRest: string[] = []; // full-page render added before the usual render grid
 // drawings laid out row by row (row = same scale, fitted to page width), e.g. massing study above the plans
 const freeDef: Record<string, number[][][]> = { 'sodic-east-vale': [[[1], [2, 3, 4]]], 'noatum-terminal': [[[2, 3], [1]], [[4], [5], [6], [7]]] };
 // two columns on one sheet, each column stacked at its own scale (study beside the plans)
