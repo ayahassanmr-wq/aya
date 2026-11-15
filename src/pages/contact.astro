@@ -8,6 +8,8 @@ import { contact, imagesFor, cover } from '../data/projects';
 import { i18n } from '../i18n';
 const L = i18n(Astro.url);
 const { t } = L;
+/* Web3Forms access key (public by design). Until it is set, Send opens the visitor's email app with the message filled in. */
+const key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 ---
 <Base title={t('Contact', 'تواصل')} description={t('Contact Aya Hassan for concept design roles, collaborations with design firms and selected private commissions.', 'تواصل مع آية حسن لوظائف التصميم المبدئي، والتعاون مع مكاتب التصميم، ومشاريع خاصة مختارة.')}>
   <PageHero images={[imagesFor('stc-hq')[2], imagesFor('misr-italia-hilltop')[1]]} alt={t('Interior of the stc headquarters', 'التصميم الداخلي لمقر stc')} meta={L.ar ? [['المقر', 'القاهرة، مصر'], ['اللغات', 'العربية · الإنجليزية']] : [['Based in', 'Cairo, Egypt'], ['Languages', 'Arabic · English']]}>
@@ -18,12 +20,20 @@ const { t } = L;
   <HireNotes />
 
   <section class="wrap rows">
-    <div class="row topic"><label class="label muted" for="topic">{t('What is it about?', 'موضوع رسالتك')}<span class="hint">{t('Pick one — it becomes the subject of your email.', 'اختر واحدًا، وسيصبح عنوان رسالتك.')}</span></label>
-      <select id="topic" class="v sel" data-topic>
-        <option value="job">{t('Job opportunity', 'فرصة عمل')}</option>
-        <option value="project" selected>{t('Project', 'مشروع')}</option>
-        <option value="studio">{t('Studio support', 'دعم للاستوديوهات')}</option>
-      </select><span class="arr" aria-hidden="true">↓</span></div>
+    <form class="cf" id="cf" data-key={key} novalidate>
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="f"><label class="label muted" for="cf-name">{t('Your name', 'اسمك')}</label><input id="cf-name" name="name" required autocomplete="name" /></div>
+      <div class="f"><label class="label muted" for="cf-email">{t('Your email', 'بريدك الإلكتروني')}</label><input id="cf-email" name="email" type="email" required autocomplete="email" dir="ltr" /></div>
+      <div class="f full"><label class="label muted" for="topic">{t('What is it about?', 'موضوع رسالتك')}</label>
+        <div class="selw"><select id="topic" name="topic" data-topic>
+          <option value="job">{t('Job opportunity', 'فرصة عمل')}</option>
+          <option value="project" selected>{t('Project', 'مشروع')}</option>
+          <option value="studio">{t('Studio support', 'دعم للاستوديوهات')}</option>
+        </select><span class="arr" aria-hidden="true">↓</span></div></div>
+      <div class="f full"><label class="label muted" for="cf-msg">{t('Message', 'رسالتك')}</label><textarea id="cf-msg" name="message" rows="5" required></textarea></div>
+      <div class="f full send"><button type="submit" class="btn solid">{t('Send message', 'أرسل الرسالة')} <span class="arr">→</span></button>
+        <p class="st" role="status" aria-live="polite" data-ok={t('Thank you — your message is on its way.', 'شكرًا، وصلت رسالتك.')} data-err={t('Something went wrong. Please email me directly below.', 'حدث خطأ. من فضلك راسلني مباشرة بالبريد أدناه.')} data-req={t('Please fill in your name, a valid email and a message.', 'من فضلك اكتب اسمك وبريدًا صحيحًا ورسالتك.')}></p></div>
+    </form>
     <div class="row"><span class="label muted">{t('Email', 'البريد')}</span><a href={`mailto:${contact.email}`} class="v link" id="em" dir="ltr">{contact.email.split("@")[0]}<wbr />@{contact.email.split("@")[1]}</a><button type="button" class="btn copy" data-copy="em" data-done={t('Copied', 'تم النسخ')}>{t('Copy', 'انسخ')}</button></div>
     <div class="row"><span class="label muted">{t('Social', 'التواصل')}</span><Social size="l" /><span></span></div>
   </section>
@@ -32,16 +42,33 @@ const { t } = L;
 </Base>
 
 <script>
-  // topic dropdown: pre-select from ?type=, and put the topic in the email subject
+  // contact form: posts to Web3Forms; without a key, falls back to a pre-filled email
   {
-    const sel = document.querySelector<HTMLSelectElement>('[data-topic]');
-    const em = document.getElementById('em') as HTMLAnchorElement | null;
-    if (sel && em) {
+    const f = document.getElementById('cf') as HTMLFormElement | null;
+    const sel = f?.querySelector<HTMLSelectElement>('[data-topic]');
+    if (f && sel) {
       const type = new URLSearchParams(location.search).get('type');
       if (type && [...sel.options].some((o) => o.value === type)) sel.value = type;
-      const base = em.getAttribute('href')!.split('?')[0];
-      const set = () => { em.href = `${base}?subject=${encodeURIComponent(sel.selectedOptions[0].text + ' · ayahassan.com')}`; };
-      sel.addEventListener('change', set); set();
+      const st = f.querySelector<HTMLElement>('.st')!;
+      const btn = f.querySelector<HTMLButtonElement>('button[type=submit]')!;
+      const to = (document.getElementById('em') as HTMLAnchorElement).getAttribute('href')!.split('?')[0];
+      f.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!f.checkValidity()) { st.textContent = st.dataset.req!; st.className = 'st bad'; return; }
+        const d = new FormData(f);
+        if (d.get('botcheck')) return;
+        const subject = `${sel.selectedOptions[0].text} · ayahassan.com`;
+        if (!f.dataset.key) { location.href = `${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`${d.get('message')}\n\n${d.get('name')} · ${d.get('email')}`)}`; return; }
+        btn.disabled = true; st.textContent = '…'; st.className = 'st';
+        try {
+          const r = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({ access_key: f.dataset.key, subject, from_name: 'ayahassan.com', name: d.get('name'), email: d.get('email'), replyto: d.get('email'), topic: sel.selectedOptions[0].text, message: d.get('message') }) });
+          const j = await r.json();
+          if (!j.success) throw 0;
+          f.reset(); st.textContent = st.dataset.ok!; st.className = 'st ok';
+        } catch { st.textContent = st.dataset.err!; st.className = 'st bad'; }
+        btn.disabled = false;
+      });
     }
   }
   document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
@@ -60,14 +87,22 @@ const { t } = L;
   .v:hover { color: var(--ox); }
   .hint { display: block; margin-top: 6px; text-transform: none; letter-spacing: 0; font-size: 12.5px; opacity: .85; }
   .reply { grid-column: 2; grid-row: 2; margin-top: -6px; text-transform: none; letter-spacing: .02em; font-size: 13px; }
-  .sel { appearance: none; -webkit-appearance: none; background: none; border: 0; padding: 0; color: var(--ink); cursor: pointer; width: 100%; }
+  .unused-sel { appearance: none; -webkit-appearance: none; background: none; border: 0; padding: 0; color: var(--ink); cursor: pointer; width: 100%; }
   .sel:focus-visible { outline: 2px solid var(--ox); outline-offset: 6px; }
   .copy { padding: 12px 16px; background: none; cursor: pointer; color: var(--ink); }
   .arr { font-size: 22px; color: var(--ox); }
-  /* the topic picker spans the row; the arrow sits on top of it and lets clicks through, so the whole bar opens the list */
-  .topic { position: relative; }
-  .topic .sel { grid-column: 2 / -1; grid-row: 1; padding-inline-end: 40px; }
-  .topic .arr { grid-column: 3; grid-row: 1; pointer-events: none; }
-  @media (max-width: 640px) { .topic .sel { grid-column: 1 / -1; grid-row: 2; } .topic .arr { grid-column: 2; grid-row: 2; } }
+  .cf { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.4vw, 32px) clamp(20px, 3vw, 48px); padding-block: clamp(24px, 3vw, 40px) clamp(40px, 5vw, 72px); }
+  .cf .full { grid-column: 1 / -1; }
+  .f { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .f input, .f textarea, .f select { font: 400 18px/1.4 var(--sans); color: var(--ink); background: none; border: 0; border-bottom: 1px solid var(--rule); border-radius: 0; padding: 8px 0 12px; width: 100%; }
+  .f textarea { resize: vertical; min-height: 120px; }
+  .f input:focus, .f textarea:focus, .f select:focus { outline: none; border-bottom-color: var(--ox); }
+  .selw { position: relative; }
+  .selw select { appearance: none; -webkit-appearance: none; cursor: pointer; padding-inline-end: 32px; }
+  .selw .arr { position: absolute; inset-inline-end: 0; top: 6px; pointer-events: none; }
+  .send { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 20px; }
+  .st { margin: 0; font-size: 14px; } .st.ok { color: var(--ox); } .st.bad { color: #B8394A; }
+  .hp { position: absolute; left: -9999px; }
+  @media (max-width: 640px) { .cf { grid-template-columns: 1fr; } }
   @media (max-width: 640px) { .row { grid-template-columns: 1fr auto; } .row > .label { grid-column: 1 / -1; } }
 </style>
