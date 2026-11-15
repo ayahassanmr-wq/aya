@@ -53,7 +53,7 @@ const data = await Promise.all(rows.map((r) => Promise.all(r.map(async (img) => 
   .live .scroller::-webkit-scrollbar { display: none; }
   .live .scroller.drag { cursor: grabbing; }
   .live .row { transform: none; }
-  .tile { display: grid; gap: 10px; text-decoration: none; color: inherit; flex: none; user-select: none; }
-  .tile .tl { opacity: .75; transition: opacity .3s, color .3s; }
+  .tile { display: grid; gap: 10px; width: clamp(240px, 28vw, 520px); text-decoration: none; color: inherit; flex: none; user-select: none; }
+  .tile .tl { line-height: 1.5; overflow-wrap: break-word; opacity: .75; transition: opacity .3s, color .3s; }
   .tile:hover .tl { opacity: 1; color: var(--sand); }
 </style>
