@@ -10,7 +10,7 @@ import '@fontsource-variable/inter/wght-italic.css';
 import { getImage } from 'astro:assets';
 import { projects, imagesFor, fileFor, disciplinesFor, countries, contact, projectNo, clientLogo, sectorGroups, type Project, pdfOnlyProjects } from '../data/projects';
 
-interface Props { full: boolean; only?: 'interiors'; allBim?: boolean }
+interface Props { full: boolean; only?: 'interiors' | 'residential'; allBim?: boolean }
 const { full, only, allBim } = Astro.props;
 const Q = full ? 80 : 60;
 const W = { bleed: full ? 2200 : 1000, half: full ? 1400 : 640, sheet: full ? 2200 : 1100, step: full ? 1200 : 560 };
@@ -105,7 +105,8 @@ const selArch = ['travco-west-island', 'sodic-east-vale', 'sodic-ogami', 'staff-
 const bimSlugs = ['noatum-terminal', 'linah-farms', 'chery-showroom', 'dry-port'];
 const selInt = ['sabic-hq', 'stc-hq', 'suits-workspaces', 'modern-residence-new-cairo', 'hb-fuller', 'sphinx', 'jotun-office', 'tech-park', 'conference-room', 'bmw-showroom'];
 const ord = (c: Project['category']) => sectorGroups(projects.filter((p) => p.category === c && !bimSlugs.includes(p.slug))).flatMap((g) => g.list).map((p) => p.slug);
-const sections = only === 'interiors' ? [{ n: '01', name: 'Interiors', slugs: [...selInt, 'zayed-residence', 'arches-restaurant'] }] : [
+const resArch = ['travco-west-island', 'sodic-east-vale', 'sodic-ogami', 'misr-italia-hilltop', 'orascom-o-west', 'staff-housing'];
+const sections = only === 'residential' ? [{ n: '01', name: 'Architecture', slugs: resArch }, { n: '02', name: 'Interiors', slugs: ['modern-residence-new-cairo', 'zayed-residence'] }] : only === 'interiors' ? [{ n: '01', name: 'Interiors', slugs: [...selInt, 'zayed-residence', 'arches-restaurant'] }] : [
   { n: '01', name: 'Architecture', slugs: full ? [...selArch, ...ord('architecture').filter((x) => !selArch.includes(x))] : selArch },
   { n: '02', name: 'Interiors', slugs: full ? ord('interiors') : selInt },
   { n: '03', name: 'BIM delivery', slugs: bimSlugs },
@@ -179,15 +180,15 @@ const total = pg + 1;
 let pn = 0; const N = () => String(++pn).padStart(2, '0'); const T = String(total).padStart(2, '0');
 let sheetNo = 0; const nextSheet = () => `A-${String(++sheetNo).padStart(3, '0')}`;
 
-const coverImg = await jpg(only ? imagesFor('sabic-hq')[0] : imagesFor('travco-west-island')[0], W.bleed);
+const coverImg = await jpg(only === 'interiors' ? imagesFor('sabic-hq')[0] : imagesFor('travco-west-island')[0], W.bleed);
 const aboutImg = await jpg(imagesFor('sabic-hq')[1], W.half);
-const backImg = await jpg(only ? imagesFor('stc-hq')[0] : imagesFor(full ? 'travco-west-island' : 'misr-italia-hilltop')[0], W.bleed);
+const backImg = await jpg(only === 'interiors' ? imagesFor('stc-hq')[0] : only ? imagesFor('misr-italia-hilltop')[0] : imagesFor(full ? 'travco-west-island' : 'misr-italia-hilltop')[0], W.bleed);
 const clients = ['sodic', 'orascom', 'misr-italia', 'travco', 'neom', 'stc', 'sabic', 'jotun', 'bmw', 'chery', 'hb-fuller', 'al-marasem', 'guira', 'linah', 'noatum'];
 const typed = ['Suits Workspaces'];
 const now = new Date(); const year = now.getFullYear();
 const month = now.toLocaleString('en-GB', { month: 'long' });
 const shown = secs.reduce((a, s) => a + s.items.length, 0);
-const label = only ? 'Interiors' : full ? 'Portfolio' : 'Selected Works';
+const label = only === 'residential' ? 'Residential' : only ? 'Interiors' : full ? 'Portfolio' : 'Selected Works';
 const fitBox = (w: number, h: number, bw: number, bh: number) => { const s = Math.min(bw / w, bh / h); return `width:${(w * s).toFixed(1)}mm;height:${(h * s).toFixed(1)}mm`; };
 const restClass = (n: number) => `r${n}`;
 const trial = (_: string) => true;
